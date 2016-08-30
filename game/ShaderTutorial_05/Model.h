@@ -23,6 +23,10 @@ public:
 		);
 	//開放。
 	void Release();
+	LPD3DXMESH GetMesh()
+	{
+		return mesh;
+	}
 private:
 	LPD3DXMESH				mesh;			//メッシュ。
 	LPDIRECT3DTEXTURE9*		textures;		//テクスチャ。

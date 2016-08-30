@@ -1,13 +1,15 @@
 #pragma once
-
 #include "Model.h"
+#include "IsIntersect\IsIntersect.h"
 
-class CBlock {
+class IPlayerCollisionCallback;
+
+class CKinoko {
 public:
 	//コンストラクタ
-	CBlock();
+	CKinoko();
 	//デストラクタ
-	~CBlock();
+	~CKinoko();
 	//初期化。
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
 	//更新。
@@ -34,4 +36,7 @@ private:
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
+	CIsIntersect			IsIntersect;		//あたり判定
+	std::vector<IPlayerCollisionCallback*>	callbackList;//
+	D3DXVECTOR3				movespeed;
 };

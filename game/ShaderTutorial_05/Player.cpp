@@ -4,8 +4,7 @@
 //コンストラクタ
 CPlayer::CPlayer()
 {
-	//初期化。
-
+	//初期化
 	D3DXMatrixIdentity(&mWorld);
 	position.x = 1.0f;
 	position.y = 5.0f;
@@ -75,10 +74,10 @@ void CPlayer::Move()
 	{
 		state = PlayerStay;
 	}
-	movespeed.x = g_pad.GetLStickXF();
+	movespeed.x = g_pad.GetLStickXF() * 5.0f;
 	//movespeed.y = g_pad.GetLStickYF();
 	
-	D3DXVec3Scale(&movespeed, &movespeed, 0.1f);
+	//D3DXVec3Scale(&movespeed, &movespeed, 0.1f);
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
@@ -89,23 +88,19 @@ void CPlayer::Move()
 		movespeed.x -= MOVE_SPEED;
 	}
 
-	position += movespeed;
+	//position += movespeed;
 }
 
 void CPlayer::Jump()
 {
 	if (state != PlayerJump)
 	{
-		if (GetAsyncKeyState(VK_SPACE))
+		
+		if (g_pad.IsTrigger(EnButton::enButtonA))
 		{
-			movespeed.y += 0.5f;
+			movespeed.y += 8.0f;
 			state = PlayerJump;
 		}
 	}
-	if (g_pad.IsTrigger(EnButton::enButtonA))
-	{
-		movespeed.y += 5.0f;
-		state = PlayerJump;
-	}
-
+	
 }

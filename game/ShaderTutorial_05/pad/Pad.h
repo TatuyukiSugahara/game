@@ -29,6 +29,8 @@ enum EnButton{
 	*@brief	パッド
 	*/
 class CPad{
+private:
+	static const int KeyBoardMap[enButtonNum]; 
 public:
 	/*!
 	*@brief	パッドステート。
@@ -65,6 +67,9 @@ public:
 	bool IsTrigger(EnButton button) const
 	{
 		//TK_ASSERT(button < enButtonNum, "button is invalid");
+		if (!m_state.bConnected && KeyBoardMap[button] != -1){
+			return GetAsyncKeyState(KeyBoardMap[button]);
+		}
 		return m_trigger[button] != 0;
 	}
 	/*!

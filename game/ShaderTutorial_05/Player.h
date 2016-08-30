@@ -53,7 +53,7 @@ private:
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
 	CIsIntersect			IsIntersect;		//あたり判定
-	std::vector<IPlayerCollisionCallback*>	callbackList;
-	const float				MOVE_SPEED = 0.1f;	//移動速度
-	PlayerState				state;
+	std::vector<IPlayerCollisionCallback*>	callbackList;//
+	const float				MOVE_SPEED = 5.0f;	//移動速度
+	PlayerState				state;				//プレイヤーの状態
 };

@@ -1,7 +1,8 @@
 #pragma once
-
 #include "Model.h"
-//虎クラス。
+
+class CPlayer;
+
 class CHatenaBox {
 public:
 	//コンストラクタ
@@ -9,7 +10,7 @@ public:
 	//デストラクタ
 	~CHatenaBox();
 	//初期化。
-	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
+	void Init(LPDIRECT3DDEVICE9 pd3dDevice,CPlayer* player);
 	//更新。
 	void Update();
 	//描画。
@@ -29,9 +30,24 @@ public:
 	{
 		position = pos;
 	}
+	bool GetItem()
+	{
+		return Item;
+	}
+	void SetItem(bool flag)
+	{
+		Item = flag;
+	}
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
+	/*AABB*/
+	D3DXVECTOR3 m_aabbMin;
+	D3DXVECTOR3 m_aabbMax;
+
+	bool					Item;			//アイテムフラグ
+
+	CPlayer*					player;
 };

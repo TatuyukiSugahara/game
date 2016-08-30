@@ -35,6 +35,25 @@ namespace {
 		{ enButtonLB3, XINPUT_GAMEPAD_LEFT_THUMB },
 	};
 }
+
+const int CPad::KeyBoardMap[enButtonNum] = {
+	-1, // enButtonUp,		//!<上。
+	-1, //enButtonDown,		//!<下。
+	-1, //enButtonLeft,		//!<左。
+	-1, //enButtonRight,		//!<右。
+	VK_SPACE, //enButtonA,			//!<Aボタン。
+	-1, //enButtonB,			//!<Bボタン。
+	-1, //enButtonX,			//!<Xボタン。
+	-1, //enButtonY,			//!<Yボタン。
+	-1, //enButtonSelect,	//!<セレクトボタン。
+	-1, //enButtonStart,		//!<スタートボタン。
+	-1, //enButtonRB1,		//!<RB1ボタン。
+	-1, //enButtonRB2,		//!<RB2ボタン。
+	-1, //enButtonRB3,		//!<RB3ボタン。
+	-1, //enButtonLB1,		//!<LB1ボタン。
+	-1, //enButtonLB2,		//!<LB2ボタン。
+	-1, //enButtonLB3,		//!<LB3ボタン。
+};
 CPad::CPad() :
 m_padNo(0)
 {

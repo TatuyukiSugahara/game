@@ -1,5 +1,12 @@
 #pragma once
 #include "lib\System.h"
+#include "Camera.h"
+#include "Light.h"
+#include "Player.h"
+#include "Block.h"
+#include "Stage.h"
+#include "HatenaBox.h"
+#include "Kinoko.h"
 
 #define MAX_COLLISION 100
 
@@ -18,17 +25,14 @@ public:
 	virtual ~CStage(){}
 	virtual void Initialize();
 	virtual void Update();
-	virtual void Draw();
+	virtual void Render();
+	void UpdateLight();
+	void Release();
 
-	void CreateCollision2D();
-	void Add2DRigidBody(int arraySize);
+	void CreateCollision2D();				//2Dあたり判定
+	void Add2DRigidBody(int arraySize);		//2Dあたり判定追加
 
 protected:
-
-
-	bool				isButtomTriger;
-	bool				isDied;
-
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
 	btRigidBody*		m_rigidBody3D[MAX_COLLISION];	//剛体3D。
@@ -36,4 +40,10 @@ protected:
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
 
+	Camera camera;				//カメラ。
+	CLight light;				//ライト
+	CPlayer player;				//プレイヤー
+	CBlock block;				//ブロック
+	CHatenaBox	hanatebox;		//はてなボックス
+	CKinoko	kinoko;				//キノコ
 };

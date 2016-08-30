@@ -84,7 +84,7 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	//ここからゲーム関係の初期化。
 	g_pad.Init(0);//パッド初期化
-	g_bulletPhysics.InitPysics();
+	g_bulletPhysics.InitPysics();//物理初期化
 	Init();
 	
 	// ゲームループ
