@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Kinoko.h"
+#include "CalcAABBSizeFromMesh.h"
+#include "stage.h"
 
 //コンストラクタ
 CKinoko::CKinoko()
@@ -14,6 +16,8 @@ CKinoko::CKinoko()
 	movespeed.x = 0.0f;
 	movespeed.y = 0.0f;
 	movespeed.z = 0.0f;
+
+	kinoko = false;
 }
 //デストラクタ
 CKinoko::~CKinoko()
@@ -24,16 +28,33 @@ void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "kinoko.x");
 	IsIntersect.CollisitionInitialize(&position);//あたり判定初期化
+
+	//AABB
+	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
+	m_aabbMin += position;
+	m_aabbMax += position;
 }
 //更新。
 void CKinoko::Update()
 {
-	movespeed.x = 0.1f;
-	D3DXVec3Scale(&movespeed, &movespeed, 0.1f);
-	
-	position += movespeed;
+
+	/*AABB*/
+	if (m_aabbMin.x < g_stage.GetPlayer()->GetPos().x
+		&& m_aabbMin.y < g_stage.GetPlayer()->GetPos().y
+		&& m_aabbMax.x > g_stage.GetPlayer()->GetPos().x
+		&& m_aabbMax.y > g_stage.GetPlayer()->GetPos().y
+		)
+	{
+		kinoko = true;
+	}
+
+	movespeed.x = 1.0f;
 
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
+
+	m_aabbMax += IsIntersect.GetAddPos();
+	m_aabbMin += IsIntersect.GetAddPos();
+
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }

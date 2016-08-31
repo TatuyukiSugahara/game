@@ -49,6 +49,53 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 		return 0.0f;
 	}
 };
+//天井
+struct SweepResultCeiling : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit;
+	D3DXVECTOR3 hitPos;
+	const btCollisionObject* hitCollisionObject;
+	SweepResultCeiling()
+	{
+		isHit = false;
+		hitPos.x = 0.0f;
+		hitPos.y = 0.0f;
+		hitPos.z = 0.0f;
+		hitCollisionObject = NULL;
+	}
+
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() != -1) {
+			//無視。
+			return 0.0f;
+		}
+		D3DXVECTOR3 hitPointNormal;
+
+		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
+		hitPointNormal.y = convexResult.m_hitNormalLocal.y();
+		hitPointNormal.z = convexResult.m_hitNormalLocal.z();
+
+		D3DXVECTOR3 Up(0.0f, 1.0f, 0.0f);
+
+		float d = D3DXVec3Dot(&hitPointNormal, &Up);
+		if (d > 0.0f) {
+			//当たってない。
+			return 0.0f;
+		}
+		//if (acosf(d) > PI * 0.2) {
+		//	//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
+		//	return 0.0f;
+		//}
+		isHit = true;
+
+		hitPos.x = convexResult.m_hitPointLocal.x();
+		hitPos.y = convexResult.m_hitPointLocal.y();
+		hitPos.z = convexResult.m_hitPointLocal.z();
+		hitCollisionObject = convexResult.m_hitCollisionObject;
+		return 0.0f;
+	}
+};
 struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 {
 	D3DXVECTOR3 hitNormalXZ;
@@ -113,6 +160,8 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position)
 	m_moveSpeed.y = 0.0f;
 	m_moveSpeed.z = 0.0f;				//移動速度
 
+	addPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	m_radius = 0.3f;						//バウンディングスフィアの半径。
 	//コリジョン初期化。
 	m_collisionShape = new btSphereShape(m_radius);
@@ -140,7 +189,6 @@ void CIsIntersect::Intersect(
 	D3DXVECTOR3 addGravity = gravity;
 	addGravity *= (deltaTime);
 	*m_moveSpeed += (addGravity);
-	D3DXVECTOR3 addPos;
 	addPos = *m_moveSpeed;
 	addPos *= (deltaTime);
 	D3DXVECTOR3 Up(0.0f, 1.0f, 0.0f);
@@ -252,6 +300,61 @@ void CIsIntersect::Intersect(
 					//あたってたので離れた
 					p->OnHitGroundLeave(callback.hitCollisionObject);
 					p->SetHitGround(false);
+				}
+			}
+		}
+	}
+	//上方向を調べる。
+	{
+		btTransform start, end;
+		start.setIdentity();
+		end.setIdentity();
+		start.setOrigin(btVector3(m_position->x, m_position->y, m_position->z));
+		D3DXVECTOR3 newPos;
+		SweepResultCeiling callback;
+		if (fabsf(addPos.y) > 0.0001f) {
+			newPos = *m_position;
+			newPos.y += addPos.y;
+
+
+			end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
+
+			g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);
+		}
+		if (callback.isHit) {
+			//当たった。
+			//天井。
+			m_moveSpeed->y = 0.0f;
+			D3DXVECTOR3 Circle;
+			float x = 0.0f;
+			float offset = 0.0f;	//押し戻す量。
+			Circle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+			Circle = *m_position;
+			Circle.y = callback.hitPos.y;//円の中心
+			D3DXVECTOR3 v = Circle - callback.hitPos;
+			x = D3DXVec3Length(&v);//物体の角とプレイヤーの間の横幅の距離が求まる。
+
+			offset = sqrt(m_radius*m_radius - x*x);//yの平方根を求める。
+			addPos.y = callback.hitPos.y - m_position->y;
+			addPos.y -= offset;
+			for (auto p : callbackList){
+				p->OnHitCeiling(callback.hitCollisionObject);
+				if (!p->IsHitCeiling()){
+					//初めてあたった
+					if (p->OnHitCeilingTrigger(callback.hitCollisionObject)){
+						p->SetHitCeiling(true);
+					}
+				}
+			}
+		}
+		else{
+
+			for (auto p : callbackList){
+				if (p->IsHitCeiling()){
+					//あたってたので離れた
+					p->OnHitCeilingLeave(callback.hitCollisionObject);
+					p->SetHitCeiling(false);
 				}
 			}
 		}

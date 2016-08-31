@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "HatenaBox.h"
-#include "Player.h"
+#include "stage.h"
 #include "CalcAABBSizeFromMesh.h"
 
 //コンストラクタ
@@ -18,10 +18,9 @@ CHatenaBox::~CHatenaBox()
 {
 }
 //初期化。
-void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice,CPlayer* player)
+void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "hatena_box.x");
-	this->player = player;
 
 	Item = false;
 	//AABB
@@ -32,10 +31,10 @@ void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice,CPlayer* player)
 //更新。
 void CHatenaBox::Update()
 {
-	if (m_aabbMin.x < player->GetPos().x
-		&& m_aabbMin.y < player->GetPos().y
-		&& m_aabbMax.x > player->GetPos().x
-		&& m_aabbMax.y > player->GetPos().y
+	if (m_aabbMin.x < g_stage.GetPlayer()->GetPos().x
+		&& m_aabbMin.y < g_stage.GetPlayer()->GetPos().y
+		&& m_aabbMax.x > g_stage.GetPlayer()->GetPos().x
+		&& m_aabbMax.y > g_stage.GetPlayer()->GetPos().y
 		)
 	{
 		Item = true;

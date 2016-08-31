@@ -6,6 +6,8 @@ SCollisionInfo collisionInfoTable2D[] = {
 #include "Collision2D_stage01.h"
 };
 
+CStage g_stage;
+
 /*!-----------------------------------------------------------------------------
 *@brief	ライトを更新。
 -----------------------------------------------------------------------------*/
@@ -23,7 +25,7 @@ void CStage::Initialize()
 	//ブロック初期化
 	block.Init(g_pd3dDevice);
 	//はてなボックス初期化
-	hanatebox.Init(g_pd3dDevice,&player);
+	hanatebox.Init(g_pd3dDevice);
 	//キノコ初期化
 	kinoko.Init(g_pd3dDevice);
 	//プレイヤー初期化
@@ -42,7 +44,7 @@ void CStage::Update()
 	//はてなボックス更新
 	hanatebox.Update();
 	//キノコ更新
-	if (hanatebox.GetItem() == true)
+	if (hanatebox.GetItem() == true && kinoko.GetKinoko() == false)
 	{
 		kinoko.Update();
 	}
@@ -79,7 +81,7 @@ void CStage::Render()
 		light.GetLightNum()
 		);
 	//キノコ
-	if (hanatebox.GetItem() == true)
+	if (hanatebox.GetItem() == true && kinoko.GetKinoko() == false)
 	{
 		kinoko.Render(
 			g_pd3dDevice,
@@ -102,6 +104,7 @@ void CStage::Render()
 		light.GetLightNum()
 		);
 	// シーンの描画終了。
+
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
 	g_pd3dDevice->Present(NULL, NULL, NULL, NULL);

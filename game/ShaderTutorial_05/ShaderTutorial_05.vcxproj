@@ -153,9 +153,11 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
+    <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="HatenaBox.cpp" />
     <ClCompile Include="IsIntersect\IsIntersect.cpp" />
+    <ClCompile Include="Kinoko.cpp" />
     <ClCompile Include="lib\System.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -175,10 +177,12 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
+    <ClInclude Include="CalcAABBSizeFromMesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HatenaBox.h" />
     <ClInclude Include="IsIntersect\IPlayerCollisionCallback.h" />
     <ClInclude Include="IsIntersect\IsIntersect.h" />
+    <ClInclude Include="Kinoko.h" />
     <ClInclude Include="lib\System.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />

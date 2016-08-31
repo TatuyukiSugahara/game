@@ -1,9 +1,0 @@
-﻿2016/08/25 13:46:22 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "D:\_Users\kbc15_000\Desktop\game\ShaderTutorial_05\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット)。
-     1>Lib:
-         BulletDynamics.vcxproj -> D:\_Users\kbc15_000\Desktop\game\\bulletPhysics\lib\Debug\BulletDynamics_Debug.lib
-     1>プロジェクト "D:\_Users\kbc15_000\Desktop\game\ShaderTutorial_05\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット) のビルドが完了しました。
-
-ビルドに成功しました。
-
-経過時間 00:00:00.12

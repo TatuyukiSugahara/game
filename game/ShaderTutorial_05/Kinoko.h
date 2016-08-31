@@ -31,6 +31,14 @@ public:
 	{
 		position = pos;
 	}
+	void SetKinoko(bool flag)
+	{
+		kinoko = flag;
+	}
+	bool GetKinoko()
+	{
+		return kinoko;
+	}
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
@@ -39,4 +47,10 @@ private:
 	CIsIntersect			IsIntersect;		//あたり判定
 	std::vector<IPlayerCollisionCallback*>	callbackList;//
 	D3DXVECTOR3				movespeed;
+	
+	/*AABB*/
+	D3DXVECTOR3 m_aabbMin;
+	D3DXVECTOR3 m_aabbMax;
+
+	bool		kinoko;						//キノコと当たった？
 };

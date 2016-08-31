@@ -75,6 +75,12 @@
     <ClCompile Include="HatenaBox.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Kinoko.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcAABBSizeFromMesh.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -129,6 +135,12 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="HatenaBox.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcAABBSizeFromMesh.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Kinoko.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "Stage.h"
 
 //コンストラクタ
 CPlayer::CPlayer()
 {
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
+	D3DXMatrixIdentity(&mScale);
 	position.x = 1.0f;
 	position.y = 5.0f;
 	position.z = 0.0f;
@@ -31,6 +33,12 @@ void CPlayer::Update()
 {
 	Move();//移動
 	Jump();//ジャンプ
+
+	if (g_stage.GetKinoko()->GetKinoko() == true)
+	{
+		D3DXMatrixScaling(&mScale, 1.5f, 1.5f, 1.5f);
+	}
+
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
@@ -46,6 +54,8 @@ void CPlayer::Render(
 	int numDiffuseLight
 	)
 {
+	mWorld = mScale * mWorld;
+
 	model.Render(
 		pd3dDevice,
 		mWorld,
@@ -75,9 +85,6 @@ void CPlayer::Move()
 		state = PlayerStay;
 	}
 	movespeed.x = g_pad.GetLStickXF() * 5.0f;
-	//movespeed.y = g_pad.GetLStickYF();
-	
-	//D3DXVec3Scale(&movespeed, &movespeed, 0.1f);
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{

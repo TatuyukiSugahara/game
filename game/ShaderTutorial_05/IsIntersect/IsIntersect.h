@@ -17,11 +17,16 @@ public:
 		D3DXVECTOR3* m_moveSpeed, 
 		std::vector<IPlayerCollisionCallback*>& callbackList
 	);
+	D3DXVECTOR3 GetAddPos()
+	{
+		return addPos;
+	}
 	
 private:
 	float	m_radius;		//ラジアンの角度
 	//D3DXVECTOR3 m_position;	//ポジション
 	D3DXVECTOR3 m_moveSpeed;		//移動速度
+	D3DXVECTOR3 addPos;				//移動した分
 	//ここからBulletPhysicsで衝突判定を行うためのメンバ変数。
 	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。
 	btSphereShape*		m_collisionShape;	//!<コリジョン形状。

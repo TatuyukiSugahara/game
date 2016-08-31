@@ -32,6 +32,14 @@ public:
 	void CreateCollision2D();				//2Dあたり判定
 	void Add2DRigidBody(int arraySize);		//2Dあたり判定追加
 
+	CPlayer* GetPlayer()
+	{
+		return &player;
+	}
+	CKinoko* GetKinoko()
+	{
+		return &kinoko;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -47,3 +55,5 @@ protected:
 	CHatenaBox	hanatebox;		//はてなボックス
 	CKinoko	kinoko;				//キノコ
 };
+
+extern CStage g_stage;

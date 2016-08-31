@@ -1,8 +1,6 @@
 #pragma once
 #include "Model.h"
 
-class CPlayer;
-
 class CHatenaBox {
 public:
 	//コンストラクタ
@@ -10,7 +8,7 @@ public:
 	//デストラクタ
 	~CHatenaBox();
 	//初期化。
-	void Init(LPDIRECT3DDEVICE9 pd3dDevice,CPlayer* player);
+	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
 	//更新。
 	void Update();
 	//描画。
@@ -48,6 +46,4 @@ private:
 	D3DXVECTOR3 m_aabbMax;
 
 	bool					Item;			//アイテムフラグ
-
-	CPlayer*					player;
 };
