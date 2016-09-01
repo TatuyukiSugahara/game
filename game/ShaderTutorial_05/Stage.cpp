@@ -22,8 +22,12 @@ void CStage::Initialize()
 	Add2DRigidBody(ARRAYSIZE(collisionInfoTable2D));
 	//ライトを初期化。
 	light.Init();
+	//ステージ背景初期化
+	stageback.Init(g_pd3dDevice);
 	//ブロック初期化
 	block.Init(g_pd3dDevice);
+	//nブロック初期化
+	nblock.Init(g_pd3dDevice);
 	//はてなボックス初期化
 	hanatebox.Init(g_pd3dDevice);
 	//キノコ初期化
@@ -39,8 +43,12 @@ void CStage::Update()
 {
 	//ライトの更新。
 	UpdateLight();
+	//ステージ背景更新
+	stageback.Update();
 	//ブロックを更新
 	block.Update();
+	//Nブロックを更新
+	nblock.Update();
 	//はてなボックス更新
 	hanatebox.Update();
 	//キノコ更新
@@ -60,8 +68,28 @@ void CStage::Render()
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	//シーンの描画開始。
 	g_pd3dDevice->BeginScene();
+	//ステージ背景描画
+	stageback.Render(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+		);
 	//ブロックを描画
 	block.Render(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+		);
+	//Nブロックを描画
+	nblock.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -112,6 +140,8 @@ void CStage::Render()
 
 void CStage::Release()
 {
+	//ステージ背景リリース
+	stageback.Release();
 	//ブロックリリース
 	block.Release();
 	//はてなボックスリリース
@@ -138,7 +168,7 @@ void CStage::CreateCollision2D()
 			m_groundShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
 			btTransform groundTransform;
 			groundTransform.setIdentity();
-			groundTransform.setOrigin(btVector3(collision.pos.x, collision.pos.y, collision.pos.z));
+			groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, collision.pos.z));
 			float mass = 0.0f;
 
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects

@@ -1,5 +1,6 @@
 #include "IsIntersect.h"
 #include "IPlayerCollisionCallback.h"
+#include "..\Stage.h"
 
 //あたり判定
 
@@ -83,10 +84,10 @@ struct SweepResultCeiling : public btCollisionWorld::ConvexResultCallback
 			//当たってない。
 			return 0.0f;
 		}
-		//if (acosf(d) > PI * 0.2) {
-		//	//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
-		//	return 0.0f;
-		//}
+		if (acosf(d) < PI * 0.2) {
+			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
+			return 0.0f;
+		}
 		isHit = true;
 
 		hitPos.x = convexResult.m_hitPointLocal.x();
@@ -154,7 +155,7 @@ CIsIntersect::~CIsIntersect()
 
 }
 
-void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position)
+void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position, float radius)
 {
 	m_moveSpeed.x = 0.0f;				//移動速度
 	m_moveSpeed.y = 0.0f;
@@ -162,7 +163,7 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position)
 
 	addPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	m_radius = 0.3f;						//バウンディングスフィアの半径。
+	m_radius = radius;						//バウンディングスフィアの半径。
 	//コリジョン初期化。
 	m_collisionShape = new btSphereShape(m_radius);
 	float mass = 1000.0f;
@@ -183,7 +184,6 @@ void CIsIntersect::Intersect(
 	D3DXVECTOR3* m_moveSpeed,
 	std::vector<IPlayerCollisionCallback*>& callbackList)
 {
-
 	static float deltaTime = 1.0f / 60.0f;
 	static D3DXVECTOR3 gravity(0.0f, -9.8f, 0.0f);
 	D3DXVECTOR3 addGravity = gravity;
@@ -220,7 +220,6 @@ void CIsIntersect::Intersect(
 				t.y = 0.0f;
 				t.z = -addPos.z;
 				D3DXVec3Normalize(&t, &t);
-				//D3DXVec3Normalize(&t, &addPos);
 				//半径分押し戻す。
 				t *= m_radius;
 				addPos += t;
@@ -228,7 +227,6 @@ void CIsIntersect::Intersect(
 				//滑らせる方向を計算。
 				D3DXVec3Cross(&t, &callback.hitNormalXZ, &Up);
 				D3DXVec3Normalize(&t, &t);
-				//D3DXVec3Normalize(&t, &addPos);
 				t *= D3DXVec3Dot(&t, &addPosXZ);
 				addPos += t;	//滑らせるベクトルを加算。
 				for (auto p : callbackList){
@@ -309,35 +307,35 @@ void CIsIntersect::Intersect(
 		btTransform start, end;
 		start.setIdentity();
 		end.setIdentity();
-		start.setOrigin(btVector3(m_position->x, m_position->y, m_position->z));
-		D3DXVECTOR3 newPos;
+		btVector3 btStart = btVector3(m_position->x, m_position->y + 1.0f, m_position->z);
+		start.setOrigin(btStart);
+		
 		SweepResultCeiling callback;
 		if (fabsf(addPos.y) > 0.0001f) {
-			newPos = *m_position;
-			newPos.y += addPos.y;
 
 
-			end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
+			end.setOrigin(btVector3(btStart.x(), btStart.y() + addPos.y, btStart.z()));
 
 			g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);
 		}
 		if (callback.isHit) {
 			//当たった。
 			//天井。
-			m_moveSpeed->y = 0.0f;
+			m_moveSpeed->y =0.0f;
 			D3DXVECTOR3 Circle;
 			float x = 0.0f;
 			float offset = 0.0f;	//押し戻す量。
 			Circle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-			Circle = *m_position;
+			Circle = D3DXVECTOR3(btStart.x(), btStart.y(), btStart.z());
 			Circle.y = callback.hitPos.y;//円の中心
-			D3DXVECTOR3 v = Circle - callback.hitPos;
+			D3DXVECTOR3 v = callback.hitPos - Circle;
 			x = D3DXVec3Length(&v);//物体の角とプレイヤーの間の横幅の距離が求まる。
 
 			offset = sqrt(m_radius*m_radius - x*x);//yの平方根を求める。
-			addPos.y = callback.hitPos.y - m_position->y;
+			addPos.y = callback.hitPos.y - btStart.y();
 			addPos.y -= offset;
+
 			for (auto p : callbackList){
 				p->OnHitCeiling(callback.hitCollisionObject);
 				if (!p->IsHitCeiling()){
@@ -365,5 +363,4 @@ void CIsIntersect::Intersect(
 	const btVector3& rPos = m_rigidBody->getWorldTransform().getOrigin();
 
 	m_rigidBody->getWorldTransform().setOrigin(btVector3(m_position->x, m_position->y, m_position->z));
-
 }

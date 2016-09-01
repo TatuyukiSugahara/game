@@ -27,14 +27,21 @@ void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
 	m_aabbMin += position;
 	m_aabbMax += position;
+	m_aabbMin += D3DXVECTOR3(0.2f, -0.3f, 0.2f);
+	m_aabbMax -= D3DXVECTOR3(0.2f, 0.2f, 0.2f);
 }
 //更新。
 void CHatenaBox::Update()
 {
-	if (m_aabbMin.x < g_stage.GetPlayer()->GetPos().x
-		&& m_aabbMin.y < g_stage.GetPlayer()->GetPos().y
-		&& m_aabbMax.x > g_stage.GetPlayer()->GetPos().x
-		&& m_aabbMax.y > g_stage.GetPlayer()->GetPos().y
+	/*  obj1の右側がobj2の左側より大きい　かつ
+		obj1の左側がobj2の右側より小さい　かつ
+		obj1の上側がobj2の下側より大きい　かつ
+		obj1の下側がobj2の上側より小さい*/
+	if (m_aabbMax.x > g_stage.GetPlayer()->GetAABBMin().x
+		&& m_aabbMin.x < g_stage.GetPlayer()->GetAABBMax().x
+		&& m_aabbMax.y > g_stage.GetPlayer()->GetAABBMin().y
+		&& m_aabbMin.y < g_stage.GetPlayer()->GetAABBMax().y
+
 		)
 	{
 		Item = true;

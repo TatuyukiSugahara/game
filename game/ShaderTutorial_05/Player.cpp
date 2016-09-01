@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "CalcAABBSizeFromMesh.h"
 #include "Stage.h"
 
 //コンストラクタ
@@ -8,13 +9,14 @@ CPlayer::CPlayer()
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
 	D3DXMatrixIdentity(&mScale);
-	position.x = 1.0f;
-	position.y = 5.0f;
-	position.z = 0.0f;
+	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);
 
-	movespeed.x = 0.0f;
-	movespeed.y = 0.0f;
-	movespeed.z = 0.0f;
+	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	radius = 0.3f;
 
 	state = PlayerStay;
 }
@@ -26,7 +28,13 @@ CPlayer::~CPlayer()
 void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "unitychan.x");
-	IsIntersect.CollisitionInitialize(&position);//あたり判定初期化
+	IsIntersect.CollisitionInitialize(&position,radius);//あたり判定初期化
+
+	//AABB
+	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
+	m_aabbMin += position;
+	m_aabbMax += position;
+
 }
 //更新。
 void CPlayer::Update()
@@ -34,12 +42,18 @@ void CPlayer::Update()
 	Move();//移動
 	Jump();//ジャンプ
 
-	if (g_stage.GetKinoko()->GetKinoko() == true)
+	if (g_stage.GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{
 		D3DXMatrixScaling(&mScale, 1.5f, 1.5f, 1.5f);
+		radius *= 1.5f*1.5f;
+		IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 	}
 
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
+
+	m_aabbMax += IsIntersect.GetAddPos();
+	m_aabbMin += IsIntersect.GetAddPos();
+
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }
@@ -94,8 +108,6 @@ void CPlayer::Move()
 	{
 		movespeed.x -= MOVE_SPEED;
 	}
-
-	//position += movespeed;
 }
 
 void CPlayer::Jump()

@@ -7,6 +7,8 @@
 #include "Stage.h"
 #include "HatenaBox.h"
 #include "Kinoko.h"
+#include "NBlock.h"
+#include "StageBack.h"
 
 #define MAX_COLLISION 100
 
@@ -54,6 +56,8 @@ protected:
 	CBlock block;				//ブロック
 	CHatenaBox	hanatebox;		//はてなボックス
 	CKinoko	kinoko;				//キノコ
+	CNBlock	nblock;				//ノーマルブロック
+	CStageBack stageback;					//ステージ背景
 };
 
 extern CStage g_stage;

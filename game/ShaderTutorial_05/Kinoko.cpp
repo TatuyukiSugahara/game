@@ -17,6 +17,8 @@ CKinoko::CKinoko()
 	movespeed.y = 0.0f;
 	movespeed.z = 0.0f;
 
+	radius = 0.3f;
+
 	kinoko = false;
 }
 //デストラクタ
@@ -27,31 +29,32 @@ CKinoko::~CKinoko()
 void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "kinoko.x");
-	IsIntersect.CollisitionInitialize(&position);//あたり判定初期化
+	IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 
 	//AABB
 	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
 	m_aabbMin += position;
 	m_aabbMax += position;
+
 }
 //更新。
 void CKinoko::Update()
 {
 
 	/*AABB*/
-	if (m_aabbMin.x < g_stage.GetPlayer()->GetPos().x
-		&& m_aabbMin.y < g_stage.GetPlayer()->GetPos().y
-		&& m_aabbMax.x > g_stage.GetPlayer()->GetPos().x
-		&& m_aabbMax.y > g_stage.GetPlayer()->GetPos().y
+	if (m_aabbMax.x > g_stage.GetPlayer()->GetAABBMin().x
+		&& m_aabbMin.x < g_stage.GetPlayer()->GetAABBMax().x
+		&& m_aabbMax.y > g_stage.GetPlayer()->GetAABBMin().y
+		&& m_aabbMin.y < g_stage.GetPlayer()->GetAABBMax().y
+
 		)
 	{
 		kinoko = true;
 	}
 
-	movespeed.x = 1.0f;
-
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 
+	movespeed.x = 1.0f;
 	m_aabbMax += IsIntersect.GetAddPos();
 	m_aabbMin += IsIntersect.GetAddPos();
 

@@ -44,6 +44,14 @@ public:
 	{
 		return position;
 	}
+	D3DXVECTOR3 GetAABBMax()
+	{
+		return m_aabbMax;
+	}
+	D3DXVECTOR3 GetAABBMin()
+	{
+		return m_aabbMin;
+	}
 	void Move();
 	void Jump();
 private:
@@ -56,5 +64,10 @@ private:
 	CIsIntersect			IsIntersect;		//あたり判定
 	std::vector<IPlayerCollisionCallback*>	callbackList;//
 	const float				MOVE_SPEED = 5.0f;	//移動速度
+	float					radius;
 	PlayerState				state;				//プレイヤーの状態
+
+	/*AABB*/
+	D3DXVECTOR3 m_aabbMin;
+	D3DXVECTOR3 m_aabbMax;
 };

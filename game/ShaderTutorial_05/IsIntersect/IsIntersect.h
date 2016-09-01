@@ -11,7 +11,7 @@ class CIsIntersect
 public:
 	CIsIntersect();
 	~CIsIntersect();
-	void CollisitionInitialize(D3DXVECTOR3* m_position);
+	void CollisitionInitialize(D3DXVECTOR3* m_position,float radius);
 	void Intersect(
 		D3DXVECTOR3* m_position, 
 		D3DXVECTOR3* m_moveSpeed, 

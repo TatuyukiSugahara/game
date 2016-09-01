@@ -1,15 +1,13 @@
 #pragma once
+
 #include "Model.h"
-#include "IsIntersect\IsIntersect.h"
 
-class IPlayerCollisionCallback;
-
-class CKinoko {
+class CNBlock {
 public:
 	//コンストラクタ
-	CKinoko();
+	CNBlock();
 	//デストラクタ
-	~CKinoko();
+	~CNBlock();
 	//初期化。
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
 	//更新。
@@ -31,26 +29,9 @@ public:
 	{
 		position = pos;
 	}
-	void SetKinoko(bool flag)
-	{
-		kinoko = flag;
-	}
-	bool GetKinoko()
-	{
-		return kinoko;
-	}
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
-	CIsIntersect			IsIntersect;		//あたり判定
-	std::vector<IPlayerCollisionCallback*>	callbackList;//
-	D3DXVECTOR3				movespeed;
-	float					radius;
-	/*AABB*/
-	D3DXVECTOR3 m_aabbMin;
-	D3DXVECTOR3 m_aabbMax;
-
-	bool		kinoko;						//キノコと当たった？
 };

@@ -162,10 +162,12 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="NBlock.cpp" />
     <ClCompile Include="pad\KeyInput.cpp" />
     <ClCompile Include="pad\Pad.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageBack.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -186,10 +188,12 @@
     <ClInclude Include="lib\System.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="NBlock.h" />
     <ClInclude Include="pad\KeyInput.h" />
     <ClInclude Include="pad\Pad.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageBack.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="tk\tkAssert.h" />
     <ClInclude Include="tk\tkEnginePreCompile.h" />
