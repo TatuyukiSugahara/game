@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "HatenaBox.h"
 #include "stage.h"
-#include "CalcAABBSizeFromMesh.h"
+
+SCollisionInfo collisionInfoTable2Dhatena[] = {
+#include "Collision2D_hatenabox1.h"
+};
 
 //コンストラクタ
 CHatenaBox::CHatenaBox()
@@ -12,6 +15,7 @@ CHatenaBox::CHatenaBox()
 	position.x = 8.0f;
 	position.y = 4.0f;
 	position.z = 0.0f;
+	
 }
 //デストラクタ
 CHatenaBox::~CHatenaBox()
@@ -20,34 +24,16 @@ CHatenaBox::~CHatenaBox()
 //初期化。
 void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
+	CreateCollision2D();
+	Add2DRigidBody();
+
 	model.Init(pd3dDevice, "hatena_box.x");
 
 	Item = false;
-	//AABB
-	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
-	m_aabbMin += position;
-	m_aabbMax += position;
-	m_aabbMin += D3DXVECTOR3(0.2f, -0.3f, 0.2f);
-	m_aabbMax -= D3DXVECTOR3(0.2f, 0.2f, 0.2f);
 }
 //更新。
 void CHatenaBox::Update()
-{
-	/*  obj1の右側がobj2の左側より大きい　かつ
-		obj1の左側がobj2の右側より小さい　かつ
-		obj1の上側がobj2の下側より大きい　かつ
-		obj1の下側がobj2の上側より小さい*/
-	if (m_aabbMax.x > g_stage.GetPlayer()->GetAABBMin().x
-		&& m_aabbMin.x < g_stage.GetPlayer()->GetAABBMax().x
-		&& m_aabbMax.y > g_stage.GetPlayer()->GetAABBMin().y
-		&& m_aabbMin.y < g_stage.GetPlayer()->GetAABBMax().y
-
-		)
-	{
-		Item = true;
-	}
-
-	
+{	
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }
@@ -78,4 +64,37 @@ void CHatenaBox::Render(
 void CHatenaBox::Release()
 {
 	model.Release();
+}
+
+void CHatenaBox::CreateCollision2D()
+{
+	SCollisionInfo& collision = *collisionInfoTable2Dhatena;
+		//ここで剛体とかを登録する。
+		//剛体を初期化。
+		{
+			//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
+			m_hatenaboxShape = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
+			btTransform groundTransform;
+			groundTransform.setIdentity();
+			groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, collision.pos.z));
+			float mass = 0.0f;
+
+			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
+			m_myMotionState = new btDefaultMotionState(groundTransform);
+			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_hatenaboxShape, btVector3(0, 0, 0));
+			m_rigidBody2Dhatena = new btRigidBody(rbInfo);
+
+			//ワールドに追加。
+			//g_bulletPhysics.AddRigidBody(m_rigidBody2D[i]);
+
+		}
+	
+}
+
+void CHatenaBox::Add2DRigidBody()//ワールドに追加。
+{
+	if (!m_isAdd2DCollision){
+		m_isAdd2DCollision = true;
+		g_bulletPhysics.AddRigidBody(m_rigidBody2Dhatena);
+	}
 }

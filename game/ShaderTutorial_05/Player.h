@@ -44,6 +44,14 @@ public:
 	{
 		return position;
 	}
+	D3DXVECTOR3 GetMoveSpeed()
+	{
+		return movespeed;
+	}
+	D3DXVECTOR3 GetAddPos()
+	{
+		return IsIntersect.GetAddPos();
+	}
 	D3DXVECTOR3 GetAABBMax()
 	{
 		return m_aabbMax;
@@ -52,14 +60,16 @@ public:
 	{
 		return m_aabbMin;
 	}
-	void Move();
+	void Move2D();
+	void Move3D();
 	void Jump();
+	void Died();							//死亡
 private:
 	D3DXVECTOR3				position;		//座標。
 	D3DXVECTOR3				movespeed;		//移動速度
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
-	D3DXMATRIX				mScale;			//スケール
+	D3DXMATRIX				mScale;			//スケールw a
 	Model					model;			//モデル。
 	CIsIntersect			IsIntersect;		//あたり判定
 	std::vector<IPlayerCollisionCallback*>	callbackList;//

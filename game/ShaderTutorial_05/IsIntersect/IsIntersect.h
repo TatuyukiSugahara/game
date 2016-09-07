@@ -21,7 +21,18 @@ public:
 	{
 		return addPos;
 	}
-	
+	bool gethit()
+	{
+		return isHit;
+	}
+	bool GetGround()
+	{
+		return isGround;
+	}
+	const btCollisionObject* getCollisionObj()
+	{
+		return hitCollisionObject;
+	}
 private:
 	float	m_radius;		//ラジアンの角度
 	//D3DXVECTOR3 m_position;	//ポジション
@@ -32,4 +43,7 @@ private:
 	btSphereShape*		m_collisionShape;	//!<コリジョン形状。
 	btRigidBody*			m_rigidBody;
 	btDefaultMotionState*	m_myMotionState;
+	bool isHit;					//天井と当たった？
+	bool isGround;				//床と当たっている？
+	const btCollisionObject* hitCollisionObject;//どのコリジョンと当たった？
 };

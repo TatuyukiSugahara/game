@@ -12,10 +12,11 @@ private:
 	D3DXVECTOR3				vEyePt;				//!<カメラの視点。
 	D3DXVECTOR3				vLookatPt;			//!<カメラの注視点。
 	D3DXVECTOR3				vUpVec;				//!<カメラの上方向。
+	D3DXVECTOR3				toPos;				//!<視点から注視点のベクトル
 	float					Far;				//!<遠平面。
 	float					Near;				//!<近平面。
 	float					aspect;				//!<アスペクト比
-	CPlayer* player;
+	CPlayer*				player;
 public:
 	/*!
 	 *@brief	コンストラクタ。
@@ -105,6 +106,14 @@ public:
 	{
 		return projectionMatrix;
 	}
+	//============================================================
+	//カメラが横に回転。
+	//============================================================
+	void RotTransversal(float roty);
+	//============================================================
+	//カメラが縦に回転。
+	//============================================================
+	void RotLongitudinal(float rotx);
 	/*!
 	 *@brief	カメラの更新処理。
 	 */

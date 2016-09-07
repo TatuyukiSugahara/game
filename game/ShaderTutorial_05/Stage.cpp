@@ -24,6 +24,8 @@ void CStage::Initialize()
 	light.Init();
 	//ステージ背景初期化
 	stageback.Init(g_pd3dDevice);
+	//プレイヤー初期化
+	player.Init(g_pd3dDevice);
 	//ブロック初期化
 	block.Init(g_pd3dDevice);
 	//nブロック初期化
@@ -32,8 +34,8 @@ void CStage::Initialize()
 	hanatebox.Init(g_pd3dDevice);
 	//キノコ初期化
 	kinoko.Init(g_pd3dDevice);
-	//プレイヤー初期化
-	player.Init(g_pd3dDevice);
+	//土管初期化
+	pipe.Init(g_pd3dDevice);
 	//カメラの初期化。
 	camera.Init(&player);
 	
@@ -45,6 +47,8 @@ void CStage::Update()
 	UpdateLight();
 	//ステージ背景更新
 	stageback.Update();
+	//プレイヤーを更新。
+	player.Update();
 	//ブロックを更新
 	block.Update();
 	//Nブロックを更新
@@ -56,8 +60,8 @@ void CStage::Update()
 	{
 		kinoko.Update();
 	}
-	//プレイヤーを更新。
-	player.Update();
+	//土管更新
+	pipe.Update();
 	//カメラの更新
 	camera.Update();
 }
@@ -70,6 +74,16 @@ void CStage::Render()
 	g_pd3dDevice->BeginScene();
 	//ステージ背景描画
 	stageback.Render(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+		);
+	//プレイヤーを描画
+	player.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -121,8 +135,8 @@ void CStage::Render()
 			light.GetLightNum()
 			);
 	}
-	//プレイヤーを描画
-	player.Render(
+	//土管描画
+	pipe.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -130,9 +144,9 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-		);
+	);
+		
 	// シーンの描画終了。
-
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
 	g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
@@ -150,6 +164,8 @@ void CStage::Release()
 	kinoko.Release();
 	//プレイヤーリリース
 	player.Release();
+	//土管リリース
+	pipe.Release();
 }
 
 void CStage::CreateCollision2D()

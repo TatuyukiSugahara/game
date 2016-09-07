@@ -34,26 +34,32 @@ namespace {
 		{ enButtonLB2, 0 },
 		{ enButtonLB3, XINPUT_GAMEPAD_LEFT_THUMB },
 	};
+	/*!
+	*@brief	仮想ボタンとキーボードとの関連付けを表す構造体。
+	*/
+	struct VirtualPadToKeyboard {
+		EnButton vButton;		//!<仮想ボタン
+		DWORD keyCoord;			//!<キーボードのキーコード。
+	};
+	const VirtualPadToKeyboard vPadToKeyboardTable[enButtonNum] = {
+		{ enButtonUp, '8' },
+		{ enButtonDown, '2' },
+		{ enButtonLeft, '4' },
+		{ enButtonRight, '6' },
+		{ enButtonA, VK_SPACE },
+		{ enButtonB, 'K' },
+		{ enButtonY, 'I' },
+		{ enButtonX, 'O' },
+		{ enButtonSelect, VK_SPACE },
+		{ enButtonStart, VK_RETURN },
+		{ enButtonRB1, '7' },
+		{ enButtonRB2, '8' },
+		{ enButtonRB3, '9' },
+		{ enButtonLB1, 'B' },
+		{ enButtonLB2, 'N' },
+		{ enButtonLB3, 'M' },
+	};
 }
-
-const int CPad::KeyBoardMap[enButtonNum] = {
-	-1, // enButtonUp,		//!<上。
-	-1, //enButtonDown,		//!<下。
-	-1, //enButtonLeft,		//!<左。
-	-1, //enButtonRight,		//!<右。
-	VK_SPACE, //enButtonA,			//!<Aボタン。
-	-1, //enButtonB,			//!<Bボタン。
-	-1, //enButtonX,			//!<Xボタン。
-	-1, //enButtonY,			//!<Yボタン。
-	-1, //enButtonSelect,	//!<セレクトボタン。
-	-1, //enButtonStart,		//!<スタートボタン。
-	-1, //enButtonRB1,		//!<RB1ボタン。
-	-1, //enButtonRB2,		//!<RB2ボタン。
-	-1, //enButtonRB3,		//!<RB3ボタン。
-	-1, //enButtonLB1,		//!<LB1ボタン。
-	-1, //enButtonLB2,		//!<LB2ボタン。
-	-1, //enButtonLB3,		//!<LB3ボタン。
-};
 CPad::CPad() :
 m_padNo(0)
 {
@@ -137,12 +143,65 @@ void CPad::Update()
 		}
 	}
 	else {
-		//接続されていない。
+		//接続されていない場合はキーボードの入力でエミュレートする。
 		if (m_state.bConnected) {
 			//未接続になった。
 			memset(&m_state, 0, sizeof(m_state));
 			memset(m_trigger, 0, sizeof(m_trigger));
 			memset(m_press, 0, sizeof(m_press));
+		}
+		m_lStickX = 0.0f;
+		m_lStickY = 0.0f;
+		m_rStickX = 0.0f;
+		m_rStickY = 0.0f;
+
+		if (GetAsyncKeyState(VK_LEFT)) {
+			m_rStickX = -1.0f;
+		}
+		else if (GetAsyncKeyState(VK_RIGHT)) {
+			m_rStickX = 1.0f;
+		}
+		if (GetAsyncKeyState(VK_UP)) {
+			m_rStickY = 1.0f;
+		}
+		else if (GetAsyncKeyState(VK_DOWN)) {
+			m_rStickY = -1.0f;
+		}
+		//スティックの入力量を正規化。
+		float t = fabsf(m_rStickX) + fabsf(m_rStickY);
+		if (t > 0.0f) {
+			m_rStickX /= t;
+			m_rStickY /= t;
+		}
+
+		if (GetAsyncKeyState('A')) {
+			m_lStickX = -1.0f;
+		}
+		else if (GetAsyncKeyState('D')) {
+			m_lStickX = 1.0f;
+		}
+		if (GetAsyncKeyState('W')) {
+			m_lStickY = 1.0f;
+		}
+		else if (GetAsyncKeyState('S')) {
+			m_lStickY = -1.0f;
+		}
+		//スティックの入力量を正規化。
+		t = fabsf(m_lStickX) + fabsf(m_lStickY);
+		if (t > 0.0f) {
+			m_lStickX /= t;
+			m_lStickY /= t;
+		}
+
+		for (const VirtualPadToKeyboard& vPadToKeyboard : vPadToKeyboardTable) {
+			if (GetAsyncKeyState(vPadToKeyboard.keyCoord)) {
+				m_trigger[vPadToKeyboard.vButton] = 1 ^ m_press[vPadToKeyboard.vButton];
+				m_press[vPadToKeyboard.vButton] = 1;
+			}
+			else {
+				m_trigger[vPadToKeyboard.vButton] = 0;
+				m_press[vPadToKeyboard.vButton] = 0;
+			}
 		}
 	}
 }

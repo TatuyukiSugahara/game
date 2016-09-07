@@ -39,8 +39,16 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 //更新。
 void CPlayer::Update()
 {
-	Move();//移動
+	//Move2D();//移動2D
+	Move3D();//移動3D
 	Jump();//ジャンプ
+	Died();//死亡
+
+	//天井と当たった？＆＆当たったのは,はてなボックス？
+	if (IsIntersect.gethit() == true && IsIntersect.getCollisionObj() == g_stage.GetHatena()->Get2DHatena())
+	{
+		g_stage.GetHatena()->SetItem(true);
+	}
 
 	if (g_stage.GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{
@@ -88,7 +96,7 @@ void CPlayer::Release()
 	model.Release();
 }
 
-void CPlayer::Move()
+void CPlayer::Move2D()
 {
 	if (movespeed.x >= 0.001f)
 	{
@@ -98,21 +106,73 @@ void CPlayer::Move()
 	{
 		state = PlayerStay;
 	}
-	movespeed.x = g_pad.GetLStickXF() * 5.0f;
+	movespeed.x = g_pad.GetLStickXF() * MOVE_SPEED;
+}
 
-	if (GetAsyncKeyState(VK_RIGHT))
+void CPlayer::Move3D()
+{
+	if (D3DXVec3Length(&movespeed) > 0.01f)
 	{
-		movespeed.x += MOVE_SPEED;
+		state = PlayerRun;
 	}
-	if (GetAsyncKeyState(VK_LEFT))
+	else if (D3DXVec3Length(&movespeed) < 0.01f)
 	{
-		movespeed.x -= MOVE_SPEED;
+		state = PlayerStay;
 	}
+
+	Camera* cam = g_stage.GetCamera();
+	D3DXMATRIX mCam = cam->GetViewMatrix();
+	//カメラ行列の逆行列をかけて、ワールド行列を求める。
+	D3DXMatrixInverse(&mCam, NULL, &mCam);
+	//X座標
+	D3DXVECTOR3 xAxisInCamera;
+	xAxisInCamera.x = mCam.m[0][0];
+	xAxisInCamera.y = mCam.m[0][1];
+	xAxisInCamera.z = mCam.m[0][2];
+	xAxisInCamera.y = 0.0f;
+	D3DXVec3Normalize(&xAxisInCamera, &xAxisInCamera);
+	//Y座標
+	D3DXVECTOR3 yAxisInCamera;
+	yAxisInCamera.x = mCam.m[1][0];
+	yAxisInCamera.y = mCam.m[1][1];
+	yAxisInCamera.z = mCam.m[1][2];
+	yAxisInCamera.x = 0.0f;
+	yAxisInCamera.z = 0.0f;
+	D3DXVec3Normalize(&yAxisInCamera, &yAxisInCamera);
+	//Z座標
+	D3DXVECTOR3 zAxisInCamera;
+	zAxisInCamera.x = mCam.m[2][0];
+	zAxisInCamera.y = mCam.m[2][1];
+	zAxisInCamera.z = mCam.m[2][2];
+	zAxisInCamera.y = 0.0f;
+	D3DXVec3Normalize(&zAxisInCamera, &zAxisInCamera);
+	D3DXVECTOR3 add(0.0f, 0.0f, 0.0f);
+	//右
+	if (g_pad.GetLStickXF() > 0.0f)
+	{
+		add += xAxisInCamera * MOVE_SPEED;
+	}
+	//左
+	if (g_pad.GetLStickXF() < 0.0f)
+	{
+		add -= xAxisInCamera * MOVE_SPEED;
+	}
+	//奥
+	if (g_pad.GetLStickYF() > 0.0f)
+	{
+		add += zAxisInCamera * MOVE_SPEED;
+	}
+	if (g_pad.GetLStickYF() < 0.0f)
+	{
+		add -= zAxisInCamera * MOVE_SPEED;
+	}
+	movespeed.x = add.x;
+	movespeed.z = add.z;
 }
 
 void CPlayer::Jump()
 {
-	if (state != PlayerJump)
+	if(IsIntersect.GetGround() == true)
 	{
 		
 		if (g_pad.IsTrigger(EnButton::enButtonA))
@@ -122,4 +182,12 @@ void CPlayer::Jump()
 		}
 	}
 	
+}
+
+void CPlayer::Died()
+{
+	if (position.y <= -10.0f)
+	{
+		PostQuitMessage(0);
+	}
 }

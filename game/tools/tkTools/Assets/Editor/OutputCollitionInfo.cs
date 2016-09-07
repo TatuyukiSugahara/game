@@ -27,7 +27,7 @@ public class OutputCollitionInfo2D : EditorWindow
             headerTxt += "},\n";
         }
       //  collision.name
-        StreamWriter sw = new StreamWriter("C:/GitHub/game/game/ShaderTutorial_05" + collision.name + ".h", false, Encoding.UTF8);
+        StreamWriter sw = new StreamWriter("C:/GitHub/game/game/ShaderTutorial_05/" + collision.name + ".h", false, Encoding.UTF8);
         sw.Write(headerTxt);
         sw.Close();
 

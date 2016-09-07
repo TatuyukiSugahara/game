@@ -160,9 +160,10 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position, float radius)
 	m_moveSpeed.x = 0.0f;				//移動速度
 	m_moveSpeed.y = 0.0f;
 	m_moveSpeed.z = 0.0f;				//移動速度
-
+	
 	addPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
+	isHit = false;//天井と当たっていない
+	isGround = false;//床と当たっていない		
 	m_radius = radius;						//バウンディングスフィアの半径。
 	//コリジョン初期化。
 	m_collisionShape = new btSphereShape(m_radius);
@@ -267,6 +268,7 @@ void CIsIntersect::Intersect(
 		if (callback.isHit) {
 			//当たった。
 			//地面。
+			isGround = true;//床と当たった
 			m_moveSpeed->y = 0.0f;
 			D3DXVECTOR3 Circle;
 			float x = 0.0f;
@@ -298,8 +300,10 @@ void CIsIntersect::Intersect(
 					//あたってたので離れた
 					p->OnHitGroundLeave(callback.hitCollisionObject);
 					p->SetHitGround(false);
+					
 				}
 			}
+			isGround = false;//床と離れた
 		}
 	}
 	//上方向を調べる。
@@ -321,6 +325,8 @@ void CIsIntersect::Intersect(
 		if (callback.isHit) {
 			//当たった。
 			//天井。
+			isHit = true;
+			hitCollisionObject = callback.hitCollisionObject;
 			m_moveSpeed->y =0.0f;
 			D3DXVECTOR3 Circle;
 			float x = 0.0f;
@@ -353,6 +359,7 @@ void CIsIntersect::Intersect(
 					//あたってたので離れた
 					p->OnHitCeilingLeave(callback.hitCollisionObject);
 					p->SetHitCeiling(false);
+					isHit = false;
 				}
 			}
 		}

@@ -9,6 +9,7 @@
 #include "Kinoko.h"
 #include "NBlock.h"
 #include "StageBack.h"
+#include "Pipe.h"
 
 #define MAX_COLLISION 100
 
@@ -33,7 +34,10 @@ public:
 
 	void CreateCollision2D();				//2Dあたり判定
 	void Add2DRigidBody(int arraySize);		//2Dあたり判定追加
-
+	Camera* GetCamera()
+	{
+		return& camera;
+	}
 	CPlayer* GetPlayer()
 	{
 		return &player;
@@ -41,6 +45,10 @@ public:
 	CKinoko* GetKinoko()
 	{
 		return &kinoko;
+	}
+	CHatenaBox* GetHatena()
+	{
+		return &hanatebox;
 	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
@@ -57,7 +65,8 @@ protected:
 	CHatenaBox	hanatebox;		//はてなボックス
 	CKinoko	kinoko;				//キノコ
 	CNBlock	nblock;				//ノーマルブロック
-	CStageBack stageback;					//ステージ背景
+	CStageBack stageback;		//ステージ背景
+	CPipe pipe;					//土管
 };
 
 extern CStage g_stage;
