@@ -18,7 +18,7 @@ CStageBack::~CStageBack()
 //初期化。
 void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "sky.x");
+	model.Init(pd3dDevice, "Asset/model/sky.x");
 }
 //更新。
 void CStageBack::Update()

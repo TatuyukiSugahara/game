@@ -1,4 +1,5 @@
 #pragma once
+#include "Texture.h"
 
 class Model {
 public:
@@ -8,6 +9,7 @@ public:
 	~Model();
 	//初期化。
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName);
+	void Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName, const char* texname);
 
 	//描画。
 	void Render(
@@ -32,4 +34,5 @@ private:
 	LPDIRECT3DTEXTURE9*		textures;		//テクスチャ。
 	DWORD					numMaterial;	//マテリアルの数。
 	ID3DXEffect*			effect;			//エフェクト。	
+	CTexture				tex;			//テクスチャロード
 };

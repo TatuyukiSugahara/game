@@ -28,7 +28,7 @@ CKinoko::~CKinoko()
 //‰Šú‰»B
 void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "kinoko.x");
+	model.Init(pd3dDevice, "Asset/model/kinoko.x");
 	IsIntersect.CollisitionInitialize(&position, radius);//‚ ‚½‚è”»’è‰Šú‰»
 
 	//AABB

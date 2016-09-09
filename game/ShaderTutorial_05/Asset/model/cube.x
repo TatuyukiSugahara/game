@@ -287,7 +287,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "Cube earth.tga";
+    "Asset/model/Cube earth.tga";
    }
   }
   Material {
@@ -296,7 +296,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "Cube grass.tga";
+    "Asset/model/Cube grass.tga";
    }
   }
  }

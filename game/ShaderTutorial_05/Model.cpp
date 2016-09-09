@@ -73,6 +73,67 @@ void Model::Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName)
 		std::abort();
 	}
 }
+//初期化。
+void Model::Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName, const char* texname)
+{
+	Release();
+	//Xファイルをロード。
+	LPD3DXBUFFER pD3DXMtrlBuffer;
+	//Xファイルのロード。
+	D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM,
+		pd3dDevice, NULL,
+		&pD3DXMtrlBuffer, NULL, &numMaterial,
+		&mesh);
+	//法線が存在するか調べる。
+	if ((mesh->GetFVF() & D3DFVF_NORMAL) == 0) {
+		//法線がないので作成する。
+		ID3DXMesh* pTempMesh = NULL;
+
+		mesh->CloneMeshFVF(mesh->GetOptions(),
+			mesh->GetFVF() | D3DFVF_NORMAL, g_pd3dDevice, &pTempMesh);
+
+		D3DXComputeNormals(pTempMesh, NULL);
+		mesh->Release();
+		mesh = pTempMesh;
+
+	}
+
+	// マテリアルバッファを取得。
+	D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
+
+	//テクスチャをロード。
+	//textures = new LPDIRECT3DTEXTURE9[numMaterial];
+	tex.Load(texname);
+	//textures = tex.GetTextureDX();
+	for (DWORD i = 0; i < numMaterial; i++)
+	{
+		textures[i] = NULL;
+		//テクスチャを作成する。
+		D3DXCreateTextureFromFileA(pd3dDevice,
+			d3dxMaterials[i].pTextureFilename,
+			&textures[i]);
+	}
+	// マテリアルバッファを解放。
+	pD3DXMtrlBuffer->Release();
+
+	//シェーダーをコンパイル。
+	LPD3DXBUFFER  compileErrorBuffer = NULL;
+	//シェーダーをコンパイル。
+	HRESULT hr = D3DXCreateEffectFromFile(
+		pd3dDevice,
+		"basic.fx",
+		NULL,
+		NULL,
+		D3DXSHADER_SKIPVALIDATION,
+		NULL,
+		&effect,
+		&compileErrorBuffer
+		);
+	if (hr != S_OK) {
+		MessageBox(NULL, (char*)(compileErrorBuffer->GetBufferPointer()), "error", MB_OK);
+		std::abort();
+	}
+}
 
 //描画。
 void Model::Render(

@@ -18,7 +18,7 @@ CPipe::~CPipe()
 //初期化。
 void CPipe::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "pipe.x");
+	model.Init(pd3dDevice, "Asset/model/pipe.x");
 }
 //更新。
 void CPipe::Update()

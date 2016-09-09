@@ -27,7 +27,7 @@ CPlayer::~CPlayer()
 //‰Šú‰»B
 void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "unitychan.x");
+	model.Init(pd3dDevice, "Asset/model/unitychan.x");
 	IsIntersect.CollisitionInitialize(&position,radius);//‚ ‚½‚è”»’è‰Šú‰»
 
 	//AABB

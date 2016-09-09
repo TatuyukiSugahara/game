@@ -10,6 +10,7 @@
 #include "NBlock.h"
 #include "StageBack.h"
 #include "Pipe.h"
+#include "Map.h"
 
 #define MAX_COLLISION 100
 
@@ -50,6 +51,10 @@ public:
 	{
 		return &hanatebox;
 	}
+	CMap* GetMap()
+	{
+		return&map;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -67,6 +72,7 @@ protected:
 	CNBlock	nblock;				//ノーマルブロック
 	CStageBack stageback;		//ステージ背景
 	CPipe pipe;					//土管
+	CMap map;					//マップ作製
 };
 
 extern CStage g_stage;

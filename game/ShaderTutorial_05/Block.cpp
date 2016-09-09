@@ -18,7 +18,7 @@ CBlock::~CBlock()
 //初期化。
 void CBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "stage1.x");
+	model.Init(pd3dDevice, "Asset/model/stage1.x");
 }
 //更新。
 void CBlock::Update()

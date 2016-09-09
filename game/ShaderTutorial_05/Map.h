@@ -1,15 +1,16 @@
 #pragma once
-#include "Model.h"
 
-class CStageBack {
+class CMapChip;
+
+/*!
+* @brief	マップクラス。
+*/
+class CMap {
 public:
-	//コンストラクタ
-	CStageBack();
-	//デストラクタ
-	~CStageBack();
-	//初期化。
+
+	CMap();
+	~CMap();
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
-	//更新。
 	void Update();
 	//描画。
 	void Render(
@@ -21,11 +22,11 @@ public:
 		D3DXVECTOR4	 ambientLight,
 		int numDiffuseLight
 		);
-	//開放。
-	void Release();
+	int GetSize()
+	{
+		return tableSize;
+	}
 private:
-	D3DXVECTOR3				position;		//座標。。
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	Model					model;			//モデル。
+	std::vector<CMapChip*> mapChipList;	//マップチップのリスト。
+	int tableSize;
 };

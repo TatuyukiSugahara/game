@@ -27,7 +27,7 @@ void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	CreateCollision2D();
 	Add2DRigidBody();
 
-	model.Init(pd3dDevice, "hatena_box.x");
+	model.Init(pd3dDevice, "Asset/model/hatena_box.x");
 
 	Item = false;
 }

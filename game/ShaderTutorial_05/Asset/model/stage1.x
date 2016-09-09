@@ -2833,7 +2833,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "ground_block.png";
+    "Asset/model/ground_block.png";
    }
   }
  }
