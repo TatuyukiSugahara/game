@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Model.h"
+#include "Stage.h"
 
 //コンストラクタ
 Model::Model()
@@ -168,6 +169,8 @@ void Model::Render(
 	effect->SetVectorArray("g_diffuseLightColor", diffuseLightColor, numDiffuseLight);
 	//環境光を設定。
 	effect->SetVector("g_ambientLight", &ambientLight);
+	//カメラの位置を設定
+	effect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage.GetCamera()->GetEyePt());
 
 	effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 

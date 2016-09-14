@@ -25,7 +25,7 @@ void CStage::Initialize()
 	//ステージ背景初期化
 	stageback.Init(g_pd3dDevice);
 	//マップ初期化
-	map.Init(g_pd3dDevice);
+	//map.Init(g_pd3dDevice);
 	//プレイヤー初期化
 	player.Init(g_pd3dDevice);
 	//ブロック初期化
@@ -50,7 +50,7 @@ void CStage::Update()
 	//ステージ背景更新
 	stageback.Update();
 	//マップ更新
-	map.Update();
+	//map.Update();
 	//プレイヤーを更新。
 	player.Update();
 	//ブロックを更新
@@ -87,15 +87,15 @@ void CStage::Render()
 		light.GetLightNum()
 		);
 	//マップ描画
-	map.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-		);
+	//map.Render(
+	//	g_pd3dDevice,
+	//	camera.GetViewMatrix(),
+	//	camera.GetProjectionMatrix(),
+	//	light.GetLightDirection(),
+	//	light.GetLightColor(),
+	//	light.GetambientLight(),
+	//	light.GetLightNum()
+	//	);
 	//プレイヤーを描画
 	player.Render(
 		g_pd3dDevice,
@@ -107,7 +107,7 @@ void CStage::Render()
 		light.GetLightNum()
 		);
 	//ブロックを描画
-	/*block.Render(
+	block.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -115,7 +115,7 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-		);*/
+		);
 	//Nブロックを描画
 	nblock.Render(
 		g_pd3dDevice,

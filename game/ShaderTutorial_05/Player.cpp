@@ -49,14 +49,12 @@ void CPlayer::Update()
 	{
 		g_stage.GetHatena()->SetItem(true);
 	}
-
 	if (g_stage.GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{
 		D3DXMatrixScaling(&mScale, 1.5f, 1.5f, 1.5f);
 		radius *= 1.5f*1.5f;
 		IsIntersect.CollisitionInitialize(&position, radius);//‚ ‚½‚è”»’è‰Šú‰»
 	}
-
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_position‚©‚ç‚ÌˆÚ“®—Ê(‚ ‚½‚è”»’è)
 
 	m_aabbMax += IsIntersect.GetAddPos();
@@ -111,11 +109,11 @@ void CPlayer::Move2D()
 
 void CPlayer::Move3D()
 {
-	if (D3DXVec3Length(&movespeed) > 0.01f)
+	if (fabs(D3DXVec3Length(&movespeed)) > 0.01f)
 	{
 		state = PlayerRun;
 	}
-	else if (D3DXVec3Length(&movespeed) < 0.01f)
+	else
 	{
 		state = PlayerStay;
 	}
