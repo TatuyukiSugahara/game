@@ -58,10 +58,10 @@ VS_OUTPUT VSMain( VS_INPUT In )
 	float3 L = -g_diffuseLightDirection[0].xyz; //ローカルのライト座標
 	Out.color = In.color * max(amb,dot(In.normal,-g_diffuseLightDirection[0].xyz));
 	//鏡面反射用のベクトル
-	Out.Eye = vEyePos - pos.xyz;	
+	Out.Eye = vEyePos - pos.xyz;
 
 	Out.uv = In.uv;
-	Out.normal = mul( In.normal, g_rotationMatrix );	//法線を回す。
+	Out.normal = mul(In.normal, g_worldMatrix);	//法線を回す。
 	return Out;
 }
 /*!
@@ -75,18 +75,18 @@ float4 PSMain( VS_OUTPUT In ) : COLOR
 		for( int i = 0; i < DIFFUSE_LIGHT_NUM; i++ ){
 			lig.xyz += max( 0.0f, dot(In.normal.xyz, -g_diffuseLightDirection[i].xyz) ) 
 					* g_diffuseLightColor[i].xyz;
+			//スペキュラを計算。
+			float3 L = -g_diffuseLightDirection[i].xyz;
+			float3 H = normalize(L + normalize(In.Eye));//ハーフベクトル
+			float3 N = normalize(In.normal);
+			lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f);
 		}
 		lig += g_ambientLight;
 	}
 	float4 color = tex2D( g_diffuseTextureSampler, In.uv );
-
-	float3 L = -g_diffuseLightDirection[0].xyz;
-	float3 H = normalize(L+normalize(In.Eye));//ハーフベクトル
-	float3 N = normalize(In.normal);	
-
 	color.xyz *= lig;
-	In.color += color;
-	return In.color + pow(max(0.0f,dot(N,H)),10.0f);
+	
+	return color;
 }
 
 technique SkinModel

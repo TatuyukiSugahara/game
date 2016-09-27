@@ -177,7 +177,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "Asset/model/hatena_box.png";
+    "hatena_box.png";
    }
   }
  }

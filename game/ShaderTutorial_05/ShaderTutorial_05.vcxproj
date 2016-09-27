@@ -35,14 +35,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -160,6 +160,7 @@
     <ClCompile Include="Kinoko.cpp" />
     <ClCompile Include="lib\System.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightBack.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapChip.cpp" />
@@ -169,6 +170,8 @@
     <ClCompile Include="pad\Pad.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageBack.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -179,6 +182,7 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tk\tkEnginePreCompile.cpp" />
+    <ClCompile Include="Turn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
@@ -191,6 +195,7 @@
     <ClInclude Include="Kinoko.h" />
     <ClInclude Include="lib\System.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LightBack.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapChip.h" />
     <ClInclude Include="Model.h" />
@@ -199,6 +204,8 @@
     <ClInclude Include="pad\Pad.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageBack.h" />
     <ClInclude Include="stdafx.h" />
@@ -207,6 +214,7 @@
     <ClInclude Include="tk\tkEnginePreCompile.h" />
     <ClInclude Include="tk\tkNoncopyable.h" />
     <ClInclude Include="tk\typedef.h" />
+    <ClInclude Include="Turn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

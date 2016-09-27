@@ -1,7 +1,7 @@
-﻿2016/05/02 15:27:20 にビルドを開始しました。
-     1>ノード 4 上のプロジェクト "C:\GitHub\programing\physicsDemo\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット)。
+﻿2016/09/15 14:24:38 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "D:\_Users\kbc15_000\Desktop\game\game\ShaderTutorial_05\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\GitHub\programing\physicsDemo\\BulletPhysics\src /nologo /W3 /WX- /O2 /Ob2 /Oy- /D WIN32 /D NDEBUG /D USE_GRAPHICAL_BENCHMARK /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /D _MBCS /Gm- /EHsc /MT /GS /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo"BulletDynamics.dir\Release\\" /Fd"BulletDynamics.dir\Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Character\btKinematicCharacterController.cpp ConstraintSolver\btConeTwistConstraint.cpp ConstraintSolver\btContactConstraint.cpp ConstraintSolver\btFixedConstraint.cpp ConstraintSolver\btGearConstraint.cpp ConstraintSolver\btGeneric6DofConstraint.cpp ConstraintSolver\btGeneric6DofSpring2Constraint.cpp ConstraintSolver\btGeneric6DofSpringConstraint.cpp ConstraintSolver\btHinge2Constraint.cpp ConstraintSolver\btHingeConstraint.cpp ConstraintSolver\btNNCGConstraintSolver.cpp ConstraintSolver\btPoint2PointConstraint.cpp ConstraintSolver\btSequentialImpulseConstraintSolver.cpp ConstraintSolver\btSliderConstraint.cpp ConstraintSolver\btSolve2LinearConstraint.cpp ConstraintSolver\btTypedConstraint.cpp ConstraintSolver\btUniversalConstraint.cpp Dynamics\btDiscreteDynamicsWorld.cpp Dynamics\btRigidBody.cpp Dynamics\btSimpleDynamicsWorld.cpp Featherstone\btMultiBody.cpp Featherstone\btMultiBodyConstraint.cpp Featherstone\btMultiBodyConstraintSolver.cpp Featherstone\btMultiBodyDynamicsWorld.cpp Featherstone\btMultiBodyJointLimitConstraint.cpp Featherstone\btMultiBodyJointMotor.cpp Featherstone\btMultiBodyPoint2Point.cpp MLCPSolvers\btDantzigLCP.cpp MLCPSolvers\btLemkeAlgorithm.cpp MLCPSolvers\btMLCPSolver.cpp Vehicle\btRaycastVehicle.cpp Vehicle\btWheelInfo.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\_Users\kbc15_000\Desktop\game\game\\BulletPhysics\src /nologo /W3 /WX- /O2 /Ob2 /Oy- /D WIN32 /D NDEBUG /D USE_GRAPHICAL_BENCHMARK /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /D _MBCS /Gm- /EHsc /MT /GS /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo"BulletDynamics.dir\Release\\" /Fd"BulletDynamics.dir\Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Character\btKinematicCharacterController.cpp ConstraintSolver\btConeTwistConstraint.cpp ConstraintSolver\btContactConstraint.cpp ConstraintSolver\btFixedConstraint.cpp ConstraintSolver\btGearConstraint.cpp ConstraintSolver\btGeneric6DofConstraint.cpp ConstraintSolver\btGeneric6DofSpring2Constraint.cpp ConstraintSolver\btGeneric6DofSpringConstraint.cpp ConstraintSolver\btHinge2Constraint.cpp ConstraintSolver\btHingeConstraint.cpp ConstraintSolver\btNNCGConstraintSolver.cpp ConstraintSolver\btPoint2PointConstraint.cpp ConstraintSolver\btSequentialImpulseConstraintSolver.cpp ConstraintSolver\btSliderConstraint.cpp ConstraintSolver\btSolve2LinearConstraint.cpp ConstraintSolver\btTypedConstraint.cpp ConstraintSolver\btUniversalConstraint.cpp Dynamics\btDiscreteDynamicsWorld.cpp Dynamics\btRigidBody.cpp Dynamics\btSimpleDynamicsWorld.cpp Featherstone\btMultiBody.cpp Featherstone\btMultiBodyConstraint.cpp Featherstone\btMultiBodyConstraintSolver.cpp Featherstone\btMultiBodyDynamicsWorld.cpp Featherstone\btMultiBodyJointLimitConstraint.cpp Featherstone\btMultiBodyJointMotor.cpp Featherstone\btMultiBodyPoint2Point.cpp MLCPSolvers\btDantzigLCP.cpp MLCPSolvers\btLemkeAlgorithm.cpp MLCPSolvers\btMLCPSolver.cpp Vehicle\btRaycastVehicle.cpp Vehicle\btWheelInfo.cpp
          btKinematicCharacterController.cpp
          btConeTwistConstraint.cpp
          btContactConstraint.cpp
@@ -39,7 +39,7 @@
          btWheelInfo.cpp
          コードを生成中...
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\GitHub\programing\physicsDemo\\bulletPhysics\lib\Release\BulletDynamics.lib" /NOLOGO  /machine:X86 BulletDynamics.dir\Release\btKinematicCharacterController.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\_Users\kbc15_000\Desktop\game\game\\bulletPhysics\lib\Release\BulletDynamics.lib" /NOLOGO  /machine:X86 BulletDynamics.dir\Release\btKinematicCharacterController.obj
          BulletDynamics.dir\Release\btConeTwistConstraint.obj
          BulletDynamics.dir\Release\btContactConstraint.obj
          BulletDynamics.dir\Release\btFixedConstraint.obj
@@ -71,9 +71,9 @@
          BulletDynamics.dir\Release\btMLCPSolver.obj
          BulletDynamics.dir\Release\btRaycastVehicle.obj
          BulletDynamics.dir\Release\btWheelInfo.obj
-         BulletDynamics.vcxproj -> C:\GitHub\programing\physicsDemo\\bulletPhysics\lib\Release\BulletDynamics.lib
-     1>プロジェクト "C:\GitHub\programing\physicsDemo\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット) のビルドが完了しました。
+         BulletDynamics.vcxproj -> D:\_Users\kbc15_000\Desktop\game\game\\bulletPhysics\lib\Release\BulletDynamics.lib
+     1>プロジェクト "D:\_Users\kbc15_000\Desktop\game\game\ShaderTutorial_05\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:47.00
+経過時間 00:00:58.39

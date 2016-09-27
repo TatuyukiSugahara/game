@@ -9,7 +9,6 @@ public:
 	~Model();
 	//初期化。
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName);
-	void Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName, const char* texname);
 
 	//描画。
 	void Render(
@@ -28,6 +27,14 @@ public:
 	LPD3DXMESH GetMesh()
 	{
 		return mesh;
+	}
+	ID3DXEffect* GetEffect()
+	{
+		return effect;
+	}
+	void SetEffect(ID3DXEffect*	effect)
+	{
+		this->effect = effect;
 	}
 private:
 	LPD3DXMESH				mesh;			//メッシュ。

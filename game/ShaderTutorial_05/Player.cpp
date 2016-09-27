@@ -34,7 +34,10 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
 	m_aabbMin += position;
 	m_aabbMax += position;
-
+	//ターン
+	m_currentAngleY = 0.0f;
+	m_targetAngleY = 0.0f;
+	turn.Initialize();
 }
 //更新。
 void CPlayer::Update()
@@ -96,11 +99,11 @@ void CPlayer::Release()
 
 void CPlayer::Move2D()
 {
-	if (movespeed.x >= 0.001f)
+	if (fabs(movespeed.x) >= 0.001f)
 	{
 		state = PlayerRun;
 	}
-	else if (movespeed.x <= 0.001f)
+	else
 	{
 		state = PlayerStay;
 	}
@@ -117,7 +120,7 @@ void CPlayer::Move3D()
 	{
 		state = PlayerStay;
 	}
-
+	bool isTurn = false;
 	Camera* cam = g_stage.GetCamera();
 	D3DXMATRIX mCam = cam->GetViewMatrix();
 	//カメラ行列の逆行列をかけて、ワールド行列を求める。
@@ -164,8 +167,26 @@ void CPlayer::Move3D()
 	{
 		add -= zAxisInCamera * MOVE_SPEED;
 	}
+	D3DXVECTOR3 dir;
+	dir = add - position;
+	dir.y = 0.0f;
+	D3DXVec3Normalize(&dir, &dir);
+
 	movespeed.x = add.x;
 	movespeed.z = add.z;
+
+	D3DXVECTOR3 Axix(1.0f, 0.0f, 0.0f);
+	m_targetAngleY = D3DXVec3Dot(&dir, &Axix);
+	m_targetAngleY = acosf(m_targetAngleY);
+	D3DXVECTOR3 v;
+	D3DXVec3Cross(&v, &dir, &Axix);
+	if (v.y > 0.0f)
+	{
+		m_targetAngleY *= -1.0f;
+	}
+	isTurn = true;
+
+	m_currentAngleY = turn.Update(isTurn, m_targetAngleY);
 }
 
 void CPlayer::Jump()

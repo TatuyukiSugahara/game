@@ -3198,7 +3198,7 @@ Frame Cylinder001 {
     0.000000;0.000000;0.000000;;
 
     TextureFilename Diffuse {
-     "Asset/model/green.png";
+     "green.png";
     }
    }
   }
