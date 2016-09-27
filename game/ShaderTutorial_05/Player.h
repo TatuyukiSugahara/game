@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "lib\System.h"
 #include "IsIntersect\IsIntersect.h"
+#include "Turn.h"
 
 class IPlayerCollisionCallback;
 
@@ -72,12 +73,15 @@ private:
 	D3DXMATRIX				mScale;			//スケールw a
 	Model					model;			//モデル。
 	CIsIntersect			IsIntersect;		//あたり判定
+	CTurn					turn;			//ターンクラス
 	std::vector<IPlayerCollisionCallback*>	callbackList;//
 	const float				MOVE_SPEED = 5.0f;	//移動速度
 	float					radius;
 	PlayerState				state;				//プレイヤーの状態
-
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;
+	//ターン
+	float					m_currentAngleY;
+	float					m_targetAngleY;
 };

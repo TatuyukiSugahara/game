@@ -14,6 +14,7 @@ CStage g_stage;
 void CStage::UpdateLight()
 {
 	light.Update();
+	lightback.Update();
 }
 
 void CStage::Initialize()
@@ -22,10 +23,12 @@ void CStage::Initialize()
 	Add2DRigidBody(ARRAYSIZE(collisionInfoTable2D));
 	//ライトを初期化。
 	light.Init();
+	//背景ライトを初期化
+	lightback.Init();
 	//ステージ背景初期化
 	stageback.Init(g_pd3dDevice);
 	//マップ初期化
-	//map.Init(g_pd3dDevice);
+	map.Init(g_pd3dDevice);
 	//プレイヤー初期化
 	player.Init(g_pd3dDevice);
 	//ブロック初期化
@@ -38,6 +41,8 @@ void CStage::Initialize()
 	kinoko.Init(g_pd3dDevice);
 	//土管初期化
 	pipe.Init(g_pd3dDevice);
+	//影初期化
+	shadow.Create(512, 512);
 	//カメラの初期化。
 	camera.Init(&player);
 	
@@ -50,9 +55,15 @@ void CStage::Update()
 	//ステージ背景更新
 	stageback.Update();
 	//マップ更新
-	//map.Update();
+	map.Update();
 	//プレイヤーを更新。
 	player.Update();
+	//影更新
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(2.0f, 5.0f, 2.0f);
+	shadow.SetLightPosition(lightPos);
+	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
+	D3DXVec3Normalize(&lightDir, &lightDir);
+	shadow.SetLightDirection(lightDir);
 	//ブロックを更新
 	block.Update();
 	//Nブロックを更新
@@ -81,21 +92,31 @@ void CStage::Render()
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
+		lightback.GetLightDirection(),
+		lightback.GetLightColor(),
+		lightback.GetambientLight(),
+		lightback.GetLightNum()
+		);
+	//マップ描画
+	map.Render(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
 		light.GetLightDirection(),
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
 		);
-	//マップ描画
-	//map.Render(
-	//	g_pd3dDevice,
-	//	camera.GetViewMatrix(),
-	//	camera.GetProjectionMatrix(),
-	//	light.GetLightDirection(),
-	//	light.GetLightColor(),
-	//	light.GetambientLight(),
-	//	light.GetLightNum()
-	//	);
+	//影描画
+	shadow.Draw(camera.GetProjectionMatrix(),
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+		);
 	//プレイヤーを描画
 	player.Render(
 		g_pd3dDevice,

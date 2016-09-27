@@ -2,6 +2,7 @@
 #include "lib\System.h"
 #include "Camera.h"
 #include "Light.h"
+#include "LightBack.h"
 #include "Player.h"
 #include "Block.h"
 #include "Stage.h"
@@ -11,6 +12,7 @@
 #include "StageBack.h"
 #include "Pipe.h"
 #include "Map.h"
+#include "ShadowMap.h"
 
 #define MAX_COLLISION 100
 
@@ -65,6 +67,7 @@ protected:
 
 	Camera camera;				//カメラ。
 	CLight light;				//ライト
+	CLightBack lightback;		//背景ライト
 	CPlayer player;				//プレイヤー
 	CBlock block;				//ブロック
 	CHatenaBox	hanatebox;		//はてなボックス
@@ -73,6 +76,7 @@ protected:
 	CStageBack stageback;		//ステージ背景
 	CPipe pipe;					//土管
 	CMap map;					//マップ作製
+	CShadowMap shadow;			//影
 };
 
 extern CStage g_stage;

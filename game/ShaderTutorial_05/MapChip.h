@@ -1,5 +1,5 @@
 #pragma once
-#include "Model.h"l
+#include "Model.h"
 
 //マップチップの配置情報。
 struct SMapChipLocInfo {
