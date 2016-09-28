@@ -54,7 +54,8 @@ void CNBlock::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 }
 //ŠJ•úB

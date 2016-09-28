@@ -19,6 +19,7 @@ CBlock::~CBlock()
 void CBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "Asset/model/stage1.x");
+	model.SetShadowReceiverFlag(true);
 }
 //更新。
 void CBlock::Update()
@@ -46,7 +47,8 @@ void CBlock::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 }
 //開放。

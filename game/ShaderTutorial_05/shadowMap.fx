@@ -8,7 +8,6 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	float4 Position	: POSITION;
-	float4 depth	: TEXCOORD;
 };
 
 float4x4	g_mWVP;		//ワールドビュープロジェクション行列。

@@ -28,6 +28,7 @@ CPlayer::~CPlayer()
 void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "Asset/model/unitychan.x");
+	model.SetShadowReceiverFlag(false);
 	IsIntersect.CollisitionInitialize(&position,radius);//‚ ‚½‚è”»’è‰Šú‰»
 
 	//AABB
@@ -74,10 +75,13 @@ void CPlayer::Render(
 	D3DXVECTOR4* diffuseLightDirection,
 	D3DXVECTOR4* diffuseLightColor,
 	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
+	int numDiffuseLight,
+	bool isDrawToShadowMap
 	)
 {
-	mWorld = mScale * mWorld;
+	D3DXMATRIX mRot;
+	D3DXMatrixRotationY(&mRot, m_currentAngleY);
+	mWorld = mScale * mRot * mWorld;
 
 	model.Render(
 		pd3dDevice,
@@ -88,7 +92,8 @@ void CPlayer::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		isDrawToShadowMap
 		);
 }
 //ŠJ•úB
@@ -167,8 +172,8 @@ void CPlayer::Move3D()
 	{
 		add -= zAxisInCamera * MOVE_SPEED;
 	}
-	D3DXVECTOR3 dir;
-	dir = add - position;
+	D3DXVECTOR3 dir(0.0f,0.0f,0.0f);
+	dir = add - dir;
 	dir.y = 0.0f;
 	D3DXVec3Normalize(&dir, &dir);
 
@@ -180,7 +185,7 @@ void CPlayer::Move3D()
 	m_targetAngleY = acosf(m_targetAngleY);
 	D3DXVECTOR3 v;
 	D3DXVec3Cross(&v, &dir, &Axix);
-	if (v.y > 0.0f)
+	if (v.x > 0.0f)
 	{
 		m_targetAngleY *= -1.0f;
 	}

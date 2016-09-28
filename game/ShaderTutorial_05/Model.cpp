@@ -11,6 +11,7 @@ Model::Model()
 	textures = NULL;
 	numMaterial = 0;
 	effect = NULL;
+	ShadowReceiverFlag = false;
 }
 //デストラクタ
 Model::~Model()
@@ -90,49 +91,77 @@ void Model::Render(
 	D3DXVECTOR4* diffuseLightDirection,
 	D3DXVECTOR4* diffuseLightColor,
 	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
+	int numDiffuseLight,
+	bool isDrawToShadowMap
 	)
 {
-	effect->SetTechnique("SkinModel");
-	effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
-	effect->BeginPass(0);
-
-	//定数レジスタに設定するカラー。
-	D3DXVECTOR4 color(1.0f, 0.0f, 0.0f, 1.0f);
-	//ワールド行列の転送。
-	effect->SetMatrix("g_worldMatrix", &worldMatrix);
-	//ビュー行列の転送。
-	effect->SetMatrix("g_viewMatrix", &viewMatrix);			//ビュー行列を転送。
-
-	effect->SetMatrix("g_projectionMatrix", &projMatrix);	//プロジェクション行列の転送。
-
-	effect->SetMatrix("g_rotationMatrix", &rotationMatrix);		//回転行列を転送。
-															//ライトの向きを転送。
-	effect->SetVectorArray("g_diffuseLightDirection", diffuseLightDirection, numDiffuseLight);
-	//ライトのカラーを転送。
-	effect->SetVectorArray("g_diffuseLightColor", diffuseLightColor, numDiffuseLight);
-	//環境光を設定。
-	effect->SetVector("g_ambientLight", &ambientLight);
-	//視点設定
-	effect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage.GetCamera()->GetEyePt());
-
-	effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
-
-	for (DWORD i = 0; i < numMaterial; i++)
+	if (isDrawToShadowMap == true)
 	{
-		if (g_hoge){
-			effect->SetTexture("g_diffuseTexture", g_hoge);
-		}
-		else
-		{
-			effect->SetTexture("g_diffuseTexture", textures[i]);
-		}
-		// Draw the mesh subset
-		mesh->DrawSubset(i);
-	}
+		effect->SetTechnique("RenderShadowMap");
+		effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+		effect->BeginPass(0);
+		
+		D3DXMATRIX mWVP;
+		mWVP = worldMatrix * g_stage.GetShadow()->Getlvpmatrix();
+		//視点設定
+		effect->SetMatrix("g_mWVP", &mWVP);
 
-	effect->EndPass();
-	effect->End();
+		
+
+		for (DWORD i = 0; i < numMaterial; i++)
+		{
+			effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
+			// Draw the mesh subset
+			mesh->DrawSubset(i);
+		}
+
+		effect->EndPass();
+		effect->End();
+	}
+	else
+	{
+		effect->SetTechnique("SkinModel");
+		effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+		effect->BeginPass(0);
+
+		//定数レジスタに設定するカラー。
+		D3DXVECTOR4 color(1.0f, 0.0f, 0.0f, 1.0f);
+		//ワールド行列の転送。
+		effect->SetMatrix("g_worldMatrix", &worldMatrix);
+		//ビュー行列の転送。
+		effect->SetMatrix("g_viewMatrix", &viewMatrix);			//ビュー行列を転送。
+
+		effect->SetMatrix("g_projectionMatrix", &projMatrix);	//プロジェクション行列の転送。
+
+		effect->SetMatrix("g_rotationMatrix", &rotationMatrix);		//回転行列を転送。
+		//ライトの向きを転送。
+		effect->SetVectorArray("g_diffuseLightDirection", diffuseLightDirection, numDiffuseLight);
+		//ライトのカラーを転送。
+		effect->SetVectorArray("g_diffuseLightColor", diffuseLightColor, numDiffuseLight);
+		//環境光を設定。
+		effect->SetVector("g_ambientLight", &ambientLight);
+		//視点設定
+		effect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage.GetCamera()->GetEyePt());
+
+		effect->SetInt("g_ShadowReceiverFlag", ShadowReceiverFlag);//影フラグ
+		//if (ShadowReceiverFlag == true)
+		{
+			effect->SetTexture("g_shadowTexture", g_hoge);//影
+			effect->SetMatrix("g_lightVPMatrix", &g_stage.GetShadow()->Getlvpmatrix());
+		}
+		for (DWORD i = 0; i < numMaterial; i++)
+		{
+
+			effect->SetTexture("g_diffuseTexture", textures[i]);
+			effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
+			// Draw the mesh subset
+			mesh->DrawSubset(i);
+		}
+		
+		effect->EndPass();
+		effect->End();
+	}
+	
 }
 //開放。
 void Model::Release()

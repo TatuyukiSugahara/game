@@ -32,7 +32,8 @@ public:
 		D3DXVECTOR4* diffuseLightDirection,
 		D3DXVECTOR4* diffuseLightColor,
 		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
+		int numDiffuseLight,
+		bool isDrawToShadowMap
 		);
 	//äJï˙ÅB
 	void Release();
@@ -60,6 +61,14 @@ public:
 	D3DXVECTOR3 GetAABBMin()
 	{
 		return m_aabbMin;
+	}
+	D3DXMATRIX GetWMatrix()
+	{
+		return mWorld;
+	}
+	D3DXMATRIX GetRot()
+	{
+		return mRotation;
 	}
 	void Move2D();
 	void Move3D();

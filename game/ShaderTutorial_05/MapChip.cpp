@@ -18,6 +18,7 @@ void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	char modelPath[256];
 	sprintf(modelPath, "Asset/model/%s.X", name);
 	model.Init(pd3dDevice, modelPath);
+	model.SetShadowReceiverFlag(false);
 	//ワールド行列のバッファを作成。
 	D3DXMATRIX mTrans;
 	D3DXMatrixTranslation(&mTrans, position.x, position.y, position.z);
@@ -50,6 +51,7 @@ void CMapChip::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 }

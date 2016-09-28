@@ -59,7 +59,7 @@ void CStage::Update()
 	//プレイヤーを更新。
 	player.Update();
 	//影更新
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(2.0f, 5.0f, 2.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
@@ -87,6 +87,16 @@ void CStage::Render()
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	//シーンの描画開始。
 	g_pd3dDevice->BeginScene();
+	//影描画
+	shadow.Draw(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+		);
 	//ステージ背景描画
 	stageback.Render(
 		g_pd3dDevice,
@@ -107,16 +117,6 @@ void CStage::Render()
 		light.GetambientLight(),
 		light.GetLightNum()
 		);
-	//影描画
-	shadow.Draw(camera.GetProjectionMatrix(),
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-		);
 	//プレイヤーを描画
 	player.Render(
 		g_pd3dDevice,
@@ -125,7 +125,8 @@ void CStage::Render()
 		light.GetLightDirection(),
 		light.GetLightColor(),
 		light.GetambientLight(),
-		light.GetLightNum()
+		light.GetLightNum(),
+		false
 		);
 	//ブロックを描画
 	block.Render(
@@ -189,6 +190,8 @@ void CStage::Render()
 
 void CStage::Release()
 {
+	//影リリース
+	shadow.Release();
 	//ステージ背景リリース
 	stageback.Release();
 	//ブロックリリース

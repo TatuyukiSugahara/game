@@ -19,6 +19,7 @@ CStageBack::~CStageBack()
 void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "Asset/model/sky.x");
+	model.SetShadowReceiverFlag(false);
 }
 //更新。
 void CStageBack::Update()
@@ -46,7 +47,8 @@ void CStageBack::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 }
 //開放。

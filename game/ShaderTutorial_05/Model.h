@@ -20,7 +20,8 @@ public:
 		D3DXVECTOR4* diffuseLightDirection,
 		D3DXVECTOR4* diffuseLightColor,
 		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
+		int numDiffuseLight,
+		bool isDrawToShadowMap
 		);
 	//開放。
 	void Release();
@@ -36,10 +37,15 @@ public:
 	{
 		this->effect = effect;
 	}
+	void SetShadowReceiverFlag(bool flag)
+	{
+		ShadowReceiverFlag = flag;
+	}
 private:
 	LPD3DXMESH				mesh;			//メッシュ。
 	LPDIRECT3DTEXTURE9*		textures;		//テクスチャ。
 	DWORD					numMaterial;	//マテリアルの数。
 	ID3DXEffect*			effect;			//エフェクト。	
 	CTexture				tex;			//テクスチャロード
+	bool					ShadowReceiverFlag;
 };

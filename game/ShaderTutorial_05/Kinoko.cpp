@@ -7,7 +7,6 @@
 CKinoko::CKinoko()
 {
 	//‰Šú‰»B
-
 	D3DXMatrixIdentity(&mWorld);
 	position.x = 8.0f;
 	position.y = 5.0f;
@@ -30,6 +29,7 @@ void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "Asset/model/kinoko.x");
 	IsIntersect.CollisitionInitialize(&position, radius);//‚ ‚½‚è”»’è‰Šú‰»
+	model.SetShadowReceiverFlag(false);
 
 	//AABB
 	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
@@ -84,7 +84,8 @@ void CKinoko::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 	g_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }

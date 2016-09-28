@@ -14,16 +14,17 @@ public:
 	}
 	void Create(int w, int h);
 	void CreateLight(D3DXMATRIX);
-	void Draw(D3DXMATRIX,
+	void Draw(
 		LPDIRECT3DDEVICE9 pd3dDevice,
 		D3DXMATRIX viewMatrix,
 		D3DXMATRIX projMatrix,
 		D3DXVECTOR4* diffuseLightDirection,
 		D3DXVECTOR4* diffuseLightColor,
 		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight);
+		int numDiffuseLight
+		);
 	void Release();
-	D3DXMATRIX Getlipmatrix()
+	D3DXMATRIX Getlvpmatrix()
 	{
 		return m_LVPMatrix;
 	}
@@ -69,6 +70,7 @@ private:
 	D3DXMATRIX m_lvMatrix;
 	D3DXMATRIX m_LVPMatrix;
 	D3DXMATRIX m_projMatrix;
+	D3DXMATRIX worldMatrix;
 	D3DXMATRIX mRot;
 	ID3DXEffect* m_pEffect;
 	float						m_near;				//!<‹ß•½–ÊB

@@ -7,6 +7,7 @@ float4x4 g_worldMatrix;			//ワールド行列。
 float4x4 g_viewMatrix;			//ビュー行列。
 float4x4 g_projectionMatrix;	//プロジェクション行列。
 float4x4 g_rotationMatrix;		//回転行列。法線を回転させるために必要になる。ライティングするなら必須。
+float4x4 g_lightVPMatrix;		//ライトビュープロジェクションマトリクス
 float3 vEyePos;				//カメラの位置(ろーかるざひょう)
 
 #define DIFFUSE_LIGHT_NUM	4		//ディフューズライトの数。
@@ -14,7 +15,11 @@ float4	g_diffuseLightDirection[DIFFUSE_LIGHT_NUM];	//ディフューズライトの方向。
 float4	g_diffuseLightColor[DIFFUSE_LIGHT_NUM];		//ディフューズライトのカラー。
 float4	g_ambientLight;								//環境光。
 
+int g_ShadowReceiverFlag;
+
 texture g_diffuseTexture;		//ディフューズテクスチャ。
+texture g_shadowTexture;		//シャドーテクスチャ。
+
 sampler g_diffuseTextureSampler = 
 sampler_state
 {
@@ -24,6 +29,17 @@ sampler_state
     MagFilter = NONE;
     AddressU = Wrap;
 	AddressV = Wrap;
+};
+
+sampler g_shadowTextureSampler =
+sampler_state
+{
+	Texture = <g_shadowTexture>;
+	MipFilter = LINEAR;
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
+	AddressU = CLAMP;
+	AddressV = CLAMP;
 };
 
 struct VS_INPUT{
@@ -39,6 +55,7 @@ struct VS_OUTPUT{
 	float2	uv		: TEXCOORD0;
 	float3	normal	: TEXCOORD1;
 	float3  Eye	: TEXCOORD2;
+	float4  lightViewPos : TEXCOORD3;
 };
 
 /*!
@@ -50,6 +67,7 @@ VS_OUTPUT VSMain( VS_INPUT In )
 	//座標変換
 	float4 pos; 
 	pos = mul( In.pos, g_worldMatrix );		//モデルのローカル空間からワールド空間に変換。
+	float4 worldPos = pos;
 	pos = mul( pos, g_viewMatrix );			//ワールド空間からビュー空間に変換。
 	pos = mul( pos, g_projectionMatrix );	//ビュー空間から射影空間に変換。
 	Out.pos = pos;
@@ -59,7 +77,12 @@ VS_OUTPUT VSMain( VS_INPUT In )
 	Out.color = In.color * max(amb,dot(In.normal,-g_diffuseLightDirection[0].xyz));
 	//鏡面反射用のベクトル
 	Out.Eye = vEyePos - pos.xyz;
-
+	
+	if(g_ShadowReceiverFlag == true)
+	{
+		Out.lightViewPos = mul(float4(worldPos.xyz, 1.0f), g_lightVPMatrix);
+	}
+	
 	Out.uv = In.uv;
 	Out.normal = mul(In.normal, g_worldMatrix);	//法線を回す。
 	return Out;
@@ -83,9 +106,16 @@ float4 PSMain( VS_OUTPUT In ) : COLOR
 		}
 		lig += g_ambientLight;
 	}
-	float4 color = tex2D( g_diffuseTextureSampler, In.uv );
-	color.xyz *= lig;
-	
+	float4 color = tex2D(g_diffuseTextureSampler, In.uv);
+	if (g_ShadowReceiverFlag == 1)
+	{
+		float4 posInLVP = In.lightViewPos;
+		posInLVP.xyz /= posInLVP.w;
+		//uv座標に変換。
+		float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy + float2(0.5f, 0.5f);
+		color *= tex2D(g_shadowTextureSampler, shadowMapUV);
+	}
+	color.xyz *= lig.xyz;
 	return color;
 }
 
@@ -93,7 +123,7 @@ technique SkinModel
 {
 	pass p0
 	{
-		VertexShader 	= compile vs_2_0 VSMain();
-		PixelShader 	= compile ps_2_0 PSMain();
+		VertexShader 	= compile vs_3_0 VSMain();
+		PixelShader 	= compile ps_3_0 PSMain();
 	}
 }

@@ -46,7 +46,8 @@ void CPipe::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 }
 //ŠJ•úB

@@ -35,14 +35,15 @@ void CShadowMap::Create(int w, int h)
 }
 
 
-void CShadowMap::Draw(D3DXMATRIX proj,
+void CShadowMap::Draw(
 	LPDIRECT3DDEVICE9 pd3dDevice,
 	D3DXMATRIX viewMatrix,
 	D3DXMATRIX projMatrix,
 	D3DXVECTOR4* diffuseLightDirection,
 	D3DXVECTOR4* diffuseLightColor,
 	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight)
+	int numDiffuseLight
+	)
 {
 
 	g_pd3dDevice->GetViewport(&m_viewport);
@@ -67,31 +68,33 @@ void CShadowMap::Draw(D3DXMATRIX proj,
 	aspect = (float)viewport.Width / (float)viewport.Height;
 	D3DXMatrixPerspectiveFovLH(&m_projMatrix, D3DXToRadian(120.0f), aspect, m_near, m_far);
 	CreateLight(m_projMatrix);
-	g_pd3dDevice->SetRenderTarget(0, m_Backbuffer);
-	g_pd3dDevice->SetDepthStencilSurface(m_BackZ);
-	g_pd3dDevice->SetViewport(&m_viewport);
-	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	g_hoge = RenderTarget.GetTexture();
 
 	ID3DXEffect* backup = model.GetEffect();
 	model.SetEffect(m_pEffect);
-	float farnear[2];
+	/*float farnear[2];
 	farnear[0] = g_stage.GetCamera()->GetFar();
 	farnear[1] = g_stage.GetCamera()->GetNear();
 	m_pEffect->SetFloatArray("g_mWVP", farnear, 2);
-	D3DXMatrixMultiply(&m_LVPMatrix, &m_lvMatrix, &m_projMatrix);
-	m_pEffect->SetMatrix("g_mWVP", &m_LVPMatrix);
-	g_stage.GetPlayer()->Render
+	m_pEffect->SetMatrix("g_mWVP", &m_LVPMatrix);*/
+	model.Render
 		(
 		pd3dDevice,
+		g_stage.GetPlayer()->GetWMatrix(),
+		g_stage.GetPlayer()->GetRot(),
 		viewMatrix,
 		projMatrix,
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		true
 		);
 	model.SetEffect(backup);
+	g_pd3dDevice->SetRenderTarget(0, m_Backbuffer);
+	g_pd3dDevice->SetDepthStencilSurface(m_BackZ);
+	g_pd3dDevice->SetViewport(&m_viewport);
+	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	g_hoge = RenderTarget.GetTexture();
 }
 
 void CShadowMap::CreateLight(D3DXMATRIX proj)

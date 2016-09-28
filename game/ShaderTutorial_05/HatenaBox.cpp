@@ -28,6 +28,7 @@ void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	Add2DRigidBody();
 
 	model.Init(pd3dDevice, "Asset/model/hatena_box.x");
+	model.SetShadowReceiverFlag(false);
 
 	Item = false;
 }
@@ -57,7 +58,8 @@ void CHatenaBox::Render(
 		diffuseLightDirection,
 		diffuseLightColor,
 		ambientLight,
-		numDiffuseLight
+		numDiffuseLight,
+		false
 		);
 }
 //äJï˙ÅB
