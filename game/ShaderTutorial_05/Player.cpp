@@ -47,11 +47,12 @@ void CPlayer::Update()
 	Move3D();//移動3D
 	Jump();//ジャンプ
 	Died();//死亡
-
 	//天井と当たった？＆＆当たったのは,はてなボックス？
-	if (IsIntersect.gethit() == true && IsIntersect.getCollisionObj() == g_stage.GetHatena()->Get2DHatena())
+	if (IsIntersect.gethit() == true 
+		&& IsIntersect.getCollisionObj() == g_stage.GetHatena()->Get2DHatena())
 	{
-		g_stage.GetHatena()->SetItem(true);
+		g_stage.GetHatena()->SetState(hit);
+		g_stage.GetKinoko()->SetState(Leave);//キノコ出現
 	}
 	if (g_stage.GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{

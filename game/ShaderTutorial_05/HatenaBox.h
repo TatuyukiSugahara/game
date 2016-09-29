@@ -1,6 +1,12 @@
 #pragma once
 #include "Model.h"
 
+enum HatenaState
+{
+	hit,			//プレイヤーと当たった
+	nohit			//プレイヤーと当たっていない
+};
+
 class CHatenaBox {
 public:
 	//コンストラクタ
@@ -32,13 +38,13 @@ public:
 	{
 		return position;
 	}
-	bool GetItem()
+	HatenaState GetState()
 	{
-		return Item;
+		return state;
 	}
-	void SetItem(bool flag)
+	void SetState(HatenaState sta)
 	{
-		Item = flag;
+		state = sta;
 	}
 	btRigidBody *Get2DHatena()
 	{
@@ -51,7 +57,7 @@ private:
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
-	bool					Item;			//アイテムフラグ
+	HatenaState				state;			//はてなの状態
 	//bulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_hatenaboxShape;	//地面のコリジョン形状。
 	btRigidBody*		m_rigidBody3Dhatena;	//剛体3D。

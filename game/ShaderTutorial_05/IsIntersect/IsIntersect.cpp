@@ -359,9 +359,10 @@ void CIsIntersect::Intersect(
 					//‚ ‚½‚Á‚Ä‚½‚Ì‚Å—£‚ê‚½
 					p->OnHitCeilingLeave(callback.hitCollisionObject);
 					p->SetHitCeiling(false);
-					isHit = false;
+					
 				}
 			}
+			isHit = false;
 		}
 	}
 

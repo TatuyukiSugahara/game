@@ -30,11 +30,16 @@ void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	model.Init(pd3dDevice, "Asset/model/hatena_box.x");
 	model.SetShadowReceiverFlag(false);
 
-	Item = false;
+	state = nohit;
 }
 //更新。
 void CHatenaBox::Update()
 {	
+	if (state == hit)
+	{
+		model.SetTexture("Asset/model/kara.png");
+		state = nohit;
+	}
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }

@@ -155,6 +155,7 @@
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="HatenaBox.cpp" />
     <ClCompile Include="IsIntersect\IsIntersect.cpp" />
     <ClCompile Include="Kinoko.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="HatenaBox.h" />
     <ClInclude Include="IsIntersect\IPlayerCollisionCallback.h" />
     <ClInclude Include="IsIntersect\IsIntersect.h" />

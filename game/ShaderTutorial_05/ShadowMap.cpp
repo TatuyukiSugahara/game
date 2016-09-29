@@ -2,7 +2,7 @@
 #include"ShadowMap.h"
 #include "Stage.h"
 
-extern LPDIRECT3DTEXTURE9 g_hoge;
+extern LPDIRECT3DTEXTURE9 g_shadow;
 
 
 void CShadowMap::Create(int w, int h)
@@ -94,7 +94,7 @@ void CShadowMap::Draw(
 	g_pd3dDevice->SetDepthStencilSurface(m_BackZ);
 	g_pd3dDevice->SetViewport(&m_viewport);
 	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	g_hoge = RenderTarget.GetTexture();
+	g_shadow = RenderTarget.GetTexture();
 }
 
 void CShadowMap::CreateLight(D3DXMATRIX proj)

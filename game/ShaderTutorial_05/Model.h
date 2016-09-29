@@ -41,11 +41,15 @@ public:
 	{
 		ShadowReceiverFlag = flag;
 	}
+	void SetTexture(const char* texture)
+	{
+		tex->Load(texture);
+	}
 private:
 	LPD3DXMESH				mesh;			//メッシュ。
 	LPDIRECT3DTEXTURE9*		textures;		//テクスチャ。
 	DWORD					numMaterial;	//マテリアルの数。
 	ID3DXEffect*			effect;			//エフェクト。	
-	CTexture				tex;			//テクスチャロード
+	CTexture*				tex;			//テクスチャロード
 	bool					ShadowReceiverFlag;
 };

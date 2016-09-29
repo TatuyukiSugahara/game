@@ -1,21 +1,12 @@
 #pragma once
 #include "Model.h"
-#include "IsIntersect\IsIntersect.h"
-
-class IPlayerCollisionCallback;
-
-enum KinokoState
-{
-	none,	//キノコがでてない
-	Leave	//キノコが出ている
-};
-
-class CKinoko {
+//土管
+class CGoal {
 public:
 	//コンストラクタ
-	CKinoko();
+	CGoal();
 	//デストラクタ
-	~CKinoko();
+	~CGoal();
 	//初期化。
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
 	//更新。
@@ -37,35 +28,11 @@ public:
 	{
 		position = pos;
 	}
-	void SetKinoko(bool flag)
-	{
-		kinoko = flag;
-	}
-	bool GetKinoko()
-	{
-		return kinoko;
-	}
-	//ステートセット
-	void SetState(KinokoState kinoko)
-	{
-		state = kinoko;
-	}
-	//ステートゲット
-	KinokoState GetState()
-	{
-		return state;
-	}
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
-	CIsIntersect			IsIntersect;		//あたり判定
-	std::vector<IPlayerCollisionCallback*>	callbackList;//
-	D3DXVECTOR3				movespeed;
-	float					radius;
-	KinokoState				state;			//キノコの状態
-	bool					kinoko;			//キノコをプレイヤーはゲットしている？
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;

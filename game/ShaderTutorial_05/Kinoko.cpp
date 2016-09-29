@@ -17,8 +17,6 @@ CKinoko::CKinoko()
 	movespeed.z = 0.0f;
 
 	radius = 0.3f;
-
-	kinoko = false;
 }
 //デストラクタ
 CKinoko::~CKinoko()
@@ -36,11 +34,12 @@ void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	m_aabbMin += position;
 	m_aabbMax += position;
 
+	kinoko = false;		//キノコゲットしていない。
+	state = none;		//キノコ出現していない。
 }
 //更新。
 void CKinoko::Update()
 {
-
 	/*AABB*/
 	if (m_aabbMax.x > g_stage.GetPlayer()->GetAABBMin().x
 		&& m_aabbMin.x < g_stage.GetPlayer()->GetAABBMax().x
@@ -49,9 +48,9 @@ void CKinoko::Update()
 
 		)
 	{
-		kinoko = true;
+		kinoko = true;			//プレイヤーとあたったのでゲットした。
+		state = none;			//キノコ出現しなくなる
 	}
-
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 
 	movespeed.x = 1.0f;

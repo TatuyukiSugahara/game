@@ -41,6 +41,8 @@ void CStage::Initialize()
 	kinoko.Init(g_pd3dDevice);
 	//土管初期化
 	pipe.Init(g_pd3dDevice);
+	//ゴール初期化
+	goal.Init(g_pd3dDevice);
 	//影初期化
 	shadow.Create(512, 512);
 	//カメラの初期化。
@@ -59,7 +61,7 @@ void CStage::Update()
 	//プレイヤーを更新。
 	player.Update();
 	//影更新
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(2.0f, 2.0f, 1.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
@@ -71,12 +73,14 @@ void CStage::Update()
 	//はてなボックス更新
 	hanatebox.Update();
 	//キノコ更新
-	if (hanatebox.GetItem() == true && kinoko.GetKinoko() == false)
+	if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
 	{
 		kinoko.Update();
 	}
 	//土管更新
 	pipe.Update();
+	//ゴール更新
+	goal.Update();
 	//カメラの更新
 	camera.Update();
 }
@@ -129,7 +133,7 @@ void CStage::Render()
 		false
 		);
 	//ブロックを描画
-	block.Render(
+	/*block.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -137,7 +141,7 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-		);
+		);*/
 	//Nブロックを描画
 	nblock.Render(
 		g_pd3dDevice,
@@ -159,7 +163,7 @@ void CStage::Render()
 		light.GetLightNum()
 		);
 	//キノコ
-	if (hanatebox.GetItem() == true && kinoko.GetKinoko() == false)
+	if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
 	{
 		kinoko.Render(
 			g_pd3dDevice,
@@ -181,7 +185,16 @@ void CStage::Render()
 		light.GetambientLight(),
 		light.GetLightNum()
 	);
-		
+	//ゴール描画
+	goal.Render(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+	);
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
@@ -222,7 +235,7 @@ void CStage::CreateCollision2D()
 			m_groundShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
 			btTransform groundTransform;
 			groundTransform.setIdentity();
-			groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, collision.pos.z));
+			groundTransform.setOrigin(btVector3(collision.pos.x, collision.pos.y, collision.pos.z));
 			float mass = 0.0f;
 
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects

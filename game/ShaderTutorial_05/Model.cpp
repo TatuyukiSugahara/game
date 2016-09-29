@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Stage.h"
 
-LPDIRECT3DTEXTURE9 g_hoge = NULL;
+LPDIRECT3DTEXTURE9 g_shadow = NULL;
 
 //コンストラクタ
 Model::Model()
@@ -48,6 +48,7 @@ void Model::Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName)
 
 	//テクスチャをロード。
 	textures = new LPDIRECT3DTEXTURE9[numMaterial];
+	tex = new CTexture[numMaterial];
 	for (DWORD i = 0; i < numMaterial; i++)
 	{
 		char* baseDir = "Asset/model/";
@@ -55,10 +56,12 @@ void Model::Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName)
 		strcpy(filePath, baseDir);
 		strcat(filePath, d3dxMaterials[i].pTextureFilename);
 		textures[i] = NULL;
+		tex[i].SetTextureDX(NULL);
 		//テクスチャを作成する。
 		D3DXCreateTextureFromFileA(pd3dDevice,
 			filePath,
 			&textures[i]);
+		tex[i].SetTextureDX(textures[i]);
 	}
 	// マテリアルバッファを解放。
 	pD3DXMtrlBuffer->Release();
@@ -146,13 +149,13 @@ void Model::Render(
 		effect->SetInt("g_ShadowReceiverFlag", ShadowReceiverFlag);//影フラグ
 		//if (ShadowReceiverFlag == true)
 		{
-			effect->SetTexture("g_shadowTexture", g_hoge);//影
+			effect->SetTexture("g_shadowTexture", g_shadow);//影
 			effect->SetMatrix("g_lightVPMatrix", &g_stage.GetShadow()->Getlvpmatrix());
 		}
+		
 		for (DWORD i = 0; i < numMaterial; i++)
 		{
-
-			effect->SetTexture("g_diffuseTexture", textures[i]);
+			effect->SetTexture("g_diffuseTexture", tex->GetTextureDX());
 			effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 			// Draw the mesh subset
 			mesh->DrawSubset(i);
@@ -181,6 +184,16 @@ void Model::Release()
 		}
 		delete[] textures;
 		textures = NULL;
+	}
+	//テクスチャを開放。
+	if (tex != NULL) {
+		for (unsigned int i = 0; i < numMaterial; i++) {
+			if (tex[i].GetTextureDX() != NULL) {
+				tex[i].SetTextureDX(NULL);
+			}
+		}
+		delete[] tex;
+		tex = NULL;
 	}
 	//エフェクトを開放。
 	if (effect != NULL) {

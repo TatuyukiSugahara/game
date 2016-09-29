@@ -8,7 +8,7 @@ CPipe::CPipe()
 
 	D3DXMatrixIdentity(&mWorld);
 	position.x = 3.0f;
-	position.y = -0.25f;
+	position.y = 0.25f;
 	position.z = 0.0f;
 }
 //デストラクタ

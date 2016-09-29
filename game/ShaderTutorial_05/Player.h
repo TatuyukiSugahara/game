@@ -70,6 +70,10 @@ public:
 	{
 		return mRotation;
 	}
+	btCollisionObject GetCollisionObj()
+	{
+		return *IsIntersect.getCollisionObj();
+	}
 	void Move2D();
 	void Move3D();
 	void Jump();

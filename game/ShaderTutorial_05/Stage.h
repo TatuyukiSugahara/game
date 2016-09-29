@@ -13,6 +13,7 @@
 #include "Pipe.h"
 #include "Map.h"
 #include "ShadowMap.h"
+#include "Goal.h"
 
 #define MAX_COLLISION 100
 
@@ -81,6 +82,7 @@ protected:
 	CPipe pipe;					//ìyä«
 	CMap map;					//É}ÉbÉvçÏêª
 	CShadowMap shadow;			//âe
+	CGoal goal;					//ÉSÅ[Éã
 };
 
 extern CStage g_stage;

@@ -8,13 +8,13 @@ public class OutputLocationInfo : MonoBehaviour {
     [MenuItem("Window/配置情報 出力")]
     public static void ShowWindow()
     {
-        GameObject collision = GameObject.Find("Location");
+        GameObject collision = Selection.activeGameObject;
         Transform[] collisions = collision.GetComponentsInChildren<Transform>();
         string headerTxt = "";
         foreach (Transform tr in collisions)
         {
             
-            if (tr.gameObject == collision || tr.parent !=collision)
+            if (tr.gameObject == collision || tr.parent != collision.transform)
             {
                 continue;
             }
@@ -38,7 +38,7 @@ public class OutputLocationInfo : MonoBehaviour {
             headerTxt += "},\n";
         }
 
-        StreamWriter sw = new StreamWriter(@"C:/GitHub/game/game/ShaderTutorial_05/locationInfo.h", false, Encoding.UTF8);
+        StreamWriter sw = new StreamWriter(@"C:/GitHub/game/game/ShaderTutorial_05/" + collision.name + ".h", false, Encoding.UTF8);
         sw.Write(headerTxt);
         sw.Close();
     }
