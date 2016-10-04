@@ -9,7 +9,7 @@ CPlayer::CPlayer()
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
 	D3DXMatrixIdentity(&mScale);
-	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);
+	position = D3DXVECTOR3(1.0f, 2.0f, 0.0f);
 
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -54,16 +54,34 @@ void CPlayer::Update()
 		g_stage.GetHatena()->SetState(hit);
 		g_stage.GetKinoko()->SetState(Leave);//キノコ出現
 	}
+	//キノコとった？&&小さい状態？
 	if (g_stage.GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{
 		D3DXMatrixScaling(&mScale, 1.5f, 1.5f, 1.5f);
 		radius *= 1.5f*1.5f;
 		IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 	}
+	//ブロックと当たった？
+	if (g_stage.GetNBlock()->Get2DBlock() == IsIntersect.getCollisionObj()
+		&& IsIntersect.gethit() == true)
+	{
+		g_stage.GetNBlock()->SetState(no);
+	}
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 
+	//AABB
 	m_aabbMax += IsIntersect.GetAddPos();
 	m_aabbMin += IsIntersect.GetAddPos();
+
+	//動いているかつ地面についている？
+	if (fabs(D3DXVec3Length(&movespeed)) >= 0.001f && IsIntersect.GetGround() == true)
+	{
+		state = PlayerRun;
+	}
+	else if (IsIntersect.GetGround())//地面についていて動いていない
+	{
+		state = PlayerStay;
+	}
 
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
@@ -81,7 +99,10 @@ void CPlayer::Render(
 	)
 {
 	D3DXMATRIX mRot;
-	D3DXMatrixRotationY(&mRot, m_currentAngleY);
+	D3DXMATRIX AddRot;
+	D3DXMatrixRotationQuaternion(&mRot, &rotation);
+	D3DXMatrixRotationY(&AddRot, D3DXToRadian(-90.0f));
+	D3DXMatrixMultiply(&mRot, &mRot, &AddRot);
 	mWorld = mScale * mRot * mWorld;
 
 	model.Render(
@@ -105,108 +126,67 @@ void CPlayer::Release()
 
 void CPlayer::Move2D()
 {
-	if (fabs(movespeed.x) >= 0.001f)
-	{
-		state = PlayerRun;
-	}
-	else
-	{
-		state = PlayerStay;
-	}
 	movespeed.x = g_pad.GetLStickXF() * MOVE_SPEED;
 }
 
 void CPlayer::Move3D()
 {
-	if (fabs(D3DXVec3Length(&movespeed)) > 0.01f)
-	{
-		state = PlayerRun;
-	}
-	else
-	{
-		state = PlayerStay;
-	}
 	bool isTurn = false;
-	Camera* cam = g_stage.GetCamera();
-	D3DXMATRIX mCam = cam->GetViewMatrix();
-	//カメラ行列の逆行列をかけて、ワールド行列を求める。
-	D3DXMatrixInverse(&mCam, NULL, &mCam);
-	//X座標
-	D3DXVECTOR3 xAxisInCamera;
-	xAxisInCamera.x = mCam.m[0][0];
-	xAxisInCamera.y = mCam.m[0][1];
-	xAxisInCamera.z = mCam.m[0][2];
-	xAxisInCamera.y = 0.0f;
-	D3DXVec3Normalize(&xAxisInCamera, &xAxisInCamera);
-	//Y座標
-	D3DXVECTOR3 yAxisInCamera;
-	yAxisInCamera.x = mCam.m[1][0];
-	yAxisInCamera.y = mCam.m[1][1];
-	yAxisInCamera.z = mCam.m[1][2];
-	yAxisInCamera.x = 0.0f;
-	yAxisInCamera.z = 0.0f;
-	D3DXVec3Normalize(&yAxisInCamera, &yAxisInCamera);
-	//Z座標
-	D3DXVECTOR3 zAxisInCamera;
-	zAxisInCamera.x = mCam.m[2][0];
-	zAxisInCamera.y = mCam.m[2][1];
-	zAxisInCamera.z = mCam.m[2][2];
-	zAxisInCamera.y = 0.0f;
-	D3DXVec3Normalize(&zAxisInCamera, &zAxisInCamera);
-	D3DXVECTOR3 add(0.0f, 0.0f, 0.0f);
-	//右
-	if (g_pad.GetLStickXF() > 0.0f)
-	{
-		add += xAxisInCamera * MOVE_SPEED;
-	}
-	//左
-	if (g_pad.GetLStickXF() < 0.0f)
-	{
-		add -= xAxisInCamera * MOVE_SPEED;
-	}
-	//奥
-	if (g_pad.GetLStickYF() > 0.0f)
-	{
-		add += zAxisInCamera * MOVE_SPEED;
-	}
-	if (g_pad.GetLStickYF() < 0.0f)
-	{
-		add -= zAxisInCamera * MOVE_SPEED;
-	}
-	D3DXVECTOR3 dir(0.0f,0.0f,0.0f);
-	dir = add - dir;
-	dir.y = 0.0f;
-	D3DXVec3Normalize(&dir, &dir);
 
-	movespeed.x = add.x;
-	movespeed.z = add.z;
+	static D3DXVECTOR3 dirX(1.0f, 0.0f, 0.0f);
+	static D3DXVECTOR3 dirZ(0.0f, 0.0f, 1.0f);
+	D3DXVECTOR3 dirpad(g_pad.GetLStickXF(), 0.0f, g_pad.GetLStickYF());
 
-	D3DXVECTOR3 Axix(1.0f, 0.0f, 0.0f);
-	m_targetAngleY = D3DXVec3Dot(&dir, &Axix);
-	m_targetAngleY = acosf(m_targetAngleY);
-	D3DXVECTOR3 v;
-	D3DXVec3Cross(&v, &dir, &Axix);
-	if (v.x > 0.0f)
-	{
-		m_targetAngleY *= -1.0f;
+	D3DXVECTOR3 addmove(0.0f, 0.0f, 0.0f);
+
+	addmove.x = dirX.x * dirpad.x - dirZ.x * dirpad.z;
+	addmove.z = dirX.z * dirpad.x - dirZ.z * dirpad.z;
+
+	//カメラが向いている方向に進む。
+	dirZ = g_stage.GetCamera()->GetCameraDir();
+	D3DXVec3Normalize(&addmove, &addmove);
+	//カメラの向いている方向と、上ベクトルとの外積を計算すると横移動のベクトルが求まる。
+	D3DXVec3Cross(&dirX, &dirZ, &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	if (D3DXVec3Length(&addmove) > 0.0f){
+		D3DXVECTOR3 forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+		m_targetAngleY = acos(D3DXVec3Dot(&forward, &addmove));
+		D3DXVECTOR3 axis;
+		D3DXVec3Cross(&axis, &forward, &addmove);
+		if (axis.x > 0.0f)
+		{
+			m_targetAngleY *= -1.0f;
+		}
+		isTurn = true;
+		m_currentAngleY = turn.Update(isTurn, m_targetAngleY);
+		D3DXQuaternionRotationAxis(&rotation, &axis, m_currentAngleY);
 	}
-	isTurn = true;
+	if (g_pad.IsPress(enButtonB))
+	{
+		movespeed.x = addmove.x * MOVE_SPEED * 1.5f;
+		movespeed.z = addmove.z * MOVE_SPEED * 1.5f;
+		return;
+	}
+	movespeed.x = addmove.x * MOVE_SPEED;
+	movespeed.z = addmove.z * MOVE_SPEED;
 
-	m_currentAngleY = turn.Update(isTurn, m_targetAngleY);
 }
 
 void CPlayer::Jump()
 {
-	if(IsIntersect.GetGround() == true)
+	if (g_pad.IsTrigger(EnButton::enButtonA)
+		&& state != PlayerJump)
 	{
-		
-		if (g_pad.IsTrigger(EnButton::enButtonA))
+		if (g_pad.IsPress(EnButton::enButtonB))
 		{
-			movespeed.y += 8.0f;
-			state = PlayerJump;
+			movespeed.y += 18.0f;
 		}
+		else
+		{
+			movespeed.y += 15.0f;
+		}
+		state = PlayerJump;
 	}
-	
+
 }
 
 void CPlayer::Died()

@@ -25,6 +25,10 @@ public:
 	{
 		return isHit;
 	}
+	bool GetWall()
+	{
+		return isWall;
+	}
 	bool GetGround()
 	{
 		return isGround;
@@ -44,6 +48,7 @@ private:
 	btRigidBody*			m_rigidBody;
 	btDefaultMotionState*	m_myMotionState;
 	bool isHit;					//天井と当たった？
+	bool isWall;				//壁と当たった？
 	bool isGround;				//床と当たっている？
 	const btCollisionObject* hitCollisionObject;//どのコリジョンと当たった？
 };

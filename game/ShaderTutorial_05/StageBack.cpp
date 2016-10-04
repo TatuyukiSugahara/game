@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "StageBack.h"
+#include "Stage.h"
 
 //コンストラクタ
 CStageBack::CStageBack()
@@ -10,6 +11,7 @@ CStageBack::CStageBack()
 	position.x = 0.0f;
 	position.y = 0.0f;
 	position.z = 0.0f;
+	targetPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 //デストラクタ
 CStageBack::~CStageBack()
@@ -23,9 +25,8 @@ void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 }
 //更新。
 void CStageBack::Update()
-{
-	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+{	
+	
 }
 //描画。
 void CStageBack::Render(
@@ -38,6 +39,11 @@ void CStageBack::Render(
 	int numDiffuseLight
 	)
 {
+	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	targetPos = g_stage.GetPlayer()->GetPos();
+	//ワールド行列の更新。
+	D3DXMatrixTranslation(&mWorld, targetPos.x, targetPos.y - position.y, targetPos.z);
+	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	model.Render(
 		pd3dDevice,
 		mWorld,

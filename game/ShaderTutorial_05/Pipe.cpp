@@ -1,32 +1,48 @@
 #include "stdafx.h"
 #include "Pipe.h"
+#include "PipeChip.h"
 
-//コンストラクタ
+using namespace std;
+
+
+//マップチップの配置情報のテーブル。
+SPipeChipLocInfo pipeChipLocInfoTable[] = {
+#include "locationPipe.h"
+};
+
 CPipe::CPipe()
 {
-	//初期化。
 
-	D3DXMatrixIdentity(&mWorld);
-	position.x = 3.0f;
-	position.y = 0.25f;
-	position.z = 0.0f;
 }
-//デストラクタ
 CPipe::~CPipe()
 {
+	for (auto& pipechip : pipeChipList){
+		delete pipechip;
+	}
 }
-//初期化。
 void CPipe::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "Asset/model/pipe.x");
+	//配置情報からマップを構築
+	tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
+	for (int a = 0; a < tableSize; a++)
+	{
+		//マップチップを生成
+		CPipeChip* pipeChip = new CPipeChip;
+		pipeChip->SetPos(pipeChipLocInfoTable[a].pos);
+		pipeChip->SetRot(pipeChipLocInfoTable[a].rotation);
+		pipeChip->SetScale(pipeChipLocInfoTable[a].scale);
+		pipeChip->Init(pipeChipLocInfoTable[a].modelName, pd3dDevice);
+		pipeChipList.push_back(pipeChip);
+	}
+
 }
-//更新。
 void CPipe::Update()
 {
-	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+	for (int a = 0; a < tableSize; a++)
+	{
+		pipeChipList[a]->Update();
+	}
 }
-//描画。
 void CPipe::Render(
 	LPDIRECT3DDEVICE9 pd3dDevice,
 	D3DXMATRIX viewMatrix,
@@ -37,21 +53,16 @@ void CPipe::Render(
 	int numDiffuseLight
 	)
 {
-	model.Render(
-		pd3dDevice,
-		mWorld,
-		mRotation,
-		viewMatrix,
-		projMatrix,
-		diffuseLightDirection,
-		diffuseLightColor,
-		ambientLight,
-		numDiffuseLight,
-		false
-		);
-}
-//開放。
-void CPipe::Release()
-{
-	model.Release();
+	for (int a = 0; a < tableSize; a++)
+	{
+		pipeChipList[a]->Render(
+			pd3dDevice,
+			viewMatrix,
+			projMatrix,
+			diffuseLightDirection,
+			diffuseLightColor,
+			ambientLight,
+			numDiffuseLight
+			);
+	}
 }

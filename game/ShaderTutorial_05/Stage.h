@@ -14,8 +14,9 @@
 #include "Map.h"
 #include "ShadowMap.h"
 #include "Goal.h"
+#include "Saboten.h"
 
-#define MAX_COLLISION 100
+#define MAX_COLLISION 500
 
 //オブジェクトの詳細
 struct SCollisionInfo {
@@ -40,7 +41,7 @@ public:
 	void Add2DRigidBody(int arraySize);		//2Dあたり判定追加
 	Camera* GetCamera()
 	{
-		return& camera;
+		return&camera;
 	}
 	CPlayer* GetPlayer()
 	{
@@ -61,6 +62,14 @@ public:
 	CShadowMap* GetShadow()
 	{
 		return&shadow;
+	}
+	CSaboten* GetSabo()
+	{
+		return &sabo;
+	}
+	CNBlock* GetNBlock()
+	{
+		return &nblock;
 	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
@@ -83,6 +92,7 @@ protected:
 	CMap map;					//マップ作製
 	CShadowMap shadow;			//影
 	CGoal goal;					//ゴール
+	CSaboten sabo;				//サボテン
 };
 
 extern CStage g_stage;

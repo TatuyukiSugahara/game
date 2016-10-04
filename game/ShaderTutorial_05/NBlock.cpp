@@ -12,7 +12,7 @@ CNBlock::CNBlock()
 	//初期化。
 
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 6.0f;
+	position.x = 14.0f;
 	position.y = 4.0f;
 	position.z = 0.0f;
 }
@@ -26,11 +26,16 @@ void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	CreateCollision2D();
 	Add2DRigidBody();
 	model.Init(pd3dDevice, "Asset/model/block.x");
+	state = yes;
 }
 //更新。
 void CNBlock::Update()
 {
-	
+	if (state == no)
+	{
+		Remove2DRigidBody();
+	}
+
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }
@@ -45,18 +50,21 @@ void CNBlock::Render(
 	int numDiffuseLight
 	)
 {
-	model.Render(
-		pd3dDevice,
-		mWorld,
-		mRotation,
-		viewMatrix,
-		projMatrix,
-		diffuseLightDirection,
-		diffuseLightColor,
-		ambientLight,
-		numDiffuseLight,
-		false
-		);
+	if (state == yes)		//出現しているなら
+	{
+		model.Render(
+			pd3dDevice,
+			mWorld,
+			mRotation,
+			viewMatrix,
+			projMatrix,
+			diffuseLightDirection,
+			diffuseLightColor,
+			ambientLight,
+			numDiffuseLight,
+			false
+			);
+	}
 }
 //開放。
 void CNBlock::Release()
@@ -90,5 +98,13 @@ void CNBlock::Add2DRigidBody()//ワールドに追加。
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
 		g_bulletPhysics.AddRigidBody(m_rigidBody2Dblock);
+	}
+}
+
+void CNBlock::Remove2DRigidBody()
+{
+	if (m_rigidBody2Dblock != NULL)
+	{
+		g_bulletPhysics.RemoveRigidBody(m_rigidBody2Dblock);
 	}
 }

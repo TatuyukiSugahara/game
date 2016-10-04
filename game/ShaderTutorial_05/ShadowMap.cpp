@@ -8,14 +8,13 @@ extern LPDIRECT3DTEXTURE9 g_shadow;
 void CShadowMap::Create(int w, int h)
 {
 	D3DXMatrixIdentity(&mRot);
-	model.Init(g_pd3dDevice, "Asset/model/unitychan.x");
 	RenderTarget.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
 	this->h = h;
 	this->w = w;
 
+
 	m_near = 1.0f;
 	m_far = 100.0f;
-
 
 	LPD3DXBUFFER  compileErrorBuffer = NULL;
 	HRESULT hr = D3DXCreateEffectFromFile(
@@ -69,18 +68,11 @@ void CShadowMap::Draw(
 	D3DXMatrixPerspectiveFovLH(&m_projMatrix, D3DXToRadian(120.0f), aspect, m_near, m_far);
 	CreateLight(m_projMatrix);
 
-	ID3DXEffect* backup = model.GetEffect();
-	model.SetEffect(m_pEffect);
-	/*float farnear[2];
-	farnear[0] = g_stage.GetCamera()->GetFar();
-	farnear[1] = g_stage.GetCamera()->GetNear();
-	m_pEffect->SetFloatArray("g_mWVP", farnear, 2);
-	m_pEffect->SetMatrix("g_mWVP", &m_LVPMatrix);*/
-	model.Render
+	ID3DXEffect* backup = g_stage.GetPlayer()->GetEffect();
+	g_stage.GetPlayer()->SetEffect(m_pEffect);
+	g_stage.GetPlayer()->Render
 		(
 		pd3dDevice,
-		g_stage.GetPlayer()->GetWMatrix(),
-		g_stage.GetPlayer()->GetRot(),
 		viewMatrix,
 		projMatrix,
 		diffuseLightDirection,
@@ -89,7 +81,7 @@ void CShadowMap::Draw(
 		numDiffuseLight,
 		true
 		);
-	model.SetEffect(backup);
+	g_stage.GetPlayer()->SetEffect(backup);
 	g_pd3dDevice->SetRenderTarget(0, m_Backbuffer);
 	g_pd3dDevice->SetDepthStencilSurface(m_BackZ);
 	g_pd3dDevice->SetViewport(&m_viewport);

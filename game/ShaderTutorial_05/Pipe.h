@@ -1,15 +1,16 @@
 #pragma once
-#include "Model.h"
-//土管
+
+class CPipeChip;
+
+/*!
+* @brief	マップクラス。
+*/
 class CPipe {
 public:
-	//コンストラクタ
+
 	CPipe();
-	//デストラクタ
 	~CPipe();
-	//初期化。
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
-	//更新。
 	void Update();
 	//描画。
 	void Render(
@@ -21,16 +22,11 @@ public:
 		D3DXVECTOR4	 ambientLight,
 		int numDiffuseLight
 		);
-	//開放。
-	void Release();
-	//座標を設定。
-	void SetPosition(D3DXVECTOR3 pos)
+	int GetSize()
 	{
-		position = pos;
+		return tableSize;
 	}
 private:
-	D3DXVECTOR3				position;		//座標。。
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	Model					model;			//モデル。
+	std::vector<CPipeChip*> pipeChipList;	//マップチップのリスト。
+	int tableSize;
 };

@@ -74,6 +74,18 @@ public:
 	{
 		return *IsIntersect.getCollisionObj();
 	}
+	Model GetModel()
+	{
+		return model;
+	}
+	void SetEffect(ID3DXEffect* effect)
+	{
+		model.SetEffect(effect);
+	}
+	ID3DXEffect* GetEffect()
+	{
+		return model.GetEffect();
+	}
 	void Move2D();
 	void Move3D();
 	void Jump();
@@ -91,10 +103,12 @@ private:
 	const float				MOVE_SPEED = 5.0f;	//移動速度
 	float					radius;
 	PlayerState				state;				//プレイヤーの状態
+	D3DXQUATERNION			rotation;		//回転クォータニオン
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;
 	//ターン
 	float					m_currentAngleY;
 	float					m_targetAngleY;
+
 };

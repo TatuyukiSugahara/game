@@ -1,6 +1,12 @@
 #pragma once
 #include "Model.h"
 
+enum BlockState
+{
+	yes,		//ブロックある
+	no			//ブロックない
+};
+
 //ノーマルブロック
 class CNBlock {
 public:
@@ -31,11 +37,21 @@ public:
 	}
 	void CreateCollision2D();				//2Dあたり判定
 	void Add2DRigidBody();					//2Dあたり判定追加
+	void Remove2DRigidBody();				//2Dあたり判定削除
+	btRigidBody *Get2DBlock()
+	{
+		return m_rigidBody2Dblock;
+	}
+	void SetState(BlockState sta)
+	{
+		state = sta;
+	}
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
+	BlockState				state;
 	//bulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_blockboxShape;	//地面のコリジョン形状。
 	btRigidBody*		m_rigidBody3Dblock;	//剛体3D。

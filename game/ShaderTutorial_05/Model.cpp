@@ -147,15 +147,13 @@ void Model::Render(
 		effect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage.GetCamera()->GetEyePt());
 
 		effect->SetInt("g_ShadowReceiverFlag", ShadowReceiverFlag);//影フラグ
-		//if (ShadowReceiverFlag == true)
-		{
-			effect->SetTexture("g_shadowTexture", g_shadow);//影
-			effect->SetMatrix("g_lightVPMatrix", &g_stage.GetShadow()->Getlvpmatrix());
-		}
+		
+		effect->SetTexture("g_shadowTexture", g_shadow);//影
+		effect->SetMatrix("g_lightVPMatrix", &g_stage.GetShadow()->Getlvpmatrix());
 		
 		for (DWORD i = 0; i < numMaterial; i++)
 		{
-			effect->SetTexture("g_diffuseTexture", tex->GetTextureDX());
+			effect->SetTexture("g_diffuseTexture", tex[i].GetTextureDX());
 			effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 			// Draw the mesh subset
 			mesh->DrawSubset(i);

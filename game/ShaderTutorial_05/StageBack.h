@@ -28,4 +28,5 @@ private:
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
+	D3DXVECTOR3				targetPos;		//ターゲットのポジション
 };

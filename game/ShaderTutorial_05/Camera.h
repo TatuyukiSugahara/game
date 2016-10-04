@@ -13,6 +13,7 @@ private:
 	D3DXVECTOR3				vLookatPt;			//!<カメラの注視点。
 	D3DXVECTOR3				vUpVec;				//!<カメラの上方向。
 	D3DXVECTOR3				toPos;				//!<視点から注視点のベクトル
+	D3DXVECTOR3				cameradir;			//カメラの方向
 	float					Far;				//!<遠平面。
 	float					Near;				//!<近平面。
 	float					aspect;				//!<アスペクト比
@@ -117,6 +118,10 @@ public:
 	/*!
 	 *@brief	カメラの更新処理。
 	 */
+	D3DXVECTOR3 GetCameraDir()
+	{
+		return cameradir;
+	}
 	void Update();
 	/*!
 	 *@brief	カメラの初期化。

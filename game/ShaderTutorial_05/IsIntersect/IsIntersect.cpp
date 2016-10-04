@@ -163,6 +163,7 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position, float radius)
 	
 	addPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	isHit = false;//天井と当たっていない
+	isWall = false;//壁と当たっていない
 	isGround = false;//床と当たっていない		
 	m_radius = radius;						//バウンディングスフィアの半径。
 	//コリジョン初期化。
@@ -186,7 +187,7 @@ void CIsIntersect::Intersect(
 	std::vector<IPlayerCollisionCallback*>& callbackList)
 {
 	static float deltaTime = 1.0f / 60.0f;
-	static D3DXVECTOR3 gravity(0.0f, -9.8f, 0.0f);
+	static D3DXVECTOR3 gravity(0.0f, -30.0f, 0.0f);
 	D3DXVECTOR3 addGravity = gravity;
 	addGravity *= (deltaTime);
 	*m_moveSpeed += (addGravity);
@@ -213,6 +214,7 @@ void CIsIntersect::Intersect(
 			if (callback.isHit) {
 				//当たった。
 				//壁。
+				isWall = true;
 				addPos.x = callback.hitPos.x - m_position->x;
 				addPos.z = callback.hitPos.z - m_position->z;
 
@@ -316,8 +318,6 @@ void CIsIntersect::Intersect(
 		
 		SweepResultCeiling callback;
 		if (fabsf(addPos.y) > 0.0001f) {
-
-
 			end.setOrigin(btVector3(btStart.x(), btStart.y() + addPos.y, btStart.z()));
 
 			g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);

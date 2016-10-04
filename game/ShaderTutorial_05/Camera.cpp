@@ -26,20 +26,14 @@ void Camera::Update()
 	{
 		RotTransversal(g_pad.GetRStickXF() * 0.1f);
 	}
-	/*if (fabs(g_pad.GetRStickXF()) < 0.0f)
-	{
-		RotTransversal(0.05);
-	}*/
 	if (fabs(g_pad.GetRStickYF()) > 0.0f)
 	{
 		RotLongitudinal(g_pad.GetRStickYF() * 0.1f);
 	}
-	/*if (fabs(g_pad.GetRStickYF()) < 0.0f)
-	{
-		RotLongitudinal(0.05);
-	}*/
 	
-	
+	cameradir = toPos;
+	cameradir.y = 0.0f;
+	D3DXVec3Normalize(&cameradir, &cameradir);
 
 	D3DXMatrixLookAtLH(&viewMatrix, &vEyePt, &vLookatPt, &vUpVec);
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, D3DX_PI / 4, aspect, Near, Far);
@@ -51,6 +45,7 @@ void Camera::Init(CPlayer* player)
 	vLookatPt = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	vUpVec = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	toPos = vEyePt - vLookatPt;						//Ž‹“_ - ’Ž‹“_
+	cameradir = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	this->player = player;
 
 	Update();

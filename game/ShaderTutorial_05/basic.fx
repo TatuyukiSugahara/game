@@ -113,7 +113,10 @@ float4 PSMain( VS_OUTPUT In ) : COLOR
 		posInLVP.xyz /= posInLVP.w;
 		//uvÀ•W‚É•ÏŠ·B
 		float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy + float2(0.5f, 0.5f);
-		color *= tex2D(g_shadowTextureSampler, shadowMapUV);
+		if((shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f) && (shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f))
+		{
+			color *= tex2D(g_shadowTextureSampler, shadowMapUV);
+		}
 	}
 	color.xyz *= lig.xyz;
 	return color;

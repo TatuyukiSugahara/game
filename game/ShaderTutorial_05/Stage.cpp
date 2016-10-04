@@ -45,6 +45,8 @@ void CStage::Initialize()
 	goal.Init(g_pd3dDevice);
 	//影初期化
 	shadow.Create(512, 512);
+	//サボテン初期化
+	sabo.Init(g_pd3dDevice);
 	//カメラの初期化。
 	camera.Init(&player);
 	
@@ -80,7 +82,9 @@ void CStage::Update()
 	//土管更新
 	pipe.Update();
 	//ゴール更新
-	goal.Update();
+	//goal.Update();
+	//サボテン更新
+	sabo.Update();
 	//カメラの更新
 	camera.Update();
 }
@@ -195,6 +199,16 @@ void CStage::Render()
 		light.GetambientLight(),
 		light.GetLightNum()
 	);
+	//サボテン描画
+	sabo.Render(
+		g_pd3dDevice,
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		light.GetLightDirection(),
+		light.GetLightColor(),
+		light.GetambientLight(),
+		light.GetLightNum()
+		);
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
@@ -215,8 +229,6 @@ void CStage::Release()
 	kinoko.Release();
 	//プレイヤーリリース
 	player.Release();
-	//土管リリース
-	pipe.Release();
 }
 
 void CStage::CreateCollision2D()

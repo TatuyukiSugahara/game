@@ -31,7 +31,7 @@ void CMap::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 		CMapChip* mapChip = new CMapChip;
 		mapChip->SetPos(mapChipLocInfoTable[a].pos);
 		mapChip->SetRot(mapChipLocInfoTable[a].rotation);
-		mapChip->Init(mapChipLocInfoTable->modelName, pd3dDevice);
+		mapChip->Init(mapChipLocInfoTable[a].modelName, pd3dDevice);
 		mapChipList.push_back(mapChip);
 	}
 	
