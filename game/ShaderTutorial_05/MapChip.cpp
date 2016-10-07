@@ -6,6 +6,7 @@ CMapChip::CMapChip()
 {
 	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXMatrixIdentity(&mRot);
+	D3DXMatrixIdentity(&mWorld);
 }
 
 CMapChip::~CMapChip()
@@ -19,17 +20,16 @@ void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	sprintf(modelPath, "Asset/model/%s.X", name);
 	model.Init(pd3dDevice, modelPath);
 	model.SetShadowReceiverFlag(true);
-	//ワールド行列のバッファを作成。
-	D3DXMATRIX mTrans;
-	D3DXMatrixTranslation(&mTrans, position.x, position.y, position.z);
-	D3DXMatrixRotationQuaternion(&mRot, &rotation);
-	D3DXMatrixMultiply(&mWorld, &mRot, &mTrans);
+	
 }
 
 void CMapChip::Update()
 {
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+	D3DXMatrixRotationQuaternion(&mRot, &rotation);
+	mWorld = mRot * mWorld;
+	
 	
 }
 void CMapChip::Render(

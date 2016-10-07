@@ -16,7 +16,7 @@
 #include "Goal.h"
 #include "Saboten.h"
 
-#define MAX_COLLISION 500
+#define MAX_COLLISION 100
 
 //オブジェクトの詳細
 struct SCollisionInfo {
@@ -70,6 +70,10 @@ public:
 	CNBlock* GetNBlock()
 	{
 		return &nblock;
+	}
+	CPipe* GetPipe()
+	{
+		return &pipe;
 	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。

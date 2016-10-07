@@ -7,10 +7,10 @@
 class IPlayerCollisionCallback;
 
 enum PlayerState{
-	PlayerStay,
-	PlayerWalk,
-	PlayerRun,
-	PlayerJump,
+	PlayerStay,			//ステイ
+	PlayerWalk,			//歩く
+	PlayerRun,			//走る
+	PlayerJump,			//ジャンプ
 };
 
 //プレイヤークラス。
@@ -70,9 +70,9 @@ public:
 	{
 		return mRotation;
 	}
-	btCollisionObject GetCollisionObj()
+	CIsIntersect GetIsIntersect()
 	{
-		return *IsIntersect.getCollisionObj();
+		return IsIntersect;
 	}
 	Model GetModel()
 	{

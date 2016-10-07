@@ -190,7 +190,7 @@ void CStage::Render()
 		light.GetLightNum()
 	);
 	//ƒS[ƒ‹•`‰æ
-	goal.Render(
+	/*goal.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -198,7 +198,7 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-	);
+	);*/
 	//ƒTƒ{ƒeƒ“•`‰æ
 	sabo.Render(
 		g_pd3dDevice,

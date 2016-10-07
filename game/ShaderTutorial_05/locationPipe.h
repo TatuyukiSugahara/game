@@ -89,3 +89,17 @@
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 	D3DXVECTOR3(1.00f, 1.50f, 1.00f),  //スケール
 },
+//pipe
+{
+	"pipe",
+	D3DXVECTOR3(-66.01f, 58.75f, 0.00f),             //平行移動
+	D3DXQUATERNION(1.00f, 0.00f, 0.00f, 0.00f ),  //回転
+	D3DXVECTOR3(2.20f, 1.10f, 2.20f),  //スケール
+},
+//pipe
+{
+	"pipe",
+	D3DXVECTOR3(-26.30f, 37.70f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+	D3DXVECTOR3(2.20f, 1.10f, 2.20f),  //スケール
+},

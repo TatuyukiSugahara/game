@@ -271,6 +271,7 @@ void CIsIntersect::Intersect(
 			//“–‚½‚Á‚½B
 			//’n–ÊB
 			isGround = true;//°‚Æ“–‚½‚Á‚½
+			hitCollisionObject = callback.hitCollisionObject;
 			m_moveSpeed->y = 0.0f;
 			D3DXVECTOR3 Circle;
 			float x = 0.0f;

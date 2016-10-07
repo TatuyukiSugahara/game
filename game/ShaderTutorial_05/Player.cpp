@@ -68,7 +68,6 @@ void CPlayer::Update()
 		g_stage.GetNBlock()->SetState(no);
 	}
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_position‚©‚ç‚ÌˆÚ“®—Ê(‚ ‚½‚è”»’è)
-
 	//AABB
 	m_aabbMax += IsIntersect.GetAddPos();
 	m_aabbMin += IsIntersect.GetAddPos();

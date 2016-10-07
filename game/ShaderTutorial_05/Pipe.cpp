@@ -1,18 +1,24 @@
 #include "stdafx.h"
 #include "Pipe.h"
 #include "PipeChip.h"
+#include "Stage.h"
 
 using namespace std;
 
 
-//マップチップの配置情報のテーブル。
+//土管チップの配置情報のテーブル。
 SPipeChipLocInfo pipeChipLocInfoTable[] = {
 #include "locationPipe.h"
+};
+//あたり判定
+SCollisionInfo collisionInfoTable2Dpipe[] = {
+#include "Collision2D_Pipe.h"
 };
 
 CPipe::CPipe()
 {
-
+	nextPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	isPipe = false;
 }
 CPipe::~CPipe()
 {
@@ -34,6 +40,9 @@ void CPipe::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 		pipeChip->Init(pipeChipLocInfoTable[a].modelName, pd3dDevice);
 		pipeChipList.push_back(pipeChip);
 	}
+	arraySize = ARRAYSIZE(collisionInfoTable2Dpipe);
+	CreateCollision2D();
+	Add2DRigidBody(arraySize);
 
 }
 void CPipe::Update()
@@ -42,6 +51,38 @@ void CPipe::Update()
 	{
 		pipeChipList[a]->Update();
 	}
+	if (g_stage.GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[4]
+		&& g_stage.GetPlayer()->GetIsIntersect().GetGround() == true
+		&& g_pad.IsTrigger(enButtonDown))
+	{
+	
+			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[12].pos.x
+				, collisionInfoTable2Dpipe[12].pos.y - g_stage.GetPlayer()->GetPos().y
+				, collisionInfoTable2Dpipe[12].pos.z);
+			isPipe = true;
+			Remove2DRigidBody(arraySize);
+	}
+	if (g_stage.GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[13]
+		&& g_stage.GetPlayer()->GetIsIntersect().GetGround() == true
+		&& g_pad.IsTrigger(enButtonDown))
+	{
+		nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[5].pos.x
+			, collisionInfoTable2Dpipe[5].pos.y + collisionInfoTable2Dpipe[5].pos.y
+			, collisionInfoTable2Dpipe[5].pos.z);
+		isPipe = true;
+		Remove2DRigidBody(arraySize);
+	}
+
+	if (isPipe == true)
+	{
+		count++;
+		if (count >= 30)
+		{
+			g_stage.GetPlayer()->SetPosition(nextPos);
+			isPipe = false;
+		}
+	}
+
 }
 void CPipe::Render(
 	LPDIRECT3DDEVICE9 pd3dDevice,
@@ -64,5 +105,60 @@ void CPipe::Render(
 			ambientLight,
 			numDiffuseLight
 			);
+	}
+}
+
+void CPipe::CreateCollision2D()
+{
+	if (arraySize >= MAX_COLLISION)
+	{
+		std::abort();
+	}
+	for (int i = 0; i < arraySize; i++) {
+		SCollisionInfo& collision = collisionInfoTable2Dpipe[i];
+		//ここで剛体とかを登録する。
+		//剛体を初期化。
+		{
+			//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
+			m_pipeboxShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
+			btTransform groundTransform;
+			groundTransform.setIdentity();
+			groundTransform.setOrigin(btVector3(collision.pos.x, collision.pos.y, collision.pos.z));
+			float mass = 0.0f;
+
+			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
+			m_myMotionState = new btDefaultMotionState(groundTransform);
+			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_pipeboxShape[i], btVector3(0, 0, 0));
+			m_rigidBody2Dpipe[i] = new btRigidBody(rbInfo);
+
+			//ワールドに追加。
+			//g_bulletPhysics.AddRigidBody(m_rigidBody2Dpipe[i]);
+
+		}
+	}
+}
+
+void CPipe::Add2DRigidBody(int arraySize)//ワールドに追加。
+{
+	if (!m_isAdd2DCollision){
+		m_isAdd2DCollision = true;
+		arraySize;
+		for (int i = 0; i < arraySize; i++)
+		{
+			g_bulletPhysics.AddRigidBody(m_rigidBody2Dpipe[i]);
+		}
+	}
+}
+
+void CPipe::Remove2DRigidBody(int arraySize)//ワールドから削除
+{
+	if (m_isAdd2DCollision){
+		m_isAdd2DCollision = false;
+		arraySize;
+		for (int i = 0; i < arraySize; i++)
+		{
+			if (m_rigidBody2Dpipe[i] != NULL)
+				g_bulletPhysics.RemoveRigidBody(m_rigidBody2Dpipe[i]);
+		}
 	}
 }
