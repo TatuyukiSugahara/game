@@ -7,6 +7,7 @@ CPad					g_pad;
 
 LPDIRECT3D9             g_pD3D = NULL;		
 LPDIRECT3DDEVICE9       g_pd3dDevice = NULL;
+EffectManager*			g_effectManager = NULL;
 
 extern void Init();
 extern void Render();

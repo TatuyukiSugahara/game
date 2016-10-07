@@ -80,6 +80,8 @@ void CPipe::Update()
 		{
 			g_stage.GetPlayer()->SetPosition(nextPos);
 			isPipe = false;
+			Add2DRigidBody(arraySize);
+			count = 0;
 		}
 	}
 

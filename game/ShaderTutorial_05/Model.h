@@ -1,5 +1,5 @@
 #pragma once
-#include "Texture.h"
+#include "Frame\Texture.h"
 
 class Model {
 public:

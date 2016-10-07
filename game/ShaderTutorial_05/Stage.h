@@ -43,6 +43,10 @@ public:
 	{
 		return&camera;
 	}
+	CLight* GetLight()
+	{
+		return &light;
+	}
 	CPlayer* GetPlayer()
 	{
 		return &player;

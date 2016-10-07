@@ -158,6 +158,11 @@
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Frame\Animation.cpp" />
+    <ClCompile Include="Frame\EffectManager.cpp" />
+    <ClCompile Include="Frame\SkinModel.cpp" />
+    <ClCompile Include="Frame\SkinModelData.cpp" />
+    <ClCompile Include="Frame\Texture.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="HatenaBox.cpp" />
     <ClCompile Include="IsIntersect\IsIntersect.cpp" />
@@ -186,7 +191,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tk\tkEnginePreCompile.cpp" />
     <ClCompile Include="Turn.cpp" />
   </ItemGroup>
@@ -195,6 +199,11 @@
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Frame\Animation.h" />
+    <ClInclude Include="Frame\EffectManager.h" />
+    <ClInclude Include="Frame\SkinModel.h" />
+    <ClInclude Include="Frame\SkinModelData.h" />
+    <ClInclude Include="Frame\Texture.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="HatenaBox.h" />
     <ClInclude Include="IsIntersect\IPlayerCollisionCallback.h" />
@@ -218,7 +227,6 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageBack.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="tk\tkAssert.h" />
     <ClInclude Include="tk\tkEnginePreCompile.h" />
     <ClInclude Include="tk\tkNoncopyable.h" />

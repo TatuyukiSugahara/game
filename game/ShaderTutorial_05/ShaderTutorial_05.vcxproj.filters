@@ -28,6 +28,9 @@
     <Filter Include="ソース ファイル\IsIntersect">
       <UniqueIdentifier>{d3660505-4980-48d9-8457-7f752a1c3b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Frame">
+      <UniqueIdentifier>{beb15e38-c9a4-4ee2-a2ac-e8bb30b7b2d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,9 +93,6 @@
     <ClCompile Include="Stage.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MapChip.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -119,6 +119,21 @@
     </ClCompile>
     <ClCompile Include="PipeChip.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\Texture.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\SkinModel.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\SkinModelData.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\Animation.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\EffectManager.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +206,6 @@
     <ClInclude Include="Pipe.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MapChip.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
@@ -220,6 +232,21 @@
     </ClInclude>
     <ClInclude Include="PipeChip.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\Texture.h">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\SkinModel.h">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\SkinModelData.h">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\Animation.h">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\EffectManager.h">
+      <Filter>ソース ファイル\Frame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
