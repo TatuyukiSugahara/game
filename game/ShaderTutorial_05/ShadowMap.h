@@ -3,6 +3,8 @@
 #include"RenderTarget.h"
 #include "Model.h"
 
+extern LPDIRECT3DTEXTURE9 g_shadow;
+
 class CShadowMap
 {
 public:
@@ -15,13 +17,8 @@ public:
 	void Create(int w, int h);
 	void CreateLight(D3DXMATRIX);
 	void Draw(
-		LPDIRECT3DDEVICE9 pd3dDevice,
 		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix,
-		D3DXVECTOR4* diffuseLightDirection,
-		D3DXVECTOR4* diffuseLightColor,
-		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
+		D3DXMATRIX projMatrix
 		);
 	void Release();
 	D3DXMATRIX Getlvpmatrix()
@@ -41,6 +38,10 @@ public:
 	void SetEffect(ID3DXEffect* effect)
 	{
 		m_pEffect = effect;
+	}
+	ID3DXEffect* GetEffect()
+	{
+		return m_pEffect;
 	}
 	/*!
 	* @brief	ãﬂïΩñ ÅB
@@ -63,7 +64,6 @@ private:
 	int w, h;
 
 	CRenderTarget RenderTarget;
-	Model		  model;
 
 	D3DXVECTOR3 m_lightPosition;
 	D3DXVECTOR3 m_lightDirection;

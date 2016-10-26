@@ -22,7 +22,7 @@
 #include <map>
 #include <string>
 
-#include "Camera.h"
 #include "Frame\SkinModel.h"
 #include "Frame\SkinModelData.h"
 #include "Frame\Animation.h"
+#include "Light.h"

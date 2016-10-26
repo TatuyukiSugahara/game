@@ -390,7 +390,7 @@ namespace {
 			{
 				if (pMeshContainer->pMaterials[iMaterial].pTextureFilename != NULL)
 				{
-					char* baseDir = "Assets/model/";
+					char* baseDir = "Asset/model/";
 					char filePath[64];
 					strcpy(filePath, baseDir);
 					strcat(filePath, pMeshContainer->pMaterials[iMaterial].pTextureFilename);
@@ -629,4 +629,34 @@ void SkinModelData::LoadModelData( const char* filePath, Animation* anim )
 void SkinModelData::UpdateBoneMatrix(const D3DXMATRIX& matWorld)
 {
 	UpdateFrameMatrices(frameRoot, &matWorld);
+}
+
+LPD3DXMESH SkinModelData::GetOrgMesh(LPD3DXFRAME frame) const
+{
+	D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)(frame->pMeshContainer);
+	if (pMeshContainer != nullptr) {
+		return pMeshContainer->pOrigMesh;
+	}
+	if (frame->pFrameSibling != nullptr) {
+		//ŒZ’í
+		LPD3DXMESH mesh = GetOrgMesh(frame->pFrameSibling);
+
+		if (mesh) {
+			return mesh;
+		}
+	}
+	if (frame->pFrameFirstChild != nullptr)
+	{
+		//Žq‹ŸB
+		LPD3DXMESH mesh = GetOrgMesh(frame->pFrameFirstChild);
+		if (mesh) {
+			return mesh;
+		}
+	}
+
+	return nullptr;
+}
+LPD3DXMESH SkinModelData::GetOrgMeshFirst() const
+{
+	return GetOrgMesh(frameRoot);
 }

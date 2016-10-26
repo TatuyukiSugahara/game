@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BallCollision.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
@@ -174,9 +175,15 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapChip.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Mohurun.cpp" />
     <ClCompile Include="NBlock.cpp" />
     <ClCompile Include="pad\KeyInput.cpp" />
     <ClCompile Include="pad\Pad.cpp" />
+    <ClCompile Include="Particle\IndexBuffer.cpp" />
+    <ClCompile Include="Particle\Particle.cpp" />
+    <ClCompile Include="Particle\ParticleEmitter.cpp" />
+    <ClCompile Include="Particle\Primitive.cpp" />
+    <ClCompile Include="Particle\VertexBuffer.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PipeChip.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -195,6 +202,7 @@
     <ClCompile Include="Turn.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallCollision.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
@@ -215,9 +223,15 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapChip.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Mohurun.h" />
     <ClInclude Include="NBlock.h" />
     <ClInclude Include="pad\KeyInput.h" />
     <ClInclude Include="pad\Pad.h" />
+    <ClInclude Include="Particle\IndexBuffer.h" />
+    <ClInclude Include="Particle\Particle.h" />
+    <ClInclude Include="Particle\ParticleEmitter.h" />
+    <ClInclude Include="Particle\Primitive.h" />
+    <ClInclude Include="Particle\VertexBuffer.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PipeChip.h" />
     <ClInclude Include="Player.h" />

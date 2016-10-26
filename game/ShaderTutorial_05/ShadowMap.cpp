@@ -2,8 +2,6 @@
 #include"ShadowMap.h"
 #include "Stage.h"
 
-extern LPDIRECT3DTEXTURE9 g_shadow;
-
 
 void CShadowMap::Create(int w, int h)
 {
@@ -15,33 +13,12 @@ void CShadowMap::Create(int w, int h)
 
 	m_near = 1.0f;
 	m_far = 100.0f;
-
-	LPD3DXBUFFER  compileErrorBuffer = NULL;
-	HRESULT hr = D3DXCreateEffectFromFile(
-		g_pd3dDevice,
-		"shadowMap.fx",
-		NULL,
-		NULL,
-		D3DXSHADER_DEBUG,
-		NULL,
-		&m_pEffect,
-		&compileErrorBuffer
-		);
-	if (FAILED(hr)) {
-		MessageBox(NULL, (char*)(compileErrorBuffer->GetBufferPointer()), "error", MB_OK);
-		abort();
-	}
 }
 
 
 void CShadowMap::Draw(
-	LPDIRECT3DDEVICE9 pd3dDevice,
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix,
-	D3DXVECTOR4* diffuseLightDirection,
-	D3DXVECTOR4* diffuseLightColor,
-	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
+	D3DXMATRIX projMatrix
 	)
 {
 
@@ -68,20 +45,12 @@ void CShadowMap::Draw(
 	D3DXMatrixPerspectiveFovLH(&m_projMatrix, D3DXToRadian(120.0f), aspect, m_near, m_far);
 	CreateLight(m_projMatrix);
 
-	ID3DXEffect* backup = g_stage.GetPlayer()->GetEffect();
-	g_stage.GetPlayer()->SetEffect(m_pEffect);
 	g_stage.GetPlayer()->Render
 		(
-		pd3dDevice,
 		viewMatrix,
 		projMatrix,
-		diffuseLightDirection,
-		diffuseLightColor,
-		ambientLight,
-		numDiffuseLight,
 		true
 		);
-	g_stage.GetPlayer()->SetEffect(backup);
 	g_pd3dDevice->SetRenderTarget(0, m_Backbuffer);
 	g_pd3dDevice->SetDepthStencilSurface(m_BackZ);
 	g_pd3dDevice->SetViewport(&m_viewport);

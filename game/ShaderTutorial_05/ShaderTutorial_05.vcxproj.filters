@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\Frame">
       <UniqueIdentifier>{beb15e38-c9a4-4ee2-a2ac-e8bb30b7b2d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{67bd749b-e8af-4474-a3cf-b185ba5f1d95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -134,6 +137,27 @@
     </ClCompile>
     <ClCompile Include="Frame\EffectManager.cpp">
       <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Mohurun.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BallCollision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\ParticleEmitter.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\Primitive.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\VertexBuffer.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\IndexBuffer.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\Particle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +271,27 @@
     </ClInclude>
     <ClInclude Include="Frame\EffectManager.h">
       <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Mohurun.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BallCollision.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\Particle.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\ParticleEmitter.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\Primitive.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\VertexBuffer.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\IndexBuffer.h">
+      <Filter>ソース ファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

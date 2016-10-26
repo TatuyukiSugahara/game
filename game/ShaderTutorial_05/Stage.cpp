@@ -31,6 +31,8 @@ void CStage::Initialize()
 	map.Init(g_pd3dDevice);
 	//プレイヤー初期化
 	player.Init(g_pd3dDevice);
+	//モフルンエネミー初期化
+	mohurun.Init();
 	//ブロック初期化
 	block.Init(g_pd3dDevice);
 	//nブロック初期化
@@ -62,8 +64,10 @@ void CStage::Update()
 	map.Update();
 	//プレイヤーを更新。
 	player.Update();
+	//モフルンエネミー更新
+	mohurun.Update();
 	//影更新
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(2.0f, 2.0f, 1.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(3.0f, 3.0f, 1.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
@@ -97,13 +101,8 @@ void CStage::Render()
 	g_pd3dDevice->BeginScene();
 	//影描画
 	shadow.Draw(
-		g_pd3dDevice,
 		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
+		camera.GetProjectionMatrix()
 		);
 	//ステージ背景描画
 	stageback.Render(
@@ -116,26 +115,15 @@ void CStage::Render()
 		lightback.GetLightNum()
 		);
 	//マップ描画
-	map.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-		);
+	map.Render();
 	//プレイヤーを描画
 	player.Render(
-		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum(),
 		false
 		);
+	//モフルンエネミー描画
+	mohurun.Render();
 	//ブロックを描画
 	/*block.Render(
 		g_pd3dDevice,
@@ -209,6 +197,7 @@ void CStage::Render()
 		light.GetambientLight(),
 		light.GetLightNum()
 		);
+	
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。

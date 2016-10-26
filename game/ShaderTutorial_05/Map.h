@@ -13,15 +13,7 @@ public:
 	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
 	void Update();
 	//ï`âÊÅB
-	void Render(
-		LPDIRECT3DDEVICE9 pd3dDevice,
-		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix,
-		D3DXVECTOR4* diffuseLightDirection,
-		D3DXVECTOR4* diffuseLightColor,
-		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
-		);
+	void Render();
 	int GetSize()
 	{
 		return tableSize;

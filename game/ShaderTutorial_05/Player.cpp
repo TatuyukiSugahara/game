@@ -27,18 +27,38 @@ CPlayer::~CPlayer()
 //初期化。
 void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "Asset/model/unitychan.x");
-	model.SetShadowReceiverFlag(false);
+	//ライトを初期化。
+	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
+	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-0.707f, 0.0f, -0.707f, 1.0f));
+	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, -0.707f, 1.0f));
+	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, -0.707f, 1.0f));
+
+	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
+	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
+	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
+	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
+	light.SetAmbientLight(D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
+
+	//モデルをロード。
+	modelData.LoadModelData("Asset/model/Unity.X", &animation);
+
+	skinmodel.Init(&modelData);
+	skinmodel.SetLight(&light);
+	animation.PlayAnimation(0, 0.3);
+
 	IsIntersect.CollisitionInitialize(&position,radius);//あたり判定初期化
 
 	//AABB
-	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
+	/*CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
 	m_aabbMin += position;
-	m_aabbMax += position;
+	m_aabbMax += position;*/
 	//ターン
 	m_currentAngleY = 0.0f;
 	m_targetAngleY = 0.0f;
 	turn.Initialize();
+	AnimationRun = false;			//アニメーションランしている？
+	skinmodel.SetShadowReceiverFlag(false);
+	skinmodel.SetDrawToShadowMap(false);
 }
 //更新。
 void CPlayer::Update()
@@ -48,7 +68,7 @@ void CPlayer::Update()
 	Jump();//ジャンプ
 	Died();//死亡
 	//天井と当たった？＆＆当たったのは,はてなボックス？
-	if (IsIntersect.gethit() == true 
+	if (IsIntersect.gethit() == true
 		&& IsIntersect.getCollisionObj() == g_stage.GetHatena()->Get2DHatena())
 	{
 		g_stage.GetHatena()->SetState(hit);
@@ -76,51 +96,45 @@ void CPlayer::Update()
 	if (fabs(D3DXVec3Length(&movespeed)) >= 0.001f && IsIntersect.GetGround() == true)
 	{
 		state = PlayerRun;
+		if (AnimationRun == false)//アニメーション状態?
+		{
+			animation.PlayAnimation(PlayerRun, 0.3);
+			AnimationRun = true;
+		}
 	}
-	else if (IsIntersect.GetGround())//地面についていて動いていない
+	else
+	{
+		AnimationRun = false;
+	}
+	if (IsIntersect.GetGround() && fabs(D3DXVec3Length(&movespeed)) <= 0.001f)//地面についていて動いていない
 	{
 		state = PlayerStay;
+		animation.PlayAnimation(PlayerStay, 0.3);
 	}
 
 	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+	animation.Update(1.0f / 60.0f);
+	skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(2.0f, 2.0f, 2.0f));
 }
 //描画。
 void CPlayer::Render(
-	LPDIRECT3DDEVICE9 pd3dDevice,
 	D3DXMATRIX viewMatrix,
 	D3DXMATRIX projMatrix,
-	D3DXVECTOR4* diffuseLightDirection,
-	D3DXVECTOR4* diffuseLightColor,
-	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight,
 	bool isDrawToShadowMap
 	)
 {
-	D3DXMATRIX mRot;
+	/*D3DXMATRIX mRot;
 	D3DXMATRIX AddRot;
 	D3DXMatrixRotationQuaternion(&mRot, &rotation);
 	D3DXMatrixRotationY(&AddRot, D3DXToRadian(-90.0f));
 	D3DXMatrixMultiply(&mRot, &mRot, &AddRot);
-	mWorld = mScale * mRot * mWorld;
-
-	model.Render(
-		pd3dDevice,
-		mWorld,
-		mRotation,
-		viewMatrix,
-		projMatrix,
-		diffuseLightDirection,
-		diffuseLightColor,
-		ambientLight,
-		numDiffuseLight,
-		isDrawToShadowMap
-		);
+	mWorld = mScale * mRot * mWorld;*/
+	skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);
 }
 //開放。
 void CPlayer::Release()
 {
-	model.Release();
+	
 }
 
 void CPlayer::Move2D()
@@ -184,6 +198,8 @@ void CPlayer::Jump()
 			movespeed.y += 15.0f;
 		}
 		state = PlayerJump;
+		animation.PlayAnimation(PlayerJump, 0.3);
+
 	}
 
 }
@@ -195,3 +211,4 @@ void CPlayer::Died()
 		PostQuitMessage(0);
 	}
 }
+

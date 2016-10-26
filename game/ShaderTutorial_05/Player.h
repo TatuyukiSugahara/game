@@ -26,13 +26,8 @@ public:
 	void Update();
 	//描画。
 	void Render(
-		LPDIRECT3DDEVICE9 pd3dDevice,
 		D3DXMATRIX viewMatrix,
 		D3DXMATRIX projMatrix,
-		D3DXVECTOR4* diffuseLightDirection,
-		D3DXVECTOR4* diffuseLightColor,
-		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight,
 		bool isDrawToShadowMap
 		);
 	//開放。
@@ -74,29 +69,28 @@ public:
 	{
 		return IsIntersect;
 	}
-	Model GetModel()
-	{
-		return model;
-	}
 	void SetEffect(ID3DXEffect* effect)
 	{
-		model.SetEffect(effect);
+		skinmodel.SetEffect(effect);
 	}
 	ID3DXEffect* GetEffect()
 	{
-		return model.GetEffect();
+		return skinmodel.GetEffect();
 	}
 	void Move2D();
 	void Move3D();
 	void Jump();
-	void Died();							//死亡
+	void Died();//死亡
 private:
 	D3DXVECTOR3				position;		//座標。
 	D3DXVECTOR3				movespeed;		//移動速度
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
-	D3DXMATRIX				mScale;			//スケールw a
-	Model					model;			//モデル。
+	D3DXMATRIX				mScale;			//スケールw
+	SkinModel skinmodel;
+	SkinModelData modelData;
+	Animation animation;
+	CLight	light;
 	CIsIntersect			IsIntersect;		//あたり判定
 	CTurn					turn;			//ターンクラス
 	std::vector<IPlayerCollisionCallback*>	callbackList;//
@@ -110,5 +104,5 @@ private:
 	//ターン
 	float					m_currentAngleY;
 	float					m_targetAngleY;
-
+	bool					AnimationRun;
 };

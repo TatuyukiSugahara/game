@@ -186,6 +186,7 @@ void CIsIntersect::Intersect(
 	D3DXVECTOR3* m_moveSpeed,
 	std::vector<IPlayerCollisionCallback*>& callbackList)
 {
+	isWall = false;
 	static float deltaTime = 1.0f / 60.0f;
 	static D3DXVECTOR3 gravity(0.0f, -30.0f, 0.0f);
 	D3DXVECTOR3 addGravity = gravity;
@@ -215,6 +216,7 @@ void CIsIntersect::Intersect(
 				//“–‚½‚Á‚½B
 				//•ÇB
 				isWall = true;
+				hitCollisionObject = callback.hitCollisionObject;
 				addPos.x = callback.hitPos.x - m_position->x;
 				addPos.z = callback.hitPos.z - m_position->z;
 

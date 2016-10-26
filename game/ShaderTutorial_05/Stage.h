@@ -15,6 +15,7 @@
 #include "ShadowMap.h"
 #include "Goal.h"
 #include "Saboten.h"
+#include "Mohurun.h"
 
 #define MAX_COLLISION 100
 
@@ -79,6 +80,10 @@ public:
 	{
 		return &pipe;
 	}
+	CMohurun* GetMohu()
+	{
+		return &mohurun;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -101,6 +106,7 @@ protected:
 	CShadowMap shadow;			//影
 	CGoal goal;					//ゴール
 	CSaboten sabo;				//サボテン
+	CMohurun mohurun;			//モフルンエネミー
 };
 
 extern CStage g_stage;

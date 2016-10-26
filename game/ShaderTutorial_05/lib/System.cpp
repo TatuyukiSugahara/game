@@ -34,6 +34,8 @@ void InitD3D(HWND hWnd)
 		D3DCREATE_HARDWARE_VERTEXPROCESSING,
 		&d3dpp, &g_pd3dDevice);
 
+	g_effectManager = new EffectManager;
+
 }
 //-----------------------------------------------------------------------------
 // メッセージプロシージャ。

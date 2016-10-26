@@ -57,6 +57,15 @@ public:
 	* @brief	ボーン行列を更新。
 	*/
 	void UpdateBoneMatrix( const D3DXMATRIX& matWorld );
+
+	/*!
+	* @brief	オリジナルメッシュを取得。
+	*/
+	LPD3DXMESH GetOrgMesh(LPD3DXFRAME frame) const;
+	/*!
+	* @brief	先頭のメッシュを取得。
+	*/
+	LPD3DXMESH GetOrgMeshFirst() const;
 private:
 	LPD3DXFRAME					frameRoot;		//フレームルート。
 	ID3DXAnimationController*   pAnimController;	//アニメーションコントローラ。

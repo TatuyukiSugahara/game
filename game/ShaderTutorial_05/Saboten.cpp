@@ -53,9 +53,6 @@ void CSaboten::Update()
 			exit(0);
 		}
 	}
-
-
-
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }

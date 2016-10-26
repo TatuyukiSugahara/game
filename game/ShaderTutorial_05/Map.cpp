@@ -10,7 +10,6 @@ SMapChipLocInfo mapChipLocInfoTable[] = {
 #include "locationInfo.h"
 };
 
-
 CMap::CMap()
 {
 
@@ -43,26 +42,10 @@ void CMap::Update()
 		mapChipList[a]->Update();
 	}
 }
-void CMap::Render(
-	LPDIRECT3DDEVICE9 pd3dDevice,
-	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix,
-	D3DXVECTOR4* diffuseLightDirection,
-	D3DXVECTOR4* diffuseLightColor,
-	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
-	)
+void CMap::Render()
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		mapChipList[a]->Render(
-			pd3dDevice,
-			viewMatrix,
-			projMatrix,
-			diffuseLightDirection,
-			diffuseLightColor,
-			ambientLight,
-			numDiffuseLight
-			);
+		mapChipList[a]->Render();
 	}
 }

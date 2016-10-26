@@ -16,15 +16,7 @@ public:
 	//更新。
 	void Update();
 	//描画。
-	void Render(
-		LPDIRECT3DDEVICE9 pd3dDevice,
-		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix,
-		D3DXVECTOR4* diffuseLightDirection,
-		D3DXVECTOR4* diffuseLightColor,
-		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
-		);
+	void Render();
 	void SetPos(D3DXVECTOR3 pos)
 	{
 		position=pos;
@@ -34,7 +26,10 @@ public:
 		rotation = rot;
 	}
 private:
-	Model								model;			//モデル。
+	SkinModel skinmodel;
+	SkinModelData modelData;
+	Animation animation;
+	CLight	light;
 	D3DXMATRIX							mRot;
 	D3DXVECTOR3							position;
 	D3DXQUATERNION						rotation;

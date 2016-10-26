@@ -45,4 +45,7 @@ void Terminate()
 {
 	//ステージリリース
 	g_stage.Release();
+	delete g_effectManager;
+	g_pd3dDevice->Release();
+	g_pD3D->Release();
 }
