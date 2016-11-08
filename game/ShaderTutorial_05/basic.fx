@@ -102,7 +102,7 @@ float4 PSMain( VS_OUTPUT In ) : COLOR
 			float3 L = -g_diffuseLightDirection[i].xyz;
 			float3 H = normalize(L + normalize(In.Eye));//ハーフベクトル
 			float3 N = normalize(In.normal);
-			lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f);
+			lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f) * g_diffuseLightColor[i].w;
 		}
 		lig += g_ambientLight;
 	}

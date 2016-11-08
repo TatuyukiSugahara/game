@@ -16,6 +16,8 @@
 #include "Goal.h"
 #include "Saboten.h"
 #include "Mohurun.h"
+#include "Sound\SoundEngine.h"
+#include "Sound\SoundSource.h"
 
 #define MAX_COLLISION 100
 
@@ -84,6 +86,10 @@ public:
 	{
 		return &mohurun;
 	}
+	CSoundEngine* GetSoundEngine()
+	{
+		return &soundengine;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -107,6 +113,8 @@ protected:
 	CGoal goal;					//ゴール
 	CSaboten sabo;				//サボテン
 	CMohurun mohurun;			//モフルンエネミー
+	CSoundEngine soundengine;
+	CSoundSource soundSource;
 };
 
-extern CStage g_stage;
+extern CStage* g_stage;

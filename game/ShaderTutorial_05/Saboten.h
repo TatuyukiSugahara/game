@@ -29,21 +29,9 @@ public:
 	{
 		position = pos;
 	}
-	btRigidBody *Get2Dsabo()
-	{
-		return m_rigidBody2Dsabo;
-	}
-	void CreateCollision2D();				//2Dあたり判定
-	void Add2DRigidBody();					//2Dあたり判定追加
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
-	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_saboboxShape;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dsabi;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dsabo;	//剛体2D。
-	btDefaultMotionState* m_myMotionState;
-	bool				m_isAdd2DCollision;
 };

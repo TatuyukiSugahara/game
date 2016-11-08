@@ -6,7 +6,7 @@ SCollisionInfo collisionInfoTable2D[] = {
 #include "Collision2D_stage01.h"
 };
 
-CStage g_stage;
+CStage* g_stage;
 
 /*!-----------------------------------------------------------------------------
 *@brief	ライトを更新。
@@ -23,6 +23,15 @@ void CStage::Initialize()
 	Add2DRigidBody(ARRAYSIZE(collisionInfoTable2D));
 	//ライトを初期化。
 	light.Init();
+	
+	//サウンドエンジン初期化
+	soundengine.Init();
+
+	//サウンドソースを初期化。
+	soundSource.InitStreaming("Asset/Sound/mario.wav");
+	soundSource.Play(true);
+	soundSource.SetVolume(0.5f);
+
 	//背景ライトを初期化
 	lightback.Init();
 	//ステージ背景初期化
@@ -50,7 +59,7 @@ void CStage::Initialize()
 	//サボテン初期化
 	sabo.Init(g_pd3dDevice);
 	//カメラの初期化。
-	camera.Init(&player);
+	camera.Init();
 	
 }
 
@@ -58,6 +67,10 @@ void CStage::Update()
 {
 	//ライトの更新。
 	UpdateLight();
+	//サウンドエンジン
+	soundengine.Update();
+	//サウンドソース更新
+	soundSource.Update();
 	//ステージ背景更新
 	stageback.Update();
 	//マップ更新
@@ -67,7 +80,7 @@ void CStage::Update()
 	//モフルンエネミー更新
 	mohurun.Update();
 	//影更新
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(3.0f, 3.0f, 1.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 10.0f, 0.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);

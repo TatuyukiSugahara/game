@@ -31,12 +31,19 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-
+#include <xaudio2.h>
+#include <x3daudio.h>
+#include <xaudio2fx.h>
+#include <mmiscapi.h>
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "X3daudio.lib")
 
 #include "typedef.h"
 #include "tkAssert.h"
 #include "tkNoncopyable.h"
+#include "tkLog.h"
 #include "..\pad\KeyInput.h"
+
 
 
 

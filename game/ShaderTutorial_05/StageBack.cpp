@@ -40,7 +40,7 @@ void CStageBack::Render(
 	)
 {
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	targetPos = g_stage.GetPlayer()->GetPos();
+	targetPos = g_stage->GetPlayer()->GetPos();
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, targetPos.x, targetPos.y - position.y, targetPos.z);
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

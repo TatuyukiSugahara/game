@@ -41,10 +41,10 @@ void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 void CKinoko::Update()
 {
 	/*AABB*/
-	if (m_aabbMax.x > g_stage.GetPlayer()->GetAABBMin().x
-		&& m_aabbMin.x < g_stage.GetPlayer()->GetAABBMax().x
-		&& m_aabbMax.y > g_stage.GetPlayer()->GetAABBMin().y
-		&& m_aabbMin.y < g_stage.GetPlayer()->GetAABBMax().y
+	if (m_aabbMax.x > g_stage->GetPlayer()->GetAABBMin().x
+		&& m_aabbMin.x < g_stage->GetPlayer()->GetAABBMax().x
+		&& m_aabbMax.y > g_stage->GetPlayer()->GetAABBMin().y
+		&& m_aabbMin.y < g_stage->GetPlayer()->GetAABBMax().y
 
 		)
 	{

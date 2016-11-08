@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "Animation.h"
 
+Animation::~Animation()
+{
+	if (pAnimController != nullptr){
+		pAnimController->Release();
+	}
+}
 void Animation::Init(ID3DXAnimationController* anim)
 {
 	pAnimController = anim;
@@ -8,16 +14,18 @@ void Animation::Init(ID3DXAnimationController* anim)
 	pAnimController->GetAnimationSet(0, &animSet);
 	numAnimSet = pAnimController->GetMaxNumAnimationSets();
 	numMaxTracks = pAnimController->GetMaxNumTracks();
-	blendRateTable.reset( new float[numMaxTracks] );
+	blendRateTable.reset(new float[numMaxTracks]);
 	animationEndTime.reset(new double[numAnimSet]);
 	animationSets.reset(new ID3DXAnimationSet*[numAnimSet]);
-	for( int i = 0; i < numMaxTracks; i++ ){
+	animationLoopFlags.reset(new bool[numAnimSet]);
+	for (int i = 0; i < numMaxTracks; i++){
 		blendRateTable[i] = 1.0f;
 	}
 	//アニメーションセットを初期化。
 	for (int i = 0; i < numAnimSet; i++) {
 		pAnimController->GetAnimationSet(i, &animationSets[i]);
 		animationEndTime[i] = -1.0;
+		animationLoopFlags[i] = true;
 	}
 	localAnimationTime = 0.0;
 }
@@ -26,11 +34,14 @@ void Animation::PlayAnimation(int animationSetIndex)
 {
 	if (animationSetIndex < numAnimSet) {
 		if (pAnimController) {
+			isAnimEnd = false;
+			isInterpolate = false;
+			playAnimationRequest.clear();
 			currentAnimationSetNo = animationSetIndex;
 			currentTrackNo = 0;
 			//0番目以外のトラックは無効にする。
 			for (int i = 1; i < numMaxTracks; i++) {
-				pAnimController->SetTrackEnable(i,  FALSE);
+				pAnimController->SetTrackEnable(i, FALSE);
 			}
 			pAnimController->SetTrackWeight(0, 1.0f);
 			pAnimController->SetTrackAnimationSet(currentTrackNo, animationSets[currentAnimationSetNo]);
@@ -39,52 +50,77 @@ void Animation::PlayAnimation(int animationSetIndex)
 			localAnimationTime = 0.0;
 		}
 	}
-	else {
-		//アニメーションのインデックスが不正です。
-		std::abort();
-	}
+
 }
 void Animation::PlayAnimation(int animationSetIndex, float interpolateTime)
 {
 	if (animationSetIndex < numAnimSet) {
 		if (pAnimController) {
+			isAnimEnd = false;
 			//補間開始の印。
 			isInterpolate = true;
 			this->interpolateTime = 0.0f;
 			interpolateEndTime = interpolateTime;
-			currentTrackNo = (currentTrackNo+1) % numMaxTracks;
-			pAnimController->SetTrackAnimationSet( currentTrackNo, animationSets[animationSetIndex]);
+			int prevTrackNo = currentTrackNo;
+			currentTrackNo = (currentTrackNo + 1) % numMaxTracks;
+			pAnimController->SetTrackAnimationSet(currentTrackNo, animationSets[animationSetIndex]);
+			pAnimController->SetTrackSpeed(prevTrackNo, 0.0f);
 			pAnimController->SetTrackEnable(currentTrackNo, TRUE);
 			pAnimController->SetTrackSpeed(currentTrackNo, 1.0f);
 			pAnimController->SetTrackPosition(currentTrackNo, 0.0f);
 			localAnimationTime = 0.0;
 			currentAnimationSetNo = animationSetIndex;
+			UpdateTrackWeights();
+		}
+	}
+	
+}
+/*!
+*@brief	補間時間を元にトラックの重みを更新。
+*/
+void Animation::UpdateTrackWeights()
+{
+	float weight = 0.0f;
+	if (interpolateTime < interpolateEndTime) {
+		weight = interpolateTime / interpolateEndTime;
+		float invWeight = 1.0f - weight;
+		//ウェイトを設定していく。
+		for (int i = 0; i < numMaxTracks; i++) {
+			if (i != currentTrackNo) {
+				pAnimController->SetTrackWeight(i, blendRateTable[i] * invWeight);
+			}
+			else {
+				pAnimController->SetTrackWeight(i, weight);
+			}
 		}
 	}
 	else {
-		//アニメーションのインデックスが不正です。
-		std::abort();
+		for (int i = 0; i < numMaxTracks; i++) {
+			if (i != currentTrackNo) {
+				pAnimController->SetTrackWeight(i, 0.0f);
+			}
+			else {
+				pAnimController->SetTrackWeight(i, 1.0f);
+			}
+		}
+	}
+}
+/*!
+*@brief	アニメーションの再生リクエストをポップ。
+*/
+void Animation::PopRequestPlayAnimation()
+{
+	if (!playAnimationRequest.empty()) {
+		RequestPlayAnimation& req = playAnimationRequest.front();
+		PlayAnimation(req.animationSetIndex, req.interpolateTime);
+		playAnimationRequest.pop_front();
 	}
 }
 void Animation::Update(float deltaTime)
 {
-	if (pAnimController) {
+	if (pAnimController && !isAnimEnd) {
 		localAnimationTime += deltaTime;
-		
-		if (animationEndTime[currentAnimationSetNo] > 0.0 //アニメーションの終了時間が設定されている。
-			&& localAnimationTime > animationEndTime[currentAnimationSetNo] //アニメーションの終了時間を超えた。
-		) {
-			localAnimationTime -= animationEndTime[currentAnimationSetNo];
-			pAnimController->SetTrackPosition(currentTrackNo, localAnimationTime);
-			pAnimController->AdvanceTime(0, NULL);
-		}
-		else {
-			//普通に再生。
-			pAnimController->AdvanceTime(deltaTime, NULL);
-		}
 		if (isInterpolate) {
-			ID3DXAnimationSet* animSet = animationSets[2];
-			float period = (float)animSet->GetPeriod();
 			//補間中。
 			interpolateTime += deltaTime;
 			float weight = 0.0f;
@@ -100,18 +136,43 @@ void Animation::Update(float deltaTime)
 				}
 			}
 			else {
-				weight = interpolateTime / interpolateEndTime;
-				float invWeight = 1.0f - weight;
-				//ウェイトを設定していく。
-				for (int i = 0; i < numMaxTracks; i++) {
-					if (i != currentTrackNo) {
-						pAnimController->SetTrackWeight(i, blendRateTable[i] * invWeight);
-					}
-					else {
-						pAnimController->SetTrackWeight(i, weight);
-					}
-				}
+				//各トラックの重みを更新。
+				UpdateTrackWeights();
 			}
 		}
+		if (animationEndTime[currentAnimationSetNo] > 0.0 //アニメーションの終了時間が設定されている。
+			&& localAnimationTime > animationEndTime[currentAnimationSetNo] //アニメーションの終了時間を超えた。
+			) {
+			if (animationLoopFlags[currentAnimationSetNo]) {
+				localAnimationTime -= animationEndTime[currentAnimationSetNo];
+				pAnimController->SetTrackPosition(currentTrackNo, localAnimationTime);
+				pAnimController->AdvanceTime(0, NULL);
+			}
+			else {
+				isAnimEnd = true;
+			}
+		}
+		else {
+			//普通に再生。
+			if (animationSets[currentAnimationSetNo]->GetPeriod() < localAnimationTime
+				&& !animationLoopFlags[currentAnimationSetNo]) {
+				localAnimationTime = animationSets[currentAnimationSetNo]->GetPeriod();
+				isAnimEnd = true;
+			}
+			else {
+				pAnimController->AdvanceTime(deltaTime, NULL);
+			}
+		}
+
+		//ローカルタイムをトラックから取得して同期。
+		D3DXTRACK_DESC trackDesk;
+		pAnimController->GetTrackDesc(currentTrackNo, &trackDesk);
+		localAnimationTime = fmod(trackDesk.Position, animationSets[currentAnimationSetNo]->GetPeriod());
+	}
+
+	if (isAnimEnd) {
+		//アニメーション終わった。
+		//アニメーションの連続再生のリクエストをポップする。
+		PopRequestPlayAnimation();
 	}
 }

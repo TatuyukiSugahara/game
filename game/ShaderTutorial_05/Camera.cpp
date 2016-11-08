@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "pad\Pad.h"
+#include "Stage.h"
 
 //コンストラクタ。
 Camera::Camera()
@@ -18,10 +19,11 @@ Camera::~Camera()
 //カメラの更新処理。
 void Camera::Update()
 {
+	
 	//プレイヤー追尾
-	D3DXVECTOR3 Pos = D3DXVECTOR3(player->GetPos().x, vEyePt.y, vEyePt.z);
-	vEyePt = player->GetPos() + toPos;
-	vLookatPt = player->GetPos();
+	D3DXVECTOR3 Pos = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, vEyePt.y, vEyePt.z);
+	vEyePt = g_stage->GetPlayer()->GetPos() + toPos;
+	vLookatPt = g_stage->GetPlayer()->GetPos();
 	if (fabs(g_pad.GetRStickXF()) > 0.0f)
 	{
 		RotTransversal(g_pad.GetRStickXF() * 0.1f);
@@ -35,18 +37,25 @@ void Camera::Update()
 	cameradir.y = 0.0f;
 	D3DXVec3Normalize(&cameradir, &cameradir);
 
+
 	D3DXMatrixLookAtLH(&viewMatrix, &vEyePt, &vLookatPt, &vUpVec);
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, D3DX_PI / 4, aspect, Near, Far);
+	
+	//3Dサウンドのリスナーはカメラ。
+	g_stage->GetSoundEngine()->SetListenerPosition(g_stage->GetPlayer()->GetPos());
+	const D3DXMATRIX& m = mRot;
+	g_stage->GetSoundEngine()->SetListenerFront({ m.m[2][0], m.m[2][1], m.m[2][2] });
+	g_stage->GetSoundEngine()->SetListenerUp({ m.m[1][0], m.m[1][1], m.m[1][2] });
+
 }
 //カメラの初期化。
-void Camera::Init(CPlayer* player)
+void Camera::Init()
 {
 	vEyePt = D3DXVECTOR3(0.0f, 1.0f, -8.0);
 	vLookatPt = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	vUpVec = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	toPos = vEyePt - vLookatPt;						//視点 - 注視点
 	cameradir = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	this->player = player;
 
 	Update();
 }
@@ -55,7 +64,6 @@ void Camera::Init(CPlayer* player)
 //============================================================
 void Camera::RotTransversal(float roty)
 {
-	D3DXMATRIX mRot;
 	D3DXQUATERNION mAxisY;
 	D3DXVECTOR4 v;
 	D3DXQuaternionRotationAxis(&mAxisY, &vUpVec, roty);
@@ -71,7 +79,6 @@ void Camera::RotLongitudinal(float rotx)
 {
 	D3DXVECTOR3 Cross;
 	D3DXQUATERNION zAxis;
-	D3DXMATRIX mRot;
 	D3DXVECTOR4 v;
 	D3DXVec3Cross(&Cross, &vUpVec, &toPos);
 	D3DXQuaternionRotationAxis(&zAxis, &Cross, rotx);

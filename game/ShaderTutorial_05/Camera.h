@@ -9,6 +9,7 @@ class Camera {
 private:
 	D3DXMATRIX				viewMatrix;			//!<ビュー行列。カメラ行列
 	D3DXMATRIX				projectionMatrix;	//!<プロジェクション行列。ビュー空間から射影空間に変換する行列。
+	D3DXMATRIX				mRot;				//!<回転行列
 	D3DXVECTOR3				vEyePt;				//!<カメラの視点。
 	D3DXVECTOR3				vLookatPt;			//!<カメラの注視点。
 	D3DXVECTOR3				vUpVec;				//!<カメラの上方向。
@@ -17,7 +18,6 @@ private:
 	float					Far;				//!<遠平面。
 	float					Near;				//!<近平面。
 	float					aspect;				//!<アスペクト比
-	CPlayer*				player;
 public:
 	/*!
 	 *@brief	コンストラクタ。
@@ -107,6 +107,11 @@ public:
 	{
 		return projectionMatrix;
 	}
+	//回転のゲッター
+	D3DXMATRIX GetRot()
+	{
+		return mRot;
+	}
 	//============================================================
 	//カメラが横に回転。
 	//============================================================
@@ -126,5 +131,5 @@ public:
 	/*!
 	 *@brief	カメラの初期化。
 	 */
-	void Init(CPlayer* player);
+	void Init();
 };

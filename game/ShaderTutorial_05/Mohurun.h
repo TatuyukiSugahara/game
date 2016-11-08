@@ -38,6 +38,7 @@ private:
 	State state;
 
 	D3DXVECTOR3				position;		//座標。。
+	D3DXVECTOR3				scale;			//大きさ
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	SkinModel skinmodel;
@@ -49,5 +50,6 @@ private:
 	const int MAXPAR = 100;
 	int parTime;
 	bool parflag;		
+	int count;
 };
 

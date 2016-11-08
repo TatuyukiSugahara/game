@@ -34,6 +34,12 @@
     <Filter Include="ソース ファイル\Particle">
       <UniqueIdentifier>{67bd749b-e8af-4474-a3cf-b185ba5f1d95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{49b09699-3da4-4f85-afc1-6cc205e1915e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Title">
+      <UniqueIdentifier>{1a430cfa-b9db-45ba-b3ec-c53d7e88ac9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -158,6 +164,30 @@
     </ClCompile>
     <ClCompile Include="Particle\Particle.cpp">
       <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\WaveFile.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundEngine.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundSource.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\2DImage.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCamera.cpp">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLight.cpp">
+      <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +322,33 @@
     </ClInclude>
     <ClInclude Include="Particle\IndexBuffer.h">
       <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundSource.h">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\WaveFile.h">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundEngine.h">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="tk\tkLog.h">
+      <Filter>ソース ファイル\tk</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\2DImage.h">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCamera.h">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLight.h">
+      <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -51,19 +51,19 @@ void CPipe::Update()
 	{
 		pipeChipList[a]->Update();
 	}
-	if (g_stage.GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[4]
-		&& g_stage.GetPlayer()->GetIsIntersect().GetGround() == true
+	if (g_stage->GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[4]
+		&& g_stage->GetPlayer()->GetIsIntersect().GetGround() == true
 		&& g_pad.IsTrigger(enButtonDown))
 	{
 	
 			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[12].pos.x
-				, collisionInfoTable2Dpipe[12].pos.y - g_stage.GetPlayer()->GetPos().y
+				, collisionInfoTable2Dpipe[12].pos.y - g_stage->GetPlayer()->GetPos().y
 				, collisionInfoTable2Dpipe[12].pos.z);
 			isPipe = true;
 			Remove2DRigidBody(arraySize);
 	}
-	if (g_stage.GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[13]
-		&& g_stage.GetPlayer()->GetIsIntersect().GetGround() == true
+	if (g_stage->GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[13]
+		&& g_stage->GetPlayer()->GetIsIntersect().GetGround() == true
 		&& g_pad.IsTrigger(enButtonDown))
 	{
 		nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[5].pos.x
@@ -78,7 +78,7 @@ void CPipe::Update()
 		count++;
 		if (count >= 30)
 		{
-			g_stage.GetPlayer()->SetPosition(nextPos);
+			g_stage->GetPlayer()->SetPosition(nextPos);
 			isPipe = false;
 			Add2DRigidBody(arraySize);
 			count = 0;

@@ -74,9 +74,10 @@ struct VS_INPUT
     float4  BlendWeights    : BLENDWEIGHT;
 	float4  BlendIndices    : BLENDINDICES;
 	float4  color		: COLOR0;
-	float4  normal		: NORMAL0;
+	float3  normal		: NORMAL0;
 	float2	uv		: TEXCOORD1;
     float3  Tex0            : TEXCOORD0;
+    float3	Tangent			: TANGENT;		//接ベクトル
 };
 
 /*!
@@ -91,6 +92,7 @@ struct VS_OUTPUT
 	float3  Eye	: TEXCOORD3;
     float2  Tex0   			: TEXCOORD0;
 	float4  lightViewPos_1	: TEXCOORD4;
+	float3	Tangent			: TEXCOORD5;		//接ベクトル
 };
 /*!
  *@brief	ワールド座標とワールド法線をスキン行列から計算する。
@@ -99,11 +101,11 @@ struct VS_OUTPUT
  *@param[out]	Normal	ワールド法線の格納先。
  *@param[out]	Tangent	ワールド接ベクトルの格納先。
  */
-void CalcWorldPosAndNormalFromSkinMatrix( VS_INPUT In, out float3 Pos)//, out float3 Normal, out float3 Tangent )
+void CalcWorldPosAndNormalFromSkinMatrix( VS_INPUT In, out float3 Pos, out float3 Normal, out float3 Tangent )
 {
 	Pos = 0.0f;
-	//Normal = 0.0f;
-	//Tangent = 0.0f;
+	Normal = 0.0f;
+	Tangent = 0.0f;
 	//ブレンドするボーンのインデックス。
 	int4 IndexVector = D3DCOLORtoUBYTE4(In.BlendIndices);
 	
@@ -116,14 +118,14 @@ void CalcWorldPosAndNormalFromSkinMatrix( VS_INPUT In, out float3 Pos)//, out fl
         LastWeight = LastWeight + BlendWeightsArray[iBone];
         
         Pos += mul(In.Pos, g_mWorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
-       //Normal += mul(In.Normal, g_mWorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
-        //Tangent += mul(In.Tangent, g_mWorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
+        Normal += mul(In.normal, g_mWorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
+        Tangent += mul(In.Tangent, g_mWorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
     }
     LastWeight = 1.0f - LastWeight; 
     
 	Pos += (mul(In.Pos, g_mWorldMatrixArray[IndexArray[g_numBone-1]]) * LastWeight);
-    //Normal += (mul(In.Normal, g_mWorldMatrixArray[IndexArray[g_numBone-1]]) * LastWeight);
-    //Tangent += (mul(In.Tangent, g_mWorldMatrixArray[IndexArray[g_numBone-1]]) * LastWeight);
+    Normal += (mul(In.normal, g_mWorldMatrixArray[IndexArray[g_numBone-1]]) * LastWeight);
+    Tangent += (mul(In.Tangent, g_mWorldMatrixArray[IndexArray[g_numBone-1]]) * LastWeight);
 }
 /*!
  *@brief	ワールド座標とワールド法線を計算。
@@ -132,11 +134,11 @@ void CalcWorldPosAndNormalFromSkinMatrix( VS_INPUT In, out float3 Pos)//, out fl
  *@param[out]	Normal	ワールド法線の格納先。
  *@param[out]	Tangent	ワールド接ベクトルの格納先。
  */
-void CalcWorldPosAndNormal( VS_INPUT In, out float3 Pos)//, out float3 Normal, out float3 Tangent )
+void CalcWorldPosAndNormal( VS_INPUT In, out float3 Pos, out float3 Normal, out float3 Tangent )
 {
 	Pos = mul(In.Pos, g_worldMatrix );
-	//Normal = mul(In.Normal, g_rotationMatrix );
-	//Tangent = mul(In.Tangent, g_rotationMatrix );
+	Normal = mul(In.normal, g_rotationMatrix );
+	Tangent = mul(In.Tangent, g_rotationMatrix );
 }
 /*!
  *@brief	頂点シェーダー。
@@ -146,13 +148,13 @@ void CalcWorldPosAndNormal( VS_INPUT In, out float3 Pos)//, out float3 Normal, o
 VS_OUTPUT VSMain( VS_INPUT In, uniform bool hasSkin )
 {
 	VS_OUTPUT o = (VS_OUTPUT)0;
-	float3 Pos;//, Normal, Tangent;
+	float3 Pos, Normal, Tangent;
 	if(hasSkin){
 		//スキンあり。
-		CalcWorldPosAndNormalFromSkinMatrix(In, Pos);//, Normal, Tangent );
+		CalcWorldPosAndNormalFromSkinMatrix(In, Pos, Normal, Tangent );
 	}else{
 		//スキンなし。
-		CalcWorldPosAndNormal(In, Pos);//, Normal, Tangent );
+		CalcWorldPosAndNormal(In, Pos, Normal, Tangent );
 	}
   
 	float4 worldpos = mul(In.Pos,g_worldMatrix);
@@ -169,9 +171,8 @@ VS_OUTPUT VSMain( VS_INPUT In, uniform bool hasSkin )
     o.Eye = vEyePos - Pos.xyz;
 
     o.uv = In.uv;
-    o.normal = mul(In.normal, g_rotationMatrix);	//法線を回す。
-    //o.Normal = normalize(Normal);
-    //o.Tangent = normalize(Tangent);
+    o.normal = normalize(Normal);
+    o.Tangent = normalize(Tangent);
     o.Tex0 = In.Tex0;
 	return o;
 }
@@ -197,7 +198,7 @@ float4 posInLVP = In.lightViewPos_1;
 			float3 L = -g_diffuseLightDirection[i].xyz;
 				float3 H = normalize(L + normalize(In.Eye));//ハーフベクトル。
 				float3 N = normalize(In.normal);
-				lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f);
+				lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f) * g_diffuseLightColor[i].w;
 		}
 		lig += g_ambientLight;
 	}

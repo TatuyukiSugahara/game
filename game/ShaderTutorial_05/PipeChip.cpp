@@ -15,7 +15,7 @@ CPipeChip::~CPipeChip()
 }
 void CPipeChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	size = g_stage.GetMap()->GetSize();
+	size = g_stage->GetMap()->GetSize();
 	//まずはスキンモデルをロード。
 	char modelPath[256];
 	sprintf(modelPath, "Asset/model/%s.X", name);

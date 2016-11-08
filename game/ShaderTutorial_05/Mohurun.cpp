@@ -7,6 +7,7 @@
 CMohurun::CMohurun()
 {
 	position = D3DXVECTOR3(4.0f, 1.0f, 0.0f);
+	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 }
 
 
@@ -20,14 +21,14 @@ void CMohurun::Init()
 	//ライトを初期化。
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
 	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-0.707f, 0.0f, -0.707f, 1.0f));
-	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, -0.707f, 1.0f));
-	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, -0.707f, 1.0f));
+	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, 0.707f, 1.0f));
+	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, 0.707f, 1.0f));
 
-	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
-	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
-	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
-	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
-	light.SetAmbientLight(D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
+	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 0.0f));
+	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 0.0f));
+	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
+	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
+	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
 
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/enemy.X", &animation);
@@ -46,6 +47,8 @@ void CMohurun::Init()
 
 	parflag = false;
 	parTime = 0;
+
+	count = 0;
 }
 //更新。
 void CMohurun::Update()
@@ -54,19 +57,19 @@ void CMohurun::Update()
 	{
 		//ワールド行列の更新。
 		animation.Update(1.0f / 60.0f);
-
-		if (BallCollision(position, g_stage.GetPlayer()->GetPos(), 0.75f, 0.5f) == true)
+		/*if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.5f) == true)
 		{
 			exit(0);
-		}
+		}*/
 		if (BallCollision(position + D3DXVECTOR3(0.0f, 0.1f, 0.0f),
-			g_stage.GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.3f, 0.0f), 0.75f, 0.5f) == true)
+			g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.3f, 0.0f), 0.75f, 0.5f) == true)
 		{
+			scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
 			particleEmitter.Init(param);
-			state = off;
 			parflag = true;
+			state = off;
 		}
-		skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+		skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), scale);
 	}
 	if (parflag == true)
 	{
@@ -78,18 +81,19 @@ void CMohurun::Update()
 		else
 		{
 			parflag = false;
-		}	
+		}
+		count++;
 	}
 }
 //描画。
 void CMohurun::Render()
 {
-	if (state == on)
+	if (count < 50)
 	{
-		skinmodel.Draw(&g_stage.GetCamera()->GetViewMatrix(), &g_stage.GetCamera()->GetProjectionMatrix(), false);
+		skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
 	}
 	if (parflag == true)
 	{
-		particleEmitter.Render(g_stage.GetCamera()->GetViewMatrix(), g_stage.GetCamera()->GetProjectionMatrix());
+		particleEmitter.Render(g_stage->GetCamera()->GetViewMatrix(), g_stage->GetCamera()->GetProjectionMatrix());
 	}
 }

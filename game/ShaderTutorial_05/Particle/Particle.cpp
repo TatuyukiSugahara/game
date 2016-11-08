@@ -4,6 +4,7 @@
 #include "..\stdafx.h"
 #include "ParticleEmitter.h"
 #include "Particle.h"
+#include "..\Stage.h"
 
 
  /*!
@@ -42,11 +43,14 @@ void CParticle::Init( const SParicleEmitParameter& param , D3DXVECTOR3 pos)
 	moveSpeed = param.initSpeed;
 
 	position = pos;
+	//初速度に乱数を加える
 	float add = ((rand() % 255) - 128) / 128.0f;
 	moveSpeed.x += add * 0.3f;
 	moveSpeed.y += add * 0.3f;
 	moveSpeed.z += add * 0.3f;
 
+	//頂点バッファ作成
+	//板ポリ
 	SShapeVertex_PT vb[] = {
 		{
 			-halfW, halfH, 0.0f, 1.0f,
@@ -66,6 +70,7 @@ void CParticle::Init( const SParicleEmitParameter& param , D3DXVECTOR3 pos)
 		},
 		
 	};
+	//インデックスバッファ
 	short index[]{
 		0,1,2,3
 	};
@@ -110,9 +115,19 @@ void CParticle::Update()
 void CParticle::Render(const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix)
 {
 	D3DXMATRIX m, mTrans;
+	//平行移動行列
 	D3DXMatrixTranslation(&mTrans, position.x, position.y, position.z);
 
-	m = mTrans * viewMatrix * projMatrix;
+	D3DXMATRIX viewRotMatrix;
+	D3DXMatrixInverse(&viewRotMatrix, NULL, &viewMatrix); //カメラ行列の逆行列を求める。
+	//カメラの平行移動成分を0にする。
+	viewRotMatrix.m[3][0] = 0.0f;
+	viewRotMatrix.m[3][1] = 0.0f;
+	viewRotMatrix.m[3][2] = 0.0f;
+	viewRotMatrix.m[3][3] = 1.0f;
+
+	//	ワールド行列 *　ビュー行列 * プロジェクション行列
+	m = viewRotMatrix * mTrans * viewMatrix * projMatrix;
 
 	g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);

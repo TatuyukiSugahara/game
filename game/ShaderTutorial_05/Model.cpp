@@ -105,7 +105,7 @@ void Model::Render(
 		effect->BeginPass(0);
 		
 		D3DXMATRIX mWVP;
-		mWVP = worldMatrix * g_stage.GetShadow()->Getlvpmatrix();
+		mWVP = worldMatrix * g_stage->GetShadow()->Getlvpmatrix();
 		//視点設定
 		effect->SetMatrix("g_mWVP", &mWVP);
 
@@ -144,12 +144,12 @@ void Model::Render(
 		//環境光を設定。
 		effect->SetVector("g_ambientLight", &ambientLight);
 		//視点設定
-		effect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage.GetCamera()->GetEyePt());
+		effect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage->GetCamera()->GetEyePt());
 
 		effect->SetInt("g_ShadowReceiverFlag", ShadowReceiverFlag);//影フラグ
 		
 		effect->SetTexture("g_shadowTexture", g_shadow);//影
-		effect->SetMatrix("g_lightVPMatrix", &g_stage.GetShadow()->Getlvpmatrix());
+		effect->SetMatrix("g_lightVPMatrix", &g_stage->GetShadow()->Getlvpmatrix());
 		
 		for (DWORD i = 0; i < numMaterial; i++)
 		{

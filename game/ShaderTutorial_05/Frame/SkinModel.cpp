@@ -57,7 +57,7 @@ void SkinModel::DrawMeshContainer(
 
 	//ライトビュープロジェクション行列の計算。
 	D3DXMATRIX LVP;
-	LVP = g_stage.GetShadow()->Getlvpmatrix();
+	LVP = g_stage->GetShadow()->Getlvpmatrix();
 
 	//定数レジスタに設定するカラー。
 	D3DXVECTOR4 color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -70,11 +70,11 @@ void SkinModel::DrawMeshContainer(
 	//回転行列を転送。
 	pEffect->SetMatrix("g_rotationMatrix", rotationMatrix);
 	//ライトの向きを転送。
-	pEffect->SetVectorArray("g_diffuseLightDirection", g_stage.GetLight()->GetLightDirection(), g_stage.GetLight()->GetLightNum());
+	pEffect->SetVectorArray("g_diffuseLightDirection", light->GetLightDirection(), light->GetLightNum());
 	////ライトのカラーを転送。
-	pEffect->SetVectorArray("g_diffuseLightColor", g_stage.GetLight()->GetLightColor(), g_stage.GetLight()->GetLightNum());
+	pEffect->SetVectorArray("g_diffuseLightColor", light->GetLightColor(), light->GetLightNum());
 	////環境光を設定。
-	pEffect->SetVector("g_ambientLight", &g_stage.GetLight()->GetambientLight());
+	pEffect->SetVector("g_ambientLight", &light->GetambientLight());
 	//影のフラグを転送。
 	//StageでフラグをTRUEにしている
 	pEffect->SetInt("g_ShadowReceiverFlag", ShadowReceiverFlag);
@@ -83,7 +83,7 @@ void SkinModel::DrawMeshContainer(
 	//ビュープロジェクション。
 	pEffect->SetMatrix("g_mViewProj", &viewProj);
 	//視点。
-	pEffect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage.GetCamera()->GetEyePt());
+	pEffect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage->GetCamera()->GetEyePt());
 	//影を描画しているレンダーターゲットのテクスチャを取得。
 	
 	if (ShadowReceiverFlag == TRUE)

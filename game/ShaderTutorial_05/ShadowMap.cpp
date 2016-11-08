@@ -37,18 +37,18 @@ void CShadowMap::Draw(
 		1.0f,
 		0);
 
-	D3DVIEWPORT9 viewport = { 0, 0, w, h, 0.0f, 1.0f };
-	g_pd3dDevice->SetViewport(&viewport);
+	//D3DVIEWPORT9 viewport = { 0, 0, w, h, 0.0f, 1.0f };
+	//g_pd3dDevice->SetViewport(&viewport);
 	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	float aspect;
-	aspect = (float)viewport.Width / (float)viewport.Height;
-	D3DXMatrixPerspectiveFovLH(&m_projMatrix, D3DXToRadian(120.0f), aspect, m_near, m_far);
+	//aspect = (float)viewport.Width / (float)viewport.Height;
+	D3DXMatrixOrthoLH(&m_projMatrix, 20.0f, 20.0f, m_near, m_far);
 	CreateLight(m_projMatrix);
 
-	g_stage.GetPlayer()->Render
+	g_stage->GetPlayer()->Render
 		(
-		viewMatrix,
-		projMatrix,
+		m_lvMatrix,
+		m_projMatrix,
 		true
 		);
 	g_pd3dDevice->SetRenderTarget(0, m_Backbuffer);
@@ -73,7 +73,7 @@ void CShadowMap::CreateLight(D3DXMATRIX proj)
 	D3DXVECTOR3 target;
 	D3DXVec3Add(&target, &m_lightPosition, &m_lightDirection);
 	D3DXMatrixLookAtLH(&m_lvMatrix, &m_lightPosition, &target, &lightUp);
-	D3DXMatrixMultiply(&m_LVPMatrix, &m_lvMatrix, &proj);
+		D3DXMatrixMultiply(&m_LVPMatrix, &m_lvMatrix, &m_projMatrix);
 }
 
 void CShadowMap::Release()

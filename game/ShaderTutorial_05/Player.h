@@ -11,6 +11,9 @@ enum PlayerState{
 	PlayerWalk,			//歩く
 	PlayerRun,			//走る
 	PlayerJump,			//ジャンプ
+	PlayerIsJump,		//ジャンプをするとき
+	PlayerJumpNow,		//ジャンプ中
+	PlayerJumpWas,		//着地時
 };
 
 //プレイヤークラス。
@@ -80,6 +83,7 @@ public:
 	void Move2D();
 	void Move3D();
 	void Jump();
+	void State();
 	void Died();//死亡
 private:
 	D3DXVECTOR3				position;		//座標。
@@ -104,5 +108,4 @@ private:
 	//ターン
 	float					m_currentAngleY;
 	float					m_targetAngleY;
-	bool					AnimationRun;
 };
