@@ -99,11 +99,15 @@ void CStage::Update()
 	//土管更新
 	pipe.Update();
 	//ゴール更新
-	//goal.Update();
+	goal.Update();
 	//サボテン更新
 	sabo.Update();
 	//カメラの更新
 	camera.Update();
+	if (scene != GameScene::Game)
+	{
+		soundSource.Stop();
+	}
 }
 
 void CStage::Render()
@@ -191,7 +195,7 @@ void CStage::Render()
 		light.GetLightNum()
 	);
 	//ゴール描画
-	/*goal.Render(
+	goal.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -199,7 +203,7 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-	);*/
+	);
 	//サボテン描画
 	sabo.Render(
 		g_pd3dDevice,

@@ -68,6 +68,13 @@ void CMohurun::Update()
 			particleEmitter.Init(param);
 			parflag = true;
 			state = off;
+			CSoundSource* SEenemyDeath = new CSoundSource;
+			SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
+			SEenemyDeath->Play(false);
+			SEenemyDeath->SetVolume(0.25f);
+			g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,
+				-g_stage->GetPlayer()->GetMoveSpeed().y,
+				g_stage->GetPlayer()->GetMoveSpeed().z));
 		}
 		skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), scale);
 	}

@@ -61,6 +61,10 @@ void CPipe::Update()
 				, collisionInfoTable2Dpipe[12].pos.z);
 			isPipe = true;
 			Remove2DRigidBody(arraySize);
+			CSoundSource* SEPipe = new CSoundSource;
+			SEPipe->Init("Asset/Sound/Pipe.wav");
+			SEPipe->Play(false);
+			SEPipe->SetVolume(0.25f);
 	}
 	if (g_stage->GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[13]
 		&& g_stage->GetPlayer()->GetIsIntersect().GetGround() == true
@@ -71,6 +75,10 @@ void CPipe::Update()
 			, collisionInfoTable2Dpipe[5].pos.z);
 		isPipe = true;
 		Remove2DRigidBody(arraySize);
+		CSoundSource* SEPipe = new CSoundSource;
+		SEPipe->Init("Asset/Sound/Pipe.wav");
+		SEPipe->SetVolume(2.0f);
+		SEPipe->Play(false);
 	}
 
 	if (isPipe == true)

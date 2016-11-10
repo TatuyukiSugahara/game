@@ -2,6 +2,8 @@
 #include "Goal.h"
 #include "CalcAABBSizeFromMesh.h"
 #include "Stage.h"
+#include "ResultScene.h"
+#include "Sound\SoundSource.h"
 
 //コンストラクタ
 CGoal::CGoal()
@@ -9,7 +11,7 @@ CGoal::CGoal()
 	//初期化。
 
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 75.0f;
+	position.x = 460.0f;
 	position.y = 0.25f;
 	position.z = 0.0f;
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -39,8 +41,11 @@ void CGoal::Update()
 
 		)
 	{
-		MessageBox(NULL, "GOAL", 0, MB_OK);
-		exit(0);
+		CSoundSource* SEGoal = new CSoundSource;
+		SEGoal->Init("Asset/Sound/goal.wav");
+		SEGoal->Play(false);
+		g_resultscene.SetState(ResultState::Goal);
+		scene = GameScene::Result;
 	}
 
 	//ワールド行列の更新。

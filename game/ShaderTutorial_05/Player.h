@@ -80,28 +80,33 @@ public:
 	{
 		return skinmodel.GetEffect();
 	}
+	void SetMoveSpeed(D3DXVECTOR3 speed)
+	{
+		movespeed = speed;
+	}
 	void Move2D();
 	void Move3D();
 	void Jump();
 	void State();
 	void Died();//死亡
 private:
-	D3DXVECTOR3				position;		//座標。
-	D3DXVECTOR3				movespeed;		//移動速度
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	D3DXMATRIX				mScale;			//スケールw
+	D3DXVECTOR3				position;						//座標。
+	D3DXVECTOR3				movespeed;						//移動速度
+	D3DXMATRIX				mWorld;							//ワールド行列。
+	D3DXMATRIX				mRotation;						//回転行列。
+	D3DXMATRIX				mScale;							//スケールw
 	SkinModel skinmodel;
 	SkinModelData modelData;
 	Animation animation;
 	CLight	light;
-	CIsIntersect			IsIntersect;		//あたり判定
-	CTurn					turn;			//ターンクラス
-	std::vector<IPlayerCollisionCallback*>	callbackList;//
-	const float				MOVE_SPEED = 5.0f;	//移動速度
+	CIsIntersect			IsIntersect;					//あたり判定
+	CTurn					turn;							//ターンクラス
+	std::vector<IPlayerCollisionCallback*>	callbackList;	//
+	const float				MOVE_SPEED = 5.0f;				//移動速度
 	float					radius;
-	PlayerState				state;				//プレイヤーの状態
-	D3DXQUATERNION			rotation;		//回転クォータニオン
+	PlayerState				state;							//プレイヤーの状態
+	D3DXQUATERNION			rotation;						//回転クォータニオン
+	float					deathCount;						//死亡までのカウント
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;

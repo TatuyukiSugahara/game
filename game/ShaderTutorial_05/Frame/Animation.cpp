@@ -119,6 +119,7 @@ void Animation::PopRequestPlayAnimation()
 void Animation::Update(float deltaTime)
 {
 	if (pAnimController && !isAnimEnd) {
+		deltaTime *= animationSpeedRate;
 		localAnimationTime += deltaTime;
 		if (isInterpolate) {
 			//ï‚ä‘íÜÅB

@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "CalcAABBSizeFromMesh.h"
 #include "Stage.h"
+#include "Sound\SoundSource.h"
+#include "ResultScene.h"
 
 //コンストラクタ
 CPlayer::CPlayer()
@@ -101,6 +103,14 @@ void CPlayer::Update()
 	State();//アニメーション状態変更
 
 	//ワールド行列の更新。
+	if (g_pad.IsPress(enButtonB))
+	{
+		animation.SetAnimationSpeedRate(2.0f);
+	}
+	else
+	{
+		animation.SetAnimationSpeedRate(1.0f);
+	}
 	animation.Update(1.0f / 60.0f);
 	skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(2.0f, 2.0f, 2.0f));
 }
@@ -122,7 +132,6 @@ void CPlayer::Render(
 //開放。
 void CPlayer::Release()
 {
-	
 }
 
 void CPlayer::Move2D()
@@ -187,6 +196,10 @@ void CPlayer::Jump()
 		{
 			movespeed.y += 15.0f;
 		}
+		CSoundSource* SEjump = new CSoundSource;
+		SEjump->Init("Asset/Sound/jump.wav");
+		SEjump->Play(false);
+		SEjump->SetVolume(0.25f);
 		state = PlayerIsJump;
 		animation.PlayAnimation(PlayerIsJump,0.05f);
 
@@ -241,6 +254,10 @@ void CPlayer::Died()
 {
 	if (position.y <= -10.0f)
 	{
+		CSoundSource* SEDeath = new CSoundSource;
+		SEDeath->Init("Asset/Sound/death.wav");
+		SEDeath->Play(false);
+		g_resultscene.SetState(ResultState::Death);
 		scene = GameScene::Result;
 	}
 }

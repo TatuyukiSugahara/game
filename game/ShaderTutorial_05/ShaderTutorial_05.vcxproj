@@ -189,6 +189,11 @@
     <ClCompile Include="PipeChip.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="ResultCamera.cpp" />
+    <ClCompile Include="ResultDeath.cpp" />
+    <ClCompile Include="ResultGoal.cpp" />
+    <ClCompile Include="ResultLight.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="Saboten.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="Sound\SoundEngine.cpp" />
@@ -245,6 +250,11 @@
     <ClInclude Include="PipeChip.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="ResultCamera.h" />
+    <ClInclude Include="ResultDeath.h" />
+    <ClInclude Include="ResultGoal.h" />
+    <ClInclude Include="ResultLight.h" />
+    <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Saboten.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="Sound\SoundEngine.h" />

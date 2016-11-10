@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Saboten.h"
 #include "stage.h"
+#include "ResultScene.h"
 
 //コンストラクタ
 CSaboten::CSaboten()
@@ -43,8 +44,9 @@ void CSaboten::Update()
 	{
 		if (fabs(distance) <= 0.1f)
 		{
-			MessageBox(NULL, "GAME OVER", 0, MB_OK);
-			exit(0);
+			g_resultscene.SetState(ResultState::Goal);
+			scene = GameScene::Result;
+
 		}
 	}
 	//ワールド行列の更新。

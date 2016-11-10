@@ -113,6 +113,13 @@ public:
 	{
 		return (float)localAnimationTime;
 	}
+	/*!
+	*@brief	アニメーションの再生速度に乗算される値。1.0で通常のアニメーション速度。
+	*/
+	void SetAnimationSpeedRate(float rate)
+	{
+		animationSpeedRate = rate;
+	}
 private:
 	/*!
 	*@brief	補間時間を元にトラックの重みを更新。
@@ -143,5 +150,6 @@ private:
 	bool									isAnimEnd;				//!<アニメーションの終了フラグ。
 	float									interpolateEndTime;		//!<補間終了時間。
 	float									interpolateTime;		//!<補間時間。
+	float									animationSpeedRate = 1.0f;		//!<アニメーションの再生速度に乗算される値。1.0で通常の再生速度。
 	std::deque<RequestPlayAnimation>		playAnimationRequest;	//!<アニメーション再生のリクエスト。
 };

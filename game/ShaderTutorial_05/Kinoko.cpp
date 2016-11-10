@@ -2,6 +2,7 @@
 #include "Kinoko.h"
 #include "CalcAABBSizeFromMesh.h"
 #include "stage.h"
+#include "Sound\SoundSource.h"
 
 //コンストラクタ
 CKinoko::CKinoko()
@@ -49,6 +50,9 @@ void CKinoko::Update()
 		)
 	{
 		kinoko = true;			//プレイヤーとあたったのでゲットした。
+		CSoundSource* SESuper = new CSoundSource;
+		SESuper->Init("Asset/Sound/super.wav");
+		SESuper->Play(false);
 		state = none;			//キノコ出現しなくなる
 	}
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)

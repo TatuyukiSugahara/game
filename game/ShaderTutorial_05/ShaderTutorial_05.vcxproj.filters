@@ -40,6 +40,9 @@
     <Filter Include="ソース ファイル\Title">
       <UniqueIdentifier>{1a430cfa-b9db-45ba-b3ec-c53d7e88ac9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Result">
+      <UniqueIdentifier>{953d27af-ad6b-4393-b5f3-47abf70e2900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -188,6 +191,21 @@
     </ClCompile>
     <ClCompile Include="TitleLight.cpp">
       <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultDeath.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultCamera.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultLight.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultGoal.cpp">
+      <Filter>ソース ファイル\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +367,21 @@
     </ClInclude>
     <ClInclude Include="TitleLight.h">
       <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultDeath.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultCamera.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultLight.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultGoal.h">
+      <Filter>ソース ファイル\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

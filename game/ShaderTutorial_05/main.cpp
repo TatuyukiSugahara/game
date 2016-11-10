@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "stage.h"
 #include "TitleScene.h"
+#include "ResultScene.h"
 
 //-----------------------------------------------------------------------------
 // グローバル変数。
@@ -20,6 +21,8 @@ void Init()
 	//ステージ初期化
 	g_stage = new CStage;
 	g_stage->Initialize();
+	//リザルト画面
+	g_resultscene.Init();
 
 	
 }
@@ -39,6 +42,8 @@ VOID Render()
 		g_stage->Render();
 		break;
 	case Result:
+		//リザルト画面
+		g_resultscene.Render();
 		break;
 	}
 	
@@ -64,6 +69,8 @@ void Update()
 		g_stage->Update();
 		break;
 	case Result:
+		//リザルト画面
+		g_resultscene.Update();
 		break;
 	}
 	
