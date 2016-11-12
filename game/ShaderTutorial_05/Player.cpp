@@ -10,10 +10,9 @@ CPlayer::CPlayer()
 {
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
-	D3DXMatrixIdentity(&mScale);
-	position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
-
-	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);		//初期位置
+	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
+	Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);			//初期スケール
 
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -85,8 +84,8 @@ void CPlayer::Update()
 	//キノコとった？&&小さい状態？
 	if (g_stage->GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{
-		D3DXMatrixScaling(&mScale, 1.5f, 1.5f, 1.5f);
-		radius *= 1.5f*1.5f;
+		D3DXVec3Scale(&Scale, &Scale, 1.5f);
+		radius = 0.45;
 		IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 	}
 	//ブロックと当たった？
@@ -112,7 +111,7 @@ void CPlayer::Update()
 		animation.SetAnimationSpeedRate(1.0f);
 	}
 	animation.Update(1.0f / 60.0f);
-	skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(2.0f, 2.0f, 2.0f));
+	skinmodel.UpdateWorldMatrix(position, rotation, Scale);
 }
 //描画。
 void CPlayer::Render(
@@ -190,11 +189,11 @@ void CPlayer::Jump()
 	{
 		if (g_pad.IsPress(EnButton::enButtonB))
 		{
-			movespeed.y += 18.0f;
+			movespeed.y = 18.0f;
 		}
 		else
 		{
-			movespeed.y += 15.0f;
+			movespeed.y = 15.0f;
 		}
 		CSoundSource* SEjump = new CSoundSource;
 		SEjump->Init("Asset/Sound/jump.wav");

@@ -92,9 +92,9 @@ public:
 private:
 	D3DXVECTOR3				position;						//座標。
 	D3DXVECTOR3				movespeed;						//移動速度
+	D3DXVECTOR3				Scale;							//スケールw
 	D3DXMATRIX				mWorld;							//ワールド行列。
 	D3DXMATRIX				mRotation;						//回転行列。
-	D3DXMATRIX				mScale;							//スケールw
 	SkinModel skinmodel;
 	SkinModelData modelData;
 	Animation animation;

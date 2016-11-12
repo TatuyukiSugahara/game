@@ -9,7 +9,6 @@
 CGoal::CGoal()
 {
 	//‰Šú‰»B
-
 	D3DXMatrixIdentity(&mWorld);
 	position.x = 460.0f;
 	position.y = 0.25f;

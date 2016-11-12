@@ -162,6 +162,7 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* m_position, float radius)
 	m_moveSpeed.z = 0.0f;				//à⁄ìÆë¨ìx
 	
 	addPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	gravity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	isHit = false;//ìVà‰Ç∆ìñÇΩÇ¡ÇƒÇ¢Ç»Ç¢
 	isWall = false;//ï«Ç∆ìñÇΩÇ¡ÇƒÇ¢Ç»Ç¢
 	isGround = false;//è∞Ç∆ìñÇΩÇ¡ÇƒÇ¢Ç»Ç¢		
@@ -188,7 +189,14 @@ void CIsIntersect::Intersect(
 {
 	isWall = false;
 	static float deltaTime = 1.0f / 60.0f;
-	static D3DXVECTOR3 gravity(0.0f, -30.0f, 0.0f);
+	if (isGround || g_pad.IsPress(enButtonA))
+	{
+		gravity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
+	if (!isGround)
+	{
+		gravity = D3DXVECTOR3(0.0f, -30.0f, 0.0f);
+	}
 	D3DXVECTOR3 addGravity = gravity;
 	addGravity *= (deltaTime);
 	*m_moveSpeed += (addGravity);
