@@ -92,7 +92,12 @@ void CPlayer::Update()
 	if (g_stage->GetNBlock()->Get2DBlock() == IsIntersect.getCollisionObj()
 		&& IsIntersect.gethit() == true)
 	{
+		CSoundSource* SEBlock = new CSoundSource;
+		SEBlock->Init("Asset/Sound/block.wav");
+		SEBlock->Play(false);
+		SEBlock->SetVolume(0.25f);
 		g_stage->GetNBlock()->SetState(no);
+		g_stage->GetNBlock()->SetParFlag(true);
 	}
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_position‚©‚ç‚ÌˆÚ“®—Ê(‚ ‚½‚è”»’è)
 	//AABB

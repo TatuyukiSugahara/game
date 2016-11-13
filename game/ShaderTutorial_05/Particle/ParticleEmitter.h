@@ -24,6 +24,7 @@ struct SParicleEmitParameter {
 	float h;							//!<パーティクルの高さ。
 	float intervalTime;					//!<パーティクルの発生間隔。
 	D3DXVECTOR3 initSpeed;				//!<初速度
+	D3DVECTOR pos;						//!<ポジション				
 
 };
 /*!
@@ -46,7 +47,7 @@ public:
 	 *@param[in]	param		パーティクル生成用のパラメータ。
 	 */
 	void Init(const SParicleEmitParameter& param);
-	void Update(D3DXVECTOR3 pos);
+	void Update();
 	void Render(const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix);
 private:
 	SParicleEmitParameter	param;			//!<パラメータ。

@@ -1,5 +1,6 @@
 #pragma once
 #include "Model.h"
+#include "Particle\ParticleEmitter.h"
 
 enum BlockState
 {
@@ -46,12 +47,22 @@ public:
 	{
 		state = sta;
 	}
+	//!<パーティクルがでるフラグをセット
+	void SetParFlag(bool f)
+	{
+		parflag = f;
+	}
 private:
 	D3DXVECTOR3				position;		//座標。。
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
 	BlockState				state;
+	SParicleEmitParameter param;
+	std::list<CParticleEmitter*> particleEmitterList;
+	const int MAXPAR = 100;
+	int parTime;
+	bool parflag;
 	//bulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_blockboxShape;	//地面のコリジョン形状。
 	btRigidBody*		m_rigidBody3Dblock;	//剛体3D。

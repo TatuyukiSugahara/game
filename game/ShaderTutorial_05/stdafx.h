@@ -21,6 +21,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <list>
 
 #include "Frame\SkinModel.h"
 #include "Frame\SkinModelData.h"

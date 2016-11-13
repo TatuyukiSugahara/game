@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "NBlock.h"
 #include "stage.h"
+#include "Sound\SoundSource.h"
 
 SCollisionInfo collisionInfoTable2Dblock[] = {
 #include "Collision2D_blockbox1.h"
@@ -27,17 +28,55 @@ void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	Add2DRigidBody();
 	model.Init(pd3dDevice, "Asset/model/block.x");
 	state = yes;
+
+	param.texturePath = "Asset/model/block.png";
+	param.w = 0.5f;
+	param.h = 0.5f;
+	param.intervalTime = 0.5f;
+	param.initSpeed = D3DXVECTOR3(0.0f, 0.5f, 0.0f);
+	param.pos = position;
+
+	parflag = false;
+	parTime = 0; 
+	CParticleEmitter* particleEmitter = new CParticleEmitter;
+	particleEmitter->Init(param);
+	particleEmitterList.push_back(particleEmitter);
 }
 //更新。
 void CNBlock::Update()
 {
-	if (state == no)
+	if (state == no)//ブロック壊された
 	{
 		Remove2DRigidBody();
+		
+		if (parflag == true)
+		{
+			if (MAXPAR >= parTime)
+			{
+				parTime++;
+				for (auto p : particleEmitterList)
+				{
+					p->Update();
+				}
+			}
+			else
+			{
+				parflag = false;
+				for (auto p : particleEmitterList)
+				{
+					delete(p);
+				}
+				particleEmitterList.clear();
+			}
+		}
+	}
+	else
+	{
+		//ワールド行列の更新。
+		D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 	}
 
-	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+	
 }
 //描画。
 void CNBlock::Render(
@@ -64,6 +103,16 @@ void CNBlock::Render(
 			numDiffuseLight,
 			false
 			);
+	}
+	else
+	{
+		if (MAXPAR >= parTime)
+		{
+			for (auto p : particleEmitterList)
+			{
+				p->Render(g_stage->GetCamera()->GetViewMatrix(), g_stage->GetCamera()->GetProjectionMatrix());
+			}
+		}
 	}
 }
 //開放。

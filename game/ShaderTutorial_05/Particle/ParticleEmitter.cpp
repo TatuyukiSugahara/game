@@ -19,12 +19,12 @@ void CParticleEmitter::Init( const SParicleEmitParameter& param )
 	this->param = param;
 	timer = 0.0f;
 }
-void CParticleEmitter::Update(D3DXVECTOR3 pos)
+void CParticleEmitter::Update()
 {
 	if (timer >= param.intervalTime) {
 		//パーティクルを生成。
 		CParticle* p = new CParticle;
-		p->Init(param,pos);
+		p->Init(param);
 		timer = 0.0f;
 		particleList.push_back(p);
 	}

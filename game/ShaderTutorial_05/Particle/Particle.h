@@ -20,7 +20,7 @@ class CParticle{
 public:
 	CParticle();
 	~CParticle();
-	void Init(const SParicleEmitParameter& param,D3DXVECTOR3 pos);
+	void Init(const SParicleEmitParameter& param);
 	void Update();
 	void Render(const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix);
 };

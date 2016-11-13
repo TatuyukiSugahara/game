@@ -45,8 +45,8 @@ private:
 	SkinModelData modelData;
 	Animation animation;
 	CLight	light;
-	CParticleEmitter particleEmitter;		//パーティクルエミッター
 	SParicleEmitParameter param;
+	std::list<CParticleEmitter*> particleEmitterList;
 	const int MAXPAR = 100;
 	int parTime;
 	bool parflag;		

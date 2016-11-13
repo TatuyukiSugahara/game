@@ -44,6 +44,7 @@ void CMohurun::Init()
 	param.h = 0.5f;
 	param.intervalTime = 0.2f;
 	param.initSpeed = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	param.pos = position;
 
 	parflag = false;
 	parTime = 0;
@@ -59,13 +60,15 @@ void CMohurun::Update()
 		animation.Update(1.0f / 60.0f);
 		/*if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.5f) == true)
 		{
-			exit(0);
+		exit(0);
 		}*/
 		if (BallCollision(position + D3DXVECTOR3(0.0f, 0.1f, 0.0f),
 			g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.3f, 0.0f), 0.75f, 0.5f) == true)
 		{
 			scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
-			particleEmitter.Init(param);
+			CParticleEmitter* particleEmitter = new CParticleEmitter;
+			particleEmitter->Init(param);
+			particleEmitterList.push_back(particleEmitter);
 			parflag = true;
 			state = off;
 			CSoundSource* SEenemyDeath = new CSoundSource;
@@ -82,12 +85,20 @@ void CMohurun::Update()
 	{
 		if (MAXPAR >= parTime)
 		{
-			particleEmitter.Update(position);
 			parTime++;
+			for (auto p : particleEmitterList)
+			{
+				p->Update();
+			}
 		}
 		else
 		{
 			parflag = false;
+			for (auto p : particleEmitterList)
+			{
+				delete(p);
+			}
+			particleEmitterList.clear();
 		}
 		count++;
 	}
@@ -99,8 +110,11 @@ void CMohurun::Render()
 	{
 		skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
 	}
-	if (parflag == true)
+	else if (MAXPAR >= parTime)
 	{
-		particleEmitter.Render(g_stage->GetCamera()->GetViewMatrix(), g_stage->GetCamera()->GetProjectionMatrix());
+		for (auto p : particleEmitterList)
+		{
+			p->Render(g_stage->GetCamera()->GetViewMatrix(), g_stage->GetCamera()->GetProjectionMatrix());
+		}
 	}
 }

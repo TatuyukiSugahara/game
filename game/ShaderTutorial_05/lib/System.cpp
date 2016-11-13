@@ -2,9 +2,7 @@
 #include "System.h"
 #include "..\BulletPhysics\BulletPhysics.h"
 
-
-CPad					g_pad;
-
+CPad					g_pad;					//ゲームパッド
 LPDIRECT3D9             g_pD3D = NULL;		
 LPDIRECT3DDEVICE9       g_pd3dDevice = NULL;
 EffectManager*			g_effectManager = NULL;
