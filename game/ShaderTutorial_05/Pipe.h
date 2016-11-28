@@ -1,9 +1,8 @@
 #pragma once
 
+#define MAXCOLLISION 30
+
 class CPipeChip;
-
-#define MAX_COLLISION 30
-
 
 /*!
 * @brief	マップクラス。
@@ -44,9 +43,9 @@ private:
 	std::vector<CPipeChip*> pipeChipList;	//マップチップのリスト。
 	int tableSize;
 	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_pipeboxShape[MAX_COLLISION];	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dpipe[MAX_COLLISION];	//剛体3D。
-	btRigidBody*		m_rigidBody2Dpipe[MAX_COLLISION];	//剛体2D。
+	btCollisionShape*	m_pipeboxShape[MAXCOLLISION];	//地面のコリジョン形状。
+	btRigidBody*		m_rigidBody3Dpipe[MAXCOLLISION];	//剛体3D。
+	btRigidBody*		m_rigidBody2Dpipe[MAXCOLLISION];	//剛体2D。
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
 

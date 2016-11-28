@@ -178,6 +178,8 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mohurun.cpp" />
     <ClCompile Include="NBlock.cpp" />
+    <ClCompile Include="NBlockChip.cpp" />
+    <ClCompile Include="NoBlock.cpp" />
     <ClCompile Include="pad\KeyInput.cpp" />
     <ClCompile Include="pad\Pad.cpp" />
     <ClCompile Include="Particle\IndexBuffer.cpp" />
@@ -239,6 +241,8 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mohurun.h" />
     <ClInclude Include="NBlock.h" />
+    <ClInclude Include="NBlockChip.h" />
+    <ClInclude Include="NoBlock.h" />
     <ClInclude Include="pad\KeyInput.h" />
     <ClInclude Include="pad\Pad.h" />
     <ClInclude Include="Particle\IndexBuffer.h" />

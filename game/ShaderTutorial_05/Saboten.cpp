@@ -44,7 +44,7 @@ void CSaboten::Update()
 	{
 		if (fabs(distance) <= 0.1f)
 		{
-			g_resultscene.SetState(ResultState::Goal);
+			g_resultscene.SetState(ResultState::Death);
 			scene = GameScene::Result;
 
 		}

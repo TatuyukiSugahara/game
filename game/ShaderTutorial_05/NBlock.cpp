@@ -1,159 +1,62 @@
 #include "stdafx.h"
 #include "NBlock.h"
-#include "stage.h"
-#include "Sound\SoundSource.h"
+#include "NBlockChip.h"
+#include "Stage.h"
 
-SCollisionInfo collisionInfoTable2Dblock[] = {
-#include "Collision2D_blockbox1.h"
+using namespace std;
+
+//マップチップの配置情報のテーブル。
+SBlockChipLocInfo nblockChipLocInfoTable[] = {
+#include "LocationBlock.h"
 };
 
-//コンストラクタ
 CNBlock::CNBlock()
 {
-	//初期化。
 
-	D3DXMatrixIdentity(&mWorld);
-	position.x = 14.0f;
-	position.y = 4.0f;
-	position.z = 0.0f;
 }
-//デストラクタ
 CNBlock::~CNBlock()
 {
+	for (auto& mapchip : nblockChipList){
+		delete mapchip;
+	}
 }
-//初期化。
 void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	CreateCollision2D();
-	Add2DRigidBody();
-	model.Init(pd3dDevice, "Asset/model/block.x");
-	state = yes;
+	//配置情報からマップを構築
+	tableSize = sizeof(nblockChipLocInfoTable) / sizeof(nblockChipLocInfoTable[0]);
+	for (int a = 0; a < tableSize; a++)
+	{
+		//マップチップを生成
+		CNBlockChip* mapChip = new CNBlockChip;
+		mapChip->SetPos(nblockChipLocInfoTable[a].pos);
+		mapChip->SetRot(nblockChipLocInfoTable[a].rotation);
+		mapChip->Init();
+		nblockChipList.push_back(mapChip);
+	}
 
-	param.texturePath = "Asset/model/block.png";
-	param.w = 0.5f;
-	param.h = 0.5f;
-	param.intervalTime = 0.5f;
-	param.initSpeed = D3DXVECTOR3(0.0f, 0.5f, 0.0f);
-	param.pos = position;
-
-	parflag = false;
-	parTime = 0; 
-	CParticleEmitter* particleEmitter = new CParticleEmitter;
-	particleEmitter->Init(param);
-	particleEmitterList.push_back(particleEmitter);
 }
-//更新。
 void CNBlock::Update()
 {
-	if (state == no)//ブロック壊された
+	for (int a = 0; a < tableSize; a++)
 	{
-		Remove2DRigidBody();
-		
-		if (parflag == true)
+		//ブロックと当たった？
+		if (nblockChipList[a]->Get2DBlock() == g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()
+			&& g_stage->GetPlayer()->GetIsIntersect().gethit() == true)
 		{
-			if (MAXPAR >= parTime)
-			{
-				parTime++;
-				for (auto p : particleEmitterList)
-				{
-					p->Update();
-				}
-			}
-			else
-			{
-				parflag = false;
-				for (auto p : particleEmitterList)
-				{
-					delete(p);
-				}
-				particleEmitterList.clear();
-			}
+			CSoundSource* SEBlock = new CSoundSource;
+			SEBlock->Init("Asset/Sound/block.wav");
+			SEBlock->Play(false);
+			SEBlock->SetVolume(0.25f);
+			nblockChipList[a]->SetLost(true);
+			nblockChipList[a]->SetParFlag(true);
 		}
-	}
-	else
-	{
-		//ワールド行列の更新。
-		D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
-	}
-
-	
-}
-//描画。
-void CNBlock::Render(
-	LPDIRECT3DDEVICE9 pd3dDevice,
-	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix,
-	D3DXVECTOR4* diffuseLightDirection,
-	D3DXVECTOR4* diffuseLightColor,
-	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
-	)
-{
-	if (state == yes)		//出現しているなら
-	{
-		model.Render(
-			pd3dDevice,
-			mWorld,
-			mRotation,
-			viewMatrix,
-			projMatrix,
-			diffuseLightDirection,
-			diffuseLightColor,
-			ambientLight,
-			numDiffuseLight,
-			false
-			);
-	}
-	else
-	{
-		if (MAXPAR >= parTime)
-		{
-			for (auto p : particleEmitterList)
-			{
-				p->Render(g_stage->GetCamera()->GetViewMatrix(), g_stage->GetCamera()->GetProjectionMatrix());
-			}
-		}
+		nblockChipList[a]->Update();
 	}
 }
-//開放。
-void CNBlock::Release()
+void CNBlock::Render()
 {
-	model.Release();
-}
-
-void CNBlock::CreateCollision2D()
-{
-	SCollisionInfo& collision = *collisionInfoTable2Dblock;
-	//ここで剛体とかを登録する。
-	//剛体を初期化。
+	for (int a = 0; a < tableSize; a++)
 	{
-		//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
-		m_blockboxShape = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
-		btTransform groundTransform;
-		groundTransform.setIdentity();
-		groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, collision.pos.z));
-		float mass = 0.0f;
-
-		//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
-		m_myMotionState = new btDefaultMotionState(groundTransform);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_blockboxShape, btVector3(0, 0, 0));
-		m_rigidBody2Dblock = new btRigidBody(rbInfo);
-	}
-
-}
-
-void CNBlock::Add2DRigidBody()//ワールドに追加。
-{
-	if (!m_isAdd2DCollision){
-		m_isAdd2DCollision = true;
-		g_bulletPhysics.AddRigidBody(m_rigidBody2Dblock);
-	}
-}
-
-void CNBlock::Remove2DRigidBody()
-{
-	if (m_rigidBody2Dblock != NULL)
-	{
-		g_bulletPhysics.RemoveRigidBody(m_rigidBody2Dblock);
+		nblockChipList[a]->Render();
 	}
 }

@@ -42,10 +42,10 @@ void CStage::Initialize()
 	player.Init(g_pd3dDevice);
 	//モフルンエネミー初期化
 	mohurun.Init();
-	//ブロック初期化
-	block.Init(g_pd3dDevice);
 	//nブロック初期化
 	nblock.Init(g_pd3dDevice);
+	//見えないブロック初期化
+	noblock.Init();
 	//はてなボックス初期化
 	hanatebox.Init(g_pd3dDevice);
 	//キノコ初期化
@@ -85,10 +85,10 @@ void CStage::Update()
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
 	shadow.SetLightDirection(lightDir);
-	//ブロックを更新
-	block.Update();
 	//Nブロックを更新
 	nblock.Update();
+	//見えないブロック更新
+	noblock.Update();
 	//はてなボックス更新
 	hanatebox.Update();
 	//キノコ更新
@@ -141,26 +141,10 @@ void CStage::Render()
 		);
 	//モフルンエネミー描画
 	mohurun.Render();
-	//ブロックを描画
-	/*block.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-		);*/
 	//Nブロックを描画
-	nblock.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-		);
+	nblock.Render();
+	//見えないブロック描画
+	noblock.Render();
 	//はてなボックス描画
 	hanatebox.Render(
 		g_pd3dDevice,
@@ -227,8 +211,6 @@ void CStage::Release()
 	shadow.Release();
 	//ステージ背景リリース
 	stageback.Release();
-	//ブロックリリース
-	block.Release();
 	//はてなボックスリリース
 	hanatebox.Release();
 	//キノコリリース

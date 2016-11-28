@@ -207,6 +207,12 @@
     <ClCompile Include="ResultGoal.cpp">
       <Filter>ソース ファイル\Result</Filter>
     </ClCompile>
+    <ClCompile Include="NBlockChip.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NoBlock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -382,6 +388,12 @@
     </ClInclude>
     <ClInclude Include="ResultGoal.h">
       <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="NBlockChip.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NoBlock.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

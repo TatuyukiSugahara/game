@@ -43,8 +43,13 @@ void CMohurun::Init()
 	param.w = 0.5f;
 	param.h = 0.5f;
 	param.intervalTime = 0.2f;
+	param.life = 0.5f;
 	param.initSpeed = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	param.pos = position;
+
+	CParticleEmitter* particleEmitter = new CParticleEmitter;
+	particleEmitter->Init(param);
+	particleEmitterList.push_back(particleEmitter);
 
 	parflag = false;
 	parTime = 0;
@@ -66,9 +71,6 @@ void CMohurun::Update()
 			g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.3f, 0.0f), 0.75f, 0.5f) == true)
 		{
 			scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
-			CParticleEmitter* particleEmitter = new CParticleEmitter;
-			particleEmitter->Init(param);
-			particleEmitterList.push_back(particleEmitter);
 			parflag = true;
 			state = off;
 			CSoundSource* SEenemyDeath = new CSoundSource;

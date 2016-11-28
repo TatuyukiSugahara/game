@@ -29,8 +29,23 @@ void CParticleEmitter::Update()
 		particleList.push_back(p);
 	}
 	timer += 1.0f / 60.0f;
-	for (auto p : particleList) {
+
+	/*for (auto p : particleList) {
 		p->Update();
+	}*/
+	//std::List <CParticle*>::iterater it = particleList.begin()
+	auto it = particleList.begin();
+	while (it != particleList.end())
+	{
+		if (!(*it)->Update())
+		{
+			delete *it;
+			it = particleList.erase(it);
+		}
+		else
+		{
+			it++;
+		}
 	}
 }
 void CParticleEmitter::Render(const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix)

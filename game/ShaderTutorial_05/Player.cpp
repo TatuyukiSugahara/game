@@ -13,12 +13,12 @@ CPlayer::CPlayer()
 	position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);		//初期位置
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
 	Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);			//初期スケール
-
+	addmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	radius = 0.3f;
-
+	friction = 0.2f;
 	state = PlayerStay;
 }
 //デストラクタ
@@ -57,9 +57,9 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	IsIntersect.CollisitionInitialize(&position,radius);//あたり判定初期化
 
 	//AABB
-	/*CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
+	CalcAABBSizeFromMesh(modelData.GetOrgMeshFirst(), m_aabbMin, m_aabbMax);
 	m_aabbMin += position;
-	m_aabbMax += position;*/
+	m_aabbMax += position;
 	//ターン
 	m_currentAngleY = 0.0f;
 	m_targetAngleY = 0.0f;
@@ -70,8 +70,15 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 //更新。
 void CPlayer::Update()
 {
-	//Move2D();//移動2D
-	Move3D();//移動3D
+	if (g_pad.IsPress(enButtonB))
+	{
+		Move(7.5f);//移動
+	}
+	else
+	{
+		Move(5.0f);//移動
+	}
+	
 	Jump();//ジャンプ
 	Died();//死亡
 	//天井と当たった？＆＆当たったのは,はてなボックス？
@@ -88,17 +95,7 @@ void CPlayer::Update()
 		radius = 0.45;
 		IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 	}
-	//ブロックと当たった？
-	if (g_stage->GetNBlock()->Get2DBlock() == IsIntersect.getCollisionObj()
-		&& IsIntersect.gethit() == true)
-	{
-		CSoundSource* SEBlock = new CSoundSource;
-		SEBlock->Init("Asset/Sound/block.wav");
-		SEBlock->Play(false);
-		SEBlock->SetVolume(0.25f);
-		g_stage->GetNBlock()->SetState(no);
-		g_stage->GetNBlock()->SetParFlag(true);
-	}
+	
 	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 	//AABB
 	m_aabbMax += IsIntersect.GetAddPos();
@@ -106,16 +103,17 @@ void CPlayer::Update()
 
 	State();//アニメーション状態変更
 
-	//ワールド行列の更新。
+	//Bダッシュ時のアニメーション速度
 	if (g_pad.IsPress(enButtonB))
 	{
 		animation.SetAnimationSpeedRate(2.0f);
 	}
-	else
+	else//通常時
 	{
 		animation.SetAnimationSpeedRate(1.0f);
 	}
 	animation.Update(1.0f / 60.0f);
+	//ワールド行列の更新。
 	skinmodel.UpdateWorldMatrix(position, rotation, Scale);
 }
 //描画。
@@ -138,12 +136,7 @@ void CPlayer::Release()
 {
 }
 
-void CPlayer::Move2D()
-{
-	movespeed.x = g_pad.GetLStickXF() * MOVE_SPEED;
-}
-
-void CPlayer::Move3D()
+void CPlayer::Move(float maxmove)
 {
 	bool isTurn = false;
 
@@ -151,11 +144,11 @@ void CPlayer::Move3D()
 	static D3DXVECTOR3 dirZ(0.0f, 0.0f, 1.0f);
 	D3DXVECTOR3 dirpad(g_pad.GetLStickXF(), 0.0f, g_pad.GetLStickYF());
 
-	D3DXVECTOR3 addmove(0.0f, 0.0f, 0.0f);
+	
 
 	addmove.x = dirX.x * dirpad.x - dirZ.x * dirpad.z;
 	addmove.z = dirX.z * dirpad.x - dirZ.z * dirpad.z;
-
+	
 	//カメラが向いている方向に進む。
 	dirZ = g_stage->GetCamera()->GetCameraDir();
 	D3DXVec3Normalize(&addmove, &addmove);
@@ -174,15 +167,50 @@ void CPlayer::Move3D()
 		m_currentAngleY = turn.Update(isTurn, m_targetAngleY);
 		D3DXQuaternionRotationAxis(&rotation, &axis, m_currentAngleY);
 	}
-	if (g_pad.IsPress(enButtonB))
+	D3DXVECTOR3 v1;//現在の進行方向
+	D3DXVec3Normalize(&v1, &movespeed);
+	D3DXVECTOR3 v2;//次の進行方向
+	D3DXVec3Normalize(&v2, &addmove);
+	//内積
+	float naiseki = D3DXVec3Dot(&v1, &v2);
+	//移動量があるなら
+	if (D3DXVec3Length(&addmove) > 0.0f)
 	{
-		movespeed.x = addmove.x * MOVE_SPEED * 1.5f;
-		movespeed.z = addmove.z * MOVE_SPEED * 1.5f;
-		return;
+		friction = 0.8f + 2.6f * (1.0f - fabs(naiseki));
 	}
-	movespeed.x = addmove.x * MOVE_SPEED;
-	movespeed.z = addmove.z * MOVE_SPEED;
+	else
+	{
+		friction = 0.4f;
+	}
+	//速度の上限
+	D3DXVECTOR3 moveSpeedXZ = movespeed;
+	moveSpeedXZ.y = 0.0f;
+	D3DXVec3Normalize(&v1, &moveSpeedXZ);
+	/*if (!IsIntersect.GetGround()){
+		addmove *= 0.2f;
+	}*/
+	if (D3DXVec3Length(&moveSpeedXZ) <= maxmove || D3DXVec3Dot(&v1, &v2) < 0.0f)
+	{
+		movespeed.x += addmove.x;
+		movespeed.z += addmove.z;
+	}
 
+	
+	if (IsIntersect.GetGround())
+	{
+		//地面で移動中
+		D3DXVECTOR3 masatu(0.0f, 0.0f, 0.0f);
+		D3DXVec3Normalize(&masatu, &movespeed);
+		masatu *= -friction;
+		if (D3DXVec3Length(&moveSpeedXZ) < D3DXVec3Length(&masatu))
+		{
+			masatu = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+			movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		}
+		movespeed.x += masatu.x;
+		movespeed.z += masatu.z;
+	}
 }
 
 void CPlayer::Jump()
@@ -214,7 +242,7 @@ void CPlayer::Jump()
 void CPlayer::State()
 {
 	//動いているかつ地面についている？
-	if (fabs(D3DXVec3Length(&movespeed)) >= 0.001f && IsIntersect.GetGround() == true)
+	if (fabs(D3DXVec3Length(&movespeed)) >= 0.1f && IsIntersect.GetGround() == true)
 	{
 		if (state != PlayerRun)
 		{
@@ -223,7 +251,7 @@ void CPlayer::State()
 		}
 	}
 	//地面についていて動いていない
-	if (IsIntersect.GetGround() == true && fabs(D3DXVec3Length(&movespeed)) <= 0.001f)
+	if (IsIntersect.GetGround() == true && fabs(D3DXVec3Length(&movespeed)) <= 0.1f)
 	{
 		if (state != PlayerStay)
 		{
@@ -232,12 +260,14 @@ void CPlayer::State()
 			{
 				state = PlayerJumpWas;
 				animation.PlayAnimation(PlayerJumpWas, 0.3f);
+				friction = 0.8f;
 			}
 			//ステイ状態
 			if (!animation.IsPlay() || state == PlayerRun)
 			{
 				state = PlayerStay;
 				animation.PlayAnimation(PlayerStay, 0.3);
+				movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			}
 
 		}
@@ -251,6 +281,20 @@ void CPlayer::State()
 			state = PlayerJumpNow;
 			animation.PlayAnimation(PlayerJumpNow, 0.2f);
 		}
+		/*if (D3DXVec3Length(&addmove) > 0.0f)
+		{
+			D3DXVECTOR3 masatu(0.0f, 0.0f, 0.0f);
+			D3DXVec3Normalize(&masatu, &movespeed);
+			D3DXVECTOR3 moveSpeedXZ = movespeed;
+			moveSpeedXZ.y = 0.0f;
+			masatu *= -friction;
+			if (D3DXVec3Length(&moveSpeedXZ) > D3DXVec3Length(&masatu))
+			{
+				movespeed.x += masatu.x;
+				movespeed.z += masatu.z;
+			}
+			
+		}*/
 	}
 }
 

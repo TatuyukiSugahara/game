@@ -1,5 +1,4 @@
 #pragma once
-#include "Model.h"
 #include "lib\System.h"
 #include "IsIntersect\IsIntersect.h"
 #include "Turn.h"
@@ -84,8 +83,7 @@ public:
 	{
 		movespeed = speed;
 	}
-	void Move2D();
-	void Move3D();
+	void Move(float maxmove);
 	void Jump();
 	void State();
 	void Died();//死亡
@@ -104,9 +102,11 @@ private:
 	std::vector<IPlayerCollisionCallback*>	callbackList;	//
 	const float				MOVE_SPEED = 5.0f;				//移動速度
 	float					radius;
+	float					friction;						//摩擦
 	PlayerState				state;							//プレイヤーの状態
 	D3DXQUATERNION			rotation;						//回転クォータニオン
 	float					deathCount;						//死亡までのカウント
+	D3DXVECTOR3				addmove;							//次の移動
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;

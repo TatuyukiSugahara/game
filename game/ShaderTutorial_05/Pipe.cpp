@@ -3,6 +3,7 @@
 #include "PipeChip.h"
 #include "Stage.h"
 
+
 using namespace std;
 
 
@@ -120,7 +121,7 @@ void CPipe::Render(
 
 void CPipe::CreateCollision2D()
 {
-	if (arraySize >= MAX_COLLISION)
+	if (arraySize >= MAXCOLLISION)
 	{
 		std::abort();
 	}

@@ -46,6 +46,5 @@ private:
 	D3DXVECTOR3							Scale;			//大きさ
 	D3DXMATRIX							mScale;			//matrixスケール
 	D3DXMATRIX							mWorld;			//ワールド行列。
-	int									size;
 };
 

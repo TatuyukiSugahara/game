@@ -41,8 +41,8 @@ void CParticle::Init( const SParicleEmitParameter& param)
 	
 	D3DXVECTOR4 uv(0.0f, 0.0f, 1.0f, 1.0f);
 	moveSpeed = param.initSpeed;
-
 	position = param.pos;
+	Life = param.life;
 	//初速度に乱数を加える
 	float add = ((rand() % 255) - 128) / 128.0f;
 	moveSpeed.x += add * 0.3f;
@@ -106,11 +106,23 @@ void CParticle::Init( const SParicleEmitParameter& param)
 		std::abort();
 	}
 }
-void CParticle::Update()
+bool CParticle::Update()
 {
+
 	float deltaTime = 1.0f / 60.0f;
+
+	D3DXVECTOR3 gravity = D3DXVECTOR3(0.0f, -0.016f, 0.0f); //Y方向に-0.16m/frame^2の重力加速度。
+	moveSpeed += gravity;  //重力加速度をmoveSpeedに適用する。
+
 	D3DXVECTOR3 add = moveSpeed * deltaTime;
 	position += add;
+	Life -= deltaTime;
+	if (Life <= 0.0f)
+	{
+		return false;
+	}
+	
+	return true;
 }
 void CParticle::Render(const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix)
 {
@@ -133,9 +145,9 @@ void CParticle::Render(const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatri
 	g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	//アルファブレンディングを有効にする。
-	/*g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-	g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);*/
+	g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
 
 	shaderEffect->SetTechnique("ColorTexPrimAdd");

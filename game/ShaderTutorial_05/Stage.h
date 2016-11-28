@@ -4,7 +4,6 @@
 #include "Light.h"
 #include "LightBack.h"
 #include "Player.h"
-#include "Block.h"
 #include "Stage.h"
 #include "HatenaBox.h"
 #include "Kinoko.h"
@@ -18,6 +17,7 @@
 #include "Mohurun.h"
 #include "Sound\SoundEngine.h"
 #include "Sound\SoundSource.h"
+#include "NoBlock.h"
 
 #define MAX_COLLISION 100
 
@@ -90,6 +90,10 @@ public:
 	{
 		return &soundengine;
 	}
+	CNoBlock* GetNoBlock()
+	{
+		return&noblock;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -102,7 +106,6 @@ protected:
 	CLight light;				//ライト
 	CLightBack lightback;		//背景ライト
 	CPlayer player;				//プレイヤー
-	CBlock block;				//ブロック
 	CHatenaBox	hanatebox;		//はてなボックス
 	CKinoko	kinoko;				//キノコ
 	CNBlock	nblock;				//ノーマルブロック
@@ -113,6 +116,7 @@ protected:
 	CGoal goal;					//ゴール
 	CSaboten sabo;				//サボテン
 	CMohurun mohurun;			//モフルンエネミー
+	CNoBlock	noblock;		//見えないブロック
 	CSoundEngine soundengine;
 	CSoundSource soundSource;
 };
