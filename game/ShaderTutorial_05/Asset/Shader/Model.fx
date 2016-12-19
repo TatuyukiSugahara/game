@@ -24,10 +24,10 @@ float4	g_diffuseLightColor[DIFFUSE_LIGHT_NUM];		//ディフューズライトのカラー。
 float4	g_ambientLight;								//環境光。
 int g_ShadowReceiverFlag;							//影を受けるフラグ
 
-bool g_isHasNormalMap;			//法線マップ保持している？
-
 texture g_diffuseTexture;		//ディフューズテクスチャ。
 texture g_shadowTexture;		//シャドーテクスチャ。
+texture g_normalTexture;		//法線マップ。
+texture g_specularTexture;		//スペキュラマップ。
 
 sampler g_diffuseTextureSampler = 
 sampler_state
@@ -51,19 +51,31 @@ sampler_state
 	AddressV = CLAMP;
 };
 
-//法線マップ
-texture g_normalTexture;		//法線マップ。
+//法線マップ。
 sampler g_normalMapSampler = 
 sampler_state
 {
 	Texture = <g_normalTexture>;
-    MipFilter = NONE;
-    MinFilter = NONE;
-    MagFilter = NONE;
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
     AddressU = Wrap;
 	AddressV = Wrap;
 };
+bool g_hasNormalMap;			//法線マップがあるかフラグ
 
+//スペキュラマップ
+sampler g_specularMapSampler = 
+sampler_state
+{
+	Texture = <g_specularTexture>;
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
+    AddressU = Wrap;
+	AddressV = Wrap;
+};
+bool g_isHasSpecularMap;		//スペキュラマップ保持している？
 
 /*!
  * @brief	入力頂点
@@ -187,24 +199,47 @@ float4 posInLVP = In.lightViewPos_1;
 	//uv座標に変換。
 	float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy + float2(0.5f, 0.5f);
 	float2 shadow_val = 1.0f;
-
+	
+	float3 normal = In.normal;
+	//ノーマルマップ
+	if(g_hasNormalMap == true)
+	{
+		//タンジェントスペースの法線をロード。
+		float3 localNormal = tex2D(g_normalMapSampler, In.Tex0);
+		//頂点シェーダーから受け取った接ベクトルを正規化。
+		float3 tangent = normalize(In.Tangent);
+		//頂点法線と接ベクトルを使って従法線を求める。
+		float3 biNormal = normalize( cross(tangent, normal) );
+		
+		//-1.0～1.0の範囲にマッピングする。
+		localNormal = (localNormal * 2.0f) - 1.0f;
+		//タンジェントスペースからワールドスペースに変換する。
+		normal = tangent * localNormal.x
+				+ biNormal * localNormal.y
+				+ normal * localNormal.z;
+	}
 	//ライトを計算。
 	float4 lig = 0.0f;
 	{
 		for (int i = 0; i < DIFFUSE_LIGHT_NUM; i++){
-			lig.xyz += max(0.0f, dot(In.normal.xyz, -g_diffuseLightDirection[i].xyz))
+			lig.xyz += max(0.0f, dot(normal.xyz, -g_diffuseLightDirection[i].xyz))
 				* g_diffuseLightColor[i].xyz;
 			//スペキュラを計算。
 			float3 L = -g_diffuseLightDirection[i].xyz;
 				float3 H = normalize(L + normalize(In.Eye));//ハーフベクトル。
-				float3 N = normalize(In.normal);
+				float3 N = normalize(normal);
 				lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f) * g_diffuseLightColor[i].w;
+			if(g_isHasSpecularMap){
+			//スペキュラマップがある
+			float3 spec = lig.xyz * tex2D(g_specularMapSampler, In.Tex0);
+			lig.xyz += spec;
+	}
 		}
 		lig += g_ambientLight;
 	}
 	float4 color = tex2D(g_diffuseTextureSampler, In.Tex0);
 
-	if(g_ShadowReceiverFlag==true)
+	if(g_ShadowReceiverFlag == true)
 	{
 		if ((shadowMapUV.x > 0.0f && shadowMapUV.x <1.0f) && (shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f))
 		{

@@ -37,6 +37,8 @@ void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	skinmodel.SetLight(&light);
 	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetNormalMap(false);
+	skinmodel.SetSpecularMap(false);
 	
 }
 

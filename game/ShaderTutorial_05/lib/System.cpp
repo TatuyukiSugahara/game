@@ -6,6 +6,7 @@ CPad					g_pad;					//ゲームパッド
 LPDIRECT3D9             g_pD3D = NULL;		
 LPDIRECT3DDEVICE9       g_pd3dDevice = NULL;
 EffectManager*			g_effectManager = NULL;
+CPhysicsWorld			g_physicsWorld;
 
 extern void Init();
 extern void Render();
@@ -86,6 +87,7 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	//ここからゲーム関係の初期化。
 	g_pad.Init(0);//パッド初期化
 	g_bulletPhysics.InitPysics();//物理初期化
+	g_physicsWorld.Init();			//物理ワールド初期化
 	Init();
 	
 	// ゲームループ
@@ -100,7 +102,8 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		}
 		else {
 			g_pad.Update();	//パッドアップデート
-			g_bulletPhysics.Update();					//物理エンジン更新
+			g_bulletPhysics.Update();		//物理エンジン更新
+			g_physicsWorld.Update();		//物理ワールド更新
 			Update();
 			Render();
 		}

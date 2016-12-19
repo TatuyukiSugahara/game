@@ -52,8 +52,8 @@ void CPipe::Update()
 	{
 		pipeChipList[a]->Update();
 	}
-	if (g_stage->GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[4]
-		&& g_stage->GetPlayer()->GetIsIntersect().GetGround() == true
+	if (/*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[4]
+		&& /*g_stage->GetPlayer()->GetIsIntersect().GetGround()*/g_stage->GetPlayer()->GetcharacterController().IsOnGround()
 		&& g_pad.IsTrigger(enButtonDown))
 	{
 	
@@ -67,8 +67,8 @@ void CPipe::Update()
 			SEPipe->Play(false);
 			SEPipe->SetVolume(0.25f);
 	}
-	if (g_stage->GetPlayer()->GetIsIntersect().getCollisionObj() == m_rigidBody2Dpipe[13]
-		&& g_stage->GetPlayer()->GetIsIntersect().GetGround() == true
+	if (/*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[13]
+		&& /*g_stage->GetPlayer()->GetIsIntersect().GetGround()*/g_stage->GetPlayer()->GetcharacterController().IsOnGround()
 		&& g_pad.IsTrigger(enButtonDown))
 	{
 		nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[5].pos.x

@@ -1,6 +1,5 @@
 #pragma once
 #include "..\..\bulletPhysics\src\btBulletDynamicsCommon.h"
-#include"BulletPhysics.h"
 #include"..\BulletCollision\CollisionDispatch\btGhostObject.h"
 #include "..\stdafx.h"
 
@@ -70,7 +69,7 @@ public:
 		m_dynamicWorld->addCollisionObject(gost);
 	}
 	/*!
-	* @brief	コリジョンオブジェクトを追加。
+	* @brief	コリジョンオブジェクトを削除。
 	*@param[in]	body		剛体
 	*/
 	void RemoveCollisionObject(btGhostObject* gost)

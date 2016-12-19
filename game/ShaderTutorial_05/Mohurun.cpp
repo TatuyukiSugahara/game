@@ -55,6 +55,10 @@ void CMohurun::Init()
 	parTime = 0;
 
 	count = 0;
+	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetShadowReceiverFlag(false);
+	skinmodel.SetNormalMap(false);
+	skinmodel.SetSpecularMap(false);
 }
 //çXêVÅB
 void CMohurun::Update()

@@ -68,7 +68,6 @@
 		m_is3DSound = is3DSound;
 	}
 	void CSoundSource::Release()
-
 	{
 		m_waveFile.Release();
 		if (m_sourceVoice != nullptr) {

@@ -10,7 +10,7 @@ CPlayer::CPlayer()
 {
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
-	position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);		//初期位置
+	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
 	Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);			//初期スケール
 	addmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -24,21 +24,52 @@ CPlayer::CPlayer()
 //デストラクタ
 CPlayer::~CPlayer()
 {
+	if (normalMap != NULL)
+	{
+		normalMap->Release();
+	}
 }
 //初期化。
 void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
+	//ノーマルマップロード
+	HRESULT hr = D3DXCreateTextureFromFileA(
+		g_pd3dDevice,
+		"Asset/model/utc_nomal.tga",
+		&normalMap);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認してください。", "エラー", MB_OK);
+	}
+	//スペキュラマップをロード。
+	hr = D3DXCreateTextureFromFileA(g_pd3dDevice,
+		"Asset/model/utc_spec.tga",
+		&specularMap
+		);
+	//D3DXCreateTextureFromFileAの戻り値をチェック。
+	if (FAILED(hr)) {
+		//D3DXCreateTextureFromFileAで失敗した。
+		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認をお願いします。", "エラー", MB_OK);
+	}
+	if (normalMap != NULL) {
+		//法線マップの読み込みが成功したので、CSkinModelに法線マップを設定する。
+		skinmodel.SetNormalMap(normalMap);
+	}
+	if (specularMap != NULL) {
+		//スペキュラマップの読み込みが成功したので、CSkinModelにスペきゅらマップを設定する。
+		skinmodel.SetSpecularMap(specularMap);
+	}
 	//ライトを初期化。
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
 	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-0.707f, 0.0f, -0.707f, 1.0f));
 	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, 0.707f, 1.0f));
 	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, 0.707f, 1.0f));
 
-	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 0.0f));
-	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 0.0f));
-	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.5f, 0.5f, 0.5f, 0.0f));
-	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.5f, 0.5f, 0.5f, 0.0f));
-	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
+	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
+	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
+	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
+	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
+	light.SetAmbientLight(D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
 
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/Unity.X", &animation);
@@ -54,7 +85,9 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	animation.SetAnimationLoopFlag(PlayerJumpWas, false);
 
 
-	IsIntersect.CollisitionInitialize(&position,radius);//あたり判定初期化
+	//IsIntersect.CollisitionInitialize(&position,radius);//あたり判定初期化
+	characterController.Init(0.3f, 1.0f, position);
+	characterController.SetGravity(-30.0f);
 
 	//AABB
 	CalcAABBSizeFromMesh(modelData.GetOrgMeshFirst(), m_aabbMin, m_aabbMax);
@@ -66,6 +99,8 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	turn.Initialize();
 	skinmodel.SetShadowReceiverFlag(false);
 	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetNormalMap(true);
+	skinmodel.SetSpecularMap(true);
 }
 //更新。
 void CPlayer::Update()
@@ -82,8 +117,8 @@ void CPlayer::Update()
 	Jump();//ジャンプ
 	Died();//死亡
 	//天井と当たった？＆＆当たったのは,はてなボックス？
-	if (IsIntersect.gethit() == true
-		&& IsIntersect.getCollisionObj() == g_stage->GetHatena()->Get2DHatena())
+	if (characterController.IsCeiling()
+		&& characterController.getCollisionObj() == g_stage->GetHatena()->Get2DHatena())
 	{
 		g_stage->GetHatena()->SetState(hit);
 		g_stage->GetKinoko()->SetState(Leave);//キノコ出現
@@ -93,13 +128,16 @@ void CPlayer::Update()
 	{
 		D3DXVec3Scale(&Scale, &Scale, 1.5f);
 		radius = 0.45;
-		IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
+		//IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 	}
-	
-	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
+	characterController.SetMoveSpeed(movespeed);
+	characterController.Execute();
+	movespeed = characterController.GetMoveSpeed();
+	position = characterController.GetPosition();
+	//IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 	//AABB
-	m_aabbMax += IsIntersect.GetAddPos();
-	m_aabbMin += IsIntersect.GetAddPos();
+	//m_aabbMax += IsIntersect.GetAddPos();
+	//m_aabbMin += IsIntersect.GetAddPos();
 
 	State();//アニメーション状態変更
 
@@ -123,12 +161,6 @@ void CPlayer::Render(
 	bool isDrawToShadowMap
 	)
 {
-	/*D3DXMATRIX mRot;
-	D3DXMATRIX AddRot;
-	D3DXMatrixRotationQuaternion(&mRot, &rotation);
-	D3DXMatrixRotationY(&AddRot, D3DXToRadian(-90.0f));
-	D3DXMatrixMultiply(&mRot, &mRot, &AddRot);
-	mWorld = mScale * mRot * mWorld;*/
 	skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);
 }
 //開放。
@@ -174,14 +206,20 @@ void CPlayer::Move(float maxmove)
 	//内積
 	float naiseki = D3DXVec3Dot(&v1, &v2);
 	//移動量があるなら
-	if (D3DXVec3Length(&addmove) > 0.0f)
+	friction = 0.25f;
+	/*if (D3DXVec3Length(&addmove) > 0.0f)
 	{
 		friction = 0.8f + 2.6f * (1.0f - fabs(naiseki));
 	}
 	else
 	{
 		friction = 0.4f;
-	}
+	}*/
+
+	//速度を加算。
+	movespeed.x += addmove.x;
+	movespeed.z += addmove.z;
+
 	//速度の上限
 	D3DXVECTOR3 moveSpeedXZ = movespeed;
 	moveSpeedXZ.y = 0.0f;
@@ -189,14 +227,15 @@ void CPlayer::Move(float maxmove)
 	/*if (!IsIntersect.GetGround()){
 		addmove *= 0.2f;
 	}*/
-	if (D3DXVec3Length(&moveSpeedXZ) <= maxmove || D3DXVec3Dot(&v1, &v2) < 0.0f)
+	if (D3DXVec3Length(&moveSpeedXZ) >= maxmove )
 	{
-		movespeed.x += addmove.x;
-		movespeed.z += addmove.z;
+
+		movespeed.x = v1.x * maxmove;
+		movespeed.z = v1.z * maxmove;
 	}
 
 	
-	if (IsIntersect.GetGround())
+	if (characterController.IsOnGround())
 	{
 		//地面で移動中
 		D3DXVECTOR3 masatu(0.0f, 0.0f, 0.0f);
@@ -205,7 +244,6 @@ void CPlayer::Move(float maxmove)
 		if (D3DXVec3Length(&moveSpeedXZ) < D3DXVec3Length(&masatu))
 		{
 			masatu = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
 			movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 		movespeed.x += masatu.x;
@@ -234,15 +272,15 @@ void CPlayer::Jump()
 		SEjump->SetVolume(0.25f);
 		state = PlayerIsJump;
 		animation.PlayAnimation(PlayerIsJump,0.05f);
+		characterController.Jump();
 
 	}
-
 }
 
 void CPlayer::State()
 {
 	//動いているかつ地面についている？
-	if (fabs(D3DXVec3Length(&movespeed)) >= 0.1f && IsIntersect.GetGround() == true)
+	if (fabs(D3DXVec3Length(&movespeed)) >= 0.1f && characterController.IsOnGround() == true)
 	{
 		if (state != PlayerRun)
 		{
@@ -251,7 +289,7 @@ void CPlayer::State()
 		}
 	}
 	//地面についていて動いていない
-	if (IsIntersect.GetGround() == true && fabs(D3DXVec3Length(&movespeed)) <= 0.1f)
+	if (characterController.IsOnGround() == true && fabs(D3DXVec3Length(&movespeed)) <= 0.1f)
 	{
 		if (state != PlayerStay)
 		{
@@ -274,27 +312,13 @@ void CPlayer::State()
 		
 	}
 	//ジャンプ中
-	if (!IsIntersect.GetGround())
+	if (!characterController.IsOnGround())
 	{
 		if (state != PlayerJumpNow && !animation.IsPlay())
 		{
 			state = PlayerJumpNow;
 			animation.PlayAnimation(PlayerJumpNow, 0.2f);
 		}
-		/*if (D3DXVec3Length(&addmove) > 0.0f)
-		{
-			D3DXVECTOR3 masatu(0.0f, 0.0f, 0.0f);
-			D3DXVec3Normalize(&masatu, &movespeed);
-			D3DXVECTOR3 moveSpeedXZ = movespeed;
-			moveSpeedXZ.y = 0.0f;
-			masatu *= -friction;
-			if (D3DXVec3Length(&moveSpeedXZ) > D3DXVec3Length(&masatu))
-			{
-				movespeed.x += masatu.x;
-				movespeed.z += masatu.z;
-			}
-			
-		}*/
 	}
 }
 

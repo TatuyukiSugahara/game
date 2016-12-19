@@ -55,7 +55,7 @@ void CKinoko::Update()
 		SESuper->Play(false);
 		state = none;			//ƒLƒmƒRoŒ»‚µ‚È‚­‚È‚é
 	}
-	IsIntersect.Intersect(&position, &movespeed, callbackList);//m_position‚©‚ç‚ÌˆÚ“®—Ê(‚ ‚½‚è”»’è)
+	//IsIntersect.Intersect(&position, &movespeed, callbackList);//m_position‚©‚ç‚ÌˆÚ“®—Ê(‚ ‚½‚è”»’è)
 
 	movespeed.x = 1.0f;
 	m_aabbMax += IsIntersect.GetAddPos();

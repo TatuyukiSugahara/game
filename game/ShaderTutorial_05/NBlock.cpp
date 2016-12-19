@@ -40,17 +40,17 @@ void CNBlock::Update()
 	for (int a = 0; a < tableSize; a++)
 	{
 		//ブロックと当たった？
-		if (nblockChipList[a]->Get2DBlock() == g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()
-			&& g_stage->GetPlayer()->GetIsIntersect().gethit() == true)
-		{
-			CSoundSource* SEBlock = new CSoundSource;
-			SEBlock->Init("Asset/Sound/block.wav");
-			SEBlock->Play(false);
-			SEBlock->SetVolume(0.25f);
-			nblockChipList[a]->SetLost(true);
-			nblockChipList[a]->SetParFlag(true);
-		}
-		nblockChipList[a]->Update();
+		//if (nblockChipList[a]->Get2DBlock() == /*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
+		//	&& /*g_stage->GetPlayer()->GetIsIntersect().gethit()*/g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
+		//{
+		//	CSoundSource* SEBlock = new CSoundSource;
+		//	SEBlock->Init("Asset/Sound/block.wav");
+		//	SEBlock->Play(false);
+		//	SEBlock->SetVolume(0.25f);
+		//	nblockChipList[a]->SetLost(true);
+		//	nblockChipList[a]->SetParFlag(true);
+		//}
+		//nblockChipList[a]->Update();
 	}
 }
 void CNBlock::Render()

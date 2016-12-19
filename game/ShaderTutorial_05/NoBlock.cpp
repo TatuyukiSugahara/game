@@ -53,11 +53,11 @@ void CNoBlock::Update()
 	}
 	else if (state == noblockState::noblocknohit)
 	{
-		if (Get2Dnoblock() == g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()
-			&& g_stage->GetPlayer()->GetIsIntersect().gethit() == true)
-		{
-			state = noblockState::noblockhit;
-		}
+		//if (Get2Dnoblock() == /*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
+		//	&& /*g_stage->GetPlayer()->GetIsIntersect().gethit()*/g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
+		//{
+		//	state = noblockState::noblockhit;
+		//}
 	}
 }
 //•`‰æB

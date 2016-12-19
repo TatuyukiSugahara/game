@@ -17,6 +17,8 @@ void SkinModel::DrawMeshContainer(
 	D3DXMATRIX* viewMatrix,
 	D3DXMATRIX* projMatrix,
 	CLight* light,
+	LPDIRECT3DTEXTURE9 normal,
+	LPDIRECT3DTEXTURE9 specularMap,
 	bool isDrawToShadowMap
 	)
 {
@@ -54,6 +56,7 @@ void SkinModel::DrawMeshContainer(
 			pEffect->SetTechnique("NoSkinModel");
 		}
 	}
+	
 
 	//ライトビュープロジェクション行列の計算。
 	D3DXMATRIX LVP;
@@ -98,7 +101,36 @@ void SkinModel::DrawMeshContainer(
 			light,
 			sizeof(CLight)
 			);
-
+		if (isNormalMap == true)
+		{
+			if (normal != NULL)
+			{
+				//法線マップがある場合
+				pEffect->SetTexture("g_normalTexture", normal);
+				pEffect->SetBool("g_hasNormalMap", isNormalMap);
+			}
+		}
+		else
+		{
+			//法線マップがない場合
+			pEffect->SetTexture("g_normalTexture", NULL);
+			pEffect->SetBool("g_hasNormalMap", isNormalMap);
+		}
+		if (isSpecularMap == true)
+		{
+			if (specularMap != NULL) {
+				//スペキュラマップがあるので、シェーダーに転送する。
+				pEffect->SetTexture("g_specularTexture", specularMap);
+				//スペキュラマップのあり、なしのフラグをtrueにする。
+				pEffect->SetBool("g_isHasSpecularMap", isSpecularMap);
+			}
+		}
+		else 
+		{
+			//スペキュラマップのあり、なしのフラグをfalseにする。
+			pEffect->SetTexture("g_specularTexture", NULL);
+			pEffect->SetBool("g_isHasSpecularMap", isSpecularMap);
+		}
 
 		if (pMeshContainer->pSkinInfo != NULL)
 		{
@@ -182,6 +214,8 @@ void SkinModel::DrawFrame(
 	D3DXMATRIX* viewMatrix,
 	D3DXMATRIX* projMatrix,
 	CLight* light,
+	LPDIRECT3DTEXTURE9 normal,
+	LPDIRECT3DTEXTURE9 specularMap,
 	bool isDrawToShadowMap
 	)
 {
@@ -200,6 +234,8 @@ void SkinModel::DrawFrame(
 			viewMatrix,
 			projMatrix,
 			light,
+			normal,
+			specularMap,
 			isDrawToShadowMap
 			);
 
@@ -217,6 +253,8 @@ void SkinModel::DrawFrame(
 			viewMatrix,
 			projMatrix,
 			light,
+			normal,
+			specularMap,
 			isDrawToShadowMap
 			);
 	}
@@ -232,6 +270,8 @@ void SkinModel::DrawFrame(
 			viewMatrix,
 			projMatrix,
 			light,
+			normal,
+			specularMap,
 			isDrawToShadowMap
 			);
 	}
@@ -251,6 +291,8 @@ void SkinModel::Init(SkinModelData* modelData)
 {
 	ShadowReceiverFlag = false;
 	isDrawToShadowMap = false;
+	isNormalMap = false;
+	isSpecularMap = false;
 	pEffect = g_effectManager->LoadEffect("Asset/Shader/Model.fx");
 	skinModelData = modelData;
 }
@@ -280,6 +322,8 @@ void SkinModel::Draw(D3DXMATRIX* viewMatrix, D3DXMATRIX* projMatrix,bool isDrawT
 			viewMatrix,
 			projMatrix,
 			light,
+			normalMap,
+			specularMap,
 			isDrawToShadowMap
 		);
 	}

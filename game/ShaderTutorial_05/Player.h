@@ -2,6 +2,7 @@
 #include "lib\System.h"
 #include "IsIntersect\IsIntersect.h"
 #include "Turn.h"
+#include "character\CharacterController.h"
 
 class IPlayerCollisionCallback;
 
@@ -47,10 +48,10 @@ public:
 	{
 		return movespeed;
 	}
-	D3DXVECTOR3 GetAddPos()
+	/*D3DXVECTOR3 GetAddPos()
 	{
 		return IsIntersect.GetAddPos();
-	}
+	}*/
 	D3DXVECTOR3 GetAABBMax()
 	{
 		return m_aabbMax;
@@ -67,9 +68,13 @@ public:
 	{
 		return mRotation;
 	}
-	CIsIntersect GetIsIntersect()
+	/*CIsIntersect GetIsIntersect()
 	{
 		return IsIntersect;
+	}*/
+	CCharacterController& GetcharacterController()
+	{
+		return characterController;
 	}
 	void SetEffect(ID3DXEffect* effect)
 	{
@@ -97,8 +102,10 @@ private:
 	SkinModelData modelData;
 	Animation animation;
 	CLight	light;
-	CIsIntersect			IsIntersect;					//あたり判定
+	LPDIRECT3DTEXTURE9 normalMap = NULL;					//ノーマルマップ
+	LPDIRECT3DTEXTURE9 specularMap = NULL;					//スペキュラマップ。
 	CTurn					turn;							//ターンクラス
+	CCharacterController characterController;				//キャラクターコントローラー
 	std::vector<IPlayerCollisionCallback*>	callbackList;	//
 	const float				MOVE_SPEED = 5.0f;				//移動速度
 	float					radius;

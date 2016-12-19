@@ -9,6 +9,7 @@
 
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 #include "BulletPhysics\BulletPhysics.h"
+#include "physics\Physics.h"
 
 #include "lib/System.h"
 

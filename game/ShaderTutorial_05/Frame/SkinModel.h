@@ -45,6 +45,8 @@ public:
 		D3DXMATRIX* viewMatrix,
 		D3DXMATRIX* projMatrix,
 		CLight* light,
+		LPDIRECT3DTEXTURE9	normalMap,
+		LPDIRECT3DTEXTURE9 specularMap,
 		bool isDrawToShadowMap);
 
 	void DrawFrame(
@@ -56,6 +58,8 @@ public:
 		D3DXMATRIX* viewMatrix,
 		D3DXMATRIX* projMatrix,
 		CLight* light,
+		LPDIRECT3DTEXTURE9	normalMap,
+		LPDIRECT3DTEXTURE9 specularMap,
 		bool isDrawToShadowMap
 		);
 	/*!
@@ -73,6 +77,17 @@ public:
 	{
 		isDrawToShadowMap = flag;
 	}
+	/*!
+	*@brief 法線マップフラグを設定。
+	*/
+	void SetNormalMap(bool flag)
+	{
+		isNormalMap = flag;
+	}
+	void SetSpecularMap(bool flag)
+	{
+		isSpecularMap = flag;
+	}
 	ID3DXEffect* GetEffect()
 	{
 		return pEffect;
@@ -85,6 +100,20 @@ public:
 	* @brief	先頭のメッシュを取得。
 	*/
 	LPD3DXMESH GetOrgMeshFirst() const;
+	/*!
+	* @brief	ノーマルマップセット。
+	*/
+	void SetNormalMap(LPDIRECT3DTEXTURE9 normal)
+	{
+		normalMap = normal;
+	}
+	/*!
+	*@brief スペキュラマップを設定。
+	*/
+	void SetSpecularMap(LPDIRECT3DTEXTURE9 specMap)
+	{
+		specularMap = specMap;
+	}
 private:
 	D3DXMATRIX			worldMatrix;			//!<ワールド行列。
 	D3DXMATRIX			rotationMatrix;			//!<回転行列。
@@ -94,4 +123,8 @@ private:
 	CLight*				light;					//!<ライト。
 	bool				ShadowReceiverFlag;
 	bool				isDrawToShadowMap;
+	bool				isNormalMap;			//<!ノーマルマップフラグ
+	bool				isSpecularMap;		//<!スペキュラマップフラグ
+	LPDIRECT3DTEXTURE9	normalMap;				//<!ノーマルマップ。
+	LPDIRECT3DTEXTURE9  specularMap;				//<!スペキュラマップ。
 };

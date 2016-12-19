@@ -36,6 +36,8 @@ void CNBlockChip::Init()
 	animation.SetAnimationLoopFlag(1, false);
 	skinmodel.SetShadowReceiverFlag(false);
 	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetNormalMap(false);
+	skinmodel.SetSpecularMap(false);
 
 	CreateCollision2D();
 	Add2DRigidBody();

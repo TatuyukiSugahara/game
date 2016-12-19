@@ -43,6 +43,12 @@
     <Filter Include="ソース ファイル\Result">
       <UniqueIdentifier>{953d27af-ad6b-4393-b5f3-47abf70e2900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\character">
+      <UniqueIdentifier>{370b7457-19fc-45b8-b52b-db5bb61acc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Physics">
+      <UniqueIdentifier>{b4d8abcd-e01f-450c-a2d3-b286d05c24fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,6 +218,21 @@
     </ClCompile>
     <ClCompile Include="NoBlock.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\SphereCollider.cpp">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\CapsuleCollider.cpp">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\RigidBody.cpp">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="character\CharacterController.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\Physics.cpp">
+      <Filter>ソース ファイル\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +415,27 @@
     </ClInclude>
     <ClInclude Include="NoBlock.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\SphereCollider.h">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\CapsuleCollider.h">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\ICollider.h">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\RigidBody.h">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="character\CharacterController.h">
+      <Filter>ソース ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="character\CollisionAttr.h">
+      <Filter>ソース ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\Physics.h">
+      <Filter>ソース ファイル\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

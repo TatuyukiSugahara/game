@@ -257,7 +257,7 @@ void CStage::Add2DRigidBody(int arraySize)//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 		arraySize;
 		for (int i = 0; i < arraySize; i++)
 		{
-			g_bulletPhysics.AddRigidBody(m_rigidBody2D[i]);
+			g_physicsWorld.AddRigidBody(m_rigidBody2D[i]);
 		}
 	}
 }

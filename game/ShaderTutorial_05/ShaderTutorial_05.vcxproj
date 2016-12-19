@@ -159,6 +159,7 @@
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Frame\2DImage.cpp" />
     <ClCompile Include="Frame\Animation.cpp" />
     <ClCompile Include="Frame\EffectManager.cpp" />
@@ -187,6 +188,10 @@
     <ClCompile Include="Particle\ParticleEmitter.cpp" />
     <ClCompile Include="Particle\Primitive.cpp" />
     <ClCompile Include="Particle\VertexBuffer.cpp" />
+    <ClCompile Include="physics\CapsuleCollider.cpp" />
+    <ClCompile Include="physics\Physics.cpp" />
+    <ClCompile Include="physics\RigidBody.cpp" />
+    <ClCompile Include="physics\SphereCollider.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PipeChip.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -222,6 +227,8 @@
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="character\CharacterController.h" />
+    <ClInclude Include="character\CollisionAttr.h" />
     <ClInclude Include="Frame\2DImage.h" />
     <ClInclude Include="Frame\Animation.h" />
     <ClInclude Include="Frame\EffectManager.h" />
@@ -250,6 +257,11 @@
     <ClInclude Include="Particle\ParticleEmitter.h" />
     <ClInclude Include="Particle\Primitive.h" />
     <ClInclude Include="Particle\VertexBuffer.h" />
+    <ClInclude Include="physics\CapsuleCollider.h" />
+    <ClInclude Include="physics\ICollider.h" />
+    <ClInclude Include="physics\Physics.h" />
+    <ClInclude Include="physics\RigidBody.h" />
+    <ClInclude Include="physics\SphereCollider.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PipeChip.h" />
     <ClInclude Include="Player.h" />
