@@ -121,9 +121,9 @@
 					return 0.0f;
 				}
 				//上方向と法線のなす角度を求める。
-				float angle = D3DXVec3Dot(&hitNormalTmp, &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+				float angle = D3DXVec3Dot(&hitNormalTmp, &D3DXVECTOR3(0.0f, -1.0f, 0.0f));
 				angle = fabsf(acosf(angle));
-				if (angle < PI * 0.3f)		//天井の傾斜が54度より小さいので天井とみなす
+				if (angle > 0.9f)		//壁判定
 				{
 					return 0.0f;
 				}
@@ -294,102 +294,86 @@
 		//XZの移動は確定。
 		m_position.x = nextPosition.x;
 		m_position.z = nextPosition.z;
+
+		//上方向を調べる。
+#if 1
+		m_isCeiling = false;
+		{
+			D3DXVECTOR3 addPos(0.0f, 0.0f, 0.0f);
+			addPos = nextPosition - m_position;
+			btTransform start, end;
+			start.setIdentity();
+			end.setIdentity();
+			btVector3 btStart = btVector3(m_position.x, m_position.y, m_position.z);
+			start.setOrigin(btStart);
+
+			SweepResultCeiling callback;
+			if (addPos.y > 0.0f){
+				if (fabsf(addPos.y) > 0.0001f) {
+					end.setOrigin(btVector3(nextPosition.x, nextPosition.y, nextPosition.z));
+					callback.me = m_rigidBody.GetBody();
+					callback.startPos = D3DXVECTOR3(btStart);
+					//衝突検出。
+					g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+				}
+				if (callback.isHit) {
+					//当たった。
+					//天井。
+					m_isCeiling = true;
+					hitCollisionObject = callback.hitCollisionObject;
+					m_moveSpeed.y = 0.0f;
+					nextPosition.y = callback.hitPos.y - m_height;
+				}
+			}
+		}
+#endif
+
 		//下方向を調べる。
 		{
+
 			D3DXVECTOR3 addPos;
 			addPos = nextPosition - m_position;
 
 			m_position = nextPosition;	//移動の仮確定。
-										//レイを作成する。
-			btTransform start, end;
-			start.setIdentity();
-			end.setIdentity();
-			//始点はカプセルコライダーの中心。
-			start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
-			//終点は地面上にいない場合は1m下を見る。
-			//地面上にいなくてジャンプで上昇中の場合は上昇量の0.01倍下を見る。
-			//地面上にいなくて降下中の場合はそのまま落下先を調べる。
-			D3DXVECTOR3 endPos;
-			endPos = D3DXVECTOR3(start.getOrigin());
-			if (m_isOnGround == false) {
-				if (addPos.y > 0.0f) {
-					//ジャンプ中とかで上昇中。
-					//上昇中でもXZに移動した結果めり込んでいる可能性があるので下を調べる。
-					endPos.y -= addPos.y * 0.01f;
-				}
-				else {
-					//落下している場合はそのまま下を調べる。
-					endPos.y += addPos.y;
-				}
-			}
-			else {
-				//地面上にいない場合は1m下を見る。
-				endPos.y -= 1.0f;
-			}
-			end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
-			SweepResultGround callback;
-			callback.me = m_rigidBody.GetBody();
-			callback.startPos = D3DXVECTOR3(start.getOrigin());
-			if (fabsf(start.getOrigin().y() - endPos.y) > 0.0f) {
-				//衝突検出。
-				g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
-				if (callback.isHit) {
-					//当たった。
-					hitCollisionObject = callback.hitCollisionObject;	//地面のコリジョンオブジェクトと当たった。
-					m_moveSpeed.y = 0.0f;
-					m_isJump = false;
-					m_isOnGround = true;
-					nextPosition.y = callback.hitPos.y;
-				}
-				else {
-					//地面上にいない。
-					m_isOnGround = false;
-					m_isJump = true;
-				}
-			}
-		}
-		//上方向を調べる。
-		{
-			D3DXVECTOR3 addPos(0.0f,0.0f,0.0f);
-			addPos = nextPosition;
-			btTransform start, end;
-			start.setIdentity();
-			end.setIdentity();
-			btVector3 btStart = btVector3(m_position.x, m_position.y + 0.3f, m_position.z);
-			start.setOrigin(btStart);
-
-			SweepResultCeiling callback;
-			if (fabsf(addPos.y) > 0.0001f) {
-				end.setOrigin(btVector3(btStart.x(), btStart.y() + addPos.y, btStart.z()));
+			
+			if (addPos.y < 0.0f){
+				//レイを作成する。
+				btTransform start, end;
+				start.setIdentity();
+				end.setIdentity();
+				//始点はカプセルコライダーの中心。
+				start.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
+				//終点は地面上にいない場合は1m下を見る。
+				//地面上にいなくてジャンプで上昇中の場合は上昇量の0.01倍下を見る。
+				//地面上にいなくて降下中の場合はそのまま落下先を調べる。
+				D3DXVECTOR3 endPos;
+				endPos = D3DXVECTOR3(start.getOrigin());
+				endPos.y += addPos.y;
+				end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
+				SweepResultGround callback;
 				callback.me = m_rigidBody.GetBody();
-				callback.startPos = D3DXVECTOR3(btStart);
-				//衝突検出。
-				g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
-			}
-			if (callback.isHit) {
-				//当たった。
-				//天井。
-				m_isCeiling = true;
-				hitCollisionObject = callback.hitCollisionObject;
-				m_moveSpeed.y = 0.0f;
-				D3DXVECTOR3 Circle;
-				float x = 0.0f;
-				float offset = 0.0f;	//押し戻す量。
-				Circle = D3DXVECTOR3(btStart.x(), btStart.y(), btStart.z());
-				Circle.y = callback.hitPos.y;//円の中心
-				D3DXVECTOR3 v = callback.hitPos - Circle;
-				x = D3DXVec3Length(&v);//物体の角とプレイヤーの間の横幅の距離が求まる。
-
-				offset = sqrt(m_radius*m_radius - x*x);//yの平方根を求める。
-				addPos.y = callback.hitPos.y - btStart.y();
-				addPos.y -= offset;
-				nextPosition.y += addPos.y;
-			}
-			else{
-
-				m_isCeiling = false;
+				callback.startPos = D3DXVECTOR3(start.getOrigin());
+				if (fabsf(start.getOrigin().y() - endPos.y) > 0.0f) {
+					//衝突検出。
+					g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+					if (callback.isHit) {
+						//当たった。
+						hitCollisionObject = callback.hitCollisionObject;	//地面のコリジョンオブジェクトと当たった。
+						m_moveSpeed.y = 0.0f;
+						m_isJump = false;
+						m_isOnGround = true;
+						nextPosition.y = callback.hitPos.y;
+					}
+					else {
+						//地面上にいない。
+						m_isOnGround = false;
+						m_isJump = true;
+					}
+				}
 			}
 		}
+
+		
 		//移動確定。
 		m_position = nextPosition;
 		btRigidBody* btBody = m_rigidBody.GetBody();

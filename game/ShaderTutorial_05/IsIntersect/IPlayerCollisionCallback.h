@@ -35,6 +35,6 @@ public:
 	}
 	bool IsHitCeiling()
 	{
-		return IsHitCeiling();
+		return /*IsHitCeiling()*/true;
 	}
 };

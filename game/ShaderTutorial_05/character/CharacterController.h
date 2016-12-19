@@ -7,6 +7,8 @@
 #include "../Physics/SphereCollider.h"
 #include "../Physics/CapsuleCollider.h"
 #include "../Physics/RigidBody.h"
+
+
 #define PI 3.14159265358979323846f
 	/*!
 	 * @brief	キャラクタコントローラー。
@@ -85,6 +87,7 @@ public:
 	{
 		return m_isCeiling;
 	}
+	
 	/*!
 	* @brief	コライダーを取得。
 	*/
