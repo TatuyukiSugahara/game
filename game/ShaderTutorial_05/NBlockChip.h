@@ -25,7 +25,10 @@ public:
 	//更新。
 	void Update();
 	//描画。
-	void Render();
+	void Render(
+		D3DXMATRIX viewMatrix,
+		D3DXMATRIX projMatrix,
+		bool isDrawToShadowMap);
 	void SetPos(D3DXVECTOR3 pos)
 	{
 		position = pos;

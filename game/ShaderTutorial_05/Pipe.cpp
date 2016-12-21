@@ -143,7 +143,7 @@ void CPipe::CreateCollision2D()
 			m_rigidBody2Dpipe[i] = new btRigidBody(rbInfo);
 
 			//ワールドに追加。
-			//g_bulletPhysics.AddRigidBody(m_rigidBody2Dpipe[i]);
+			//g_physicsWorld.AddRigidBody(m_rigidBody2Dpipe[i]);
 
 		}
 	}
@@ -156,7 +156,7 @@ void CPipe::Add2DRigidBody(int arraySize)//ワールドに追加。
 		arraySize;
 		for (int i = 0; i < arraySize; i++)
 		{
-			g_bulletPhysics.AddRigidBody(m_rigidBody2Dpipe[i]);
+			g_physicsWorld.AddRigidBody(m_rigidBody2Dpipe[i]);
 		}
 	}
 }
@@ -169,7 +169,7 @@ void CPipe::Remove2DRigidBody(int arraySize)//ワールドから削除
 		for (int i = 0; i < arraySize; i++)
 		{
 			if (m_rigidBody2Dpipe[i] != NULL)
-				g_bulletPhysics.RemoveRigidBody(m_rigidBody2Dpipe[i]);
+				g_physicsWorld.RemoveRigidBody(m_rigidBody2Dpipe[i]);
 		}
 	}
 }

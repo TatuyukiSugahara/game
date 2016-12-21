@@ -93,11 +93,14 @@ void CNBlockChip::Update()
 	skinmodel.UpdateWorldMatrix(position, rotation, scale);
 }
 
-void CNBlockChip::Render()
+void CNBlockChip::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	if (MAXPAR >= parTime)
 	{
-		skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
+		skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 
 	if (blockLost == true)
@@ -136,7 +139,8 @@ void CNBlockChip::Add2DRigidBody()//ÉèÅ[ÉãÉhÇ…í«â¡ÅB
 {
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
-		g_bulletPhysics.AddRigidBody(m_rigidBody2Dblock);
+		g_physicsWorld.AddRigidBody(m_rigidBody2Dblock);
+		
 	}
 }
 
@@ -144,6 +148,6 @@ void CNBlockChip::Remove2DRigidBody()
 {
 	if (m_rigidBody2Dblock != NULL)
 	{
-		g_bulletPhysics.RemoveRigidBody(m_rigidBody2Dblock);
+		g_physicsWorld.RemoveRigidBody(m_rigidBody2Dblock);
 	}
 }

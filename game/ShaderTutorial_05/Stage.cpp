@@ -58,6 +58,8 @@ void CStage::Initialize()
 	shadow.Create(512, 512);
 	//サボテン初期化
 	sabo.Init(g_pd3dDevice);
+	//コインを初期化
+	coin.Init();
 	//カメラの初期化。
 	camera.Init();
 	
@@ -102,6 +104,8 @@ void CStage::Update()
 	goal.Update();
 	//サボテン更新
 	sabo.Update();
+	//コイン更新
+	coin.Update();
 	//カメラの更新
 	camera.Update();
 	if (scene != GameScene::Game)
@@ -142,7 +146,10 @@ void CStage::Render()
 	//モフルンエネミー描画
 	mohurun.Render();
 	//Nブロックを描画
-	nblock.Render();
+	nblock.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix(),
+		false);
 	//見えないブロック描画
 	noblock.Render();
 	//はてなボックス描画
@@ -198,7 +205,8 @@ void CStage::Render()
 		light.GetambientLight(),
 		light.GetLightNum()
 		);
-	
+	//コイン描画
+	coin.Render();
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。

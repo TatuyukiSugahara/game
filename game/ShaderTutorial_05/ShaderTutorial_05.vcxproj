@@ -160,6 +160,8 @@
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="CoinChip.cpp" />
     <ClCompile Include="Frame\2DImage.cpp" />
     <ClCompile Include="Frame\Animation.cpp" />
     <ClCompile Include="Frame\EffectManager.cpp" />
@@ -229,6 +231,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="character\CollisionAttr.h" />
+    <ClInclude Include="Coin.h" />
+    <ClInclude Include="CoinChip.h" />
     <ClInclude Include="Frame\2DImage.h" />
     <ClInclude Include="Frame\Animation.h" />
     <ClInclude Include="Frame\EffectManager.h" />

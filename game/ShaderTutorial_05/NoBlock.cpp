@@ -53,11 +53,11 @@ void CNoBlock::Update()
 	}
 	else if (state == noblockState::noblocknohit)
 	{
-		//if (Get2Dnoblock() == /*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
-		//	&& /*g_stage->GetPlayer()->GetIsIntersect().gethit()*/g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
-		//{
-		//	state = noblockState::noblockhit;
-		//}
+		if (Get2Dnoblock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
+			&& g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
+		{
+			state = noblockState::noblockhit;
+		}
 	}
 }
 //描画。
@@ -93,7 +93,7 @@ void CNoBlock::CreateCollision2D()
 		m_rigidBody2Dnoblock = new btRigidBody(rbInfo);
 
 		//ワールドに追加。
-		//g_bulletPhysics.AddRigidBody(m_rigidBody2D[i]);
+		//g_physicsWorld.AddRigidBody(m_rigidBody2D[i]);
 
 	}
 
@@ -103,6 +103,6 @@ void CNoBlock::Add2DRigidBody()//ワールドに追加。
 {
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
-		g_bulletPhysics.AddRigidBody(m_rigidBody2Dnoblock);
+		g_physicsWorld.AddRigidBody(m_rigidBody2Dnoblock);
 	}
 }

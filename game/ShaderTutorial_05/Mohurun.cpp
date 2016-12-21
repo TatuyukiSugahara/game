@@ -67,10 +67,10 @@ void CMohurun::Update()
 	{
 		//ワールド行列の更新。
 		animation.Update(1.0f / 60.0f);
-		/*if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.5f) == true)
+		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.5f) == true)
 		{
 		exit(0);
-		}*/
+		}
 		if (BallCollision(position + D3DXVECTOR3(0.0f, 0.1f, 0.0f),
 			g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.3f, 0.0f), 0.75f, 0.5f) == true)
 		{

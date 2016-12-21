@@ -85,7 +85,6 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	animation.SetAnimationLoopFlag(PlayerJumpWas, false);
 
 
-	//IsIntersect.CollisitionInitialize(&position,radius);//‚ ‚½‚è”»’è‰Šú‰»
 	characterController.Init(0.3f, 1.0f, position);
 	characterController.SetGravity(-30.0f);
 
@@ -134,7 +133,6 @@ void CPlayer::Update()
 	characterController.Execute();
 	movespeed = characterController.GetMoveSpeed();
 	position = characterController.GetPosition();
-	//IsIntersect.Intersect(&position, &movespeed, callbackList);//m_position‚©‚ç‚ÌˆÚ“®—Ê(‚ ‚½‚è”»’è)
 	//AABB
 	//m_aabbMax += IsIntersect.GetAddPos();
 	//m_aabbMin += IsIntersect.GetAddPos();

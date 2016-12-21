@@ -51,6 +51,12 @@ void CShadowMap::Draw(
 		m_projMatrix,
 		true
 		);
+	g_stage->GetNBlock()->Render
+		(
+		m_lvMatrix,
+		m_projMatrix,
+		true
+		);
 	g_pd3dDevice->SetRenderTarget(0, m_Backbuffer);
 	g_pd3dDevice->SetDepthStencilSurface(m_BackZ);
 	g_pd3dDevice->SetViewport(&m_viewport);
