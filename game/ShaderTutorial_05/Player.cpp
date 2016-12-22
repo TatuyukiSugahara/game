@@ -10,7 +10,7 @@ CPlayer::CPlayer()
 {
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
-	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
+	position = D3DXVECTOR3(470.0f, 5.0f, 0.0f);		//初期位置
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
 	Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);			//初期スケール
 	addmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -134,8 +134,8 @@ void CPlayer::Update()
 	movespeed = characterController.GetMoveSpeed();
 	position = characterController.GetPosition();
 	//AABB
-	//m_aabbMax += IsIntersect.GetAddPos();
-	//m_aabbMin += IsIntersect.GetAddPos();
+	m_aabbMax += characterController.GetAdd();
+	m_aabbMin += characterController.GetAdd();
 
 	State();//アニメーション状態変更
 

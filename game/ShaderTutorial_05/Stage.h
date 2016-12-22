@@ -19,6 +19,7 @@
 #include "Sound\SoundSource.h"
 #include "NoBlock.h"
 #include "Coin.h"
+#include "GoalFlag.h"
 
 #define MAX_COLLISION 100
 
@@ -119,6 +120,7 @@ protected:
 	CMohurun mohurun;			//モフルンエネミー
 	CNoBlock	noblock;		//見えないブロック
 	CCoin coin;					//コイン
+	CGoalFlag goalflag;			//ゴールフラグ
 	CSoundEngine soundengine;
 	CSoundSource soundSource;
 };

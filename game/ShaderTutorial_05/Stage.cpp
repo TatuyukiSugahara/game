@@ -60,6 +60,8 @@ void CStage::Initialize()
 	sabo.Init(g_pd3dDevice);
 	//コインを初期化
 	coin.Init();
+	//ゴールフラグ初期化
+	goalflag.Init();
 	//カメラの初期化。
 	camera.Init();
 	
@@ -106,6 +108,8 @@ void CStage::Update()
 	sabo.Update();
 	//コイン更新
 	coin.Update();
+	//ゴールフラグ更新
+	goalflag.Update();
 	//カメラの更新
 	camera.Update();
 	if (scene != GameScene::Game)
@@ -207,6 +211,8 @@ void CStage::Render()
 		);
 	//コイン描画
 	coin.Render();
+	//ゴール旗描画
+	goalflag.Render();
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。

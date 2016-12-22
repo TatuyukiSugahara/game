@@ -183,8 +183,9 @@
 		m_position = position;
 		//コリジョン作成。
 		m_radius = radius;
-		m_height = height;
-		m_collider.Create(radius, height);
+		m_height = height;							
+		m_collider.Create(radius, height);			//コライダークリエイト
+		Add = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量初期化
 
 		//剛体を初期化。
 		RigidBodyInfo rbInfo;
@@ -220,6 +221,8 @@
 				//現在の座標から次の移動先へ向かうベクトルを求める。
 				D3DXVECTOR3 addPos;
 				addPos = nextPosition - m_position;
+				//移動量を設定
+				Add = addPos;
 				D3DXVECTOR3 addPosXZ = addPos;
 				addPosXZ.y = 0.0f;
 				if (D3DXVec3Length(&addPosXZ) < FLT_EPSILON) {
@@ -373,7 +376,6 @@
 			}
 		}
 
-		
 		//移動確定。
 		m_position = nextPosition;
 		btRigidBody* btBody = m_rigidBody.GetBody();

@@ -10,8 +10,8 @@ CGoal::CGoal()
 {
 	//èâä˙âªÅB
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 460.0f;
-	position.y = 5.0f;
+	position.x = 465.0f;
+	position.y = 1.0f;
 	position.z = 0.0f;
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -37,6 +37,8 @@ void CGoal::Update()
 		&& m_aabbMin.x < g_stage->GetPlayer()->GetAABBMax().x
 		&& m_aabbMax.y > g_stage->GetPlayer()->GetAABBMin().y
 		&& m_aabbMin.y < g_stage->GetPlayer()->GetAABBMax().y
+		&& m_aabbMax.z > g_stage->GetPlayer()->GetAABBMin().z
+		&& m_aabbMin.z < g_stage->GetPlayer()->GetAABBMax().z
 
 		)
 	{
