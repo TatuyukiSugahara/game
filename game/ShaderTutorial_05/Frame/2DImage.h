@@ -7,7 +7,7 @@ public:
 	~C2DImage();
 	virtual void Init();
 	virtual void Update() = 0;
-	void Render(LPD3DXSPRITE);
+	virtual void Render(LPD3DXSPRITE);
 	void SetupMatrices();
 protected:
 	D3DXVECTOR2 position;			//位置情報
@@ -19,5 +19,6 @@ protected:
 	D3DXVECTOR2 texCenter;		//テクスチャの中点
 	RECT rect;					//描画矩形
 	D3DXMATRIX transformMatrix;	//変換行列
+	D3DXIMAGE_INFO imgInfo;			//テクスチャ情報
 };
 

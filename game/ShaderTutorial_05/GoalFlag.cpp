@@ -46,9 +46,11 @@ void CGoalFlag::Update()
 	skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), scale);
 }
 //•`‰æB
-void CGoalFlag::Render()
+void CGoalFlag::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix)
 {
-	skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
+	skinmodel.Draw(&viewMatrix, &projMatrix, false);
 }
 //ŠJ•úB
 void CGoalFlag::Release()

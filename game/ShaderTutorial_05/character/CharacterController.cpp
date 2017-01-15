@@ -185,8 +185,7 @@
 		m_radius = radius;
 		m_height = height;							
 		m_collider.Create(radius, height);			//コライダークリエイト
-		Add = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量初期化
-
+		
 		//剛体を初期化。
 		RigidBodyInfo rbInfo;
 		rbInfo.collider = &m_collider;
@@ -198,7 +197,7 @@
 		//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 		m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
 		m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
-		//g_physicsWorld.AddRigidBody(&m_rigidBody);
+		//g_physicsWorld->AddRigidBody(&m_rigidBody);
 
 	}
 	void CCharacterController::Execute()
@@ -221,8 +220,6 @@
 				//現在の座標から次の移動先へ向かうベクトルを求める。
 				D3DXVECTOR3 addPos;
 				addPos = nextPosition - m_position;
-				//移動量を設定
-				Add = addPos;
 				D3DXVECTOR3 addPosXZ = addPos;
 				addPosXZ.y = 0.0f;
 				if (D3DXVec3Length(&addPosXZ) < FLT_EPSILON) {
@@ -247,7 +244,7 @@
 				callback.me = m_rigidBody.GetBody();
 				callback.startPos = posTmp;
 				//衝突検出。
-				g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+				g_physicsWorld->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
 				if (callback.isHit) {
 					//当たった。
@@ -317,7 +314,7 @@
 					callback.me = m_rigidBody.GetBody();
 					callback.startPos = D3DXVECTOR3(btStart);
 					//衝突検出。
-					g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+					g_physicsWorld->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 				}
 				if (callback.isHit) {
 					//当たった。
@@ -358,7 +355,7 @@
 				callback.startPos = D3DXVECTOR3(start.getOrigin());
 				if (fabsf(start.getOrigin().y() - endPos.y) > 0.0f) {
 					//衝突検出。
-					g_physicsWorld.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+					g_physicsWorld->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 					if (callback.isHit) {
 						//当たった。
 						hitCollisionObject = callback.hitCollisionObject;	//地面のコリジョンオブジェクトと当たった。
@@ -391,5 +388,5 @@
 	*/
 	//void CCharacterController::RemoveRigidBoby()
 	//{
-	//	//g_physicsWorld.RemoveRigidBody(&m_rigidBody);
+	//	//g_physicsWorld->RemoveRigidBody(&m_rigidBody);
 	//}

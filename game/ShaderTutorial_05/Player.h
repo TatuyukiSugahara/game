@@ -54,11 +54,11 @@ public:
 	}*/
 	D3DXVECTOR3 GetAABBMax()
 	{
-		return m_aabbMax;
+		return m_aabbMaxget;
 	}
 	D3DXVECTOR3 GetAABBMin()
 	{
-		return m_aabbMin;
+		return m_aabbMinget;
 	}
 	D3DXMATRIX GetWMatrix()
 	{
@@ -117,6 +117,8 @@ private:
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;
+	D3DXVECTOR3 m_aabbMinget;
+	D3DXVECTOR3 m_aabbMaxget;
 	//É^Å[Éì
 	float					m_currentAngleY;
 	float					m_targetAngleY;

@@ -35,4 +35,3 @@ enum GameScene
 	Game,		//ƒQ[ƒ€‰æ–Ê
 	Result,		//ƒŠƒUƒ‹ƒg‰æ–Ê
 };
-extern GameScene scene;

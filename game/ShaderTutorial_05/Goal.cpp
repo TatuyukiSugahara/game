@@ -45,8 +45,11 @@ void CGoal::Update()
 		CSoundSource* SEGoal = new CSoundSource;
 		SEGoal->Init("Asset/Sound/goal.wav");
 		SEGoal->Play(false);
-		g_resultscene.SetState(ResultState::Goal);
-		scene = GameScene::Result;
+		if (g_resultscene != NULL)
+		{
+			g_resultscene->SetState(ResultState::Goal);
+		}
+		g_scenemanager->ChangeScene(GameScene::Result);
 	}
 
 	//ワールド行列の更新。

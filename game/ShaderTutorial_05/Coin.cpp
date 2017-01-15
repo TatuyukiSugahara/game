@@ -43,11 +43,13 @@ void CCoin::Update()
 	}
 	//Release();
 }
-void CCoin::Render()
+void CCoin::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix)
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		coinChipList[a]->Render();
+		coinChipList[a]->Render(viewMatrix,projMatrix);
 	}
 }
 

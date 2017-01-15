@@ -38,17 +38,17 @@ void CSaboten::Update()
 	D3DXVec3TransformCoord(&pos, &pos, &InverseMat);
 	D3DXVec3TransformCoord(&dir, &dir, &InverseRot);
 
-	D3DXIntersect(model.GetMesh(), &pos,
-		&dir, &hit, NULL, NULL, NULL, &distance, NULL, NULL);
-	if (hit)
-	{
-		if (fabs(distance) <= 0.1f)
-		{
-			g_resultscene.SetState(ResultState::Death);
-			scene = GameScene::Result;
+	//D3DXIntersect(model.GetMesh(), &pos,
+	//	&dir, &hit, NULL, NULL, NULL, &distance, NULL, NULL);
+	//if (hit)
+	//{
+	//	if (fabs(distance) <= 0.1f)
+	//	{
+	//		/*g_resultscene.SetState(ResultState::Death);
+	//		scene = GameScene::Result;*/
 
-		}
-	}
+	//	}
+	//}
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
 }

@@ -61,11 +61,13 @@ void CNoBlock::Update()
 	}
 }
 //描画。
-void CNoBlock::Render()
+void CNoBlock::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix)
 {
 	if (state == noblockState::noblockhit)
 	{
-		skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
+		skinmodel.Draw(&viewMatrix, &projMatrix, false);
 	}
 }
 //開放。
@@ -93,7 +95,7 @@ void CNoBlock::CreateCollision2D()
 		m_rigidBody2Dnoblock = new btRigidBody(rbInfo);
 
 		//ワールドに追加。
-		//g_physicsWorld.AddRigidBody(m_rigidBody2D[i]);
+		//g_physicsWorld->AddRigidBody(m_rigidBody2D[i]);
 
 	}
 
@@ -103,6 +105,6 @@ void CNoBlock::Add2DRigidBody()//ワールドに追加。
 {
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
-		g_physicsWorld.AddRigidBody(m_rigidBody2Dnoblock);
+		g_physicsWorld->AddRigidBody(m_rigidBody2Dnoblock);
 	}
 }

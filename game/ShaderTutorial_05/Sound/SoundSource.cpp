@@ -10,6 +10,7 @@
 
 	CSoundSource::CSoundSource()
 	{
+		g_soundengine->SetListenerPosition({10.0f, 0.0f, 0.0f});
 		memset(m_emitterAzimuths, 0, sizeof(m_emitterAzimuths));
 		memset(m_matrixCoefficients, 0, sizeof(m_matrixCoefficients));
 	}
@@ -20,7 +21,7 @@
 	void CSoundSource::InitCommon()
 	{
 		m_dspSettings.SrcChannelCount = INPUTCHANNELS;
-		m_dspSettings.DstChannelCount = g_stage->GetSoundEngine()->GetNumChannel();
+		m_dspSettings.DstChannelCount = g_soundengine->GetNumChannel();
 		m_dspSettings.pMatrixCoefficients = m_matrixCoefficients;
 		m_dspSettings.pDelayTimes = nullptr;
 		m_dspSettings.DopplerFactor = 1.0f;
@@ -39,9 +40,9 @@
 		unsigned int dummy;
 		m_waveFile.Read(m_buffer.get(), m_waveFile.GetSize(), &dummy);
 		//サウンドボイスソースを作成。
-		m_sourceVoice = g_stage->GetSoundEngine()->CreateXAudio2SourceVoice(&m_waveFile, is3DSound);
+		m_sourceVoice = g_soundengine->CreateXAudio2SourceVoice(&m_waveFile, is3DSound);
 		if (is3DSound) {
-			g_stage->GetSoundEngine()->Add3DSoundSource(this);
+			g_soundengine->Add3DSoundSource(this);
 		}
 		InitCommon();
 		
@@ -58,10 +59,10 @@
 		m_readStartPos = 0;
 		m_currentBufferingSize = 0;
 		//サウンドボイスソースを作成。
-		m_sourceVoice = g_stage->GetSoundEngine()->CreateXAudio2SourceVoice(&m_waveFile, is3DSound);
+		m_sourceVoice = g_soundengine->CreateXAudio2SourceVoice(&m_waveFile, is3DSound);
 		m_sourceVoice->Start(0,0);
 		if (is3DSound) {
-			g_stage->GetSoundEngine()->Add3DSoundSource(this);
+			g_soundengine->Add3DSoundSource(this);
 		}
 		InitCommon();
 		
@@ -172,7 +173,7 @@
 	void CSoundSource::Remove3DSound()
 	{
 		if (m_is3DSound) {
-			g_stage->GetSoundEngine()->Remove3DSoundSource(this);
+			g_soundengine->Remove3DSoundSource(this);
 			m_is3DSound = false;
 		}
 	}

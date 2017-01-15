@@ -20,7 +20,7 @@ void CTitleScene::Update()
 	title.Update();
 	if (g_pad.IsPress(enButtonA))
 	{
-		scene = GameScene::Game;
+		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }
 

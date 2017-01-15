@@ -1,16 +1,16 @@
 #pragma once
 #include "Particle\ParticleEmitter.h"
-enum State
+enum BirdState
 {
-	on,				//敵がいる
-	off				//敵がいない
+	BIRDON,				//敵がいる
+	BIRDOFF,				//敵がいない
 };
 
-class CMohurun
+class CBird
 {
 public:
-	CMohurun();
-	~CMohurun();
+	CBird();
+	~CBird();
 	//初期化。
 	void Init();
 	//更新。
@@ -24,11 +24,11 @@ public:
 	{
 		position = pos;
 	}
-	State GetState()
+	BirdState GetState()
 	{
 		return state;
 	}
-	void SetState(State state)
+	void SetState(BirdState state)
 	{
 		this->state = state;
 	}
@@ -37,9 +37,8 @@ public:
 		return position;
 	}
 private:
-	State state;
+	BirdState state;
 
-	D3DXVECTOR3				gravity = D3DXVECTOR3(0.0f, -0.98f, 0.0f);
 	D3DXVECTOR3				position;		//座標。。
 	D3DXVECTOR3				scale;			//大きさ
 	D3DXMATRIX				mWorld;			//ワールド行列。
@@ -52,7 +51,7 @@ private:
 	std::list<CParticleEmitter*> particleEmitterList;
 	const int MAXPAR = 100;
 	int parTime;
-	bool parflag;		
+	bool parflag;
 	int count;
 };
 

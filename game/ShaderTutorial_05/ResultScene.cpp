@@ -2,7 +2,7 @@
 #include "ResultScene.h"
 #include "Stage.h"
 
-CResultScene g_resultscene;
+CResultScene* g_resultscene;
 
 void CResultScene::Init()
 {
@@ -16,6 +16,15 @@ void CResultScene::Init()
 
 void CResultScene::Update()
 {
+	if (g_scenemanager->GetResult() == 0)
+	{
+		state = ResultState::Goal;
+	}
+	else if (g_scenemanager->GetResult() == 1)
+	{
+		state = ResultState::Death;
+	}
+
 	if (state == ResultState::Goal)
 	{
 		resultGoal.Update();
@@ -29,7 +38,7 @@ void CResultScene::Update()
 	
 	if (g_pad.IsTrigger(enButtonA))
 	{
-		scene = GameScene::Title;
+		
 		g_stage->GetPlayer()->SetPosition(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 	}
 	if (g_pad.IsTrigger(enButtonB))

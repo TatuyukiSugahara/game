@@ -14,8 +14,6 @@ CMapChip::~CMapChip()
 }
 void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	size = g_stage->GetMap()->GetSize();
-
 	//ƒ‰ƒCƒg‚ð‰Šú‰»B
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
 	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-0.707f, 0.0f, -0.707f, 1.0f));
@@ -50,9 +48,10 @@ void CMapChip::Update()
 	mWorld = mRot * mWorld;
 	skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	
-	
 }
-void CMapChip::Render()
+void CMapChip::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix)
 {
-	skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
+	skinmodel.Draw(&viewMatrix, &projMatrix, false);
 }

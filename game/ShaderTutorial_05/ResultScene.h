@@ -1,4 +1,5 @@
 #pragma once 
+#include "Scene\Scene.h"
 #include "ResultDeath.h"
 #include "ResultCamera.h"
 #include "ResultLight.h"
@@ -10,7 +11,7 @@ enum ResultState
 	Death,
 };
 
-class CResultScene
+class CResultScene : public CScene
 {
 public:
 	CResultScene(){}
@@ -33,4 +34,4 @@ private:
 	ResultState state;
 };
 
-extern CResultScene g_resultscene;
+extern CResultScene* g_resultscene;

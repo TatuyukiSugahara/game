@@ -1,5 +1,6 @@
 #pragma once
 #include "lib\System.h"
+#include "Scene\Scene.h"
 #include "Camera.h"
 #include "Light.h"
 #include "LightBack.h"
@@ -15,11 +16,13 @@
 #include "Goal.h"
 #include "Saboten.h"
 #include "Mohurun.h"
-#include "Sound\SoundEngine.h"
 #include "Sound\SoundSource.h"
 #include "NoBlock.h"
 #include "Coin.h"
 #include "GoalFlag.h"
+#include "CoinNomber.h"
+#include "Bird.h"
+#include "RotationGimmick.h"
 
 #define MAX_COLLISION 100
 
@@ -31,12 +34,12 @@ struct SCollisionInfo {
 };
 
 //今後ステージは此奴を継承する
-class CStage
+class CStage : public CScene
 {
 public:
 	CStage(){}
-	virtual ~CStage(){}
-	virtual void Initialize();
+	~CStage(){}
+	virtual void Init();
 	virtual void Update();
 	virtual void Render();
 	void UpdateLight();
@@ -88,13 +91,13 @@ public:
 	{
 		return &mohurun;
 	}
-	CSoundEngine* GetSoundEngine()
-	{
-		return &soundengine;
-	}
 	CNoBlock* GetNoBlock()
 	{
 		return&noblock;
+	}
+	CCoinNomber* GetCoinNum()
+	{
+		return &coinNumber;
 	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
@@ -103,6 +106,8 @@ protected:
 	btRigidBody*		m_rigidBody2D[MAX_COLLISION];	//剛体2D。
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
+
+	LPD3DXSPRITE m_pSprite;			//スプライト
 
 	Camera camera;				//カメラ。
 	CLight light;				//ライト
@@ -121,8 +126,9 @@ protected:
 	CNoBlock	noblock;		//見えないブロック
 	CCoin coin;					//コイン
 	CGoalFlag goalflag;			//ゴールフラグ
-	CSoundEngine soundengine;
-	CSoundSource soundSource;
+	CCoinNomber coinNumber;		//コインナンバー
+	CBird bird;					//鳥エネミー
+	CRotationGimmick rotationgimmick;//回転するギミック
 };
 
 extern CStage* g_stage;

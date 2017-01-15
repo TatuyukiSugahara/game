@@ -2,8 +2,9 @@
 #include "Title.h"
 #include "TitleCamera.h"
 #include "TitleLight.h"
+#include "Scene\Scene.h"
 
-class CTitleScene
+class CTitleScene : public CScene
 {
 public:
 	CTitleScene(){}

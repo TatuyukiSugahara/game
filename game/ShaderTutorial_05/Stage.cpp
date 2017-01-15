@@ -17,20 +17,26 @@ void CStage::UpdateLight()
 	lightback.Update();
 }
 
-void CStage::Initialize()
+void CStage::Init()
 {
+	g_stage = this;
 	CreateCollision2D();
 	Add2DRigidBody(ARRAYSIZE(collisionInfoTable2D));
 	//ライトを初期化。
 	light.Init();
-	
-	//サウンドエンジン初期化
-	soundengine.Init();
+	//カメラの初期化。
+	camera.Init();
 
 	//サウンドソースを初期化。
-	soundSource.InitStreaming("Asset/Sound/mario.wav");
-	soundSource.Play(true);
-	soundSource.SetVolume(0.5f);
+	g_soundsource->InitStreaming("Asset/Sound/mario.wav");
+	g_soundsource->Play(true);
+	g_soundsource->SetVolume(0.5f);
+
+	//スプライト初期化
+	if (FAILED(D3DXCreateSprite(g_pd3dDevice, &m_pSprite)))
+	{
+		MessageBox(0, TEXT("スプライト作成失敗"), NULL, MB_OK);
+	}
 
 	//背景ライトを初期化
 	lightback.Init();
@@ -60,10 +66,15 @@ void CStage::Initialize()
 	sabo.Init(g_pd3dDevice);
 	//コインを初期化
 	coin.Init();
+	//コインナンバー初期化
+	coinNumber.Init();	
 	//ゴールフラグ初期化
 	goalflag.Init();
-	//カメラの初期化。
-	camera.Init();
+	//鳥初期化
+	bird.Init();
+	//回転するギミック初期化
+	rotationgimmick.Init();
+	
 	
 }
 
@@ -71,10 +82,6 @@ void CStage::Update()
 {
 	//ライトの更新。
 	UpdateLight();
-	//サウンドエンジン
-	soundengine.Update();
-	//サウンドソース更新
-	soundSource.Update();
 	//ステージ背景更新
 	stageback.Update();
 	//マップ更新
@@ -110,12 +117,14 @@ void CStage::Update()
 	coin.Update();
 	//ゴールフラグ更新
 	goalflag.Update();
+	//コイン更新
+	coinNumber.Update();
+	//鳥更新
+	bird.Update();
+	//回転するギミック更新
+	rotationgimmick.Update();
 	//カメラの更新
 	camera.Update();
-	if (scene != GameScene::Game)
-	{
-		soundSource.Stop();
-	}
 }
 
 void CStage::Render()
@@ -140,7 +149,9 @@ void CStage::Render()
 		lightback.GetLightNum()
 		);
 	//マップ描画
-	map.Render();
+	map.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix());
 	//プレイヤーを描画
 	player.Render(
 		camera.GetViewMatrix(),
@@ -148,14 +159,18 @@ void CStage::Render()
 		false
 		);
 	//モフルンエネミー描画
-	mohurun.Render();
+	mohurun.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix());
 	//Nブロックを描画
 	nblock.Render(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
 		false);
 	//見えないブロック描画
-	noblock.Render();
+	noblock.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix());
 	//はてなボックス描画
 	hanatebox.Render(
 		g_pd3dDevice,
@@ -210,9 +225,24 @@ void CStage::Render()
 		light.GetLightNum()
 		);
 	//コイン描画
-	coin.Render();
+	coin.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix());
 	//ゴール旗描画
-	goalflag.Render();
+	goalflag.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix());
+	//コイン描画
+	coinNumber.Render(m_pSprite);
+	//鳥描画
+	bird.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix());
+	//回転するギミック描画
+	rotationgimmick.Render(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix()
+		);
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
@@ -271,7 +301,7 @@ void CStage::Add2DRigidBody(int arraySize)//ワールドに追加。
 		arraySize;
 		for (int i = 0; i < arraySize; i++)
 		{
-			g_physicsWorld.AddRigidBody(m_rigidBody2D[i]);
+			g_physicsWorld->AddRigidBody(m_rigidBody2D[i]);
 		}
 	}
 }

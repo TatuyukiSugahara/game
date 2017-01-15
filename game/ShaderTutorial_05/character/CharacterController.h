@@ -118,16 +118,10 @@ public:
 	{
 		return hitCollisionObject;
 	}
-	//移動量ゲット
-	D3DXVECTOR3 GetAdd()
-	{
-		return Add;
-	}
 private:
 	D3DXVECTOR3 			m_position = D3DXVECTOR3(0.0f,0.0f,0.0f);	//座標。
 	D3DXVECTOR3 			m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動速度。
 	D3DXVECTOR3				UP = D3DXVECTOR3(0.0f, 1.0f, 0.0f);				//上方向のベクトル
-	D3DXVECTOR3				Add;											//移動量
 	bool 				m_isJump = false;				//ジャンプ中？
 	bool				m_isOnGround = true;			//地面の上にいる？
 	bool				m_isCeiling = false;			//ブロックと頭があたった？

@@ -42,10 +42,14 @@ void CMap::Update()
 		mapChipList[a]->Update();
 	}
 }
-void CMap::Render()
+void CMap::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix)
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		mapChipList[a]->Render();
+		mapChipList[a]->Render(
+			viewMatrix,
+			projMatrix);
 	}
 }

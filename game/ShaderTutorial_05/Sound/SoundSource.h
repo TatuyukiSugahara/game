@@ -7,6 +7,7 @@
 #include <x3daudio.h>
 #include <xaudio2fx.h>
 #include "Sound/WaveFile.h"
+#include <memory>
 
 
 	/*!

@@ -54,6 +54,7 @@ void CCoinChip::Update()
 		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.37, 0.5f) == true)
 		{
 			coinget = true;
+			g_stage->GetCoinNum()->AddNum(1);
 			//ƒTƒEƒ“ƒh
 			CSoundSource* soundSource = new CSoundSource;
 			soundSource->Init("Asset/Sound/coin.wav");
@@ -65,10 +66,12 @@ void CCoinChip::Update()
 		skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	}
 }
-void CCoinChip::Render()
+void CCoinChip::Render(
+	D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix)
 {
 	if (coinget == false)
 	{
-		skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
+		skinmodel.Draw(&viewMatrix, &projMatrix, false);
 	}
 }

@@ -10,7 +10,7 @@ CPlayer::CPlayer()
 {
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
-	position = D3DXVECTOR3(470.0f, 5.0f, 0.0f);		//初期位置
+	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
 	Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);			//初期スケール
 	addmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -90,8 +90,8 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 
 	//AABB
 	CalcAABBSizeFromMesh(modelData.GetOrgMeshFirst(), m_aabbMin, m_aabbMax);
-	m_aabbMin += position;
-	m_aabbMax += position;
+	m_aabbMin;
+	m_aabbMax;
 	//ターン
 	m_currentAngleY = 0.0f;
 	m_targetAngleY = 0.0f;
@@ -134,8 +134,8 @@ void CPlayer::Update()
 	movespeed = characterController.GetMoveSpeed();
 	position = characterController.GetPosition();
 	//AABB
-	m_aabbMax += characterController.GetAdd();
-	m_aabbMin += characterController.GetAdd();
+	m_aabbMaxget = m_aabbMax + position;
+	m_aabbMinget = m_aabbMin + position;
 
 	State();//アニメーション状態変更
 
@@ -327,8 +327,8 @@ void CPlayer::Died()
 		CSoundSource* SEDeath = new CSoundSource;
 		SEDeath->Init("Asset/Sound/death.wav");
 		SEDeath->Play(false);
-		g_resultscene.SetState(ResultState::Death);
-		scene = GameScene::Result;
+		g_scenemanager->SetResult(1);//死んだ場合
+		g_scenemanager->ChangeScene(GameScene::Result);
 	}
 }
 

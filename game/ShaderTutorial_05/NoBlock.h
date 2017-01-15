@@ -18,7 +18,9 @@ public:
 	//更新。
 	void Update();
 	//描画。
-	void Render();
+	void Render(
+		D3DXMATRIX viewMatrix,
+		D3DXMATRIX projMatrix);
 	//開放。
 	void Release();
 	//座標を設定。

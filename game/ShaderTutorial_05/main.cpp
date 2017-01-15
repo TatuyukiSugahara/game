@@ -5,6 +5,7 @@
 #include "stage.h"
 #include "TitleScene.h"
 #include "ResultScene.h"
+#include "Scene\SceneManager.h"
 
 //-----------------------------------------------------------------------------
 // グローバル変数。
@@ -15,15 +16,16 @@
 //-----------------------------------------------------------------------------
 void Init()
 {
-	scene = GameScene::Title;
-	//タイトルシーン初期化
-	g_titlescene.Init();
-	//ステージ初期化
-	g_stage = new CStage;
-	g_stage->Initialize();
-	//リザルト画面
-	g_resultscene.Init();
-
+	//scene = GameScene::Title;
+	////タイトルシーン初期化
+	//g_titlescene.Init();
+	////ステージ初期化
+	//g_stage->Init();
+	////リザルト画面
+	//g_resultscene.Init();
+	//サウンドエンジン
+	g_soundengine->Init();
+	g_scenemanager->InitializeScene();
 	
 }
 //-----------------------------------------------------------------------------
@@ -31,22 +33,22 @@ void Init()
 //-----------------------------------------------------------------------------
 VOID Render()
 {
-	switch (scene)
-	{
-	case Title:
-		//タイトルシーン描画
-		g_titlescene.Render();
-		break;
-	case Game:
-		//ステージ描画
-		g_stage->Render();
-		break;
-	case Result:
-		//リザルト画面
-		g_resultscene.Render();
-		break;
-	}
-	
+	//switch (scene)
+	//{
+	//case Title:
+	//	//タイトルシーン描画
+	//	g_titlescene.Render();
+	//	break;
+	//case Game:
+	//	//ステージ描画
+	//	g_stage->Render();
+	//	break;
+	//case Result:
+	//	//リザルト画面
+	//	g_resultscene.Render();
+	//	break;
+	//}
+	g_scenemanager->RenderScene();
 	
 }
 /*!-----------------------------------------------------------------------------
@@ -58,22 +60,25 @@ void Update()
 	{
 		PostQuitMessage(0);
 	}
-	switch (scene)
-	{
-	case Title:
-		//タイトルシーン更新
-		g_titlescene.Update();
-		break;
-	case Game:
-		//ステージ更新
-		g_stage->Update();
-		break;
-	case Result:
-		//リザルト画面
-		g_resultscene.Update();
-		break;
-	}
-	
+	//switch (scene)
+	//{
+	//case Title:
+	//	//タイトルシーン更新
+	//	g_titlescene.Update();
+	//	break;
+	//case Game:
+	//	//ステージ更新
+	//	g_stage->Update();
+	//	break;
+	//case Result:
+	//	//リザルト画面
+	//	g_resultscene.Update();
+	//	break;
+	//}
+	//サウンドエンジン
+	g_soundengine->Update();
+	g_soundsource->Update();
+	g_scenemanager->UpdateScene();
 	
 }
 //-----------------------------------------------------------------------------
@@ -82,9 +87,13 @@ void Update()
 void Terminate()
 {
 	//ステージリリース
-	g_stage->Release();
-	delete g_stage;
-	delete g_effectManager;
+	if (g_stage){
+		g_stage->Release();
+		delete g_stage;
+	}
+	if (g_effectManager){
+		delete g_effectManager;
+	}
 	g_pd3dDevice->Release();
 	g_pD3D->Release();
 }

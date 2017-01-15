@@ -139,7 +139,7 @@ void CNBlockChip::Add2DRigidBody()//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 {
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
-		g_physicsWorld.AddRigidBody(m_rigidBody2Dblock);
+		g_physicsWorld->AddRigidBody(m_rigidBody2Dblock);
 		
 	}
 }
@@ -148,6 +148,6 @@ void CNBlockChip::Remove2DRigidBody()
 {
 	if (m_rigidBody2Dblock != NULL)
 	{
-		g_physicsWorld.RemoveRigidBody(m_rigidBody2Dblock);
+		g_physicsWorld->RemoveRigidBody(m_rigidBody2Dblock);
 	}
 }

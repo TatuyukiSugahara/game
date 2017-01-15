@@ -15,7 +15,6 @@ C2DImage::~C2DImage()
 
 void C2DImage::Init()
 {
-	D3DXIMAGE_INFO imgInfo;										//画像情報格納用構造体
 	D3DXCreateTextureFromFileEx(g_pd3dDevice, this->texFileName, 0, 0, 0, 0, D3DFMT_UNKNOWN,
 		D3DPOOL_DEFAULT, D3DX_FILTER_NONE, D3DX_DEFAULT, 0, &imgInfo, NULL, &this->pTexture);	//テクスチャ読込
 	this->texCenter = D3DXVECTOR2((float)imgInfo.Width / 2, (float)imgInfo.Height / 2);	//テクスチャの中点セット

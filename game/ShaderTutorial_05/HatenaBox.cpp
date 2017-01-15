@@ -102,6 +102,6 @@ void CHatenaBox::Add2DRigidBody()//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 {
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
-		g_physicsWorld.AddRigidBody(m_rigidBody2Dhatena);
+		g_physicsWorld->AddRigidBody(m_rigidBody2Dhatena);
 	}
 }

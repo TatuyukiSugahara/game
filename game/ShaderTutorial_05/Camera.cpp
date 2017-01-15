@@ -42,10 +42,10 @@ void Camera::Update()
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, D3DX_PI / 4, aspect, Near, Far);
 	
 	//3Dサウンドのリスナーはカメラ。
-	g_stage->GetSoundEngine()->SetListenerPosition(g_stage->GetPlayer()->GetPos());
+	g_soundengine->SetListenerPosition(g_stage->GetPlayer()->GetPos());
 	const D3DXMATRIX& m = mRot;
-	g_stage->GetSoundEngine()->SetListenerFront({ m.m[2][0], m.m[2][1], m.m[2][2] });
-	g_stage->GetSoundEngine()->SetListenerUp({ m.m[1][0], m.m[1][1], m.m[1][2] });
+	g_soundengine->SetListenerFront({ m.m[2][0], m.m[2][1], m.m[2][2] });
+	g_soundengine->SetListenerUp({ m.m[1][0], m.m[1][1], m.m[1][2] });
 
 }
 //カメラの初期化。

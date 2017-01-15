@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BallCollision.cpp" />
+    <ClCompile Include="Bird.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinChip.cpp" />
+    <ClCompile Include="CoinNomber.cpp" />
     <ClCompile Include="Frame\2DImage.cpp" />
     <ClCompile Include="Frame\Animation.cpp" />
     <ClCompile Include="Frame\EffectManager.cpp" />
@@ -204,7 +206,9 @@
     <ClCompile Include="ResultGoal.cpp" />
     <ClCompile Include="ResultLight.cpp" />
     <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="RotationGimmick.cpp" />
     <ClCompile Include="Saboten.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="Sound\SoundEngine.cpp" />
     <ClCompile Include="Sound\SoundSource.cpp" />
@@ -226,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BallCollision.h" />
+    <ClInclude Include="Bird.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
@@ -234,6 +239,7 @@
     <ClInclude Include="character\CollisionAttr.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinChip.h" />
+    <ClInclude Include="CoinNomber.h" />
     <ClInclude Include="Frame\2DImage.h" />
     <ClInclude Include="Frame\Animation.h" />
     <ClInclude Include="Frame\EffectManager.h" />
@@ -277,7 +283,10 @@
     <ClInclude Include="ResultGoal.h" />
     <ClInclude Include="ResultLight.h" />
     <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="RotationGimmick.h" />
     <ClInclude Include="Saboten.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="Sound\SoundEngine.h" />
     <ClInclude Include="Sound\SoundSource.h" />

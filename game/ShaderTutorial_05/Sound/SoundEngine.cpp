@@ -12,6 +12,7 @@
 
 #define NUM_PRESETS 30
 
+
 	namespace {
 		//マイクロソフトのサンプルから引っ張ってきたサウンドコーン。
 		// Specify sound cone to add directionality to listener for artistic effect:
@@ -206,9 +207,9 @@
 			//3Dサウンド。
 			XAUDIO2_SEND_DESCRIPTOR sendDescriptors[2];
 			sendDescriptors[0].Flags = XAUDIO2_SEND_USEFILTER; // LPF direct-path
-			sendDescriptors[0].pOutputVoice = g_stage->GetSoundEngine()->GetMasteringVoice();
+			sendDescriptors[0].pOutputVoice = g_soundengine->GetMasteringVoice();
 			sendDescriptors[1].Flags = XAUDIO2_SEND_USEFILTER; // LPF reverb-path -- omit for better performance at the cost of less realistic occlusion
-			sendDescriptors[1].pOutputVoice = g_stage->GetSoundEngine()->GetSubmixVoice();
+			sendDescriptors[1].pOutputVoice = g_soundengine->GetSubmixVoice();
 			const XAUDIO2_VOICE_SENDS sendList = { 2, sendDescriptors };
 			if (FAILED(m_xAudio2->CreateSourceVoice(&pSourceVoice, waveFile->GetFormat(), 0, 2.0f, NULL, &sendList)))
 			{
