@@ -76,7 +76,7 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
-	animation.PlayAnimation(0, 0.3);
+	animation.PlayAnimation(0, 0.3f);
 	animation.SetAnimationEndTime(2, 0.79f);
 	animation.SetAnimationEndTime(PlayerIsJump, 0.33f);
 	animation.SetAnimationEndTime(PlayerJumpNow, 0.016);
@@ -126,7 +126,7 @@ void CPlayer::Update()
 	if (g_stage->GetKinoko()->GetKinoko() == true && radius == 0.3f)
 	{
 		D3DXVec3Scale(&Scale, &Scale, 1.5f);
-		radius = 0.45;
+		radius = 0.45f;
 		//IsIntersect.CollisitionInitialize(&position, radius);//‚ ‚½‚è”»’è‰Šú‰»
 	}
 	characterController.SetMoveSpeed(movespeed);
@@ -283,7 +283,7 @@ void CPlayer::State()
 		if (state != PlayerRun)
 		{
 			state = PlayerRun;
-			animation.PlayAnimation(PlayerRun, 0.3);
+			animation.PlayAnimation(PlayerRun, 0.3f);
 		}
 	}
 	//’n–Ê‚É‚Â‚¢‚Ä‚¢‚Ä“®‚¢‚Ä‚¢‚È‚¢
@@ -302,7 +302,7 @@ void CPlayer::State()
 			if (!animation.IsPlay() || state == PlayerRun)
 			{
 				state = PlayerStay;
-				animation.PlayAnimation(PlayerStay, 0.3);
+				animation.PlayAnimation(PlayerStay, 0.3f);
 				movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			}
 

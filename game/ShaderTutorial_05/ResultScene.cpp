@@ -12,10 +12,6 @@ void CResultScene::Init()
 	resultlight.Init();
 	resultDeat.Init();
 	resultGoal.Init();
-}
-
-void CResultScene::Update()
-{
 	if (g_scenemanager->GetResult() == 0)
 	{
 		state = ResultState::Goal;
@@ -24,6 +20,11 @@ void CResultScene::Update()
 	{
 		state = ResultState::Death;
 	}
+}
+
+void CResultScene::Update()
+{
+	
 
 	if (state == ResultState::Goal)
 	{

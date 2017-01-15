@@ -51,7 +51,7 @@ void Camera::Update()
 //カメラの初期化。
 void Camera::Init()
 {
-	vEyePt = D3DXVECTOR3(0.0f, 1.0f, -10.0);
+	vEyePt = D3DXVECTOR3(0.0f, 1.0f, -10.0f);
 	vLookatPt = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	vUpVec = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	toPos = vEyePt - vLookatPt;						//視点 - 注視点

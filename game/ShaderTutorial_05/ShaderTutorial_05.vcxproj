@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClCompile Include="BallCollision.cpp" />
     <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="BirdChip.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
@@ -231,6 +232,7 @@
   <ItemGroup>
     <ClInclude Include="BallCollision.h" />
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="BirdChip.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
