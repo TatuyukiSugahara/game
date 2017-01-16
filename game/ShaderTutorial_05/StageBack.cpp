@@ -9,7 +9,7 @@ CStageBack::CStageBack()
 
 	D3DXMatrixIdentity(&mWorld);
 	position.x = 0.0f;
-	position.y = 0.0f;
+	position.y = -50.0f;
 	position.z = 0.0f;
 	targetPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
@@ -42,7 +42,11 @@ void CStageBack::Render(
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	targetPos = g_stage->GetPlayer()->GetPos();
 	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, targetPos.x, targetPos.y - position.y, targetPos.z);
+	D3DXMatrixTranslation(&mWorld, targetPos.x, targetPos.y - position.y - 100.0f, targetPos.z);
+	D3DXMATRIX rot;
+	D3DXMatrixRotationY(&rot, D3DXToRadian(1.0f));
+	mRotation *= rot;
+	mWorld = mWorld * mRotation;
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	model.Render(
 		pd3dDevice,

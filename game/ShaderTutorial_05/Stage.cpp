@@ -19,6 +19,10 @@ void CStage::UpdateLight()
 
 void CStage::Init()
 {
+	g_physicsWorld = new CPhysicsWorld;
+	g_physicsWorld->Init();			//物理ワールド初期化
+	memset(m_rigidBody2D, NULL, sizeof(m_rigidBody2D));
+	memset(m_groundShape, NULL, sizeof(m_groundShape));
 	g_stage = this;
 	CreateCollision2D();
 	Add2DRigidBody(ARRAYSIZE(collisionInfoTable2D));
@@ -28,9 +32,9 @@ void CStage::Init()
 	camera.Init();
 
 	//サウンドソースを初期化。
-	g_soundsource->InitStreaming("Asset/Sound/mario.wav");
-	g_soundsource->Play(true);
-	g_soundsource->SetVolume(0.5f);
+	soundsource.InitStreaming("Asset/Sound/mario.wav");
+	soundsource.Play(true);
+	soundsource.SetVolume(0.5f);
 
 	//スプライト初期化
 	if (FAILED(D3DXCreateSprite(g_pd3dDevice, &m_pSprite)))
@@ -74,8 +78,6 @@ void CStage::Init()
 	bird.Init();
 	//回転するギミック初期化
 	rotationgimmick.Init();
-	
-	
 }
 
 void CStage::Update()
@@ -123,6 +125,8 @@ void CStage::Update()
 	bird.Update();
 	//回転するギミック更新
 	rotationgimmick.Update();
+	//サウンドソース更新
+	soundsource.Update();
 	//カメラの更新
 	camera.Update();
 }

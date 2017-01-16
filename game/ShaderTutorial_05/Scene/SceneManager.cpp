@@ -17,6 +17,8 @@ void CSceneManager::UpdateScene()
 	if (nextScene != -1){
 		if (m_scenes != NULL)
 		{
+			delete g_physicsWorld;
+			g_physicsWorld = NULL;
 			delete m_scenes;
 		}
 		if (nextScene == GameScene::Title)

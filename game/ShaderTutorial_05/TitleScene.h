@@ -3,6 +3,7 @@
 #include "TitleCamera.h"
 #include "TitleLight.h"
 #include "Scene\Scene.h"
+#include "Fade.h"
 
 class CTitleScene : public CScene
 {
@@ -19,6 +20,11 @@ private:
 	CTitle title;					//ƒ^ƒCƒgƒ‹
 	CTitleCamera camera;
 	CTitleLight light;
+	CFade fade;
+
+	float Timer = 0.0f;
+	const float NEXT = 5.0f;
+	bool Fade = false;
 };
 
 extern CTitleScene g_titlescene;

@@ -12,7 +12,7 @@ CPlayer::CPlayer()
 	D3DXMatrixIdentity(&mWorld);
 	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
-	Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);			//初期スケール
+	Scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);			//初期スケール
 	addmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -27,6 +27,10 @@ CPlayer::~CPlayer()
 	if (normalMap != NULL)
 	{
 		normalMap->Release();
+	}
+	if (specularMap != NULL)
+	{
+		specularMap->Release();
 	}
 }
 //初期化。
@@ -327,6 +331,7 @@ void CPlayer::Died()
 		CSoundSource* SEDeath = new CSoundSource;
 		SEDeath->Init("Asset/Sound/death.wav");
 		SEDeath->Play(false);
+		g_stage->GetSoundSorce()->Stop();
 		g_scenemanager->SetResult(1);//死んだ場合
 		g_scenemanager->ChangeScene(GameScene::Result);
 	}

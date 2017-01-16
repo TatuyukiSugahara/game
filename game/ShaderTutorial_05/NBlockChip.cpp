@@ -14,6 +14,14 @@ CNBlockChip::CNBlockChip()
 
 CNBlockChip::~CNBlockChip()
 {
+	delete m_blockboxShape;
+	delete m_myMotionState;
+	if (m_rigidBody3Dblock){
+		delete m_rigidBody3Dblock;
+	}
+	if (m_rigidBody2Dblock){
+		delete m_rigidBody2Dblock;
+	}
 }
 void CNBlockChip::Init()
 {

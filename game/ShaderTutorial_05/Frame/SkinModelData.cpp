@@ -20,6 +20,33 @@ UINT                        g_NumBoneMatricesMax = 0;
 D3DXMATRIXA16*              g_pBoneMatrices = NULL;
 
 namespace {
+	void InternalDestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase)
+	{
+		UINT iMaterial;
+		D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
+
+		SAFE_DELETE_ARRAY(pMeshContainer->Name);
+		SAFE_DELETE_ARRAY(pMeshContainer->pAdjacency);
+		SAFE_DELETE_ARRAY(pMeshContainer->pMaterials);
+		SAFE_DELETE_ARRAY(pMeshContainer->pBoneOffsetMatrices);
+
+		// release all the allocated textures
+		if (pMeshContainer->ppTextures != NULL)
+		{
+			for (iMaterial = 0; iMaterial < pMeshContainer->NumMaterials; iMaterial++)
+			{
+				SAFE_RELEASE(pMeshContainer->ppTextures[iMaterial]);
+			}
+		}
+
+		SAFE_DELETE_ARRAY(pMeshContainer->ppTextures);
+		SAFE_DELETE_ARRAY(pMeshContainer->ppBoneMatrixPtrs);
+		SAFE_RELEASE(pMeshContainer->pBoneCombinationBuf);
+		SAFE_RELEASE(pMeshContainer->MeshData.pMesh);
+		SAFE_RELEASE(pMeshContainer->pSkinInfo);
+		SAFE_RELEASE(pMeshContainer->pOrigMesh);
+		SAFE_DELETE(pMeshContainer);
+	}
 	//--------------------------------------------------------------------------------------
 	// update the frame matrices
 	//--------------------------------------------------------------------------------------
@@ -220,7 +247,7 @@ namespace {
 		if (pFrame->pFrameSibling != NULL)
 		{
 			hr = SetupBoneMatrixPointers(pFrame->pFrameSibling, pRootFrame);
-			if (FAILED(hr))
+			if (FAILED(hr)) 
 				return hr;
 		}
 
@@ -354,7 +381,6 @@ namespace {
 		pMeshContainer->MeshData.Type = D3DXMESHTYPE_MESH;
 
 		pMesh->AddRef();
-
 		D3DVERTEXELEMENT9 decl[] = {
 			{ 0, 0 ,	D3DDECLTYPE_FLOAT4		, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION		, 0 },
 			{ 0, 16,    D3DDECLTYPE_FLOAT4		, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT	, 0 },
@@ -416,7 +442,8 @@ namespace {
 			pMeshContainer->pMaterials[0].MatD3D.Diffuse.b = 0.5f;
 			pMeshContainer->pMaterials[0].MatD3D.Specular = pMeshContainer->pMaterials[0].MatD3D.Diffuse;
 		}
-
+		pMeshContainer->pOrigMesh = pMesh;
+		pMesh->AddRef();
 		// if there is skinning information, save off the required data and then setup for HW skinning
 		if (pSkinInfo != NULL)
 		{
@@ -424,8 +451,6 @@ namespace {
 			pMeshContainer->pSkinInfo = pSkinInfo;
 			pSkinInfo->AddRef();
 
-			pMeshContainer->pOrigMesh = pMesh;
-			pMesh->AddRef();
 
 			// Will need an array of offset matrices to move the vertices from the figure space to the bone's space
 			cBones = pSkinInfo->GetNumBones();
@@ -476,14 +501,6 @@ namespace {
 			pMeshContainer->MeshData.pMesh = pOutMesh;
 
 
-			std::vector<DWORD> adjList;
-			adjList.resize(3 * pOutMesh->GetNumFaces());
-			pOutMesh->GenerateAdjacency(1.0f/512.0f, &adjList[0]); // EPSIONは適当な値(1.0f/512とか)
-
-			DWORD numVert = pOutMesh->GetNumVertices();  // Optimizeの一種
-			pOutMesh->OptimizeInplace(D3DXMESHOPT_COMPACT, &adjList[0], NULL, NULL, NULL);
-			numVert = pOutMesh->GetNumVertices();
-
 			if (FAILED(hr))
 				goto e_Exit;
 		}
@@ -519,14 +536,8 @@ namespace {
 			pMeshContainer->MeshData.pMesh = pOutMesh;
 			if (FAILED(hr))
 				goto e_Exit;
-			LPD3DXMESH optMesh;
-			std::vector<DWORD> adjList;
-			adjList.resize(3 * pOutMesh->GetNumFaces());
-			pOutMesh->GenerateAdjacency(1.0f , &adjList[0]); // EPSIONは適当な値(1.0f/512とか)
-			numVert = pOutMesh->GetNumVertices();  // Optimizeの一種
-			pOutMesh->Optimize(D3DXMESHOPT_COMPACT, &adjList[0], NULL, NULL, NULL, &optMesh);
-			numVert = optMesh->GetNumVertices();
-
+			
+		
 		}
 
 		*ppNewMeshContainer = pMeshContainer;
@@ -563,30 +574,7 @@ namespace {
 	//--------------------------------------------------------------------------------------
 	HRESULT AllocateHierarchy::DestroyMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase)
 	{
-		UINT iMaterial;
-		D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
-
-		SAFE_DELETE_ARRAY(pMeshContainer->Name);
-		SAFE_DELETE_ARRAY(pMeshContainer->pAdjacency);
-		SAFE_DELETE_ARRAY(pMeshContainer->pMaterials);
-		SAFE_DELETE_ARRAY(pMeshContainer->pBoneOffsetMatrices);
-
-		// release all the allocated textures
-		if (pMeshContainer->ppTextures != NULL)
-		{
-			for (iMaterial = 0; iMaterial < pMeshContainer->NumMaterials; iMaterial++)
-			{
-				SAFE_RELEASE(pMeshContainer->ppTextures[iMaterial]);
-			}
-		}
-
-		SAFE_DELETE_ARRAY(pMeshContainer->ppTextures);
-		SAFE_DELETE_ARRAY(pMeshContainer->ppBoneMatrixPtrs);
-		SAFE_RELEASE(pMeshContainer->pBoneCombinationBuf);
-		SAFE_RELEASE(pMeshContainer->MeshData.pMesh);
-		SAFE_RELEASE(pMeshContainer->pSkinInfo);
-		SAFE_RELEASE(pMeshContainer->pOrigMesh);
-		SAFE_DELETE(pMeshContainer);
+		InternalDestroyMeshContainer(pMeshContainerBase);
 		return S_OK;
 	}
 
@@ -599,11 +587,45 @@ SkinModelData::SkinModelData() :
 }
 SkinModelData::~SkinModelData()
 {
+	Release();
+}
+void SkinModelData::DeleteSkeleton(LPD3DXFRAME frame)
+{
+	if (!frame){
+		return;
+	}
+	if (!frame) {
+		return;
+	}
+	if (frame->pMeshContainer != NULL)
+	{
+		//メッシュコンテナがある。
+		InternalDestroyMeshContainer(frame->pMeshContainer);
+	}
+
+	if (frame->pFrameSibling != NULL)
+	{
+		//兄弟がいる。
+		DeleteSkeleton(frame->pFrameSibling);
+	}
+
+	if (frame->pFrameFirstChild != NULL)
+	{
+		//子供がいる。
+		DeleteSkeleton(frame->pFrameFirstChild);
+	}
+	SAFE_DELETE_ARRAY(frame->Name);
+	SAFE_DELETE(frame);
 }
 void SkinModelData::Release()
 {
 	if (pAnimController) {
 		pAnimController->Release();
+		pAnimController = NULL;
+	}
+	if (frameRoot){
+		DeleteSkeleton(frameRoot);
+		frameRoot = NULL;
 	}
 }
 

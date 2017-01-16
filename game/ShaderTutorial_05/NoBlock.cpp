@@ -18,6 +18,10 @@ CNoBlock::CNoBlock()
 //デストラクタ
 CNoBlock::~CNoBlock()
 {
+	delete m_noblockboxShape;
+	delete m_rigidBody3Dnoblock;
+	delete m_rigidBody2Dnoblock;
+	delete m_myMotionState;
 }
 //初期化。
 void CNoBlock::Init()

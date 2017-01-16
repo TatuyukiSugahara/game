@@ -20,6 +20,7 @@ CHatenaBox::CHatenaBox()
 //デストラクタ
 CHatenaBox::~CHatenaBox()
 {
+	Release();
 }
 //初期化。
 void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
@@ -71,6 +72,14 @@ void CHatenaBox::Render(
 void CHatenaBox::Release()
 {
 	model.Release();
+	if (m_rigidBody2Dhatena){
+	
+		m_rigidBody2Dhatena = NULL;
+	}
+	if (m_rigidBody3Dhatena){
+		
+		m_rigidBody3Dhatena = NULL;
+	}
 }
 
 void CHatenaBox::CreateCollision2D()

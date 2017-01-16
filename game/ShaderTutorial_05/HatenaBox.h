@@ -60,8 +60,8 @@ private:
 	HatenaState				state;			//はてなの状態
 	//bulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_hatenaboxShape;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dhatena;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dhatena;	//剛体2D。
+	btRigidBody*		m_rigidBody3Dhatena = NULL;	//剛体3D。
+	btRigidBody*		m_rigidBody2Dhatena = NULL;	//剛体2D。
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
 };

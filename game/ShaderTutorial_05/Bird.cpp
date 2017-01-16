@@ -12,6 +12,7 @@ SBirdChipLocInfo birdChipListTable[] = {
 
 CBird::CBird()
 {
+
 }
 
 
@@ -39,14 +40,11 @@ void CBird::Init()
 //更新。
 void CBird::Update()
 {
-
 	tableSize = sizeof(birdChipListTable) / sizeof(birdChipListTable[0]);
 	for (int a = 0; a < tableSize; a++)
 	{
 		birdChipList[a]->Update();
 	}
-
-	
 }
 //描画。
 void CBird::Render(

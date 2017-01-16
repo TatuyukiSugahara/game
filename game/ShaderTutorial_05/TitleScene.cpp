@@ -11,6 +11,7 @@ void CTitleScene::Init()
 	camera.Init();
 	light.Init();
 	title.Init();
+	fade.Init();
 }
 
 void CTitleScene::Update()
@@ -18,8 +19,21 @@ void CTitleScene::Update()
 	camera.Update();
 	light.Update();
 	title.Update();
+	fade.Update();
+
 	if (g_pad.IsPress(enButtonA))
 	{
+		Fade = true;
+	}
+	if (Fade == true)
+	{
+		Timer += (1.0f / 60.0f);
+		//fade.AddScale(D3DXVECTOR2(0.01f,0.01f));
+		fade.AddAlpha(5);
+	}
+	if (NEXT <= Timer)
+	{
+		Fade = false;
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }
@@ -32,6 +46,7 @@ void CTitleScene::Render()
 	g_pd3dDevice->BeginScene();
 
 	title.Render(m_pSprite);
+	fade.Render(m_pSprite);
 
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();

@@ -20,12 +20,26 @@ CPipe::CPipe()
 {
 	nextPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	isPipe = false;
+	memset(m_pipeboxShape, NULL, sizeof(m_pipeboxShape));
+	memset(m_rigidBody3Dpipe, NULL, sizeof(m_rigidBody3Dpipe));
+	memset(m_rigidBody2Dpipe, NULL, sizeof(m_rigidBody2Dpipe));
+	m_myMotionState = NULL;
 }
 CPipe::~CPipe()
 {
 	for (auto& pipechip : pipeChipList){
 		delete pipechip;
 	}
+	for (auto& pipeBox : m_pipeboxShape){
+		delete pipeBox;
+	}
+	for (auto& rb : m_rigidBody3Dpipe){
+		delete rb;
+	}
+	for (auto& rb : m_rigidBody2Dpipe){
+		delete rb;
+	}
+	delete m_myMotionState;
 }
 void CPipe::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {

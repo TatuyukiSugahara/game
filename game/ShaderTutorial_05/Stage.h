@@ -38,10 +38,20 @@ class CStage : public CScene
 {
 public:
 	CStage(){}
-	~CStage(){}
-	virtual void Init();
-	virtual void Update();
-	virtual void Render();
+	~CStage()
+	{
+		for (auto& shape : m_groundShape){
+			delete shape;
+		}
+		for (auto& rb : m_rigidBody2D){
+			delete rb;
+		}
+		delete m_myMotionState;
+		
+	}
+	void Init();
+	void Update();
+	void Render();
 	void UpdateLight();
 	void Release();
 
@@ -99,10 +109,13 @@ public:
 	{
 		return &coinNumber;
 	}
+	CSoundSource* GetSoundSorce()
+	{
+		return&soundsource;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3D[MAX_COLLISION];	//剛体3D。
 	btRigidBody*		m_rigidBody2D[MAX_COLLISION];	//剛体2D。
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
@@ -129,6 +142,7 @@ protected:
 	CCoinNomber coinNumber;		//コインナンバー
 	CBird bird;					//鳥エネミー
 	CRotationGimmick rotationgimmick;//回転するギミック
+	CSoundSource			soundsource;
 };
 
 extern CStage* g_stage;

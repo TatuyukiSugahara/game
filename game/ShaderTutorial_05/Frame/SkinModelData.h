@@ -67,6 +67,8 @@ public:
 	*/
 	LPD3DXMESH GetOrgMeshFirst() const;
 private:
+	void DeleteSkeleton(LPD3DXFRAME frame);
+private:
 	LPD3DXFRAME					frameRoot;		//フレームルート。
 	ID3DXAnimationController*   pAnimController;	//アニメーションコントローラ。
 };

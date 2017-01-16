@@ -39,8 +39,7 @@ void CResultScene::Update()
 	
 	if (g_pad.IsTrigger(enButtonA))
 	{
-		
-		g_stage->GetPlayer()->SetPosition(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
+		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 	if (g_pad.IsTrigger(enButtonB))
 	{

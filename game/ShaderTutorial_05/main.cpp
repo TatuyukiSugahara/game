@@ -33,21 +33,6 @@ void Init()
 //-----------------------------------------------------------------------------
 VOID Render()
 {
-	//switch (scene)
-	//{
-	//case Title:
-	//	//タイトルシーン描画
-	//	g_titlescene.Render();
-	//	break;
-	//case Game:
-	//	//ステージ描画
-	//	g_stage->Render();
-	//	break;
-	//case Result:
-	//	//リザルト画面
-	//	g_resultscene.Render();
-	//	break;
-	//}
 	g_scenemanager->RenderScene();
 	
 }
@@ -77,7 +62,6 @@ void Update()
 	//}
 	//サウンドエンジン
 	g_soundengine->Update();
-	g_soundsource->Update();
 	g_scenemanager->UpdateScene();
 	
 }
@@ -89,11 +73,11 @@ void Terminate()
 	//ステージリリース
 	if (g_stage){
 		g_stage->Release();
-		delete g_stage;
+		//delete g_stage;
 	}
 	if (g_effectManager){
 		delete g_effectManager;
 	}
-	g_pd3dDevice->Release();
-	g_pD3D->Release();
+	/*g_pd3dDevice->Release();
+	g_pD3D->Release();*/
 }

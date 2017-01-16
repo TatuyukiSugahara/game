@@ -56,9 +56,9 @@ private:
 	CLight					light;
 	noblockState			state;			//はてなの状態
 	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_noblockboxShape;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dnoblock;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dnoblock;	//剛体2D。
-	btDefaultMotionState* m_myMotionState;
+	btCollisionShape*	m_noblockboxShape = NULL;	//地面のコリジョン形状。
+	btRigidBody*		m_rigidBody3Dnoblock = NULL;	//剛体3D。
+	btRigidBody*		m_rigidBody2Dnoblock = NULL;	//剛体2D。
+	btDefaultMotionState* m_myMotionState = NULL;
 	bool				m_isAdd2DCollision;
 };

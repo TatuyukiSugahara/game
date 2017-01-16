@@ -14,6 +14,7 @@
 	}
 	void CRigidBody::Release()
 	{
+		
 		delete rigidBody;
 		delete myMotionState;
 		rigidBody = NULL;

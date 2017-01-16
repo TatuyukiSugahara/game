@@ -73,10 +73,10 @@ private:
 	bool parflag;
 	bool blockLost;						//ブロックがあるか？
 	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_blockboxShape;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dblock;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dblock;	//剛体2D。
-	btDefaultMotionState* m_myMotionState;
+	btCollisionShape*	m_blockboxShape = NULL;	//地面のコリジョン形状。
+	btRigidBody*		m_rigidBody3Dblock = NULL;	//剛体3D。
+	btRigidBody*		m_rigidBody2Dblock = NULL;	//剛体2D。
+	btDefaultMotionState* m_myMotionState = NULL;
 	bool				m_isAdd2DCollision;
 };
 

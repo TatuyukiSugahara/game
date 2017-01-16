@@ -39,7 +39,9 @@
 		*/
 		void RemoveRigidBody(btRigidBody* body)
 		{
-			dynamicWorld->removeRigidBody(body);
+			if (body){
+				dynamicWorld->removeRigidBody(body);
+			}
 		}
 		void ConvexSweepTest(
 			const btConvexShape* castShape,

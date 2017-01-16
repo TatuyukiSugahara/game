@@ -1,10 +1,6 @@
 #pragma once
-#include "Particle\ParticleEmitter.h"
-enum State
-{
-	on,				//敵がいる
-	off				//敵がいない
-};
+
+class CMohurunChip;
 
 class CMohurun
 {
@@ -19,40 +15,8 @@ public:
 	void Render(
 		D3DXMATRIX viewMatrix,
 		D3DXMATRIX projMatrix);
-	//座標を設定。
-	void SetPosition(D3DXVECTOR3 pos)
-	{
-		position = pos;
-	}
-	State GetState()
-	{
-		return state;
-	}
-	void SetState(State state)
-	{
-		this->state = state;
-	}
-	D3DXVECTOR3 GetPos()
-	{
-		return position;
-	}
 private:
-	State state;
-
-	D3DXVECTOR3				gravity = D3DXVECTOR3(0.0f, -0.98f, 0.0f);
-	D3DXVECTOR3				position;		//座標。。
-	D3DXVECTOR3				scale;			//大きさ
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	SkinModel skinmodel;
-	SkinModelData modelData;
-	Animation animation;
-	CLight	light;
-	SParicleEmitParameter param;
-	std::list<CParticleEmitter*> particleEmitterList;
-	const int MAXPAR = 100;
-	int parTime;
-	bool parflag;		
-	int count;
+	std::vector<CMohurunChip*> mohurunChipList;	//マップチップのリスト。
+	int tableSize;
 };
 

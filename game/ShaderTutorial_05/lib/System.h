@@ -13,4 +13,3 @@ extern EffectManager*			g_effectManager;
 extern CPhysicsWorld*			g_physicsWorld;
 extern CSceneManager*			g_scenemanager;
 extern CSoundEngine*			g_soundengine;
-extern CSoundSource*			g_soundsource;
