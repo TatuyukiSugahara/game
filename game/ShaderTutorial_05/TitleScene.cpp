@@ -23,17 +23,10 @@ void CTitleScene::Update()
 
 	if (g_pad.IsPress(enButtonA))
 	{
-		Fade = true;
+		fade.SetFade(true);
 	}
-	if (Fade == true)
+	if (fade.GetNext() <= fade.GetTimer())
 	{
-		Timer += (1.0f / 60.0f);
-		//fade.AddScale(D3DXVECTOR2(0.01f,0.01f));
-		fade.AddAlpha(5);
-	}
-	if (NEXT <= Timer)
-	{
-		Fade = false;
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }

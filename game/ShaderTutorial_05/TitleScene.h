@@ -21,10 +21,6 @@ private:
 	CTitleCamera camera;
 	CTitleLight light;
 	CFade fade;
-
-	float Timer = 0.0f;
-	const float NEXT = 5.0f;
-	bool Fade = false;
 };
 
 extern CTitleScene g_titlescene;

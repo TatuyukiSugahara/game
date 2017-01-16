@@ -15,18 +15,18 @@ public:
 	void Render(
 		LPDIRECT3DDEVICE9 pd3dDevice,
 		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix,
-		D3DXVECTOR4* diffuseLightDirection,
-		D3DXVECTOR4* diffuseLightColor,
-		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
+		D3DXMATRIX projMatrix
 		);
 	//開放。
 	void Release();
 private:
-	D3DXVECTOR3				position;		//座標。。
+	D3DXVECTOR3				position;		//座標。
+	D3DXVECTOR3				scale;			//スケール
 	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	Model					model;			//モデル。
+	D3DXQUATERNION			rotation;
+	SkinModel skinmodel;
+	SkinModelData modelData;
+	Animation animation;
+	CLight	light;
 	D3DXVECTOR3				targetPos;		//ターゲットのポジション
 };

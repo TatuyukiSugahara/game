@@ -23,5 +23,15 @@ void CFade::Init()
 
 void CFade::Update()
 {
+	if (Fade == true)
+	{
+		Timer += (1.0f / 60.0f);
+		AddAlpha(5);
+	}
+	if (NEXT <= Timer)
+	{
+		Fade = false;
+	}
+
 	this->SetupMatrices();
 }

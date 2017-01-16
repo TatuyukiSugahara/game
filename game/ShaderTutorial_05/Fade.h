@@ -25,6 +25,22 @@ public:
 			backColor = D3DCOLOR_ARGB(alpha, 255, 255, 255);
 		}
 	}
+	const float GetNext()
+	{
+		return NEXT;
+	}
+	float GetTimer()
+	{
+		return Timer;
+	}
+	void SetFade(bool flag)
+	{
+		Fade = flag;
+	}
 private:
 	int alpha = 0;
+
+	float Timer = 0.0f;
+	const float NEXT = 5.0f;
+	bool Fade = false;
 };

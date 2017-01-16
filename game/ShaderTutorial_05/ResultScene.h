@@ -4,6 +4,7 @@
 #include "ResultCamera.h"
 #include "ResultLight.h"
 #include "ResultGoal.h"
+#include "Fade.h"
 
 enum ResultState
 {
@@ -32,6 +33,9 @@ private:
 	CResultLight resultlight;		//ƒ‰ƒCƒg
 	CResultGoal resultGoal;			//ƒS[ƒ‹
 	ResultState state;
+
+	CFade fade;
+
 };
 
 extern CResultScene* g_resultscene;

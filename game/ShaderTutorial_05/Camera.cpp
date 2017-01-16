@@ -24,14 +24,14 @@ void Camera::Update()
 	D3DXVECTOR3 Pos = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, vEyePt.y, vEyePt.z);
 	vEyePt = g_stage->GetPlayer()->GetPos() + toPos;
 	vLookatPt = g_stage->GetPlayer()->GetPos();
-	if (fabs(g_pad.GetRStickXF()) > 0.0f)
+	/*if (fabs(g_pad.GetRStickXF()) > 0.0f)
 	{
 		RotTransversal(g_pad.GetRStickXF() * 0.1f);
 	}
 	if (fabs(g_pad.GetRStickYF()) > 0.0f)
 	{
 		RotLongitudinal(g_pad.GetRStickYF() * 0.1f);
-	}
+	}*/
 	
 	cameradir = toPos;
 	cameradir.y = 0.0f;

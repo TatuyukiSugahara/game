@@ -119,6 +119,11 @@ void CPlayer::Update()
 	
 	Jump();//ジャンプ
 	Died();//死亡
+	//落ちると死亡判定
+	if (position.y < -10.0f)
+	{
+		lifestate = Life::Died;
+	}
 	//天井と当たった？＆＆当たったのは,はてなボックス？
 	if (characterController.IsCeiling()
 		&& characterController.getCollisionObj() == g_stage->GetHatena()->Get2DHatena())
@@ -326,7 +331,7 @@ void CPlayer::State()
 
 void CPlayer::Died()
 {
-	if (position.y <= -10.0f)
+	if (lifestate == Life::Died)
 	{
 		CSoundSource* SEDeath = new CSoundSource;
 		SEDeath->Init("Asset/Sound/death.wav");

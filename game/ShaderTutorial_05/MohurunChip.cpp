@@ -69,15 +69,13 @@ void CMohurunChip::Update()
 
 		if (fabs(toLength) < 8.0f)
 		{
-			//ワールド行列の更新。
-			animation.Update(1.0f / 60.0f);
+			
 			if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.5f) == true)
 			{
-				g_scenemanager->SetResult(1);//死んだ場合
-				g_scenemanager->ChangeScene(GameScene::Result);
+				g_stage->GetPlayer()->SetLifeState(Life::Died);
 			}
 			if (BallCollision(position + D3DXVECTOR3(0.0f, 0.1f, 0.0f),
-				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.05f, 0.0f), 0.75f, 0.5f) == true)
+				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.1f, 0.0f), 0.7f, 0.5f) == true)
 			{
 				scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
 				parflag = true;
@@ -98,6 +96,8 @@ void CMohurunChip::Update()
 
 			position.x -= 0.01f;
 		}
+		//ワールド行列の更新。
+		animation.Update(1.0f / 60.0f);
 		skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), scale);
 	}
 	if (parflag == true)

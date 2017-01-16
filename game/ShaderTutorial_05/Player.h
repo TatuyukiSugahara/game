@@ -16,6 +16,11 @@ enum PlayerState{
 	PlayerJumpWas,		//着地時
 };
 
+enum Life{
+	Alive,				//生きている
+	Died,				//死んだ
+};
+
 //プレイヤークラス。
 class CPlayer {
 public:
@@ -88,6 +93,14 @@ public:
 	{
 		movespeed = speed;
 	}
+	Life GetLifeState()
+	{
+		return lifestate;
+	}
+	void SetLifeState(Life life)
+	{
+		lifestate = life;
+	}
 	void Move(float maxmove);
 	void Jump();
 	void State();
@@ -111,6 +124,7 @@ private:
 	float					radius;
 	float					friction;						//摩擦
 	PlayerState				state;							//プレイヤーの状態
+	Life					lifestate;						//プレイヤー生死
 	D3DXQUATERNION			rotation;						//回転クォータニオン
 	float					deathCount;						//死亡までのカウント
 	D3DXVECTOR3				addmove;							//次の移動

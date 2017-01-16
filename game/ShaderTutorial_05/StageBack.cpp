@@ -7,10 +7,9 @@ CStageBack::CStageBack()
 {
 	//初期化。
 
-	D3DXMatrixIdentity(&mWorld);
-	position.x = 0.0f;
-	position.y = -50.0f;
-	position.z = 0.0f;
+	position = D3DXVECTOR3(0.0f, -70.0f, 0.0f);
+	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 	targetPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 //デストラクタ
@@ -20,49 +19,56 @@ CStageBack::~CStageBack()
 //初期化。
 void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	model.Init(pd3dDevice, "Asset/model/sky.x");
-	model.SetShadowReceiverFlag(false);
+	//ライトを初期化。
+	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetDiffuseLightDirection(1, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+
+	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+	light.SetAmbientLight(D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+
+	modelData.LoadModelData("Asset/model/sky.x", &animation);
+	skinmodel.Init(&modelData);
+	skinmodel.SetLight(&light);
+	animation.PlayAnimation(0);
+	animation.SetAnimationLoopFlag(1, false);
+	skinmodel.SetShadowReceiverFlag(false);
+	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetNormalMap(false);
+	skinmodel.SetSpecularMap(false);
 }
 //更新。
 void CStageBack::Update()
 {	
+	
+	targetPos = g_stage->GetPlayer()->GetPos();
+	static float rot = 0.0f;
+	D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot += 0.001f);
+
+	skinmodel.UpdateWorldMatrix(D3DXVECTOR3(targetPos.x,position.y,targetPos.z), rotation, scale);
 	
 }
 //描画。
 void CStageBack::Render(
 	LPDIRECT3DDEVICE9 pd3dDevice,
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix,
-	D3DXVECTOR4* diffuseLightDirection,
-	D3DXVECTOR4* diffuseLightColor,
-	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
+	D3DXMATRIX projMatrix
 	)
 {
+	
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	targetPos = g_stage->GetPlayer()->GetPos();
-	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, targetPos.x, targetPos.y - position.y - 100.0f, targetPos.z);
-	D3DXMATRIX rot;
-	D3DXMatrixRotationY(&rot, D3DXToRadian(1.0f));
-	mRotation *= rot;
-	mWorld = mWorld * mRotation;
+	skinmodel.Draw(&viewMatrix, &projMatrix, false);
 	pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	model.Render(
-		pd3dDevice,
-		mWorld,
-		mRotation,
-		viewMatrix,
-		projMatrix,
-		diffuseLightDirection,
-		diffuseLightColor,
-		ambientLight,
-		numDiffuseLight,
-		false
-		);
+
+	
 }
+
 //開放。
 void CStageBack::Release()
 {
-	model.Release();
+
 }

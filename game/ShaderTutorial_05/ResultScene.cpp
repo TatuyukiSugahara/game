@@ -12,6 +12,7 @@ void CResultScene::Init()
 	resultlight.Init();
 	resultDeat.Init();
 	resultGoal.Init();
+	fade.Init();
 	if (g_scenemanager->GetResult() == 0)
 	{
 		state = ResultState::Goal;
@@ -36,8 +37,13 @@ void CResultScene::Update()
 	}
 	resultcamera.Update();
 	resultlight.Update();
+	fade.Update();
 	
-	if (g_pad.IsTrigger(enButtonA))
+	if (g_pad.IsPress(enButtonA))
+	{
+		fade.SetFade(true);
+	}
+	if (fade.GetNext() <= fade.GetTimer())
 	{
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
@@ -62,6 +68,7 @@ void CResultScene::Render()
 	{
 		resultDeat.Render(m_pSprite);
 	}
+	fade.Render(m_pSprite);
 
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();

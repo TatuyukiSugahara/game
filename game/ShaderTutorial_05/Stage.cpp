@@ -146,11 +146,7 @@ void CStage::Render()
 	stageback.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		lightback.GetLightDirection(),
-		lightback.GetLightColor(),
-		lightback.GetambientLight(),
-		lightback.GetLightNum()
+		camera.GetProjectionMatrix()
 		);
 	//ƒ}ƒbƒv•`‰æ
 	map.Render(

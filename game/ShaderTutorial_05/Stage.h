@@ -65,6 +65,10 @@ public:
 	{
 		return &light;
 	}
+	CLightBack* GetLightBack()
+	{
+		return &lightback;
+	}
 	CPlayer* GetPlayer()
 	{
 		return &player;

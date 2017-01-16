@@ -1,6 +1,6 @@
 #pragma once
 
-class CLightBack
+class CLightBack : public CLight
 {
 public:
 	CLightBack();
