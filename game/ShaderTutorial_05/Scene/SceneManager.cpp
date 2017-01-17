@@ -28,6 +28,7 @@ void CSceneManager::UpdateScene()
 		if (nextScene == GameScene::Game)
 		{
 			m_scenes = new CStage;
+			num = 0;
 		}
 		if (nextScene == GameScene::Result)
 		{

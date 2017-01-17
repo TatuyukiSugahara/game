@@ -10,7 +10,7 @@ CGoal::CGoal()
 {
 	//èâä˙âªÅB
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 465.0f;
+	position.x = -3.0f;
 	position.y = 1.0f;
 	position.z = 0.0f;
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

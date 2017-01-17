@@ -5,6 +5,8 @@
 #include "ResultLight.h"
 #include "ResultGoal.h"
 #include "Fade.h"
+#include "CoinNomber.h"
+#include "CoinSprite.h"
 
 enum ResultState
 {
@@ -35,6 +37,8 @@ private:
 	ResultState state;
 
 	CFade fade;
+	CCoinNomber coinnumber;			//コインナンバー
+	CCoinSprite	coinsprite;			//コインスプライト
 
 };
 

@@ -57,9 +57,9 @@ void CStage::Init()
 	//見えないブロック初期化
 	noblock.Init();
 	//はてなボックス初期化
-	hanatebox.Init(g_pd3dDevice);
+	//hanatebox.Init(g_pd3dDevice);
 	//キノコ初期化
-	kinoko.Init(g_pd3dDevice);
+	//kinoko.Init(g_pd3dDevice);
 	//土管初期化
 	pipe.Init(g_pd3dDevice);
 	//ゴール初期化
@@ -67,13 +67,15 @@ void CStage::Init()
 	//影初期化
 	shadow.Create(512, 512);
 	//サボテン初期化
-	sabo.Init(g_pd3dDevice);
+	//sabo.Init(g_pd3dDevice);
 	//コインを初期化
 	coin.Init();
 	//コインナンバー初期化
 	coinNumber.Init();	
 	//ゴールフラグ初期化
 	goalflag.Init();
+	//コインスプライト初期化
+	coinsprite.Init();
 	//鳥初期化
 	bird.Init();
 	//回転するギミック初期化
@@ -103,18 +105,18 @@ void CStage::Update()
 	//見えないブロック更新
 	noblock.Update();
 	//はてなボックス更新
-	hanatebox.Update();
+	//hanatebox.Update();
 	//キノコ更新
-	if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
+	/*if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
 	{
 		kinoko.Update();
-	}
+	}*/
 	//土管更新
 	pipe.Update();
 	//ゴール更新
 	goal.Update();
 	//サボテン更新
-	sabo.Update();
+	//sabo.Update();
 	//コイン更新
 	coin.Update();
 	//ゴールフラグ更新
@@ -127,6 +129,8 @@ void CStage::Update()
 	rotationgimmick.Update();
 	//サウンドソース更新
 	soundsource.Update();
+	//コインスプライト更新
+	coinsprite.Update();
 	//カメラの更新
 	camera.Update();
 }
@@ -173,7 +177,7 @@ void CStage::Render()
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix());
 	//はてなボックス描画
-	hanatebox.Render(
+	/*hanatebox.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -181,9 +185,9 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-		);
+		);*/
 	//キノコ
-	if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
+	/*if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
 	{
 		kinoko.Render(
 			g_pd3dDevice,
@@ -194,7 +198,7 @@ void CStage::Render()
 			light.GetambientLight(),
 			light.GetLightNum()
 			);
-	}
+	}*/
 	//土管描画
 	pipe.Render(
 		g_pd3dDevice,
@@ -216,7 +220,7 @@ void CStage::Render()
 		light.GetLightNum()
 	);
 	//サボテン描画
-	sabo.Render(
+	/*sabo.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -224,7 +228,7 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-		);
+		);*/
 	//コイン描画
 	coin.Render(
 		camera.GetViewMatrix(),
@@ -246,6 +250,8 @@ void CStage::Render()
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix()
 		);
+	//コインスプライト描画
+	coinsprite.Render(m_pSprite);
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
@@ -259,9 +265,9 @@ void CStage::Release()
 	//ステージ背景リリース
 	stageback.Release();
 	//はてなボックスリリース
-	hanatebox.Release();
+	//hanatebox.Release();
 	//キノコリリース
-	kinoko.Release();
+	//kinoko.Release();
 	//プレイヤーリリース
 	player.Release();
 }

@@ -57,3 +57,8 @@ void CMohurun::Render(
 		mohurunChipList[a]->Render(viewMatrix, projMatrix,isDrawToShadowMap);
 	}
 }
+
+D3DXVECTOR3 CMohurun::GetPos(int i)
+{
+	return mohurunChipList[i]->GetPos();
+}

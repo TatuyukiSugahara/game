@@ -14,6 +14,8 @@ CCoinNomber::~CCoinNomber()
 void CCoinNomber::Init()
 {
 	position = D3DXVECTOR2(30.0f, 30.0f);
+	keta1 = D3DXVECTOR2(150.0f, 30.0f);
+	keta2 = D3DXVECTOR2(120.0f, 30.0f);
 	angle = 0;
 	scale = D3DXVECTOR2(1.0f, 1.0f);
 	backColor = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -28,8 +30,8 @@ void CCoinNomber::Update()
 
 void CCoinNomber::Render(LPD3DXSPRITE pSprite)
 {
-	Render(pSprite, num % 10, D3DXVECTOR2(60.0f, 30.0f));
-	Render(pSprite, num / 10, D3DXVECTOR2(30.0f, 30.0f));
+	Render(pSprite, g_scenemanager->GetNum() % 10, keta1);
+	Render(pSprite, g_scenemanager->GetNum() / 10, keta2);
 }
 
 void CCoinNomber::Render(LPD3DXSPRITE pSprite, int num, D3DXVECTOR2 pos)

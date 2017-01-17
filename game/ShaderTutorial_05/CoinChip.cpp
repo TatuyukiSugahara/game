@@ -70,11 +70,18 @@ void CCoinChip::Update()
 		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.37, 0.5f) == true)
 		{
 			coinget = true;
-			g_stage->GetCoinNum()->AddNum(1);
+			g_scenemanager->AddNum();
 			//サウンド
 			CSoundSource* soundSource = new CSoundSource;
 			soundSource->Init("Asset/Sound/coin.wav");
 			soundSource->Play(false);
+		}
+		for (int i = 0; i < g_stage->GetMohu()->GetTableSize(); i++)
+		{
+			if (BallCollision(position, g_stage->GetMohu()->GetPos(i), 0.37, 0.5f) == true)
+			{
+				coinget = true;
+			}
 		}
 		//ワールド行列の更新。
 		static float rot = 0.0f;

@@ -13,6 +13,13 @@ void CResultScene::Init()
 	resultDeat.Init();
 	resultGoal.Init();
 	fade.Init();
+	coinnumber.Init();
+	coinnumber.Set1keta(D3DXVECTOR2(540.0f, 300.0f));
+	coinnumber.Set2keta(D3DXVECTOR2(510.0f, 300.0f));
+	coinnumber.SetColor(255, 0, 0);
+	coinsprite.Init();
+	coinsprite.SetPos(D3DXVECTOR2(440.0f, 302.5f));
+
 	if (g_scenemanager->GetResult() == 0)
 	{
 		state = ResultState::Goal;
@@ -30,6 +37,8 @@ void CResultScene::Update()
 	if (state == ResultState::Goal)
 	{
 		resultGoal.Update();
+		coinnumber.Update();
+		coinsprite.Update();
 	}
 	else if (state == ResultState::Death)
 	{
@@ -47,10 +56,6 @@ void CResultScene::Update()
 	{
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
-	if (g_pad.IsTrigger(enButtonB))
-	{
-		exit(0);
-	}
 }
 
 void CResultScene::Render()
@@ -63,6 +68,8 @@ void CResultScene::Render()
 	if (state == ResultState::Goal)
 	{
 		resultGoal.Render(m_pSprite);
+		coinnumber.Render(m_pSprite);
+		coinsprite.Render(m_pSprite);
 	}
 	else if (state == ResultState::Death)
 	{

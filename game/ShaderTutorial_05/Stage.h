@@ -23,6 +23,7 @@
 #include "CoinNomber.h"
 #include "Bird.h"
 #include "RotationGimmick.h"
+#include "CoinSprite.h"
 
 #define MAX_COLLISION 100
 
@@ -155,6 +156,7 @@ protected:
 	CBird bird;					//鳥エネミー
 	CRotationGimmick rotationgimmick;//回転するギミック
 	CSoundSource			soundsource;
+	CCoinSprite	coinsprite;
 };
 
 extern CStage* g_stage;

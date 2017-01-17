@@ -25,8 +25,17 @@ public:
 	{
 		return resultflag;
 	}
+	int GetNum()
+	{
+		return num;
+	}
+	void AddNum()
+	{
+		num++;
+	}
 private:
 	CScene* m_scenes;
 	int nextScene = -1;
 	bool resultflag = 0;		//0はゴール、1はデス
+	int num = 0;
 };

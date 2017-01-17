@@ -25,8 +25,8 @@ void CSaboten::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 //更新。
 void CSaboten::Update()
 {
-	BOOL hit;//ヒットしたか
-	FLOAT distance;	//距離
+	//BOOL hit;//ヒットしたか
+	//FLOAT distance;	//距離
 	D3DXVECTOR3 dir = position - g_stage->GetPlayer()->GetPos();
 	D3DXVECTOR3 pos = g_stage->GetPlayer()->GetPos();
 	D3DXVec3Normalize(&dir, &dir);
