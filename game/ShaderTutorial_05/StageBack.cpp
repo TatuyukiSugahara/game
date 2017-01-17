@@ -49,7 +49,7 @@ void CStageBack::Update()
 	static float rot = 0.0f;
 	D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot += 0.001f);
 
-	skinmodel.UpdateWorldMatrix(D3DXVECTOR3(targetPos.x,position.y,targetPos.z), rotation, scale);
+	skinmodel.UpdateWorldMatrix(D3DXVECTOR3(targetPos.x, targetPos.y - 80.0f, targetPos.z), rotation, scale);
 	
 }
 //ï`âÊÅB

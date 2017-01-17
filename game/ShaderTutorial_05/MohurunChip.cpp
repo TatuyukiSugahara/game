@@ -125,11 +125,12 @@ void CMohurunChip::Update()
 //ï`âÊÅB
 void CMohurunChip::Render(
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix)
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	if (count < 50)
 	{
-		skinmodel.Draw(&viewMatrix, &projMatrix, false);
+		skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 	else if (MAXPAR >= parTime)
 	{

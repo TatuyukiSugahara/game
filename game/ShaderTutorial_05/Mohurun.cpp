@@ -49,10 +49,11 @@ void CMohurun::Update()
 //ï`âÊÅB
 void CMohurun::Render(
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix)
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		mohurunChipList[a]->Render(viewMatrix, projMatrix);
+		mohurunChipList[a]->Render(viewMatrix, projMatrix,isDrawToShadowMap);
 	}
 }

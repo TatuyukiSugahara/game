@@ -45,11 +45,12 @@ void CCoin::Update()
 }
 void CCoin::Render(
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix)
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		coinChipList[a]->Render(viewMatrix,projMatrix);
+		coinChipList[a]->Render(viewMatrix,projMatrix,isDrawToShadowMap);
 	}
 }
 

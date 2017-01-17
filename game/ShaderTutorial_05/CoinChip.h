@@ -17,7 +17,8 @@ public:
 	//描画。
 	void Render(
 		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix);
+		D3DXMATRIX projMatrix,
+		bool isDrawToShadowMap);
 	void SetPos(D3DXVECTOR3 pos)
 	{
 		position = pos;
@@ -35,6 +36,7 @@ private:
 	SkinModelData modelData;
 	Animation animation;
 	CLight	light;
+	LPDIRECT3DTEXTURE9 normalMap = NULL;					//ノーマルマップ
 	D3DXMATRIX							mRot;
 	D3DXVECTOR3							position;
 	D3DXQUATERNION						rotation;

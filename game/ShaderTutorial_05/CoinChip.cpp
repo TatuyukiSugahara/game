@@ -12,10 +12,26 @@ CCoinChip::CCoinChip()
 
 CCoinChip::~CCoinChip()
 {
+	if (normalMap != NULL)
+	{
+		normalMap->Release();
+	}
 }
 void CCoinChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	size = g_stage->GetMap()->GetSize();
+	//ノーマルマップロード
+	HRESULT hr = D3DXCreateTextureFromFileA(
+		g_pd3dDevice,
+		"Asset/model/goldCoin_Normal.jpg",
+		&normalMap);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認してください。", "エラー", MB_OK);
+	}
+	if (normalMap != NULL) {
+		//法線マップの読み込みが成功したので、CSkinModelに法線マップを設定する。
+		skinmodel.SetNormalMap(normalMap);
+	}
 
 	//ライトを初期化。
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
@@ -36,9 +52,9 @@ void CCoinChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
-	skinmodel.SetShadowReceiverFlag(true);
+	skinmodel.SetShadowReceiverFlag(false);
 	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetNormalMap(false);
+	skinmodel.SetNormalMap(true);
 	skinmodel.SetSpecularMap(false);
 
 	
@@ -68,10 +84,11 @@ void CCoinChip::Update()
 }
 void CCoinChip::Render(
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix)
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	if (coinget == false)
 	{
-		skinmodel.Draw(&viewMatrix, &projMatrix, false);
+		skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 }

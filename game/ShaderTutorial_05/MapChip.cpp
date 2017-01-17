@@ -5,8 +5,6 @@
 CMapChip::CMapChip()
 {
 	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	D3DXMatrixIdentity(&mRot);
-	D3DXMatrixIdentity(&mWorld);
 }
 
 CMapChip::~CMapChip()
@@ -43,10 +41,7 @@ void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 void CMapChip::Update()
 {
 	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
-	D3DXMatrixRotationQuaternion(&mRot, &rotation);
-	mWorld = mRot * mWorld;
-	skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	
 }
 void CMapChip::Render(

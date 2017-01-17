@@ -44,6 +44,7 @@ public:
 	void SetPosition(D3DXVECTOR3 pos)
 	{
 		position = pos;
+		characterController.SetPosition(pos);
 	}
 	D3DXVECTOR3 GetPos()
 	{

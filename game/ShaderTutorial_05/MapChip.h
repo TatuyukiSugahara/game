@@ -32,10 +32,8 @@ private:
 	SkinModelData modelData;
 	Animation animation;
 	CLight	light;
-	D3DXMATRIX							mRot;
 	D3DXVECTOR3							position;
 	D3DXQUATERNION						rotation;
-	D3DXMATRIX							mWorld;			//ワールド行列。
 	int									size;
 };
 

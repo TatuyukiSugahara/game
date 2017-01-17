@@ -16,8 +16,8 @@ CNBlock::CNBlock()
 }
 CNBlock::~CNBlock()
 {
-	for (auto& mapchip : nblockChipList){
-		delete mapchip;
+	for (auto& blockChip : nblockChipList){
+		delete blockChip;
 	}
 }
 void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
@@ -27,11 +27,12 @@ void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	for (int a = 0; a < tableSize; a++)
 	{
 		//マップチップを生成
-		CNBlockChip* mapChip = new CNBlockChip;
-		mapChip->SetPos(nblockChipLocInfoTable[a].pos);
-		mapChip->SetRot(nblockChipLocInfoTable[a].rotation);
-		mapChip->Init();
-		nblockChipList.push_back(mapChip);
+		CNBlockChip* blockChip = new CNBlockChip;
+		blockChip->SetPos(nblockChipLocInfoTable[a].pos);
+		blockChip->SetRot(nblockChipLocInfoTable[a].rotation);
+		blockChip->SetScale(nblockChipLocInfoTable[a].scale);
+		blockChip->Init();
+		nblockChipList.push_back(blockChip);
 	}
 
 }

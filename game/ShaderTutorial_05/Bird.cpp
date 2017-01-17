@@ -49,10 +49,11 @@ void CBird::Update()
 //ï`âÊÅB
 void CBird::Render(
 	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix)
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		birdChipList[a]->Render(viewMatrix, projMatrix);
+		birdChipList[a]->Render(viewMatrix, projMatrix,isDrawToShadowMap);
 	}
 }

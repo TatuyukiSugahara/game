@@ -161,7 +161,8 @@ void CStage::Render()
 	//モフルンエネミー描画
 	mohurun.Render(
 		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix());
+		camera.GetProjectionMatrix(),
+		false);
 	//Nブロックを描画
 	nblock.Render(
 		camera.GetViewMatrix(),
@@ -227,7 +228,8 @@ void CStage::Render()
 	//コイン描画
 	coin.Render(
 		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix());
+		camera.GetProjectionMatrix(),
+		false);
 	//ゴール旗描画
 	goalflag.Render(
 		camera.GetViewMatrix(),
@@ -237,7 +239,8 @@ void CStage::Render()
 	//鳥描画
 	bird.Render(
 		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix());
+		camera.GetProjectionMatrix(),
+		false);
 	//回転するギミック描画
 	rotationgimmick.Render(
 		camera.GetViewMatrix(),

@@ -16,7 +16,8 @@ public:
 	//ï`âÊÅB
 	void Render(
 		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix);
+		D3DXMATRIX projMatrix,
+		bool isDrawToShadowMap);
 	int GetSize()
 	{
 		return tableSize;

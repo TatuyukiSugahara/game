@@ -26,7 +26,8 @@ public:
 	//•`‰æB
 	void Render(
 		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix);
+		D3DXMATRIX projMatrix,
+		bool isDrawToShadowMap);
 	//À•W‚ğİ’èB
 	void SetPosition(D3DXVECTOR3 pos)
 	{

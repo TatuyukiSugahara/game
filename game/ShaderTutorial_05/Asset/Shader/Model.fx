@@ -105,6 +105,7 @@ struct VS_OUTPUT
     float2  Tex0   			: TEXCOORD0;
 	float4  lightViewPos_1	: TEXCOORD4;
 	float3	Tangent			: TEXCOORD5;		//接ベクトル
+	
 };
 /*!
  *@brief	ワールド座標とワールド法線をスキン行列から計算する。
@@ -243,7 +244,12 @@ float4 posInLVP = In.lightViewPos_1;
 	{
 		if ((shadowMapUV.x > 0.0f && shadowMapUV.x <1.0f) && (shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f))
 		{
-			color *= tex2D(g_shadowTextureSampler, shadowMapUV);
+			float z = tex2D(g_shadowTextureSampler, shadowMapUV).x;
+			if(z < posInLVP.z)
+			{
+			color *= 0.5f;
+			}
+			//color *= tex2D(g_shadowTextureSampler, shadowMapUV);
 		}
 	}
 	color.xyz *= lig;
@@ -254,8 +260,8 @@ float4 posInLVP = In.lightViewPos_1;
 */
 float4 PSDrowToShadowMapMain(VS_OUTPUT In) : COLOR
 {
-	
-	return float4(0.5f,0.5f,0.5f,1.0f);
+	float z = In.lightViewPos_1.z / In.lightViewPos_1.w;
+	return z;
 }
 /*!
  *@brief	スキンありモデル用のテクニック。

@@ -66,34 +66,20 @@ void CPipe::Update()
 	{
 		pipeChipList[a]->Update();
 	}
-	if (/*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[4]
-		&& /*g_stage->GetPlayer()->GetIsIntersect().GetGround()*/g_stage->GetPlayer()->GetcharacterController().IsOnGround()
-		&& g_pad.IsTrigger(enButtonDown))
+	if (g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[6]
+		&& g_stage->GetPlayer()->GetcharacterController().IsOnGround() == true
+		)
 	{
 	
-			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[12].pos.x
-				, collisionInfoTable2Dpipe[12].pos.y - g_stage->GetPlayer()->GetPos().y
-				, collisionInfoTable2Dpipe[12].pos.z);
+			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[7].pos.x
+				, collisionInfoTable2Dpipe[7].pos.y - 1.5f
+				, collisionInfoTable2Dpipe[7].pos.z);
 			isPipe = true;
 			Remove2DRigidBody(arraySize);
 			CSoundSource* SEPipe = new CSoundSource;
 			SEPipe->Init("Asset/Sound/Pipe.wav");
 			SEPipe->Play(false);
 			SEPipe->SetVolume(0.25f);
-	}
-	if (/*g_stage->GetPlayer()->GetIsIntersect().getCollisionObj()*/g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[13]
-		&& /*g_stage->GetPlayer()->GetIsIntersect().GetGround()*/g_stage->GetPlayer()->GetcharacterController().IsOnGround()
-		&& g_pad.IsTrigger(enButtonDown))
-	{
-		nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[5].pos.x
-			, collisionInfoTable2Dpipe[5].pos.y + collisionInfoTable2Dpipe[5].pos.y
-			, collisionInfoTable2Dpipe[5].pos.z);
-		isPipe = true;
-		Remove2DRigidBody(arraySize);
-		CSoundSource* SEPipe = new CSoundSource;
-		SEPipe->Init("Asset/Sound/Pipe.wav");
-		SEPipe->SetVolume(2.0f);
-		SEPipe->Play(false);
 	}
 
 	if (isPipe == true)

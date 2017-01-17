@@ -265,14 +265,7 @@ void CPlayer::Jump()
 		&& state != PlayerJumpNow
 		)
 	{
-		if (g_pad.IsPress(EnButton::enButtonB))
-		{
-			movespeed.y = 18.0f;
-		}
-		else
-		{
-			movespeed.y = 15.0f;
-		}
+		movespeed.y = 18.0f;
 		CSoundSource* SEjump = new CSoundSource;
 		SEjump->Init("Asset/Sound/jump.wav");
 		SEjump->Play(false);
