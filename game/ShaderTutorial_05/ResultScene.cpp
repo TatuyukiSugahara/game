@@ -39,15 +39,12 @@ void CResultScene::Update()
 		resultGoal.Update();
 		coinnumber.Update();
 		coinsprite.Update();
+		
 	}
 	else if (state == ResultState::Death)
 	{
 		resultDeat.Update();
 	}
-	resultcamera.Update();
-	resultlight.Update();
-	fade.Update();
-	
 	if (g_pad.IsPress(enButtonA))
 	{
 		fade.SetFade(true);
@@ -56,6 +53,11 @@ void CResultScene::Update()
 	{
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
+	resultcamera.Update();
+	resultlight.Update();
+	fade.Update();
+	
+	
 }
 
 void CResultScene::Render()

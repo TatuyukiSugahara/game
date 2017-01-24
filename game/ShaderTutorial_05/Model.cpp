@@ -2,8 +2,6 @@
 #include "Model.h"
 #include "Stage.h"
 
-LPDIRECT3DTEXTURE9 g_shadow = NULL;
-
 //コンストラクタ
 Model::Model()
 {
@@ -71,7 +69,7 @@ void Model::Init(LPDIRECT3DDEVICE9 pd3dDevice, const char* fileName)
 	//シェーダーをコンパイル。
 	HRESULT hr = D3DXCreateEffectFromFile(
 		pd3dDevice,
-		"basic.fx",
+		"Asset/Shader/basic.fx",
 		NULL,
 		NULL,
 		D3DXSHADER_SKIPVALIDATION,

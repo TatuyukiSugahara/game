@@ -172,6 +172,7 @@
     <ClCompile Include="Frame\EffectManager.cpp" />
     <ClCompile Include="Frame\SkinModel.cpp" />
     <ClCompile Include="Frame\SkinModelData.cpp" />
+    <ClCompile Include="Frame\SkinModelDataManager.cpp" />
     <ClCompile Include="Frame\Texture.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalFlag.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="Frame\EffectManager.h" />
     <ClInclude Include="Frame\SkinModel.h" />
     <ClInclude Include="Frame\SkinModelData.h" />
+    <ClInclude Include="Frame\SkinModelDataManager.h" />
     <ClInclude Include="Frame\Texture.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalFlag.h" />

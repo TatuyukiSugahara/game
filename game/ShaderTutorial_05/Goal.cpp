@@ -10,9 +10,9 @@ CGoal::CGoal()
 {
 	//‰Šú‰»B
 	D3DXMatrixIdentity(&mWorld);
-	position.x = -3.0f;
-	position.y = 1.0f;
-	position.z = 0.0f;
+	position.x = 390.0f;
+	position.y = 30.0f;
+	position.z = -22.5f;
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
@@ -45,10 +45,7 @@ void CGoal::Update()
 		CSoundSource* SEGoal = new CSoundSource;
 		SEGoal->Init("Asset/Sound/goal.wav");
 		SEGoal->Play(false);
-		if (g_resultscene != NULL)
-		{
-			g_resultscene->SetState(ResultState::Goal);
-		}
+		g_scenemanager->SetResult(0);//ƒS[ƒ‹‚µ‚½ê‡
 		g_scenemanager->ChangeScene(GameScene::Result);
 	}
 

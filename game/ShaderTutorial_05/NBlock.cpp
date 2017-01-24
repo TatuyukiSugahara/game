@@ -66,4 +66,5 @@ void CNBlock::Render(
 			projMatrix,
 			isDrawToShadowMap);
 	}
+	
 }

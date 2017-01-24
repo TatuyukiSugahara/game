@@ -41,7 +41,7 @@ CPipe::~CPipe()
 	}
 	delete m_myMotionState;
 }
-void CPipe::Init(LPDIRECT3DDEVICE9 pd3dDevice)
+void CPipe::Init()
 {
 	//配置情報からマップを構築
 	tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
@@ -52,7 +52,7 @@ void CPipe::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 		pipeChip->SetPos(pipeChipLocInfoTable[a].pos);
 		pipeChip->SetRot(pipeChipLocInfoTable[a].rotation);
 		pipeChip->SetScale(pipeChipLocInfoTable[a].scale);
-		pipeChip->Init(pipeChipLocInfoTable[a].modelName, pd3dDevice);
+		pipeChip->Init();
 		pipeChipList.push_back(pipeChip);
 	}
 	arraySize = ARRAYSIZE(collisionInfoTable2Dpipe);
@@ -66,56 +66,42 @@ void CPipe::Update()
 	{
 		pipeChipList[a]->Update();
 	}
-	if (g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[6]
-		&& g_stage->GetPlayer()->GetcharacterController().IsOnGround() == true
-		)
-	{
+
+	PipeMove(6, 7, 9);
+	PipeMove(8, 7, 11);
 	
-			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[7].pos.x
-				, collisionInfoTable2Dpipe[7].pos.y - 1.5f
-				, collisionInfoTable2Dpipe[7].pos.z);
-			isPipe = true;
-			Remove2DRigidBody(arraySize);
-			CSoundSource* SEPipe = new CSoundSource;
-			SEPipe->Init("Asset/Sound/Pipe.wav");
-			SEPipe->Play(false);
-			SEPipe->SetVolume(0.25f);
-	}
 
 	if (isPipe == true)
 	{
 		count++;
-		if (count >= 30)
+		static D3DXVECTOR3 scale = g_stage->GetPlayer()->GetScale();
+		if (count <= 30)
+		{
+			g_stage->GetPlayer()->SubScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+		}
+		if (count == 30)
 		{
 			g_stage->GetPlayer()->SetPosition(nextPos);
-			isPipe = false;
 			Add2DRigidBody(arraySize);
+		}
+		if (count <= 60 && count >= 30)
+		{
+			g_stage->GetPlayer()->AddScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+		}
+		if (count >= 60)
+		{
+			g_stage->GetPlayer()->SetScale(scale);
+			isPipe = false;
 			count = 0;
 		}
 	}
 
 }
-void CPipe::Render(
-	LPDIRECT3DDEVICE9 pd3dDevice,
-	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix,
-	D3DXVECTOR4* diffuseLightDirection,
-	D3DXVECTOR4* diffuseLightColor,
-	D3DXVECTOR4	 ambientLight,
-	int numDiffuseLight
-	)
+void CPipe::Render()
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		pipeChipList[a]->Render(
-			pd3dDevice,
-			viewMatrix,
-			projMatrix,
-			diffuseLightDirection,
-			diffuseLightColor,
-			ambientLight,
-			numDiffuseLight
-			);
+		pipeChipList[a]->Render();
 	}
 }
 
@@ -170,6 +156,31 @@ void CPipe::Remove2DRigidBody(int arraySize)//ワールドから削除
 		{
 			if (m_rigidBody2Dpipe[i] != NULL)
 				g_physicsWorld->RemoveRigidBody(m_rigidBody2Dpipe[i]);
+		}
+	}
+}
+
+void CPipe::PipeMove(int now, int next, int pipenum)
+{
+	if (g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[now]
+		&& g_stage->GetPlayer()->GetcharacterController().IsOnGround() == true
+		)
+	{
+		D3DXVECTOR3 toPos = pipeChipLocInfoTable[pipenum].pos - g_stage->GetPlayer()->GetPos();
+		float dir = D3DXVec3Length(&toPos);
+		D3DXVec3Normalize(&toPos, &toPos);
+		g_stage->GetPlayer()->SetMoveSpeed(toPos * 2.0f);
+		if (fabs(dir) < 2.3f)
+		{
+			isPipe = true;
+			Remove2DRigidBody(arraySize);
+			CSoundSource* SEPipe = new CSoundSource;
+			SEPipe->Init("Asset/Sound/Pipe.wav");
+			SEPipe->Play(false);
+			SEPipe->SetVolume(0.25f);
+			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[next].pos.x
+				, collisionInfoTable2Dpipe[next].pos.y - 0.5f
+				, collisionInfoTable2Dpipe[next].pos.z);
 		}
 	}
 }

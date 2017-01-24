@@ -1,9 +1,10 @@
 #pragma once
 
 #include"RenderTarget.h"
-#include "Model.h"
+#include "Frame\SkinModel.h"
 
 extern LPDIRECT3DTEXTURE9 g_shadow;
+extern LPDIRECT3DTEXTURE9 g_Unity;
 
 class CShadowMap
 {
@@ -17,6 +18,10 @@ public:
 	void Create(int w, int h);
 	void CreateLight(D3DXMATRIX);
 	void Draw(
+		D3DXMATRIX viewMatrix,
+		D3DXMATRIX projMatrix
+		);
+	void RenderUnity(
 		D3DXMATRIX viewMatrix,
 		D3DXMATRIX projMatrix
 		);
@@ -64,6 +69,7 @@ private:
 	int w, h;
 
 	CRenderTarget RenderTarget;
+	CRenderTarget RenderTargetUnity;
 
 	D3DXVECTOR3 m_lightPosition;
 	D3DXVECTOR3 m_lightDirection;

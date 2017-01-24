@@ -28,6 +28,7 @@
 #include "Frame\SkinModelData.h"
 #include "Frame\Animation.h"
 #include "Light.h"
+#include "Frame\SkinModelDataManager.h"
 
 enum GameScene
 {

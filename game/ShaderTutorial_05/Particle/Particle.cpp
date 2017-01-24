@@ -43,6 +43,8 @@ void CParticle::Init( const SParicleEmitParameter& param)
 	moveSpeed = param.initSpeed;
 	position = param.pos;
 	Life = param.life;
+	gravity = param.gravity;
+	//D3DXVECTOR3(0.0f, -0.016f, 0.0f); //Y方向に-0.16m/frame^2の重力加速度。
 	//初速度に乱数を加える
 	float add = ((rand() % 255) - 128) / 128.0f;
 	moveSpeed.x += add * 0.3f;
@@ -111,7 +113,6 @@ bool CParticle::Update()
 
 	float deltaTime = 1.0f / 60.0f;
 
-	D3DXVECTOR3 gravity = D3DXVECTOR3(0.0f, -0.016f, 0.0f); //Y方向に-0.16m/frame^2の重力加速度。
 	moveSpeed += gravity;  //重力加速度をmoveSpeedに適用する。
 
 	D3DXVECTOR3 add = moveSpeed * deltaTime;

@@ -28,11 +28,13 @@ void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	char modelPath[256];
 	sprintf(modelPath, "Asset/model/%s.X", name);
 	modelData.LoadModelData(modelPath, &animation);
+	//modelData = g_skinmodeldataManager->LoadSkinModelData(modelPath,&animation);
 
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
 	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetGround(true);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
 	

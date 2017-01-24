@@ -2,6 +2,12 @@
 
 #include "Scene.h"
 
+enum StageNomber
+{
+	Stage1,
+	Stage2,
+};
+
 class CScene;
 
 using namespace std;

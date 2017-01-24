@@ -61,6 +61,7 @@ private:
 	D3DXVECTOR3				scale;			//スケール
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXQUATERNION			rotation;
+	LPDIRECT3DTEXTURE9		normalMap = NULL;	//ノーマルマップ
 	SkinModel skinmodel;
 	SkinModelData modelData;
 	Animation animation;

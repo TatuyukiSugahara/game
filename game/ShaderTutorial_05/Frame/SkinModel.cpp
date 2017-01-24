@@ -7,6 +7,9 @@
 extern UINT                 g_NumBoneMatricesMax;
 extern D3DXMATRIXA16*       g_pBoneMatrices ;
 
+LPDIRECT3DTEXTURE9 g_shadow = NULL;
+LPDIRECT3DTEXTURE9 g_Unity = NULL;
+
 void SkinModel::DrawMeshContainer(
 	IDirect3DDevice9* pd3dDevice,
 	LPD3DXMESHCONTAINER pMeshContainerBase,
@@ -87,11 +90,13 @@ void SkinModel::DrawMeshContainer(
 	pEffect->SetMatrix("g_mViewProj", &viewProj);
 	//視点。
 	pEffect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage->GetCamera()->GetEyePt());
+
 	//影を描画しているレンダーターゲットのテクスチャを取得。
-	
 	if (ShadowReceiverFlag == TRUE)
 	{
+		pEffect->SetBool("g_Ground", Ground);
 		pEffect->SetTexture("g_shadowTexture", g_shadow);
+		pEffect->SetTexture("g_shadowUnityTexture", g_Unity);
 	}
 	//共通の定数レジスタを設定
 	{
@@ -293,6 +298,7 @@ void SkinModel::Init(SkinModelData* modelData)
 	isDrawToShadowMap = false;
 	isNormalMap = false;
 	isSpecularMap = false;
+	Ground = false;
 	pEffect = g_effectManager->LoadEffect("Asset/Shader/Model.fx");
 	skinModelData = modelData;
 }

@@ -6,7 +6,8 @@
 
 CMohurunChip::CMohurunChip()
 {
-	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	scale = D3DXVECTOR3(1.5f, 1.5f, 1.5f);
+	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 
@@ -45,6 +46,7 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	param.h = 0.5f;
 	param.intervalTime = 0.2f;
 	param.life = 0.5f;
+	param.gravity = D3DXVECTOR3(0.0f, -0.016f, 0.0f);
 	param.initSpeed = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 
@@ -53,7 +55,7 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 
 	count = 0;
 	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetShadowReceiverFlag(false);
+	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
 }
@@ -63,7 +65,6 @@ void CMohurunChip::Update()
 	if (state == on)
 	{
 
-
 		D3DXVECTOR3 playerPos = g_stage->GetPlayer()->GetPos();
 		float toLength = D3DXVec3Length(&D3DXVECTOR3(position - playerPos));
 
@@ -71,12 +72,12 @@ void CMohurunChip::Update()
 		{
 			
 			if (BallCollision(position - D3DXVECTOR3(0.0f, 0.2f, 0.0f),
-				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.1f, 0.0f), 0.3f, 0.3f) == true)
+				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.1f, 0.0f), 0.5f, 0.3f) == true)
 			{
 				g_stage->GetPlayer()->SetLifeState(Life::Died);
 			}
 			if (BallCollision(position + D3DXVECTOR3(0.0f, 0.2f, 0.0f),
-				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 0.3f, 0.3f) == true)
+				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 0.5f, 0.3f) == true)
 			{
 				scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
 				parflag = true;
@@ -86,7 +87,7 @@ void CMohurunChip::Update()
 				SEenemyDeath->Play(false);
 				SEenemyDeath->SetVolume(0.25f);
 				g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,
-					-g_stage->GetPlayer()->GetMoveSpeed().y,
+					-g_stage->GetPlayer()->GetMoveSpeed().y * 0.5f,
 					g_stage->GetPlayer()->GetMoveSpeed().z));
 				param.pos = position;
 
@@ -99,7 +100,8 @@ void CMohurunChip::Update()
 		}
 		//ワールド行列の更新。
 		animation.Update(1.0f / 60.0f);
-		skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), scale);
+		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(180.0f));
+		skinmodel.UpdateWorldMatrix(position, rotation, scale);
 	}
 	if (parflag == true)
 	{

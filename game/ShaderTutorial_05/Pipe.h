@@ -12,18 +12,12 @@ public:
 
 	CPipe();
 	~CPipe();
-	void Init(LPDIRECT3DDEVICE9 pd3dDevice);
+	void Init();
 	void Update();
 	//ï`âÊÅB
-	void Render(
-		LPDIRECT3DDEVICE9 pd3dDevice,
-		D3DXMATRIX viewMatrix,
-		D3DXMATRIX projMatrix,
-		D3DXVECTOR4* diffuseLightDirection,
-		D3DXVECTOR4* diffuseLightColor,
-		D3DXVECTOR4	 ambientLight,
-		int numDiffuseLight
-		);
+	void Render();
+	//ìyä«à⁄ìÆ
+	void PipeMove(int now, int next, int pipenum);
 	int GetSize()
 	{
 		return tableSize;

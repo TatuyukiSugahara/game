@@ -42,7 +42,13 @@
 },
 //Cube (55)
 {
-	D3DXVECTOR3(331.00f, 39.40f, 0.00f),             //平行移動
+	D3DXVECTOR3(331.00f, 39.62f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(1.93f, 2.28f, 1.76f ),            //拡大
+},
+//Cube (56)
+{
+	D3DXVECTOR3(378.00f, 17.88f, -22.00f),             //平行移動
 	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(1.93f, 2.28f, 1.76f ),            //拡大
 },

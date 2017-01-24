@@ -22,9 +22,27 @@ CNBlockChip::~CNBlockChip()
 	if (m_rigidBody2Dblock){
 		delete m_rigidBody2Dblock;
 	}
+	if (normalMap != NULL)
+	{
+		normalMap->Release();
+	}
 }
 void CNBlockChip::Init()
 {
+	//ノーマルマップロード
+	HRESULT hr = D3DXCreateTextureFromFileA(
+		g_pd3dDevice,
+		"Asset/model/block_NormalMap.png",
+		&normalMap);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認してください。", "エラー", MB_OK);
+	}
+	if (normalMap != NULL) {
+		//法線マップの読み込みが成功したので、CSkinModelに法線マップを設定する。
+		skinmodel.SetNormalMap(normalMap);
+	}
+
 	//ライトを初期化。
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
 	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-0.707f, 0.0f, -0.707f, 1.0f));
@@ -42,9 +60,10 @@ void CNBlockChip::Init()
 	skinmodel.SetLight(&light);
 	animation.PlayAnimation(0);
 	animation.SetAnimationLoopFlag(1, false);
-	skinmodel.SetShadowReceiverFlag(false);
+	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetNormalMap(false);
+	skinmodel.SetGround(true);
+	skinmodel.SetNormalMap(true);
 	skinmodel.SetSpecularMap(false);
 
 	CreateCollision2D();
@@ -53,9 +72,10 @@ void CNBlockChip::Init()
 	param.texturePath = "Asset/model/block.png";
 	param.w = 0.5f;
 	param.h = 0.5f;
-	param.intervalTime = 0.2f;
+	param.intervalTime = 0.3f;
 	param.life = 1.0f;
-	param.initSpeed = D3DXVECTOR3(0.0f, 2.0f, 0.0f);
+	param.gravity = D3DXVECTOR3(0.0f, -0.2f, 0.0f);
+	param.initSpeed = D3DXVECTOR3(0.0f, 4.0f, 0.0f);
 	param.pos = position;
 	parflag = false;
 	parTime = 0;
@@ -98,7 +118,7 @@ void CNBlockChip::Update()
 		}
 	}
 	animation.Update(1.0f / 60.0f);
-	skinmodel.UpdateWorldMatrix(position, rotation, scale);
+	
 }
 
 void CNBlockChip::Render(
@@ -106,6 +126,14 @@ void CNBlockChip::Render(
 	D3DXMATRIX projMatrix,
 	bool isDrawToShadowMap)
 {
+	if (isDrawToShadowMap == true)
+	{
+		skinmodel.UpdateWorldMatrix(position - D3DXVECTOR3(0.0f, 1.5f,0.0f), rotation, scale);
+	}
+	else
+	{
+		skinmodel.UpdateWorldMatrix(position, rotation, scale);
+	}
 	if (MAXPAR >= parTime)
 	{
 		skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);

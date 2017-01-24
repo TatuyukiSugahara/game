@@ -110,11 +110,11 @@ void CPlayer::Update()
 {
 	if (g_pad.IsPress(enButtonB))
 	{
-		Move(7.5f);//移動
+		Move(9.0f);//移動
 	}
 	else
 	{
-		Move(5.0f);//移動
+		Move(4.25f);//移動
 	}
 	
 	Jump();//ジャンプ
@@ -124,20 +124,20 @@ void CPlayer::Update()
 	{
 		lifestate = Life::Died;
 	}
-	//天井と当たった？＆＆当たったのは,はてなボックス？
-	if (characterController.IsCeiling()
-		&& characterController.getCollisionObj() == g_stage->GetHatena()->Get2DHatena())
-	{
-		g_stage->GetHatena()->SetState(hit);
-		g_stage->GetKinoko()->SetState(Leave);//キノコ出現
-	}
-	//キノコとった？&&小さい状態？
-	if (g_stage->GetKinoko()->GetKinoko() == true && radius == 0.3f)
-	{
-		D3DXVec3Scale(&Scale, &Scale, 1.5f);
-		radius = 0.45f;
-		//IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
-	}
+	////天井と当たった？＆＆当たったのは,はてなボックス？
+	//if (characterController.IsCeiling()
+	//	&& characterController.getCollisionObj() == g_stage->GetHatena()->Get2DHatena())
+	//{
+	//	g_stage->GetHatena()->SetState(hit);
+	//	g_stage->GetKinoko()->SetState(Leave);//キノコ出現
+	//}
+	////キノコとった？&&小さい状態？
+	//if (g_stage->GetKinoko()->GetKinoko() == true && radius == 0.3f)
+	//{
+	//	D3DXVec3Scale(&Scale, &Scale, 1.5f);
+	//	radius = 0.45f;
+	//	//IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
+	//}
 	characterController.SetMoveSpeed(movespeed);
 	characterController.Execute();
 	movespeed = characterController.GetMoveSpeed();

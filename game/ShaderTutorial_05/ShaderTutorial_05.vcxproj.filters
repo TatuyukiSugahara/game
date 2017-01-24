@@ -270,6 +270,9 @@
     <ClCompile Include="CoinSprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Frame\SkinModelDataManager.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="CoinSprite.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\SkinModelDataManager.h">
+      <Filter>ソース ファイル\Frame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

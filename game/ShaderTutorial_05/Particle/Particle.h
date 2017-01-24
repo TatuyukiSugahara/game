@@ -18,6 +18,7 @@ class CParticle{
 	D3DXVECTOR3			moveSpeed;			//!<速度。
 	D3DXVECTOR3			position;			//!<座標。
 	float				Life;				//!<パーティクルライフ
+	D3DXVECTOR3			gravity;			//<!重力
 public:
 	CParticle();
 	~CParticle();

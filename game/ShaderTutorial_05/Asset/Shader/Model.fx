@@ -23,9 +23,11 @@ float4	g_diffuseLightDirection[DIFFUSE_LIGHT_NUM];	//ディフューズライトの方向。
 float4	g_diffuseLightColor[DIFFUSE_LIGHT_NUM];		//ディフューズライトのカラー。
 float4	g_ambientLight;								//環境光。
 int g_ShadowReceiverFlag;							//影を受けるフラグ
+int g_Ground;										//地面かどうかのフラグ
 
 texture g_diffuseTexture;		//ディフューズテクスチャ。
 texture g_shadowTexture;		//シャドーテクスチャ。
+texture g_shadowUnityTexture;	//ユニティシャドーテクスチャ
 texture g_normalTexture;		//法線マップ。
 texture g_specularTexture;		//スペキュラマップ。
 
@@ -44,6 +46,17 @@ sampler g_shadowTextureSampler =
 sampler_state
 {
 	Texture = <g_shadowTexture>;
+	MipFilter = LINEAR;
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
+	AddressU = CLAMP;
+	AddressV = CLAMP;
+};
+//ユニティシャドーテクスチャ
+sampler g_shadowUnityTextureSampler =
+sampler_state
+{
+	Texture = <g_shadowUnityTexture>;
 	MipFilter = LINEAR;
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
@@ -105,6 +118,7 @@ struct VS_OUTPUT
     float2  Tex0   			: TEXCOORD0;
 	float4  lightViewPos_1	: TEXCOORD4;
 	float3	Tangent			: TEXCOORD5;		//接ベクトル
+	float3	worldPos		: TEXCOORD6;
 	
 };
 /*!
@@ -153,6 +167,7 @@ void CalcWorldPosAndNormal( VS_INPUT In, out float3 Pos, out float3 Normal, out 
 	Normal = mul(In.normal, g_rotationMatrix );
 	Tangent = mul(In.Tangent, g_rotationMatrix );
 }
+
 /*!
  *@brief	頂点シェーダー。
  *@param[in]	In			入力頂点。
@@ -172,6 +187,7 @@ VS_OUTPUT VSMain( VS_INPUT In, uniform bool hasSkin )
   
 	float4 worldpos = mul(In.Pos,g_worldMatrix);
 	worldpos.w = 1.0f;
+	o.worldPos = worldpos;
 
 	o.lightViewPos_1 = mul(worldpos,g_mLVP );
 
@@ -225,16 +241,18 @@ float4 posInLVP = In.lightViewPos_1;
 		for (int i = 0; i < DIFFUSE_LIGHT_NUM; i++){
 			lig.xyz += max(0.0f, dot(normal.xyz, -g_diffuseLightDirection[i].xyz))
 				* g_diffuseLightColor[i].xyz;
+			float3 spec = lig.xyz;
 			//スペキュラを計算。
 			float3 L = -g_diffuseLightDirection[i].xyz;
 				float3 H = normalize(L + normalize(In.Eye));//ハーフベクトル。
 				float3 N = normalize(normal);
 				lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f) * g_diffuseLightColor[i].w;
-			if(g_isHasSpecularMap){
-			//スペキュラマップがある
-			float3 spec = lig.xyz * tex2D(g_specularMapSampler, In.Tex0);
-			lig.xyz += spec;
-	}
+			if (g_isHasSpecularMap){
+				//スペキュラマップがある
+				//float3 spec = CalcSpecular(In.worldPos, normal);
+				spec *= tex2D(g_specularMapSampler, In.Tex0).a;
+				lig.xyz += spec;
+			}
 		}
 		lig += g_ambientLight;
 	}
@@ -244,12 +262,15 @@ float4 posInLVP = In.lightViewPos_1;
 	{
 		if ((shadowMapUV.x > 0.0f && shadowMapUV.x <1.0f) && (shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f))
 		{
-			float z = tex2D(g_shadowTextureSampler, shadowMapUV).x;
-			if(z < posInLVP.z)
+			float z = tex2D(g_shadowUnityTextureSampler, shadowMapUV).x;
+			if(g_Ground == true)
 			{
-			color *= 0.5f;
+				z = min(z, tex2D(g_shadowTextureSampler, shadowMapUV).x);
 			}
-			//color *= tex2D(g_shadowTextureSampler, shadowMapUV);
+			if(z < posInLVP.z - 0.0006f)
+			{
+				color *= 0.5f;
+			}
 		}
 	}
 	color.xyz *= lig;

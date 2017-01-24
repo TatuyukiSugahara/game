@@ -71,7 +71,14 @@
 //pipe
 {
 	"pipe",
-	D3DXVECTOR3(331.00f, 40.30f, 0.00f),             //平行移動
+	D3DXVECTOR3(331.00f, 40.74f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 1.00f, 0.00f ),  //回転
+	D3DXVECTOR3(1.50f, 1.50f, 1.50f),  //スケール
+},
+//pipe
+{
+	"pipe",
+	D3DXVECTOR3(378.00f, 16.88f, -22.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 	D3DXVECTOR3(1.50f, 1.50f, 1.50f),  //スケール
 },

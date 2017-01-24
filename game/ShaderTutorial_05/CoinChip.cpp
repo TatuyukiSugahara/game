@@ -67,18 +67,19 @@ void CCoinChip::Update()
 	if (coinget == false)
 	{
 		//コインとプレイヤーが当たったか。
-		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.37, 0.5f) == true)
+		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.37f, 0.5f) == true)
 		{
 			coinget = true;
 			g_scenemanager->AddNum();
 			//サウンド
 			CSoundSource* soundSource = new CSoundSource;
 			soundSource->Init("Asset/Sound/coin.wav");
+			soundSource->SetVolume(0.25f);
 			soundSource->Play(false);
 		}
 		for (int i = 0; i < g_stage->GetMohu()->GetTableSize(); i++)
 		{
-			if (BallCollision(position, g_stage->GetMohu()->GetPos(i), 0.37, 0.5f) == true)
+			if (BallCollision(position, g_stage->GetMohu()->GetPos(i), 0.37f, 0.5f) == true)
 			{
 				coinget = true;
 			}

@@ -128,11 +128,41 @@
 {
 	D3DXVECTOR3(296.00f, 28.20f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
-	D3DXVECTOR3(7.50f, 1.50f, 7.50f ),            //拡大
+	D3DXVECTOR3(7.50f, 1.50f, 1.50f ),            //拡大
 },
 //Cube (24)
 {
 	D3DXVECTOR3(340.50f, 28.20f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(22.50f, 1.50f, 7.50f ),            //拡大
+},
+//Cube (25)
+{
+	D3DXVECTOR3(347.97f, 28.20f, -15.00f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(7.50f, 1.50f, 22.50f ),            //拡大
+},
+//Cube (26)
+{
+	D3DXVECTOR3(369.50f, 16.38f, -22.00f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(22.50f, 1.50f, 7.50f ),            //拡大
+},
+//Cube (27)
+{
+	D3DXVECTOR3(359.00f, 28.20f, -24.75f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(7.50f, 1.50f, 3.00f ),            //拡大
+},
+//Cube (28)
+{
+	D3DXVECTOR3(369.00f, 28.20f, -20.81f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(7.50f, 1.50f, 3.00f ),            //拡大
+},
+//Cube (29)
+{
+	D3DXVECTOR3(379.00f, 28.20f, -24.75f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(7.50f, 1.50f, 3.00f ),            //拡大
 },

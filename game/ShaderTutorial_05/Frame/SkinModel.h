@@ -114,6 +114,13 @@ public:
 	{
 		specularMap = specMap;
 	}
+	/*!
+	*@brief 地面かどうか設定。
+	*/
+	void SetGround(bool flag)
+	{
+		Ground = flag;
+	}
 private:
 	D3DXMATRIX			worldMatrix;			//!<ワールド行列。
 	D3DXMATRIX			rotationMatrix;			//!<回転行列。
@@ -125,6 +132,7 @@ private:
 	bool				isDrawToShadowMap;
 	bool				isNormalMap;			//<!ノーマルマップフラグ
 	bool				isSpecularMap;		//<!スペキュラマップフラグ
+	bool				Ground;				//<!地面ですか？
 	LPDIRECT3DTEXTURE9	normalMap;				//<!ノーマルマップ。
 	LPDIRECT3DTEXTURE9  specularMap;				//<!スペキュラマップ。
 };

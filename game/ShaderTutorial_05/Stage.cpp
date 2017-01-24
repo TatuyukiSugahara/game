@@ -61,7 +61,7 @@ void CStage::Init()
 	//キノコ初期化
 	//kinoko.Init(g_pd3dDevice);
 	//土管初期化
-	pipe.Init(g_pd3dDevice);
+	pipe.Init();
 	//ゴール初期化
 	goal.Init(g_pd3dDevice);
 	//影初期化
@@ -79,7 +79,7 @@ void CStage::Init()
 	//鳥初期化
 	bird.Init();
 	//回転するギミック初期化
-	rotationgimmick.Init();
+	//rotationgimmick.Init();
 }
 
 void CStage::Update()
@@ -126,7 +126,7 @@ void CStage::Update()
 	//鳥更新
 	bird.Update();
 	//回転するギミック更新
-	rotationgimmick.Update();
+	//rotationgimmick.Update();
 	//サウンドソース更新
 	soundsource.Update();
 	//コインスプライト更新
@@ -143,6 +143,10 @@ void CStage::Render()
 	g_pd3dDevice->BeginScene();
 	//影描画
 	shadow.Draw(
+		camera.GetViewMatrix(),
+		camera.GetProjectionMatrix()
+		);
+	shadow.RenderUnity(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix()
 		);
@@ -200,15 +204,7 @@ void CStage::Render()
 			);
 	}*/
 	//土管描画
-	pipe.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-	);
+	pipe.Render();
 	//ゴール描画
 	goal.Render(
 		g_pd3dDevice,
@@ -246,10 +242,10 @@ void CStage::Render()
 		camera.GetProjectionMatrix(),
 		false);
 	//回転するギミック描画
-	rotationgimmick.Render(
+	/*rotationgimmick.Render(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix()
-		);
+		);*/
 	//コインスプライト描画
 	coinsprite.Render(m_pSprite);
 	// シーンの描画終了。

@@ -102,6 +102,22 @@ public:
 	{
 		lifestate = life;
 	}
+	void SetScale(D3DXVECTOR3 scal)
+	{
+		Scale = scal;
+	}
+	D3DXVECTOR3 GetScale()
+	{
+		return Scale;
+	}
+	void SubScale(D3DXVECTOR3 sub)
+	{
+		Scale -= sub;
+	}
+	void AddScale(D3DXVECTOR3 add)
+	{
+		Scale += add;
+	}
 	void Move(float maxmove);
 	void Jump();
 	void State();

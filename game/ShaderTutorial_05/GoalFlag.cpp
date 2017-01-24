@@ -9,9 +9,9 @@ CGoalFlag::CGoalFlag()
 {
 	//初期化。
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 465.0f;
-	position.y = 8.5f;
-	position.z = 0.0f;
+	position.x = 390.0f;
+	position.y = 37.0f;
+	position.z = -22.5f;
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 }
 //デストラクタ
@@ -35,7 +35,7 @@ void CGoalFlag::Init()
 
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/goalflag.X", &animation);
-
+	animation.PlayAnimation(0);
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
 }

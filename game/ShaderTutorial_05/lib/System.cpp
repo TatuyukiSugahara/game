@@ -9,6 +9,7 @@ EffectManager*			g_effectManager = NULL;
 CPhysicsWorld*			g_physicsWorld = NULL;
 CSceneManager*			g_scenemanager = NULL;
 CSoundEngine*			g_soundengine = NULL;
+CSkinModelDataManager*	g_skinmodeldataManager = NULL;
 
 
 extern void Init();
@@ -37,6 +38,7 @@ void InitD3D(HWND hWnd)
 		&d3dpp, &g_pd3dDevice);
 
 	g_effectManager = new EffectManager;
+	g_skinmodeldataManager = new CSkinModelDataManager;
 
 }
 //-----------------------------------------------------------------------------
@@ -76,7 +78,7 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	RegisterClassEx(&wc);
 
 	// ウィンドウを作成。
-	HWND hWnd = CreateWindow("Shader Tutorial", "game",
+	HWND hWnd = CreateWindow("Shader Tutorial", "Run Run Running",
 		WS_OVERLAPPEDWINDOW, 100, 100, 960, 560,
 		NULL, NULL, wc.hInstance, NULL);
 	// Direct3Dを初期化。
