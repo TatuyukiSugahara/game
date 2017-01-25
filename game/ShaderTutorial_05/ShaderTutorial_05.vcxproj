@@ -230,6 +230,8 @@
     <ClCompile Include="TitleCamera.cpp" />
     <ClCompile Include="TitleLight.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="TitleStart.cpp" />
+    <ClCompile Include="TitleStartBG.cpp" />
     <ClCompile Include="tk\tkEnginePreCompile.cpp" />
     <ClCompile Include="Turn.cpp" />
   </ItemGroup>
@@ -308,6 +310,8 @@
     <ClInclude Include="TitleCamera.h" />
     <ClInclude Include="TitleLight.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="TitleStart.h" />
+    <ClInclude Include="TitleStartBG.h" />
     <ClInclude Include="tk\tkAssert.h" />
     <ClInclude Include="tk\tkEnginePreCompile.h" />
     <ClInclude Include="tk\tkLog.h" />

@@ -95,7 +95,7 @@ void CStage::Update()
 	//モフルンエネミー更新
 	mohurun.Update();
 	//影更新
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);

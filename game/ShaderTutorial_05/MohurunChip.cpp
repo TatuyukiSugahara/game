@@ -6,7 +6,7 @@
 
 CMohurunChip::CMohurunChip()
 {
-	scale = D3DXVECTOR3(1.5f, 1.5f, 1.5f);
+	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
@@ -96,7 +96,7 @@ void CMohurunChip::Update()
 				particleEmitterList.push_back(particleEmitter);
 			}
 
-			position.x -= 0.01f;
+		//	position.x -= 0.01f;
 		}
 		//ワールド行列の更新。
 		animation.Update(1.0f / 60.0f);

@@ -13,7 +13,7 @@ CTitle::~CTitle()
 
 void CTitle::Init()
 {
-	position = D3DXVECTOR2(465, 260);
+	position = D3DXVECTOR2(470, 260);
 	angle = 0;
 	scale = D3DXVECTOR2(1.0f, 1.0f);
 	backColor = D3DCOLOR_ARGB(255, 255, 255, 255);

@@ -273,6 +273,12 @@
     <ClCompile Include="Frame\SkinModelDataManager.cpp">
       <Filter>ソース ファイル\Frame</Filter>
     </ClCompile>
+    <ClCompile Include="TitleStart.cpp">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleStartBG.cpp">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -514,6 +520,12 @@
     </ClInclude>
     <ClInclude Include="Frame\SkinModelDataManager.h">
       <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleStart.h">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleStartBG.h">
+      <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

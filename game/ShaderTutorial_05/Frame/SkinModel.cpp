@@ -112,14 +112,14 @@ void SkinModel::DrawMeshContainer(
 			{
 				//法線マップがある場合
 				pEffect->SetTexture("g_normalTexture", normal);
-				pEffect->SetBool("g_hasNormalMap", isNormalMap);
+				pEffect->SetInt("g_hasNormalMap", isNormalMap);
 			}
 		}
 		else
 		{
 			//法線マップがない場合
 			pEffect->SetTexture("g_normalTexture", NULL);
-			pEffect->SetBool("g_hasNormalMap", isNormalMap);
+			pEffect->SetInt("g_hasNormalMap", isNormalMap);
 		}
 		if (isSpecularMap == true)
 		{
@@ -127,14 +127,14 @@ void SkinModel::DrawMeshContainer(
 				//スペキュラマップがあるので、シェーダーに転送する。
 				pEffect->SetTexture("g_specularTexture", specularMap);
 				//スペキュラマップのあり、なしのフラグをtrueにする。
-				pEffect->SetBool("g_isHasSpecularMap", isSpecularMap);
+				pEffect->SetInt("g_isHasSpecularMap", isSpecularMap);
 			}
 		}
 		else 
 		{
 			//スペキュラマップのあり、なしのフラグをfalseにする。
 			pEffect->SetTexture("g_specularTexture", NULL);
-			pEffect->SetBool("g_isHasSpecularMap", isSpecularMap);
+			pEffect->SetInt("g_isHasSpecularMap", isSpecularMap);
 		}
 
 		if (pMeshContainer->pSkinInfo != NULL)
@@ -194,7 +194,7 @@ void SkinModel::DrawMeshContainer(
 			else {
 				mWorld = *worldMatrix;
 			}
-
+			pEffect->SetTexture("g_normalTexture", NULL);
 			pEffect->SetMatrix("g_worldMatrix", &mWorld);
 			pEffect->SetMatrix("g_rotationMatrix", rotationMatrix);
 			pEffect->Begin(0, D3DXFX_DONOTSAVESTATE);

@@ -87,7 +87,7 @@ void CCoinChip::Update()
 		//ワールド行列の更新。
 		static float rot = 0.0f;
 		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot+=0.005f);
-		skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+		skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 2.0f));
 	}
 }
 void CCoinChip::Render(

@@ -12,8 +12,8 @@ void CShadowMap::Create(int w, int h)
 	this->w = w;
 
 
-	m_near = 1.0f;
-	m_far = 100.0f;
+	m_near = 0.1f;
+	m_far = 30.0f;
 }
 
 

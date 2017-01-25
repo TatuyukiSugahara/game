@@ -142,6 +142,7 @@ void CPlayer::Update()
 	characterController.Execute();
 	movespeed = characterController.GetMoveSpeed();
 	position = characterController.GetPosition();
+	characterController.SetPosition(position);
 	//AABB
 	m_aabbMaxget = m_aabbMax + position;
 	m_aabbMinget = m_aabbMin + position;

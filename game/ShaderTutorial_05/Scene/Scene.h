@@ -5,7 +5,7 @@ class CScene
 {
 public:
 	CScene(){}
-	virtual ~CScene()
+	virtual ~CScene()	//基本クラスのデストラクタにはバーチャルをつける。
 	{
 		
 	}

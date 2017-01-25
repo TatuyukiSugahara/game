@@ -4,6 +4,8 @@
 #include "TitleLight.h"
 #include "Scene\Scene.h"
 #include "Fade.h"
+#include "TitleStart.h"
+#include "TitleStartBG.h"
 
 class CTitleScene : public CScene
 {
@@ -21,6 +23,8 @@ private:
 	CTitleCamera camera;
 	CTitleLight light;
 	CFade fade;
+	CTitleStart titlestart;
+	CTitleStartBG titlestartBG;
 };
 
 extern CTitleScene g_titlescene;

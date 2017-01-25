@@ -75,7 +75,7 @@ sampler_state
     AddressU = Wrap;
 	AddressV = Wrap;
 };
-bool g_hasNormalMap;			//法線マップがあるかフラグ
+int g_hasNormalMap;			//法線マップがあるかフラグ
 
 //スペキュラマップ
 sampler g_specularMapSampler = 
@@ -88,7 +88,7 @@ sampler_state
     AddressU = Wrap;
 	AddressV = Wrap;
 };
-bool g_isHasSpecularMap;		//スペキュラマップ保持している？
+int g_isHasSpecularMap;		//スペキュラマップ保持している？
 
 /*!
  * @brief	入力頂点
@@ -257,7 +257,7 @@ float4 posInLVP = In.lightViewPos_1;
 		lig += g_ambientLight;
 	}
 	float4 color = tex2D(g_diffuseTextureSampler, In.Tex0);
-
+	
 	if(g_ShadowReceiverFlag == true)
 	{
 		if ((shadowMapUV.x > 0.0f && shadowMapUV.x <1.0f) && (shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f))

@@ -11,6 +11,8 @@ void CTitleScene::Init()
 	camera.Init();
 	light.Init();
 	title.Init();
+	titlestart.Init();
+	titlestartBG.Init();
 	fade.Init();
 }
 
@@ -19,6 +21,8 @@ void CTitleScene::Update()
 	camera.Update();
 	light.Update();
 	title.Update();
+	titlestart.Update();
+	titlestartBG.Update();
 	fade.Update();
 
 	if (g_pad.IsPress(enButtonA))
@@ -39,6 +43,8 @@ void CTitleScene::Render()
 	g_pd3dDevice->BeginScene();
 
 	title.Render(m_pSprite);
+	titlestart.Render(m_pSprite);
+	//titlestartBG.Render(m_pSprite);
 	fade.Render(m_pSprite);
 
 	// シーンの描画終了。
