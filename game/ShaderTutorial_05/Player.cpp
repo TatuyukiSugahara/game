@@ -69,11 +69,11 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, 0.707f, 1.0f));
 	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, 0.707f, 1.0f));
 
-	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
-	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
-	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
-	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 1.0f));
-	light.SetAmbientLight(D3DXVECTOR4(0.2f, 0.2f, 0.2f, 1.0f));
+	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 10.0f));
+	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 10.0f));
+	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.5f, 0.5f, 0.5f, 10.0f));
+	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.5f, 0.5f, 0.5f, 10.0f));
+	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
 
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/Unity.X", &animation);
@@ -83,10 +83,12 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	animation.PlayAnimation(0, 0.3f);
 	animation.SetAnimationEndTime(2, 0.79f);
 	animation.SetAnimationEndTime(PlayerIsJump, 0.33f);
-	animation.SetAnimationEndTime(PlayerJumpNow, 0.016);
+	animation.SetAnimationEndTime(PlayerJumpNow, 0.016f);
 	animation.SetAnimationEndTime(PlayerJumpWas, 0.33f);
+	animation.SetAnimationEndTime(PlayerHipDrop, 0.116f);
 	animation.SetAnimationLoopFlag(PlayerIsJump, false);
 	animation.SetAnimationLoopFlag(PlayerJumpWas, false);
+	animation.SetAnimationLoopFlag(PlayerHipDrop, false);
 
 
 	characterController.Init(0.3f, 1.0f, position);
@@ -308,12 +310,24 @@ void CPlayer::State()
 				animation.PlayAnimation(PlayerStay, 0.3f);
 				movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			}
-
+			
+		}
+		
+	}
+	//ヒップドロップ
+	if (g_pad.IsPress(enButtonRB1) && !characterController.IsOnGround())
+	{
+		if (state != PlayerHipDrop)
+		{
+			state = PlayerHipDrop;
+			animation.PlayAnimation(PlayerHipDrop, 0.2f);
+			movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			movespeed.y -= 20.0f;
 		}
 		
 	}
 	//ジャンプ中
-	if (!characterController.IsOnGround())
+	if (!characterController.IsOnGround() && state != PlayerHipDrop)
 	{
 		if (state != PlayerJumpNow && !animation.IsPlay())
 		{
@@ -321,6 +335,7 @@ void CPlayer::State()
 			animation.PlayAnimation(PlayerJumpNow, 0.2f);
 		}
 	}
+	
 }
 
 void CPlayer::Died()

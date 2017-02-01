@@ -32,7 +32,7 @@ public:
 	}
 private:
 	SkinModel skinmodel;
-	SkinModelData modelData;
+	SkinModelData* modelData;
 	Animation animation;
 	CLight	light;
 	D3DXMATRIX							mRot;

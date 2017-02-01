@@ -14,6 +14,7 @@ enum PlayerState{
 	PlayerIsJump,		//ジャンプをするとき
 	PlayerJumpNow,		//ジャンプ中
 	PlayerJumpWas,		//着地時
+	PlayerHipDrop,		//ヒップドロップ
 };
 
 enum Life{

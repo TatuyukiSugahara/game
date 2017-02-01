@@ -29,13 +29,11 @@ void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
 	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
 	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
-	light.SetAmbientLight(D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+	light.SetAmbientLight(D3DXVECTOR4(1.1f, 1.1f, 1.1f, 1.0f));
 
 	modelData.LoadModelData("Asset/model/sky.x", &animation);
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
-	animation.PlayAnimation(0);
-	animation.SetAnimationLoopFlag(1, false);
 	skinmodel.SetShadowReceiverFlag(false);
 	skinmodel.SetDrawToShadowMap(false);
 	skinmodel.SetNormalMap(false);

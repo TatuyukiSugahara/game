@@ -25,11 +25,12 @@ void CPipeChip::Init()
 	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 0.0f));
 	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
 	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
-	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
+	light.SetAmbientLight(D3DXVECTOR4(0.4f, 1.4f, 0.4f, 1.0f));
 
 	//まずはスキンモデルをロード。
-	modelData.LoadModelData("Asset/model/pipe.X", &animation);
-	skinmodel.Init(&modelData);
+	modelData = g_skinmodeldataManager->LoadSkinModelData("Asset/model/pipe.X");
+	//modelData.LoadModelData("Asset/model/pipe.X", &animation);
+	skinmodel.Init(modelData);
 	skinmodel.SetLight(&light);
 	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetDrawToShadowMap(false);
@@ -42,12 +43,13 @@ void CPipeChip::Init()
 
 void CPipeChip::Update()
 {
-	//ワールド行列の更新。
-	skinmodel.UpdateWorldMatrix(position, rotation, Scale);
 
 }
 void CPipeChip::Render()
 {
+	//ワールド行列の更新。
+	skinmodel.UpdateWorldMatrix(position, rotation, Scale);
+
 	skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(),
 		&g_stage->GetCamera()->GetProjectionMatrix(),
 		false);

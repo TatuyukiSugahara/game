@@ -23,21 +23,25 @@ void CTitleStart::Init()
 
 void CTitleStart::Update()
 {
-	if (scale.x >= MAX_SCALE)
+	if (alpha <= 50)
 	{
-		sca = false;
+		alp = false;
+		
 	}
-	else if (scale.x <= MIN_SCALE)
+	else if (alpha >= 254)
 	{
-		sca = true;
+		alp = true;
+		
 	}
-	if (sca == true)
+	if (alp == true)
 	{
-		scale += D3DXVECTOR2(0.005f, 0.005f);
+		backColor = D3DCOLOR_ARGB(alpha -= 2, 255, 255, 255);
 	}
 	else
 	{
-		scale -= D3DXVECTOR2(0.005f, 0.005f);
+		backColor = D3DCOLOR_ARGB(alpha += 2, 255, 255, 255);
 	}
+
+	
 	this->SetupMatrices();
 }

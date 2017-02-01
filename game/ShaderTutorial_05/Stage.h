@@ -24,6 +24,7 @@
 #include "Bird.h"
 #include "RotationGimmick.h"
 #include "CoinSprite.h"
+#include "Sun.h"
 
 #define MAX_COLLISION 100
 
@@ -157,6 +158,7 @@ protected:
 	CRotationGimmick rotationgimmick;//‰ñ“]‚·‚éƒMƒ~ƒbƒN
 	CSoundSource			soundsource;
 	CCoinSprite	coinsprite;
+	CSun sun;					//‘¾—z
 };
 
 extern CStage* g_stage;

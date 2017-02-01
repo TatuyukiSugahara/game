@@ -25,9 +25,6 @@
     <Filter Include="ソース ファイル\BulletPhysics">
       <UniqueIdentifier>{1f27f491-1791-459c-ac30-70e165085359}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\IsIntersect">
-      <UniqueIdentifier>{d3660505-4980-48d9-8457-7f752a1c3b92}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Frame">
       <UniqueIdentifier>{beb15e38-c9a4-4ee2-a2ac-e8bb30b7b2d7}</UniqueIdentifier>
     </Filter>
@@ -89,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp">
       <Filter>ソース ファイル\BulletPhysics</Filter>
-    </ClCompile>
-    <ClCompile Include="IsIntersect\IsIntersect.cpp">
-      <Filter>ソース ファイル\IsIntersect</Filter>
     </ClCompile>
     <ClCompile Include="HatenaBox.cpp">
       <Filter>ソース ファイル</Filter>
@@ -279,6 +273,12 @@
     <ClCompile Include="TitleStartBG.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
+    <ClCompile Include="Frame\bloom.cpp">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Sun.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -322,12 +322,6 @@
     </ClInclude>
     <ClInclude Include="BulletPhysics\BulletPhysics.h">
       <Filter>ソース ファイル\BulletPhysics</Filter>
-    </ClInclude>
-    <ClInclude Include="IsIntersect\IsIntersect.h">
-      <Filter>ソース ファイル\IsIntersect</Filter>
-    </ClInclude>
-    <ClInclude Include="IsIntersect\IPlayerCollisionCallback.h">
-      <Filter>ソース ファイル\IsIntersect</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>ソース ファイル</Filter>
@@ -526,6 +520,12 @@
     </ClInclude>
     <ClInclude Include="TitleStartBG.h">
       <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\bloom.h">
+      <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Sun.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

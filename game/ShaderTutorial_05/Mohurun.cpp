@@ -45,6 +45,9 @@ void CMohurun::Update()
 	{
 		mohurunChipList[a]->Update();
 	}
+
+	
+
 }
 //•`‰æB
 void CMohurun::Render(

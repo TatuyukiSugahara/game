@@ -31,26 +31,32 @@ CSkinModelDataManager::CSkinModelDataManager()
 */
 CSkinModelDataManager::~CSkinModelDataManager()
 {
+	for (map<int, SkinModelData*>::iterator it = skinmodeldata.begin();
+		it != skinmodeldata.end();)
+	{
+		skinmodeldata.erase(it++);
+	}
 }
 
-SkinModelData CSkinModelDataManager::LoadSkinModelData(const char* filePath, Animation* anim)
+SkinModelData* CSkinModelDataManager::LoadSkinModelData(const char* filePath)
 {
 
-	SkinModelData modeldata;
 	int hash = MakeHash(filePath);
 
 	auto it = skinmodeldata.find(hash);
 
 	if (it == skinmodeldata.end())
 	{
-		modeldata.LoadModelData(filePath, anim);
-		std::pair<int, SkinModelData*> node(hash, &modeldata);
+		SkinModelData* modeldata = new SkinModelData;
+		modeldata->LoadModelData(filePath, NULL);
+		std::pair<int, SkinModelData*> node(hash, modeldata);
 		skinmodeldata.insert(node);
+		return modeldata;
 	}
 	else
 	{
 		//“o˜^Ï‚ÝB
-		modeldata = *it->second;
+		return it->second;
 	}
-	return modeldata;
+
 }

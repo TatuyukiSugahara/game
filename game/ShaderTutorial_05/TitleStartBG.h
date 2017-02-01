@@ -10,4 +10,6 @@ public:
 	void Update()override;
 
 private:
+	bool alp = true;			//TRUE = Œ¸ŽZ, FALSE = ‰ÁŽZ	
+	int alpha = 200;
 };

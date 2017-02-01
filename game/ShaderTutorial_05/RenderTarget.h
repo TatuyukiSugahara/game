@@ -55,8 +55,24 @@ public:
 	{
 		return m_texture;
 	}
+	/*!
+	*@brief	幅を取得。
+	*/
+	int GetWidth() const
+	{
+		return m_width;
+	}
+	/*!
+	*@brief	高さを取得。
+	*/
+	int GetHeight() const
+	{
+		return m_height;
+	}
 private:
 	LPDIRECT3DSURFACE9		m_depthSurface;		//!<深度バッファ用のサーフェイス
 	LPDIRECT3DTEXTURE9		m_texture;			//!<書き込み先のテクスチャ。
 	LPDIRECT3DSURFACE9		m_surface;			//!<サーフェイス
+	int						m_width = 0;		//!<幅
+	int						m_height = 0;		//!<高さ
 };

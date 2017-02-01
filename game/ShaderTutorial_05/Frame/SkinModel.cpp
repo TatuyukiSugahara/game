@@ -63,7 +63,10 @@ void SkinModel::DrawMeshContainer(
 
 	//ライトビュープロジェクション行列の計算。
 	D3DXMATRIX LVP;
-	LVP = g_stage->GetShadow()->Getlvpmatrix();
+	if (g_stage)
+	{
+		LVP = g_stage->GetShadow()->Getlvpmatrix();
+	}
 
 	//定数レジスタに設定するカラー。
 	D3DXVECTOR4 color(1.0f, 0.0f, 0.0f, 1.0f);

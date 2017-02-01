@@ -18,7 +18,7 @@ public:
 	*/
 	~CSkinModelDataManager();
 
-	SkinModelData LoadSkinModelData(const char* filePath, Animation* anim);
+	SkinModelData* LoadSkinModelData(const char* filePath);
 private:
 	std::map<int, SkinModelData*>		skinmodeldata;
 };

@@ -169,6 +169,7 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Frame\2DImage.cpp" />
     <ClCompile Include="Frame\Animation.cpp" />
+    <ClCompile Include="Frame\bloom.cpp" />
     <ClCompile Include="Frame\EffectManager.cpp" />
     <ClCompile Include="Frame\SkinModel.cpp" />
     <ClCompile Include="Frame\SkinModelData.cpp" />
@@ -177,7 +178,6 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalFlag.cpp" />
     <ClCompile Include="HatenaBox.cpp" />
-    <ClCompile Include="IsIntersect\IsIntersect.cpp" />
     <ClCompile Include="Kinoko.cpp" />
     <ClCompile Include="lib\System.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -226,6 +226,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleCamera.cpp" />
     <ClCompile Include="TitleLight.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Frame\2DImage.h" />
     <ClInclude Include="Frame\Animation.h" />
+    <ClInclude Include="Frame\bloom.h" />
     <ClInclude Include="Frame\EffectManager.h" />
     <ClInclude Include="Frame\SkinModel.h" />
     <ClInclude Include="Frame\SkinModelData.h" />
@@ -260,8 +262,6 @@
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalFlag.h" />
     <ClInclude Include="HatenaBox.h" />
-    <ClInclude Include="IsIntersect\IPlayerCollisionCallback.h" />
-    <ClInclude Include="IsIntersect\IsIntersect.h" />
     <ClInclude Include="Kinoko.h" />
     <ClInclude Include="lib\System.h" />
     <ClInclude Include="Light.h" />
@@ -306,6 +306,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageBack.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Sun.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleCamera.h" />
     <ClInclude Include="TitleLight.h" />

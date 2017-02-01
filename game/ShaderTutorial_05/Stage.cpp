@@ -55,7 +55,7 @@ void CStage::Init()
 	//nブロック初期化
 	nblock.Init(g_pd3dDevice);
 	//見えないブロック初期化
-	noblock.Init();
+	//noblock.Init();
 	//はてなボックス初期化
 	//hanatebox.Init(g_pd3dDevice);
 	//キノコ初期化
@@ -78,8 +78,10 @@ void CStage::Init()
 	coinsprite.Init();
 	//鳥初期化
 	bird.Init();
+	//太陽初期化
+	sun.Init();
 	//回転するギミック初期化
-	//rotationgimmick.Init();
+	//otationgimmick.Init();
 }
 
 void CStage::Update()
@@ -95,7 +97,7 @@ void CStage::Update()
 	//モフルンエネミー更新
 	mohurun.Update();
 	//影更新
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 10.0f, 0.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
@@ -103,7 +105,7 @@ void CStage::Update()
 	//Nブロックを更新
 	nblock.Update();
 	//見えないブロック更新
-	noblock.Update();
+	//noblock.Update();
 	//はてなボックス更新
 	//hanatebox.Update();
 	//キノコ更新
@@ -131,6 +133,8 @@ void CStage::Update()
 	soundsource.Update();
 	//コインスプライト更新
 	coinsprite.Update();
+	//太陽更新
+	sun.Update();
 	//カメラの更新
 	camera.Update();
 }
@@ -141,6 +145,7 @@ void CStage::Render()
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	//シーンの描画開始。
 	g_pd3dDevice->BeginScene();
+
 	//影描画
 	shadow.Draw(
 		camera.GetViewMatrix(),
@@ -150,6 +155,24 @@ void CStage::Render()
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix()
 		);
+
+	//ハンズオン 1-1 レンダリングターゲットの切り替え。
+	LPDIRECT3DSURFACE9 frameBufferRT;
+	LPDIRECT3DSURFACE9 frameBufferDS;
+	g_pd3dDevice->GetRenderTarget(0, &frameBufferRT);		//現在のレンダリングターゲット
+	g_pd3dDevice->GetDepthStencilSurface(&frameBufferDS);	//現在のデプスステンシルサーフェスをゲット。
+	//メインレンダーターゲットに差し替える。
+	g_pd3dDevice->SetRenderTarget(
+		0,									//何番目のレンダリングターゲットを設定するかの引数。
+		mainRenderTarget->GetRenderTarget()	//変更するレンダリングターゲット。
+		);
+	// デプスステンシルバッファも変更する。
+	g_pd3dDevice->SetDepthStencilSurface(mainRenderTarget->GetDepthStencilBuffer());
+
+	// レンダリングターゲットをクリア。
+	//g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+
 	//ステージ背景描画
 	stageback.Render(
 		g_pd3dDevice,
@@ -234,8 +257,6 @@ void CStage::Render()
 	goalflag.Render(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix());
-	//コイン描画
-	coinNumber.Render(m_pSprite);
 	//鳥描画
 	bird.Render(
 		camera.GetViewMatrix(),
@@ -246,8 +267,28 @@ void CStage::Render()
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix()
 		);*/
+	//太陽描画
+	sun.Render();
+
+	bloom->Render();
+
+	//// ハンズオン 1-2 レンダリングターゲットを戻す。
+	g_pd3dDevice->SetRenderTarget(0, frameBufferRT);
+	g_pd3dDevice->SetDepthStencilSurface(frameBufferDS);
+	//参照カウンタが増えているので開放。
+	frameBufferRT->Release();
+	frameBufferDS->Release();
+
+	//// 18-3 オフスクリーンレンダリングした絵をフレームバッファに貼り付ける。
+	CopyMainRTToCurrentRT();
+
+	//コイン描画
+	coinNumber.Render(m_pSprite);
 	//コインスプライト描画
 	coinsprite.Render(m_pSprite);
+
+	
+
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。
@@ -259,7 +300,7 @@ void CStage::Release()
 	//影リリース
 	shadow.Release();
 	//ステージ背景リリース
-	stageback.Release();
+	//stageback.Release();
 	//はてなボックスリリース
 	//hanatebox.Release();
 	//キノコリリース

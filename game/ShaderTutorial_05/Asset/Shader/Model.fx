@@ -169,6 +169,27 @@ void CalcWorldPosAndNormal( VS_INPUT In, out float3 Pos, out float3 Normal, out 
 }
 
 /*!
+ *@brief	スペキュラライトを計算。
+ *@param[in]	worldPos		ワールド座標系での頂点座標。
+ *@param[in]	n				法線。
+ */
+float3 CalcSpecular( float3 worldPos, float3 normal )
+{
+	float3 spec = 0.0f;
+	
+	float3 toEyeDir = normalize(vEyePos - worldPos);
+	float3 R = -toEyeDir + 2.0f * dot(normal, toEyeDir) * normal;
+	
+	for( int i = 0; i < DIFFUSE_LIGHT_NUM; i++ ){
+		//スペキュラ成分を計算する。
+		//反射ベクトルを計算。
+		float3 L = -g_diffuseLightDirection[i].xyz;
+		spec += g_diffuseLightColor[i] * pow(max(0.0f, dot(L,R)), 5) * g_diffuseLightColor[i].w;	//スペキュラ強度。
+	}
+	return spec;
+}
+
+/*!
  *@brief	頂点シェーダー。
  *@param[in]	In			入力頂点。
  *@param[in]	hasSkin		スキンあり？
@@ -185,17 +206,11 @@ VS_OUTPUT VSMain( VS_INPUT In, uniform bool hasSkin )
 		CalcWorldPosAndNormal(In, Pos, Normal, Tangent );
 	}
   
-	float4 worldpos = mul(In.Pos,g_worldMatrix);
-	worldpos.w = 1.0f;
-	o.worldPos = worldpos;
 
-	o.lightViewPos_1 = mul(worldpos,g_mLVP );
-
+	o.lightViewPos_1 = mul(float4(Pos,1.0f),g_mLVP );
+	o.worldPos = Pos;
 	o.Pos = mul(float4(Pos.xyz, 1.0f), g_mViewProj);	//ビュー空間から射影空間に変換。
-    //拡散光+環境光。
-    float amb = -g_diffuseLightDirection[0].w;
-    float3 L = -g_diffuseLightDirection[0].xyz;//ローカルのライト座標。
-    //o.color = In.color * max(amb, dot(In.normal, -g_diffuseLightDirection[0].xyz));
+   
     //鏡面反射用のベクトル
     o.Eye = vEyePos - Pos.xyz;
 
@@ -234,6 +249,7 @@ float4 posInLVP = In.lightViewPos_1;
 		normal = tangent * localNormal.x
 				+ biNormal * localNormal.y
 				+ normal * localNormal.z;
+		normal = normalize(normal);
 	}
 	//ライトを計算。
 	float4 lig = 0.0f;
@@ -242,17 +258,6 @@ float4 posInLVP = In.lightViewPos_1;
 			lig.xyz += max(0.0f, dot(normal.xyz, -g_diffuseLightDirection[i].xyz))
 				* g_diffuseLightColor[i].xyz;
 			float3 spec = lig.xyz;
-			//スペキュラを計算。
-			float3 L = -g_diffuseLightDirection[i].xyz;
-				float3 H = normalize(L + normalize(In.Eye));//ハーフベクトル。
-				float3 N = normalize(normal);
-				lig.xyz += pow(max(0.0f, dot(N, H)), 10.0f) * g_diffuseLightColor[i].w;
-			if (g_isHasSpecularMap){
-				//スペキュラマップがある
-				//float3 spec = CalcSpecular(In.worldPos, normal);
-				spec *= tex2D(g_specularMapSampler, In.Tex0).a;
-				lig.xyz += spec;
-			}
 		}
 		lig += g_ambientLight;
 	}
@@ -273,6 +278,17 @@ float4 posInLVP = In.lightViewPos_1;
 			}
 		}
 	}
+	
+	if (g_isHasSpecularMap){
+		//スペキュラマップがある
+		float3 spec = CalcSpecular(In.worldPos, normal);
+		spec *= tex2D(g_specularMapSampler, In.Tex0).a;
+		lig.xyz += spec;
+		
+	}
+			
+	
+	
 	color.xyz *= lig;
 	return color;
 }

@@ -8,6 +8,10 @@ void CTitleScene::Init()
 {
 	this->CreateSprite();
 
+	SETitle = new CSoundSource;
+	SETitle->Init("Asset/Sound/CandyCrush.wav");
+	SETitle->Play(false);
+
 	camera.Init();
 	light.Init();
 	title.Init();
@@ -25,12 +29,17 @@ void CTitleScene::Update()
 	titlestartBG.Update();
 	fade.Update();
 
-	if (g_pad.IsPress(enButtonA))
+	if (g_pad.IsTrigger(enButtonA))
 	{
 		fade.SetFade(true);
+		CSoundSource* SETitles = new CSoundSource;
+		SETitles->Init("Asset/Sound/ta_ta_pi03.wav");
+		SETitles->Play(false);
 	}
 	if (fade.GetNext() <= fade.GetTimer())
 	{
+		SETitle->Stop();
+		delete SETitle;
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }
@@ -44,7 +53,7 @@ void CTitleScene::Render()
 
 	title.Render(m_pSprite);
 	titlestart.Render(m_pSprite);
-	//titlestartBG.Render(m_pSprite);
+	titlestartBG.Render(m_pSprite);
 	fade.Render(m_pSprite);
 
 	// シーンの描画終了。

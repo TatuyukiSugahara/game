@@ -60,8 +60,6 @@ private:
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXMATRIX				mRotation;		//回転行列。
 	Model					model;			//モデル。
-	CIsIntersect			IsIntersect;		//あたり判定
-	std::vector<IPlayerCollisionCallback*>	callbackList;//
 	D3DXVECTOR3				movespeed;
 	float					radius;
 	KinokoState				state;			//キノコの状態

@@ -10,7 +10,6 @@ public:
 	void Update()override;
 
 private:
-	const float MAX_SCALE = 1.2f;
-	const float MIN_SCALE = 0.8f;
-	bool sca = true;			//TRUE = ‰ÁŽZ , FALSE = Œ¸ŽZ
+	bool alp = true;			//TRUE = Œ¸ŽZ, FALSE = ‰ÁŽZ	
+	int alpha = 200;
 };

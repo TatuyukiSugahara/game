@@ -10,6 +10,7 @@ CPhysicsWorld*			g_physicsWorld = NULL;
 CSceneManager*			g_scenemanager = NULL;
 CSoundEngine*			g_soundengine = NULL;
 CSkinModelDataManager*	g_skinmodeldataManager = NULL;
+Bloom* bloom = NULL;
 
 
 extern void Init();
@@ -36,10 +37,6 @@ void InitD3D(HWND hWnd)
 	g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING,
 		&d3dpp, &g_pd3dDevice);
-
-	g_effectManager = new EffectManager;
-	g_skinmodeldataManager = new CSkinModelDataManager;
-
 }
 //-----------------------------------------------------------------------------
 // メッセージプロシージャ。
@@ -79,7 +76,7 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	// ウィンドウを作成。
 	HWND hWnd = CreateWindow("Shader Tutorial", "Run Run Running",
-		WS_OVERLAPPEDWINDOW, 100, 100, 960, 560,
+		WS_OVERLAPPEDWINDOW, 100, 100, 960, 540,
 		NULL, NULL, wc.hInstance, NULL);
 	// Direct3Dを初期化。
 	InitD3D(hWnd);
@@ -90,11 +87,13 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	UpdateWindow(hWnd);
 
 	//ここからゲーム関係の初期化。
-	g_scenemanager = new CSceneManager;		//シーンマネージャー初期化
-	g_soundengine = new CSoundEngine;		//サウンドエンジン初期化
-	g_pad.Init(0);//パッド初期化
-	g_bulletPhysics.InitPysics();//物理初期化
-	
+	g_scenemanager = new CSceneManager;		//シーンマネージャー作成
+	g_soundengine = new CSoundEngine;		//サウンドエンジン作成
+	g_pad.Init(0);							//パッド初期化
+	g_bulletPhysics.InitPysics();			//物理初期化
+	g_effectManager = new EffectManager;				//エフェクトマネージャー作成
+	g_skinmodeldataManager = new CSkinModelDataManager;//スキンモデルだーたマネージャーさくせい
+	bloom = new Bloom;
 	Init();
 	
 	// ゲームループ

@@ -27,7 +27,7 @@ CKinoko::~CKinoko()
 void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 	model.Init(pd3dDevice, "Asset/model/kinoko.x");
-	IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
+	//IsIntersect.CollisitionInitialize(&position, radius);//あたり判定初期化
 	model.SetShadowReceiverFlag(false);
 
 	//AABB
@@ -58,8 +58,8 @@ void CKinoko::Update()
 	//IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
 
 	movespeed.x = 1.0f;
-	m_aabbMax += IsIntersect.GetAddPos();
-	m_aabbMin += IsIntersect.GetAddPos();
+	//m_aabbMax += IsIntersect.GetAddPos();
+	//m_aabbMin += IsIntersect.GetAddPos();
 
 	//ワールド行列の更新。
 	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);

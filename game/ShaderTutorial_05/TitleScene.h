@@ -6,6 +6,8 @@
 #include "Fade.h"
 #include "TitleStart.h"
 #include "TitleStartBG.h"
+#include "Sound\SoundSource.h"
+
 
 class CTitleScene : public CScene
 {
@@ -25,6 +27,7 @@ private:
 	CFade fade;
 	CTitleStart titlestart;
 	CTitleStartBG titlestartBG;
+	CSoundSource* SETitle;
 };
 
 extern CTitleScene g_titlescene;

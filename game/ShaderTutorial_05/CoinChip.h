@@ -33,7 +33,7 @@ public:
 	}
 private:
 	SkinModel skinmodel;
-	SkinModelData modelData;
+	SkinModelData* modelData;
 	Animation animation;
 	CLight	light;
 	LPDIRECT3DTEXTURE9 normalMap = NULL;					//ノーマルマップ

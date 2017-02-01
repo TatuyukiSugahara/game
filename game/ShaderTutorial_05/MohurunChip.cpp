@@ -6,7 +6,7 @@
 
 CMohurunChip::CMohurunChip()
 {
-	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
@@ -24,10 +24,10 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, 0.707f, 1.0f));
 	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, 0.707f, 1.0f));
 
-	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 0.0f));
-	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.4f, 0.4f, 0.4f, 0.0f));
-	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
-	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
+	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 10.0f));
+	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 10.0f));
+	light.SetDiffuseLightColor(2, D3DXVECTOR4(0.5f, 0.5f, 0.5f, 10.0f));
+	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.5f, 0.5f, 0.5f, 10.0f));
 	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
 
 	//スキンモデルをロード。
@@ -47,7 +47,7 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	param.intervalTime = 0.2f;
 	param.life = 0.5f;
 	param.gravity = D3DXVECTOR3(0.0f, -0.016f, 0.0f);
-	param.initSpeed = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	param.initSpeed = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 
 
 	parflag = false;
@@ -72,14 +72,14 @@ void CMohurunChip::Update()
 		{
 			
 			if (BallCollision(position - D3DXVECTOR3(0.0f, 0.2f, 0.0f),
-				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.1f, 0.0f), 0.5f, 0.3f) == true)
+				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.1f, 0.0f), 0.7f, 0.3f) == true)
 			{
 				g_stage->GetPlayer()->SetLifeState(Life::Died);
 			}
 			if (BallCollision(position + D3DXVECTOR3(0.0f, 0.2f, 0.0f),
-				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 0.5f, 0.3f) == true)
+				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 0.7f, 0.3f) == true)
 			{
-				scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
+				scale = D3DXVECTOR3(1.4f, 0.2f, 1.4f);
 				parflag = true;
 				state = off;
 				CSoundSource* SEenemyDeath = new CSoundSource;
@@ -96,7 +96,7 @@ void CMohurunChip::Update()
 				particleEmitterList.push_back(particleEmitter);
 			}
 
-		//	position.x -= 0.01f;
+			position.x -= 0.01f;
 		}
 		//ワールド行列の更新。
 		animation.Update(1.0f / 60.0f);
