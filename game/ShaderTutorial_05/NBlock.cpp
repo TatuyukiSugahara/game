@@ -19,9 +19,14 @@ CNBlock::~CNBlock()
 	for (auto& blockChip : nblockChipList){
 		delete blockChip;
 	}
+	if (SEBlock)
+	{
+		delete SEBlock;
+	}
 }
 void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
+
 	//配置情報からマップを構築
 	tableSize = sizeof(nblockChipLocInfoTable) / sizeof(nblockChipLocInfoTable[0]);
 	for (int a = 0; a < tableSize; a++)
@@ -35,6 +40,8 @@ void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 		nblockChipList.push_back(blockChip);
 	}
 
+	
+
 }
 void CNBlock::Update()
 {
@@ -44,7 +51,7 @@ void CNBlock::Update()
 		if (nblockChipList[a]->Get2DBlock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
 			&& g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
 		{
-			CSoundSource* SEBlock = new CSoundSource;
+			SEBlock = new CSoundSource;
 			SEBlock->Init("Asset/Sound/block.wav");
 			SEBlock->Play(false);
 			SEBlock->SetVolume(0.25f);
@@ -53,6 +60,7 @@ void CNBlock::Update()
 		}
 		nblockChipList[a]->Update();
 	}
+
 }
 void CNBlock::Render(
 	D3DXMATRIX viewMatrix,

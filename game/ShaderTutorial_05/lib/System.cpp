@@ -10,7 +10,7 @@ CPhysicsWorld*			g_physicsWorld = NULL;
 CSceneManager*			g_scenemanager = NULL;
 CSoundEngine*			g_soundengine = NULL;
 CSkinModelDataManager*	g_skinmodeldataManager = NULL;
-Bloom* bloom = NULL;
+Bloom*					bloom = NULL;				//ブルーム
 
 
 extern void Init();
@@ -93,7 +93,7 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	g_bulletPhysics.InitPysics();			//物理初期化
 	g_effectManager = new EffectManager;				//エフェクトマネージャー作成
 	g_skinmodeldataManager = new CSkinModelDataManager;//スキンモデルだーたマネージャーさくせい
-	bloom = new Bloom;
+	bloom = new Bloom;									//ブルーム作成
 	Init();
 	
 	// ゲームループ

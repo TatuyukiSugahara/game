@@ -1,5 +1,12 @@
 #pragma once
 
+//マップチップの配置情報。
+struct SCoinChipLocInfo {
+	const char* modelName;		//モデル。
+	D3DXVECTOR3	pos;			//座標。
+	D3DXQUATERNION	rotation;		//回転。
+};
+
 class CCoinChip;
 
 /*!
@@ -25,4 +32,6 @@ public:
 private:
 	std::vector<CCoinChip*> coinChipList;	//マップチップのリスト。
 	int tableSize;
+	SCoinChipLocInfo* coinChipLocTable;
+	D3DXQUATERNION						rotation;
 };

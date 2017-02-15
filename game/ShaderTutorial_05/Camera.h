@@ -10,6 +10,7 @@ private:
 	D3DXMATRIX				viewMatrix;			//!<ビュー行列。カメラ行列
 	D3DXMATRIX				projectionMatrix;	//!<プロジェクション行列。ビュー空間から射影空間に変換する行列。
 	D3DXMATRIX				mRot;				//!<回転行列
+	D3DXMATRIX				viewMatrixRotInv;			//回転行列の逆行列。
 	D3DXVECTOR3				vEyePt;				//!<カメラの視点。
 	D3DXVECTOR3				vLookatPt;			//!<カメラの注視点。
 	D3DXVECTOR3				vUpVec;				//!<カメラの上方向。
@@ -96,6 +97,11 @@ public:
 	D3DXMATRIX Camera::GetViewMatrix()
 	{
 		return viewMatrix;
+	}
+	//回転行列の逆行列ゲッター
+	D3DXMATRIX Camera::GetViewMatrixInv()
+	{
+		return viewMatrixRotInv;
 	}
 	//プロジェクション行列のセッター
 	void Camera::SetProjectionMatrix(D3DXMATRIX mProj)

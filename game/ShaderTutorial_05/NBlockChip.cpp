@@ -2,6 +2,8 @@
 #include "NBlockChip.h"
 #include "Stage.h"
 
+SkinModelData*	CNBlockChip::orgSkinModelData = NULL;	//オリジナルスキンモデルデータ。
+
 CNBlockChip::CNBlockChip()
 {
 	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -26,6 +28,14 @@ CNBlockChip::~CNBlockChip()
 	{
 		normalMap->Release();
 	}
+	/*if (orgSkinModelData)
+	{
+		delete orgSkinModelData; 
+	}
+	if (orgAnimation)
+	{
+		delete orgAnimation;
+	}*/
 }
 void CNBlockChip::Init()
 {
@@ -55,7 +65,15 @@ void CNBlockChip::Init()
 	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.3f, 0.3f, 0.3f, 0.0f));
 	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
 
-	modelData.LoadModelData("Asset/model/block.x", &animation);
+	if (orgSkinModelData == NULL) {
+		orgSkinModelData = new SkinModelData;
+		orgAnimation = new Animation;
+		orgSkinModelData->LoadModelData("Asset/model/block.x", orgAnimation);
+	}
+	//オリジナルのモデルデータからクローンモデルを作成。
+	modelData.CloneModelData(*orgSkinModelData, NULL);
+
+	//modelData.LoadModelData("Asset/model/block.x", &animation);
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
 	animation.PlayAnimation(0);
@@ -74,7 +92,7 @@ void CNBlockChip::Init()
 	param.h = 0.5f;
 	param.intervalTime = 0.3f;
 	param.life = 1.0f;
-	param.gravity = D3DXVECTOR3(0.0f, -0.2f, 0.0f);
+	param.gravity = D3DXVECTOR3(0.0f, -0.5f, 0.0f);
 	param.initSpeed = D3DXVECTOR3(0.0f, 4.0f, 0.0f);
 	param.pos = position;
 	parflag = false;

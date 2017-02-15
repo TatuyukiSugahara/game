@@ -41,13 +41,10 @@ void CMohurun::Init()
 void CMohurun::Update()
 {
 	tableSize = sizeof(mohurunChipListTable) / sizeof(mohurunChipListTable[0]);
-	for (int a = 0; a < tableSize; a++)
+	for (auto p : mohurunChipList)
 	{
-		mohurunChipList[a]->Update();
+		p->Update();
 	}
-
-	
-
 }
 //ï`âÊÅB
 void CMohurun::Render(

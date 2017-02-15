@@ -4,6 +4,8 @@
 #include "BallCollision.h"
 #include "Sound\SoundSource.h"
 
+SkinModelData*	CBirdChip::orgSkinModelData = NULL;	//オリジナルスキンモデルデータ。
+
 CBirdChip::CBirdChip()
 {
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
@@ -12,6 +14,19 @@ CBirdChip::CBirdChip()
 
 CBirdChip::~CBirdChip()
 {
+	/*if (orgSkinModelData)
+	{
+		delete orgSkinModelData;
+	}
+	if (orgAnimation)
+	{
+		delete orgAnimation;
+	}*/
+	if (SEenemyDeath)
+	{
+		delete SEenemyDeath;
+	}
+
 }
 void CBirdChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 {
@@ -30,7 +45,14 @@ void CBirdChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	//まずはスキンモデルをロード。
 	char modelPath[256];
 	sprintf(modelPath, "Asset/model/%s.X", name);
-	modelData.LoadModelData(modelPath, &animation);
+
+	if (orgSkinModelData == NULL) {
+		orgSkinModelData = new SkinModelData;
+		orgAnimation = new Animation;
+		orgSkinModelData->LoadModelData(modelPath, orgAnimation);
+	}
+	//オリジナルのモデルデータからクローンモデルを作成。
+	modelData.CloneModelData(*orgSkinModelData, &animation);
 
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
@@ -55,6 +77,9 @@ void CBirdChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
+
+	SEenemyDeath = new CSoundSource;
+	SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
 
 }
 
@@ -81,8 +106,7 @@ void CBirdChip::Update()
 				scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
 				parflag = true;
 				state = BirdState::BIRDOFF;
-				CSoundSource* SEenemyDeath = new CSoundSource;
-				SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
+				
 				SEenemyDeath->Play(false);
 				SEenemyDeath->SetVolume(0.25f);
 				g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,

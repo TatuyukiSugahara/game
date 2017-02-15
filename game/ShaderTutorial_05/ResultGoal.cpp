@@ -9,6 +9,10 @@ CResultGoal::CResultGoal()
 
 CResultGoal::~CResultGoal()
 {
+	if (SEGoal)
+	{
+		delete SEGoal;
+	}
 }
 
 void CResultGoal::Init()
@@ -19,6 +23,10 @@ void CResultGoal::Init()
 	backColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	texFileName = "Asset/model/goal.png";
 	C2DImage::Init();
+
+	SEGoal = new CSoundSource;
+	SEGoal->Init("Asset/Sound/goal.wav");
+	SEGoal->Play(false);
 }
 
 void CResultGoal::Update()

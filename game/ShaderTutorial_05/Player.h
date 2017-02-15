@@ -4,7 +4,6 @@
 #include "Turn.h"
 #include "character\CharacterController.h"
 
-class IPlayerCollisionCallback;
 
 enum PlayerState{
 	PlayerStay,			//ステイ
@@ -137,7 +136,6 @@ private:
 	LPDIRECT3DTEXTURE9 specularMap = NULL;					//スペキュラマップ。
 	CTurn					turn;							//ターンクラス
 	CCharacterController characterController;				//キャラクターコントローラー
-	std::vector<IPlayerCollisionCallback*>	callbackList;	//
 	const float				MOVE_SPEED = 5.0f;				//移動速度
 	float					radius;
 	float					friction;						//摩擦
@@ -154,4 +152,8 @@ private:
 	//ターン
 	float					m_currentAngleY;
 	float					m_targetAngleY;
+
+	//サウンド
+	CSoundSource* SEjump;
+
 };

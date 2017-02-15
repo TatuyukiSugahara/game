@@ -87,6 +87,13 @@ public:
 	{
 		return m_isCeiling;
 	}
+	/*!
+	* @brief	ブロックと頭が当たったか判定。
+	*/
+	bool IsKabe() const
+	{
+		return m_isKabe;
+	}
 	
 	/*!
 	* @brief	コライダーを取得。
@@ -125,6 +132,7 @@ private:
 	bool 				m_isJump = false;				//ジャンプ中？
 	bool				m_isOnGround = true;			//地面の上にいる？
 	bool				m_isCeiling = false;			//ブロックと頭があたった？
+	bool				m_isKabe = false;				//壁と当たった？
 	CCapsuleCollider	m_collider;						//コライダー。
 	float				m_radius = 0.0f;
 	float				m_height = 0.0f;

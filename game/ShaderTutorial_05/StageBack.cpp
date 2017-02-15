@@ -31,7 +31,16 @@ void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
 	light.SetAmbientLight(D3DXVECTOR4(1.1f, 1.1f, 1.1f, 1.0f));
 
-	modelData.LoadModelData("Asset/model/sky.x", &animation);
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		modelData.LoadModelData("Asset/model/sky.x", &animation);
+		break;
+	case Stage2:
+		modelData.LoadModelData("Asset/model/skyNight.x", &animation);
+		break;
+	}
+	
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
 	skinmodel.SetShadowReceiverFlag(false);

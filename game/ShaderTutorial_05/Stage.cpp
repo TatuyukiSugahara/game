@@ -2,8 +2,12 @@
 #include "stdafx.h"
 #include "Stage.h"
 
-SCollisionInfo collisionInfoTable2D[] = {
+SCollisionInfo collisionInfoTable[] = {
 #include "Collision2D_stage01.h"
+};
+
+SCollisionInfo collisionInfoTable2[] = {
+#include "Collision_stage02.h"
 };
 
 CStage* g_stage;
@@ -21,11 +25,24 @@ void CStage::Init()
 {
 	g_physicsWorld = new CPhysicsWorld;
 	g_physicsWorld->Init();			//物理ワールド初期化
-	memset(m_rigidBody2D, NULL, sizeof(m_rigidBody2D));
+	memset(m_rigidBody, NULL, sizeof(m_rigidBody));
 	memset(m_groundShape, NULL, sizeof(m_groundShape));
 	g_stage = this;
-	CreateCollision2D();
-	Add2DRigidBody(ARRAYSIZE(collisionInfoTable2D));
+
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		collisionTable = collisionInfoTable;
+		arraySize = ARRAYSIZE(collisionInfoTable);
+		break;
+	case Stage2:
+		collisionTable = collisionInfoTable2;
+		arraySize = ARRAYSIZE(collisionInfoTable2);
+		break;
+	}
+
+	CreateCollision();
+	Add2DRigidBody(/*ARRAYSIZE(collisionTable)*/);
 	//ライトを初期化。
 	light.Init();
 	//カメラの初期化。
@@ -170,7 +187,6 @@ void CStage::Render()
 	g_pd3dDevice->SetDepthStencilSurface(mainRenderTarget->GetDepthStencilBuffer());
 
 	// レンダリングターゲットをクリア。
-	//g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 
 	//ステージ背景描画
@@ -270,6 +286,12 @@ void CStage::Render()
 	//太陽描画
 	sun.Render();
 
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER,
+		D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
+
+	//コインスプライト描画
+	coinsprite.Render();
+
 	bloom->Render();
 
 	//// ハンズオン 1-2 レンダリングターゲットを戻す。
@@ -284,8 +306,7 @@ void CStage::Render()
 
 	//コイン描画
 	coinNumber.Render(m_pSprite);
-	//コインスプライト描画
-	coinsprite.Render(m_pSprite);
+	
 
 	
 
@@ -309,15 +330,14 @@ void CStage::Release()
 	player.Release();
 }
 
-void CStage::CreateCollision2D()
+void CStage::CreateCollision()
 {
-	int arraySize = ARRAYSIZE(collisionInfoTable2D);
 	if (arraySize >= MAX_COLLISION)
 	{
 		std::abort();
 	}
 	for (int i = 0; i < arraySize; i++) {
-		SCollisionInfo& collision = collisionInfoTable2D[i];
+		SCollisionInfo& collision = collisionTable[i];
 		//ここで剛体とかを登録する。
 		//剛体を初期化。
 		{
@@ -331,7 +351,7 @@ void CStage::CreateCollision2D()
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
 			m_myMotionState = new btDefaultMotionState(groundTransform);
 			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_groundShape[i], btVector3(0, 0, 0));
-			m_rigidBody2D[i] = new btRigidBody(rbInfo);
+			m_rigidBody[i] = new btRigidBody(rbInfo);
 
 			//ワールドに追加。
 			//g_bulletPhysics.AddRigidBody(m_rigidBody2D[i]);
@@ -340,14 +360,13 @@ void CStage::CreateCollision2D()
 	}
 }
 
-void CStage::Add2DRigidBody(int arraySize)//ワールドに追加。
+void CStage::Add2DRigidBody(/*int arraySize*/)//ワールドに追加。
 {
 	if (!m_isAdd2DCollision){
 		m_isAdd2DCollision = true;
-		arraySize;
 		for (int i = 0; i < arraySize; i++)
 		{
-			g_physicsWorld->AddRigidBody(m_rigidBody2D[i]);
+			g_physicsWorld->AddRigidBody(m_rigidBody[i]);
 		}
 	}
 }

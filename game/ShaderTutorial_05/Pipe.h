@@ -1,5 +1,20 @@
 #pragma once
 
+//マップチップの配置情報。
+struct SPipeChipLocInfo {
+	const char* modelName;		//モデル。
+	D3DXVECTOR3	pos;			//座標。
+	D3DXQUATERNION	rotation;	//回転。
+	D3DXVECTOR3 scale;			//大きさ	
+};
+
+//オブジェクトの詳細
+struct SCollisionInfoPipe {
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 angle;
+	D3DXVECTOR3 scale;
+};
+
 #define MAXCOLLISION 30
 
 class CPipeChip;
@@ -26,6 +41,11 @@ public:
 	{
 		return arraySize;
 	}
+	//土管に入っているかフラグ。
+	bool GetIsPipe()
+	{
+		return isPipe;
+	}
 	btRigidBody *Get2DPipe()
 	{
 		return *m_rigidBody2Dpipe;
@@ -42,9 +62,13 @@ private:
 	btRigidBody*		m_rigidBody2Dpipe[MAXCOLLISION];	//剛体2D。
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
+	SPipeChipLocInfo* pipeChipTable;
+	SCollisionInfoPipe* collisionTablpipe;
 
 	int arraySize;
 	int count;								//土管に入るカウント;
 	D3DXVECTOR3			nextPos;			//次の土管の場所;
 	bool				isPipe;				//土管に入るフラグ;
+
+	CSoundSource* SEPipe;
 };

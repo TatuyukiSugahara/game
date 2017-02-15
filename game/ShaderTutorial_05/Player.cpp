@@ -10,7 +10,15 @@ CPlayer::CPlayer()
 {
 	//初期化
 	D3DXMatrixIdentity(&mWorld);
-	position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
+		break;
+	case Stage2:
+		position = D3DXVECTOR3(1.0f, 205.0f, 0.0f);		//初期位置
+		break;
+	}
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
 	Scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);			//初期スケール
 	addmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -31,6 +39,10 @@ CPlayer::~CPlayer()
 	if (specularMap != NULL)
 	{
 		specularMap->Release();
+	}
+	if (SEjump)
+	{
+		delete SEjump;
 	}
 }
 //初期化。
@@ -64,10 +76,10 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 		skinmodel.SetSpecularMap(specularMap);
 	}
 	//ライトを初期化。
-	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
-	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-0.707f, 0.0f, -0.707f, 1.0f));
-	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.707f, 0.707f, 1.0f));
-	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, -0.707f, 0.707f, 1.0f));
+	light.SetDiffuseLightDirection(0, D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f));
+	light.SetDiffuseLightDirection(1, D3DXVECTOR4(-1.0f, 0.0f, 0.0f, 1.0f));
+	light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.0f, -1.0f, 1.0f));
+	light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	light.SetDiffuseLightColor(0, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 10.0f));
 	light.SetDiffuseLightColor(1, D3DXVECTOR4(0.6f, 0.6f, 0.6f, 10.0f));
@@ -103,29 +115,36 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	m_targetAngleY = 0.0f;
 	turn.Initialize();
 	skinmodel.SetShadowReceiverFlag(false);
-	skinmodel.SetDrawToShadowMap(false);
+	skinmodel.SetDrawToShadowMap(true);
 	skinmodel.SetNormalMap(true);
 	skinmodel.SetSpecularMap(true);
+	skinmodel.SetHureneruflg(true);
 }
 //更新。
 void CPlayer::Update()
 {
-	if (g_pad.IsPress(enButtonB))
+	if (!g_stage->GetPipe()->GetIsPipe())
 	{
-		Move(9.0f);//移動
+		if (g_pad.IsPress(enButtonB))
+		{
+			Move(9.0f);//移動
+		}
+		else
+		{
+			Move(4.25f);//移動
+		}
+		Jump();//ジャンプ
 	}
-	else
+	if (position.y < -5.0f)
 	{
-		Move(4.25f);//移動
+		g_stage->GetCamera()->RotLongitudinal(D3DXToRadian(-5.0f));
 	}
-	
-	Jump();//ジャンプ
-	Died();//死亡
-	//落ちると死亡判定
 	if (position.y < -10.0f)
 	{
 		lifestate = Life::Died;
 	}
+	Died();//死亡
+	//落ちると死亡判定
 	////天井と当たった？＆＆当たったのは,はてなボックス？
 	//if (characterController.IsCeiling()
 	//	&& characterController.getCollisionObj() == g_stage->GetHatena()->Get2DHatena())
@@ -269,14 +288,20 @@ void CPlayer::Jump()
 		)
 	{
 		movespeed.y = 18.0f;
-		CSoundSource* SEjump = new CSoundSource;
+
+		SEjump = new CSoundSource;
 		SEjump->Init("Asset/Sound/jump.wav");
-		SEjump->Play(false);
 		SEjump->SetVolume(0.25f);
+		SEjump->Play(false);
 		state = PlayerIsJump;
 		animation.PlayAnimation(PlayerIsJump,0.05f);
 		characterController.Jump();
 
+	}
+	//空中での落下の上限
+	if (movespeed.y <= -10.0f)
+	{
+		movespeed.y = -10.0f;
 	}
 }
 
@@ -327,7 +352,7 @@ void CPlayer::State()
 		
 	}
 	//ジャンプ中
-	if (!characterController.IsOnGround() && state != PlayerHipDrop)
+	if (!characterController.IsOnGround())
 	{
 		if (state != PlayerJumpNow && !animation.IsPlay())
 		{
@@ -342,9 +367,6 @@ void CPlayer::Died()
 {
 	if (lifestate == Life::Died)
 	{
-		CSoundSource* SEDeath = new CSoundSource;
-		SEDeath->Init("Asset/Sound/death.wav");
-		SEDeath->Play(false);
 		g_stage->GetSoundSorce()->Stop();
 		g_scenemanager->SetResult(1);//死んだ場合
 		g_scenemanager->ChangeScene(GameScene::Result);

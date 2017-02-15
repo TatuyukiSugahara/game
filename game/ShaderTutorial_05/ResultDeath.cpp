@@ -9,6 +9,10 @@ CResultDeath::CResultDeath()
 
 CResultDeath::~CResultDeath()
 {
+	if (SEDeath)
+	{
+		delete SEDeath;
+	}
 }
 
 void CResultDeath::Init()
@@ -19,6 +23,9 @@ void CResultDeath::Init()
 	backColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	texFileName = "Asset/model/result.png";
 	C2DImage::Init();
+	SEDeath = new CSoundSource;
+	SEDeath->Init("Asset/Sound/death.wav");
+	SEDeath->Play(false);
 }
 
 void CResultDeath::Update()

@@ -6,8 +6,8 @@
 void CShadowMap::Create(int w, int h)
 {
 	D3DXMatrixIdentity(&mRot);
-	RenderTarget.Create(w, h, 1, D3DFMT_A8B8G8R8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
-	RenderTargetUnity.Create(w, h, 1, D3DFMT_A8B8G8R8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
+	RenderTarget.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
+	RenderTargetUnity.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
 	this->h = h;
 	this->w = w;
 

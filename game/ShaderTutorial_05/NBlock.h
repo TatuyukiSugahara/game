@@ -1,5 +1,14 @@
 #pragma once
 
+//マップチップの配置情報。
+struct SBlockChipLocInfo {
+	const char* modelName;		//モデル。
+	D3DXVECTOR3	pos;			//座標。
+	D3DXQUATERNION	rotation;	//回転。
+	D3DXVECTOR3 scale;			//大きさ	
+};
+
+
 class CNBlockChip;
 
 /*!
@@ -24,4 +33,7 @@ public:
 private:
 	std::vector<CNBlockChip*> nblockChipList;	//マップチップのリスト。
 	int tableSize;
+	SBlockChipLocInfo* nblockChipLocTable;
+
+	CSoundSource* SEBlock;
 };

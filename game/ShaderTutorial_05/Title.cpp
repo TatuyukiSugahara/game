@@ -18,6 +18,7 @@ void CTitle::Init()
 	scale = D3DXVECTOR2(1.0f, 1.0f);
 	backColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	texFileName = "Asset/model/title.png";
+	this->SetupMatrices();
 	C2DImage::Init();
 }
 

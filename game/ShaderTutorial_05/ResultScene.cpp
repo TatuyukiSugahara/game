@@ -10,23 +10,23 @@ void CResultScene::Init()
 
 	resultcamera.Init();
 	resultlight.Init();
-	resultDeat.Init();
-	resultGoal.Init();
 	fade.Init();
 	coinnumber.Init();
 	coinnumber.Set1keta(D3DXVECTOR2(540.0f, 300.0f));
 	coinnumber.Set2keta(D3DXVECTOR2(510.0f, 300.0f));
+	coinnumber.Set3keta(D3DXVECTOR2(480.0f, 300.0f));
 	coinnumber.SetColor(255, 0, 0);
-	coinsprite.Init();
-	coinsprite.SetPos(D3DXVECTOR2(440.0f, 302.5f));
+	//coinsprite.Init();
 
 	if (g_scenemanager->GetResult() == 0)
 	{
 		state = ResultState::Goal;
+		resultGoal.Init();
 	}
 	else if (g_scenemanager->GetResult() == 1)
 	{
 		state = ResultState::Death;
+		resultDeat.Init();
 	}
 }
 
@@ -38,7 +38,15 @@ void CResultScene::Update()
 	{
 		resultGoal.Update();
 		coinnumber.Update();
-		coinsprite.Update();
+		switch (g_scenemanager->GetNomber())
+		{
+		case Stage1:
+			g_scenemanager->SetNonber(Stage2);
+			break;
+		case Stage2:
+			g_scenemanager->SetNonber(Stage1);
+			break;
+		}
 		
 	}
 	else if (state == ResultState::Death)
@@ -71,7 +79,7 @@ void CResultScene::Render()
 	{
 		resultGoal.Render(m_pSprite);
 		coinnumber.Render(m_pSprite);
-		coinsprite.Render(m_pSprite);
+		//coinsprite.Render();
 	}
 	else if (state == ResultState::Death)
 	{

@@ -10,6 +10,12 @@ SCoinChipLocInfo coinChipLocInfoTable[] = {
 #include "LocationCoin.h"
 };
 
+//マップチップの配置情報のテーブル。
+SCoinChipLocInfo coinChipLocInfoTable2[] = {
+#include "LocationCoin2.h"
+};
+
+
 CCoin::CCoin()
 {
 
@@ -22,26 +28,39 @@ CCoin::~CCoin()
 }
 void CCoin::Init()
 {
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		coinChipLocTable = coinChipLocInfoTable;
+		tableSize = sizeof(coinChipLocInfoTable) / sizeof(coinChipLocInfoTable[0]);
+		break;
+	case Stage2:
+		coinChipLocTable = coinChipLocInfoTable2;
+		tableSize = sizeof(coinChipLocInfoTable2) / sizeof(coinChipLocInfoTable2[0]);
+		break;
+	}
 	//配置情報からマップを構築
-	tableSize = sizeof(coinChipLocInfoTable) / sizeof(coinChipLocInfoTable[0]);
 	for (int a = 0; a < tableSize; a++)
 	{
 		//マップチップを生成
 		CCoinChip* coinchip = new CCoinChip;
-		coinchip->SetPos(coinChipLocInfoTable[a].pos);
-		coinchip->Init(coinChipLocInfoTable[a].modelName, g_pd3dDevice);
+		coinchip->SetPos(coinChipLocTable[a].pos);
+		coinchip->Init(coinChipLocTable[a].modelName, g_pd3dDevice);
 		coinChipList.push_back(coinchip);
 	}
 
 }
 void CCoin::Update()
 {
-	tableSize = sizeof(coinChipLocInfoTable) / sizeof(coinChipLocInfoTable[0]);
+	//ワールド行列の更新。
+	static float rot = 0.0f;
+	D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot += 0.1f);
+
 	for (int a = 0; a < tableSize; a++)
 	{
+		coinChipList[a]->SetRot(rotation);
 		coinChipList[a]->Update();
 	}
-	//Release();
 }
 void CCoin::Render(
 	D3DXMATRIX viewMatrix,

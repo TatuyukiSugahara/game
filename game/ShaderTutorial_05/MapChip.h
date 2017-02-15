@@ -1,12 +1,7 @@
 #pragma once
 #include "Model.h"
 
-//マップチップの配置情報。
-struct SMapChipLocInfo {
-	const char* modelName;		//モデル。
-	D3DXVECTOR3	pos;			//座標。
-	D3DXQUATERNION	rotation;		//回転。
-};
+
 class CMapChip
 {
 public:

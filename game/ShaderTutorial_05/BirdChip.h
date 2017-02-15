@@ -55,6 +55,8 @@ private:
 	SkinModel skinmodel;
 	SkinModelData modelData;
 	Animation animation;
+	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
+	Animation* orgAnimation;
 	CLight	light;
 	SParicleEmitParameter param;
 	std::list<CParticleEmitter*> particleEmitterList;
@@ -62,5 +64,7 @@ private:
 	int parTime;
 	bool parflag;
 	int count;
+
+	CSoundSource* SEenemyDeath;
 };
 

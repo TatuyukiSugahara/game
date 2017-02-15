@@ -1,13 +1,7 @@
 #pragma once
 #include "Model.h"
 
-//マップチップの配置情報。
-struct SPipeChipLocInfo {
-	const char* modelName;		//モデル。
-	D3DXVECTOR3	pos;			//座標。
-	D3DXQUATERNION	rotation;	//回転。
-	D3DXVECTOR3 scale;			//大きさ	
-};
+
 class CPipeChip
 {
 public:

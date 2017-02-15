@@ -6,13 +6,6 @@ enum AnimState
 	BlockOff,			//アニメーションしない
 };
 
-//マップチップの配置情報。
-struct SBlockChipLocInfo {
-	const char* modelName;		//モデル。
-	D3DXVECTOR3	pos;			//座標。
-	D3DXQUATERNION	rotation;	//回転。
-	D3DXVECTOR3 scale;			//大きさ	
-};
 
 //見えるブロック
 
@@ -62,8 +55,10 @@ private:
 	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXQUATERNION			rotation;
 	LPDIRECT3DTEXTURE9		normalMap = NULL;	//ノーマルマップ
+	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
 	SkinModel skinmodel;
 	SkinModelData modelData;
+	Animation* orgAnimation;
 	Animation animation;
 	CLight	light;
 	AnimState animState;

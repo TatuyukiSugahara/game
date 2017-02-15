@@ -4,7 +4,7 @@
 
 enum StageNomber
 {
-	Stage1,
+	Stage1 = 1,
 	Stage2,
 };
 
@@ -39,9 +39,18 @@ public:
 	{
 		num++;
 	}
+	StageNomber GetNomber()
+	{
+		return Nomber;
+	}
+	void SetNonber(int i)
+	{
+		Nomber = StageNomber(i);
+	}
 private:
 	CScene* m_scenes;
 	int nextScene = -1;
 	bool resultflag = 0;		//0はゴール、1はデス
-	int num = 0;
+	int num = 0;				//コインの数
+	StageNomber Nomber = StageNomber::Stage2;
 };

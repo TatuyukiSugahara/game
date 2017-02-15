@@ -22,6 +22,10 @@ public:
 	{
 		keta2 = keta;
 	}
+	void Set3keta(D3DXVECTOR2 keta)
+	{
+		keta3 = keta;
+	}
 	void SetColor(int r,int g, int b)
 	{
 		backColor = D3DCOLOR_ARGB(255, r, g, b);
@@ -30,4 +34,5 @@ private:
 	const int NUMBER_NUM = 10;
 	D3DXVECTOR2 keta1;
 	D3DXVECTOR2 keta2;
+	D3DXVECTOR2 keta3;
 };

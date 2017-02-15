@@ -10,5 +10,5 @@ public:
 	void Update()override;
 
 private:
-
+	CSoundSource* SEGoal;
 };

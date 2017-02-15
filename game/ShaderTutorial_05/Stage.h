@@ -45,7 +45,7 @@ public:
 		for (auto& shape : m_groundShape){
 			delete shape;
 		}
-		for (auto& rb : m_rigidBody2D){
+		for (auto& rb : m_rigidBody){
 			delete rb;
 		}
 		delete m_myMotionState;
@@ -57,8 +57,8 @@ public:
 	void UpdateLight();
 	void Release();
 
-	void CreateCollision2D();				//2Dあたり判定
-	void Add2DRigidBody(int arraySize);		//2Dあたり判定追加
+	void CreateCollision();				//2Dあたり判定
+	void Add2DRigidBody(/*int arraySize*/);		//2Dあたり判定追加
 	Camera* GetCamera()
 	{
 		return&camera;
@@ -127,12 +127,18 @@ public:
 	{
 		return &coin;
 	}
+	CCoinSprite* GetCoinSprite()
+	{
+		return &coinsprite;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody2D[MAX_COLLISION];	//剛体2D。
+	btRigidBody*		m_rigidBody[MAX_COLLISION];	//剛体。
 	btDefaultMotionState* m_myMotionState;
 	bool				m_isAdd2DCollision;
+	SCollisionInfo* collisionTable;					//コリジョンテーブル
+	int arraySize;									//サイズ
 
 	LPD3DXSPRITE m_pSprite;			//スプライト
 

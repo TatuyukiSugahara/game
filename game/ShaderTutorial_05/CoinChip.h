@@ -1,11 +1,6 @@
 #pragma once
 
-//マップチップの配置情報。
-struct SCoinChipLocInfo {
-	const char* modelName;		//モデル。
-	D3DXVECTOR3	pos;			//座標。
-	D3DXQUATERNION	rotation;		//回転。
-};
+
 class CCoinChip
 {
 public:
@@ -36,12 +31,13 @@ private:
 	SkinModelData* modelData;
 	Animation animation;
 	CLight	light;
-	LPDIRECT3DTEXTURE9 normalMap = NULL;					//ノーマルマップ
 	D3DXMATRIX							mRot;
 	D3DXVECTOR3							position;
 	D3DXQUATERNION						rotation;
 	D3DXMATRIX							mWorld;			//ワールド行列。
 	int									size;
 	bool								coinget;		//コインをゲットしたかフラグ。
+
+	CSoundSource* soundSource;
 };
 

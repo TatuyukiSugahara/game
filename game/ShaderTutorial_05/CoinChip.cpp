@@ -12,26 +12,13 @@ CCoinChip::CCoinChip()
 
 CCoinChip::~CCoinChip()
 {
-	if (normalMap != NULL)
+	if (soundSource)
 	{
-		normalMap->Release();
+		delete soundSource;
 	}
 }
 void CCoinChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	//ノーマルマップロード
-	HRESULT hr = D3DXCreateTextureFromFileA(
-		g_pd3dDevice,
-		"Asset/model/goldCoin_Normal.jpg",
-		&normalMap);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認してください。", "エラー", MB_OK);
-	}
-	if (normalMap != NULL) {
-		//法線マップの読み込みが成功したので、CSkinModelに法線マップを設定する。
-		skinmodel.SetNormalMap(normalMap);
-	}
 
 	//ライトを初期化。
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.707f, 0.0f, -0.707f, 1.0f));
@@ -58,7 +45,8 @@ void CCoinChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	skinmodel.SetNormalMap(true);
 	skinmodel.SetSpecularMap(false);
 
-	
+	soundSource = new CSoundSource;
+	soundSource->Init("Asset/Sound/coin.wav");
 
 	coinget = false;
 }
@@ -68,13 +56,12 @@ void CCoinChip::Update()
 	if (coinget == false)
 	{
 		//コインとプレイヤーが当たったか。
-		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.37f, 0.5f) == true)
+		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.75) == true)
 		{
 			coinget = true;
 			g_scenemanager->AddNum();
+			g_stage->GetCoinSprite()->SetRotFlag(true);
 			//サウンド
-			CSoundSource* soundSource = new CSoundSource;
-			soundSource->Init("Asset/Sound/coin.wav");
 			soundSource->SetVolume(0.25f);
 			soundSource->Play(false);
 		}
@@ -85,10 +72,6 @@ void CCoinChip::Update()
 				coinget = true;
 			}
 		}
-		//ワールド行列の更新。
-		static float rot = 0.0f;
-		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot+=0.005f);
-		
 	}
 }
 void CCoinChip::Render(

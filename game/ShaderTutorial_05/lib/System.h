@@ -19,8 +19,8 @@ extern CSoundEngine*			g_soundengine;
 extern CSkinModelDataManager*	g_skinmodeldataManager;
 extern CRenderTarget*			mainRenderTarget;
 extern void DrawQuadPrimitive();
-extern Bloom* bloom;
 extern void CopyMainRTToCurrentRT();
+extern Bloom*					bloom;				//ブルーム
 
 
 static const int FRAME_BUFFER_WITDH = 960;		//!<フレームバッファのサイズ。

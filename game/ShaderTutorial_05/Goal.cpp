@@ -10,9 +10,18 @@ CGoal::CGoal()
 {
 	//初期化。
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 390.0f;
-	position.y = 30.0f;
-	position.z = -22.5f;
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		position.x = 385.0f;
+		position.y = 30.0f;
+		position.z = -24.5f;
+		break;
+	case Stage2:
+		position = D3DXVECTOR3(349.0f, 140.0f, 11.0f);
+		break;
+	}
+	
 	m_aabbMax = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_aabbMin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
@@ -28,6 +37,8 @@ void CGoal::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
 	m_aabbMin += position;
 	m_aabbMax += position;
+
+	
 }
 //更新。
 void CGoal::Update()
@@ -42,9 +53,6 @@ void CGoal::Update()
 
 		)
 	{
-		CSoundSource* SEGoal = new CSoundSource;
-		SEGoal->Init("Asset/Sound/goal.wav");
-		SEGoal->Play(false);
 		g_scenemanager->SetResult(0);//ゴールした場合
 		g_scenemanager->ChangeScene(GameScene::Result);
 	}

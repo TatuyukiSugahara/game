@@ -115,6 +115,13 @@ public:
 		specularMap = specMap;
 	}
 	/*!
+	*@brief フレネルを設定。
+	*/
+	void SetHureneruflg(bool flag)
+	{
+		hureneruflg = flag;
+	}
+	/*!
 	*@brief 地面かどうか設定。
 	*/
 	void SetGround(bool flag)
@@ -135,4 +142,5 @@ private:
 	bool				Ground;				//<!地面ですか？
 	LPDIRECT3DTEXTURE9	normalMap;				//<!ノーマルマップ。
 	LPDIRECT3DTEXTURE9  specularMap;				//<!スペキュラマップ。
+	bool				hureneruflg = false;				//ふちを光らせる。
 };

@@ -6,14 +6,24 @@
 
 using namespace std;
 
-
+//ステージ１
 //土管チップの配置情報のテーブル。
 SPipeChipLocInfo pipeChipLocInfoTable[] = {
 #include "locationPipe.h"
 };
 //あたり判定
-SCollisionInfo collisionInfoTable2Dpipe[] = {
+SCollisionInfoPipe collisionInfoTablepipe[] = {
 #include "Collision2D_Pipe.h"
+};
+
+//ステージ２
+//土管チップの配置情報のテーブル。
+SPipeChipLocInfo pipeChipLocInfoTable2[] = {
+#include "locationPipe2.h"
+};
+//あたり判定
+SCollisionInfoPipe collisionInfoTablpipe2[] = {
+#include "Collision_Pipe2.h"
 };
 
 CPipe::CPipe()
@@ -40,22 +50,41 @@ CPipe::~CPipe()
 		delete rb;
 	}
 	delete m_myMotionState;
+	if (SEPipe)
+	{
+		delete SEPipe;
+	}
 }
 void CPipe::Init()
 {
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		pipeChipTable = pipeChipLocInfoTable;
+		collisionTablpipe = collisionInfoTablepipe;
+		tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
+		arraySize = ARRAYSIZE(collisionInfoTablepipe);
+		break;
+	case Stage2:
+		pipeChipTable = pipeChipLocInfoTable2;
+		collisionTablpipe = collisionInfoTablpipe2;
+		tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
+		arraySize = ARRAYSIZE(collisionInfoTablpipe2);
+		break;
+	}
+
 	//配置情報からマップを構築
-	tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
 	for (int a = 0; a < tableSize; a++)
 	{
 		//マップチップを生成
 		CPipeChip* pipeChip = new CPipeChip;
-		pipeChip->SetPos(pipeChipLocInfoTable[a].pos);
-		pipeChip->SetRot(pipeChipLocInfoTable[a].rotation);
-		pipeChip->SetScale(pipeChipLocInfoTable[a].scale);
+		pipeChip->SetPos(pipeChipTable[a].pos);
+		pipeChip->SetRot(pipeChipTable[a].rotation);
+		pipeChip->SetScale(pipeChipTable[a].scale);
 		pipeChip->Init();
 		pipeChipList.push_back(pipeChip);
 	}
-	arraySize = ARRAYSIZE(collisionInfoTable2Dpipe);
+	
 	CreateCollision2D();
 	Add2DRigidBody(arraySize);
 
@@ -66,10 +95,19 @@ void CPipe::Update()
 	{
 		pipeChipList[a]->Update();
 	}
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		PipeMove(6, 7, 9);
+		PipeMove(8, 7, 11);
+		break;
+	case Stage2:
+		PipeMove(0, 1, 0);
+		PipeMove(2, 3, 2);
+		PipeMove(4, 5, 4);
+		break;
+	}
 
-	PipeMove(6, 7, 9);
-	PipeMove(8, 7, 11);
-	
 
 	if (isPipe == true)
 	{
@@ -97,6 +135,7 @@ void CPipe::Update()
 	}
 
 }
+
 void CPipe::Render()
 {
 	for (int a = 0; a < tableSize; a++)
@@ -112,7 +151,7 @@ void CPipe::CreateCollision2D()
 		std::abort();
 	}
 	for (int i = 0; i < arraySize; i++) {
-		SCollisionInfo& collision = collisionInfoTable2Dpipe[i];
+		SCollisionInfoPipe& collision = collisionTablpipe[i];
 		//ここで剛体とかを登録する。
 		//剛体を初期化。
 		{
@@ -166,7 +205,7 @@ void CPipe::PipeMove(int now, int next, int pipenum)
 		&& g_stage->GetPlayer()->GetcharacterController().IsOnGround() == true
 		)
 	{
-		D3DXVECTOR3 toPos = pipeChipLocInfoTable[pipenum].pos - g_stage->GetPlayer()->GetPos();
+		D3DXVECTOR3 toPos = pipeChipTable[pipenum].pos - g_stage->GetPlayer()->GetPos();
 		float dir = D3DXVec3Length(&toPos);
 		D3DXVec3Normalize(&toPos, &toPos);
 		g_stage->GetPlayer()->SetMoveSpeed(toPos * 2.0f);
@@ -174,13 +213,13 @@ void CPipe::PipeMove(int now, int next, int pipenum)
 		{
 			isPipe = true;
 			Remove2DRigidBody(arraySize);
-			CSoundSource* SEPipe = new CSoundSource;
+			SEPipe = new CSoundSource;
 			SEPipe->Init("Asset/Sound/Pipe.wav");
 			SEPipe->Play(false);
 			SEPipe->SetVolume(0.25f);
-			nextPos = D3DXVECTOR3(collisionInfoTable2Dpipe[next].pos.x
-				, collisionInfoTable2Dpipe[next].pos.y - 0.5f
-				, collisionInfoTable2Dpipe[next].pos.z);
+			nextPos = D3DXVECTOR3(collisionTablpipe[next].pos.x
+				, collisionTablpipe[next].pos.y - 0.5f
+				, collisionTablpipe[next].pos.z);
 		}
 	}
 }

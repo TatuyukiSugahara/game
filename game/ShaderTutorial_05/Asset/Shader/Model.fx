@@ -25,6 +25,8 @@ float4	g_ambientLight;								//環境光。
 int g_ShadowReceiverFlag;							//影を受けるフラグ
 int g_Ground;										//地面かどうかのフラグ
 
+int hureneruflg;				//ふちを光らせる。
+
 texture g_diffuseTexture;		//ディフューズテクスチャ。
 texture g_shadowTexture;		//シャドーテクスチャ。
 texture g_shadowUnityTexture;	//ユニティシャドーテクスチャ
@@ -286,10 +288,18 @@ float4 posInLVP = In.lightViewPos_1;
 		lig.xyz += spec;
 		
 	}
-			
-	
-	
 	color.xyz *= lig;
+	
+	//ユニティちゃんのふちを光らせる。
+	float t = 0.0f;
+	if (hureneruflg)
+	{
+		float3 normalInCamera = mul(In.normal, g_viewMatrixRotInv);
+		t = 1.0f - abs(dot(normalInCamera, float3(0.0f, 0.0f, 1.0f)));
+		t = pow(t, 1.5f);
+	}
+	color.xyz += t;
+	
 	return color;
 }
 /*!

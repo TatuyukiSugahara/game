@@ -3,16 +3,30 @@
 #include "Stage.h"
 #include "BallCollision.h"
 
+SkinModelData*	CMohurunChip::orgSkinModelData = NULL;	//オリジナルスキンモデルデータ。
 
 CMohurunChip::CMohurunChip()
 {
 	scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
+	movespeed = D3DXVECTOR3(-2.0f, 0.0f, 0.0f);		//初期移動速度
 }
 
 
 CMohurunChip::~CMohurunChip()
 {
+	/*if (orgSkinModelData)
+	{
+		delete orgSkinModelData;
+	}
+	if (orgAnimation)
+	{
+		delete orgAnimation;
+	}*/
+	if (SEenemyDeath)
+	{
+		delete SEenemyDeath;
+	}
 }
 
 //初期化。
@@ -33,7 +47,14 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	//スキンモデルをロード。
 	char modelPath[256];
 	sprintf(modelPath, "Asset/model/%s.X", name);
-	modelData.LoadModelData(modelPath, &animation);
+
+	if (orgSkinModelData == NULL) {
+		orgSkinModelData = new SkinModelData;
+		orgAnimation = new Animation;
+		orgSkinModelData->LoadModelData(modelPath, orgAnimation);
+	}
+	//オリジナルのモデルデータからクローンモデルを作成。
+	modelData.CloneModelData(*orgSkinModelData, &animation);
 
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
@@ -58,6 +79,12 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
+
+	characterController.Init(0.3f, 1.0f, position);
+	characterController.SetGravity(-30.0f);
+
+	SEenemyDeath = new CSoundSource;
+	SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
 }
 //更新。
 void CMohurunChip::Update()
@@ -68,7 +95,7 @@ void CMohurunChip::Update()
 		D3DXVECTOR3 playerPos = g_stage->GetPlayer()->GetPos();
 		float toLength = D3DXVec3Length(&D3DXVECTOR3(position - playerPos));
 
-		if (fabs(toLength) < 8.0f)
+		if (fabs(toLength) < 10.0f)
 		{
 			
 			if (BallCollision(position - D3DXVECTOR3(0.0f, 0.2f, 0.0f),
@@ -82,8 +109,6 @@ void CMohurunChip::Update()
 				scale = D3DXVECTOR3(1.4f, 0.2f, 1.4f);
 				parflag = true;
 				state = off;
-				CSoundSource* SEenemyDeath = new CSoundSource;
-				SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
 				SEenemyDeath->Play(false);
 				SEenemyDeath->SetVolume(0.25f);
 				g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,
@@ -96,7 +121,18 @@ void CMohurunChip::Update()
 				particleEmitterList.push_back(particleEmitter);
 			}
 
-			position.x -= 0.01f;
+			
+
+			characterController.SetMoveSpeed(movespeed);
+			characterController.Execute();
+			movespeed = characterController.GetMoveSpeed();
+			position = characterController.GetPosition();
+			characterController.SetPosition(position);
+			if (characterController.IsKabe())
+			{
+				movespeed.x *= -1.0f;
+			}
+
 		}
 		//ワールド行列の更新。
 		animation.Update(1.0f / 60.0f);
@@ -115,6 +151,7 @@ void CMohurunChip::Update()
 		}
 		else
 		{
+			
 			parflag = false;
 			for (auto p : particleEmitterList)
 			{

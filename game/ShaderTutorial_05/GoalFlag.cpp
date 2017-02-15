@@ -9,9 +9,20 @@ CGoalFlag::CGoalFlag()
 {
 	//初期化。
 	D3DXMatrixIdentity(&mWorld);
-	position.x = 390.0f;
-	position.y = 37.0f;
-	position.z = -22.5f;
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		position.x = 385.0f;
+		position.y = 37.0f;
+		position.z = -24.5f;
+		break;
+	case Stage2:
+		position.x = 349.0f;
+		position.y = 147.0f;
+		position.z = 11.0f;
+		position = D3DXVECTOR3(349.0f, 140.0f, 11.0f);
+		break;
+	}
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 }
 //デストラクタ

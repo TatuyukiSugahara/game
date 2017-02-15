@@ -13,7 +13,7 @@ class CTitleScene : public CScene
 {
 public:
 	CTitleScene(){}
-	~CTitleScene(){}
+	~CTitleScene();
 	void Init();
 	void Update();
 	void Render();

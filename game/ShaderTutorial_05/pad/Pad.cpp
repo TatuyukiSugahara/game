@@ -49,7 +49,7 @@ namespace {
 		{ enButtonA, VK_SPACE },
 		{ enButtonB, VK_CONTROL },
 		{ enButtonY, 'I' },
-		{ enButtonX, 'O' },
+		{ enButtonX, VK_SPACE },
 		{ enButtonSelect, VK_SPACE },
 		{ enButtonStart, VK_RETURN },
 		{ enButtonRB1, '7' },

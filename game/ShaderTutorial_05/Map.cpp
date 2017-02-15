@@ -10,6 +10,12 @@ SMapChipLocInfo mapChipLocInfoTable[] = {
 #include "locationInfo.h"
 };
 
+//マップチップの配置情報のテーブル。
+SMapChipLocInfo mapChipLocInfoTable2[] = {
+#include "locationInfo2.h"
+};
+
+
 CMap::CMap()
 {
 
@@ -22,15 +28,27 @@ CMap::~CMap()
 }
 void CMap::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
+
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		mapChipTable = mapChipLocInfoTable;
+		tableSize = sizeof(mapChipLocInfoTable) / sizeof(mapChipLocInfoTable[0]);
+		break;
+	case Stage2:
+		mapChipTable = mapChipLocInfoTable2;
+		tableSize = sizeof(mapChipLocInfoTable2) / sizeof(mapChipLocInfoTable2[0]);
+		break;
+	}
+
 	//配置情報からマップを構築
-	tableSize = sizeof(mapChipLocInfoTable) / sizeof(mapChipLocInfoTable[0]);
-	for (int a=0; a < tableSize;a++)
+	for (int a=0; a < tableSize; a++)
 	{
 		//マップチップを生成
 		CMapChip* mapChip = new CMapChip;
-		mapChip->SetPos(mapChipLocInfoTable[a].pos);
-		mapChip->SetRot(mapChipLocInfoTable[a].rotation);
-		mapChip->Init(mapChipLocInfoTable[a].modelName, pd3dDevice);
+		mapChip->SetPos(mapChipTable[a].pos);
+		mapChip->SetRot(mapChipTable[a].rotation);
+		mapChip->Init(mapChipTable[a].modelName, pd3dDevice);
 		mapChipList.push_back(mapChip);
 	}
 	

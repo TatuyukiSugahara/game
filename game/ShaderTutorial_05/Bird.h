@@ -16,6 +16,10 @@ public:
 		D3DXMATRIX viewMatrix,
 		D3DXMATRIX projMatrix,
 		bool isDrawToShadowMap);
+	std::vector<CBirdChip*> GetBird()
+	{
+		return birdChipList;
+	}
 private:
 	std::vector<CBirdChip*> birdChipList;	//マップチップのリスト。
 	int tableSize;

@@ -4,31 +4,35 @@
 
 CTitleScene g_titlescene;
 
+CTitleScene::~CTitleScene()
+{ 
+	delete SETitle;
+}
+
 void CTitleScene::Init()
 {
-	this->CreateSprite();
-
 	SETitle = new CSoundSource;
 	SETitle->Init("Asset/Sound/CandyCrush.wav");
+	SETitle->SetVolume(0.25f);
 	SETitle->Play(false);
-
-	camera.Init();
-	light.Init();
+	this->CreateSprite();
 	title.Init();
 	titlestart.Init();
 	titlestartBG.Init();
 	fade.Init();
+	camera.Init();
+	light.Init();
+	
 }
 
 void CTitleScene::Update()
 {
-	camera.Update();
-	light.Update();
 	title.Update();
 	titlestart.Update();
 	titlestartBG.Update();
 	fade.Update();
-
+	camera.Update();
+	light.Update();
 	if (g_pad.IsTrigger(enButtonA))
 	{
 		fade.SetFade(true);
@@ -39,7 +43,6 @@ void CTitleScene::Update()
 	if (fade.GetNext() <= fade.GetTimer())
 	{
 		SETitle->Stop();
-		delete SETitle;
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }
@@ -50,12 +53,10 @@ void CTitleScene::Render()
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	//シーンの描画開始。
 	g_pd3dDevice->BeginScene();
-
 	title.Render(m_pSprite);
 	titlestart.Render(m_pSprite);
 	titlestartBG.Render(m_pSprite);
 	fade.Render(m_pSprite);
-
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();
 	// バックバッファとフロントバッファを入れ替える。

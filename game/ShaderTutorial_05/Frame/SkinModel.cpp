@@ -94,6 +94,13 @@ void SkinModel::DrawMeshContainer(
 	//視点。
 	pEffect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage->GetCamera()->GetEyePt());
 
+	/*if (hureneruflg == true)
+	{*/
+		pEffect->SetInt("hureneruflg", hureneruflg);
+		//pEffect->SetMatrix("g_viewMatrixRotInv", &g_stage->GetCamera()->GetViewMatrixInv());
+
+	//}
+
 	//影を描画しているレンダーターゲットのテクスチャを取得。
 	if (ShadowReceiverFlag == TRUE)
 	{

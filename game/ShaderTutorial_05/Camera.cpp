@@ -37,10 +37,17 @@ void Camera::Update()
 	cameradir.y = 0.0f;
 	D3DXVec3Normalize(&cameradir, &cameradir);
 
-
 	D3DXMatrixLookAtLH(&viewMatrix, &vEyePt, &vLookatPt, &vUpVec);
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, D3DX_PI / 4, aspect, Near, Far);
 	
+	D3DXMatrixInverse(&viewMatrixRotInv, NULL, &viewMatrix);
+	mRot = viewMatrixRotInv;
+	mRot.m[3][0] = 0.0f;
+	mRot.m[3][1] = 0.0f;
+	mRot.m[3][2] = 0.0f;
+	mRot.m[3][3] = 1.0f;
+	D3DXMatrixTranspose(&viewMatrixRotInv, &mRot);
+
 	//3Dサウンドのリスナーはカメラ。
 	g_soundengine->SetListenerPosition(g_stage->GetPlayer()->GetPos());
 	const D3DXMATRIX& m = mRot;

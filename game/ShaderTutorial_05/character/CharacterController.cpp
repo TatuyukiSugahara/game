@@ -215,6 +215,7 @@
 		D3DXVec3Normalize(&originalXZDir, &originalXZDir);
 		//XZ平面での衝突検出と衝突解決を行う。
 		{
+			m_isKabe = false;
 			int loopCount = 0;
 			while (true) {
 				//現在の座標から次の移動先へ向かうベクトルを求める。
@@ -249,6 +250,7 @@
 				if (callback.isHit) {
 					//当たった。
 					//壁。
+					m_isKabe = true;
 					hitCollisionObject = callback.hitCollisionObject;//壁のコリジョンオブジェクトと当たった。
 					D3DXVECTOR3 vT0, vT1;
 					//XZ平面上での移動後の座標をvT0に、交点の座標をvT1に設定する。
