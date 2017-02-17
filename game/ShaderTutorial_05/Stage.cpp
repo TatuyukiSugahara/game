@@ -10,6 +10,10 @@ SCollisionInfo collisionInfoTable2[] = {
 #include "Collision_stage02.h"
 };
 
+SCollisionInfo collisionInfoTableBoss[] = {
+#include "CollisionStageBos.h"
+};
+
 CStage* g_stage;
 
 /*!-----------------------------------------------------------------------------
@@ -39,6 +43,10 @@ void CStage::Init()
 		collisionTable = collisionInfoTable2;
 		arraySize = ARRAYSIZE(collisionInfoTable2);
 		break;
+	case StageBoss:
+		collisionTable = collisionInfoTableBoss;
+		arraySize = ARRAYSIZE(collisionInfoTableBoss);
+		break;
 	}
 
 	CreateCollision();
@@ -49,7 +57,14 @@ void CStage::Init()
 	camera.Init();
 
 	//サウンドソースを初期化。
-	soundsource.InitStreaming("Asset/Sound/mario.wav");
+	if (g_scenemanager->GetNomber() == StageBoss)
+	{
+		soundsource.InitStreaming("Asset/Sound/battle.wav"); 
+	}
+	else
+	{
+		soundsource.InitStreaming("Asset/Sound/mario.wav");
+	}
 	soundsource.Play(true);
 	soundsource.SetVolume(0.5f);
 
@@ -67,36 +82,50 @@ void CStage::Init()
 	map.Init(g_pd3dDevice);
 	//プレイヤー初期化
 	player.Init(g_pd3dDevice);
-	//モフルンエネミー初期化
-	mohurun.Init();
-	//nブロック初期化
-	nblock.Init(g_pd3dDevice);
-	//見えないブロック初期化
-	//noblock.Init();
-	//はてなボックス初期化
-	//hanatebox.Init(g_pd3dDevice);
-	//キノコ初期化
-	//kinoko.Init(g_pd3dDevice);
-	//土管初期化
-	pipe.Init();
-	//ゴール初期化
-	goal.Init(g_pd3dDevice);
-	//影初期化
-	shadow.Create(512, 512);
-	//サボテン初期化
-	//sabo.Init(g_pd3dDevice);
-	//コインを初期化
-	coin.Init();
+	if (g_scenemanager->GetNomber() != StageBoss)
+	{
+		//モフルンエネミー初期化
+		mohurun.Init();
+		//nブロック初期化
+		nblock.Init(g_pd3dDevice);
+		//見えないブロック初期化
+		//noblock.Init();
+		//はてなボックス初期化
+		//hanatebox.Init(g_pd3dDevice);
+		//キノコ初期化
+		//kinoko.Init(g_pd3dDevice);
+		//土管初期化
+		pipe.Init();
+		//ゴール初期化
+		goal.Init(g_pd3dDevice);
+
+		//サボテン初期化
+		//sabo.Init(g_pd3dDevice);
+		//コインを初期化
+		coin.Init();
+
+		//ゴールフラグ初期化
+		goalflag.Init();
+
+		//鳥初期化
+		bird.Init();
+	}
 	//コインナンバー初期化
-	coinNumber.Init();	
-	//ゴールフラグ初期化
-	goalflag.Init();
+	coinNumber.Init();
 	//コインスプライト初期化
 	coinsprite.Init();
-	//鳥初期化
-	bird.Init();
+	//影初期化
+	shadow.Create(512, 512);
 	//太陽初期化
 	sun.Init();
+	if (g_scenemanager->GetNomber() == StageBoss)
+	{
+		//ボス初期化
+		boss.Init();
+		//ボスライフ初期化
+		bossLife.Init();
+	}
+
 	//回転するギミック初期化
 	//otationgimmick.Init();
 }
@@ -111,16 +140,39 @@ void CStage::Update()
 	map.Update();
 	//プレイヤーを更新。
 	player.Update();
-	//モフルンエネミー更新
-	mohurun.Update();
+	if (g_scenemanager->GetNomber() != StageBoss)
+	{
+		//モフルンエネミー更新
+		mohurun.Update();
+		//Nブロックを更新
+		nblock.Update();
+		//土管更新
+		pipe.Update();
+		//ゴール更新
+		goal.Update();
+		//サボテン更新
+		//sabo.Update();
+		//コイン更新
+		coin.Update();
+		//ゴールフラグ更新
+		goalflag.Update();
+		//鳥更新
+		bird.Update();
+		//回転するギミック更新
+		//rotationgimmick.Update();
+		
+	}
+	//コイン更新
+		coinNumber.Update();
+	//コインスプライト更新
+		coinsprite.Update();
 	//影更新
 	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 10.0f, 0.0f);
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
 	shadow.SetLightDirection(lightDir);
-	//Nブロックを更新
-	nblock.Update();
+	
 	//見えないブロック更新
 	//noblock.Update();
 	//はてなボックス更新
@@ -130,28 +182,19 @@ void CStage::Update()
 	{
 		kinoko.Update();
 	}*/
-	//土管更新
-	pipe.Update();
-	//ゴール更新
-	goal.Update();
-	//サボテン更新
-	//sabo.Update();
-	//コイン更新
-	coin.Update();
-	//ゴールフラグ更新
-	goalflag.Update();
-	//コイン更新
-	coinNumber.Update();
-	//鳥更新
-	bird.Update();
-	//回転するギミック更新
-	//rotationgimmick.Update();
+	
 	//サウンドソース更新
 	soundsource.Update();
-	//コインスプライト更新
-	coinsprite.Update();
+	
 	//太陽更新
 	sun.Update();
+	if (g_scenemanager->GetNomber() == StageBoss)
+	{
+		//ボス更新
+		boss.Update();
+		//ボスライフ更新
+		bossLife.Update();
+	}
 	//カメラの更新
 	camera.Update();
 }
@@ -205,22 +248,36 @@ void CStage::Render()
 		camera.GetProjectionMatrix(),
 		false
 		);
-	//モフルンエネミー描画
-	mohurun.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		false);
-	//Nブロックを描画
-	nblock.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		false);
-	//見えないブロック描画
-	noblock.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix());
-	//はてなボックス描画
-	/*hanatebox.Render(
+	if (g_scenemanager->GetNomber() != StageBoss)
+	{
+		//モフルンエネミー描画
+		mohurun.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			false);
+		//Nブロックを描画
+		nblock.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			false);
+		//見えないブロック描画
+		noblock.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix());
+		//はてなボックス描画
+		/*hanatebox.Render(
+			g_pd3dDevice,
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			light.GetLightDirection(),
+			light.GetLightColor(),
+			light.GetambientLight(),
+			light.GetLightNum()
+			);*/
+		//キノコ
+		/*if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
+		{
+		kinoko.Render(
 		g_pd3dDevice,
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
@@ -228,11 +285,12 @@ void CStage::Render()
 		light.GetLightColor(),
 		light.GetambientLight(),
 		light.GetLightNum()
-		);*/
-	//キノコ
-	/*if (kinoko.GetState() == Leave && kinoko.GetKinoko() == false)
-	{
-		kinoko.Render(
+		);
+		}*/
+		//土管描画
+		pipe.Render();
+		//ゴール描画
+		goal.Render(
 			g_pd3dDevice,
 			camera.GetViewMatrix(),
 			camera.GetProjectionMatrix(),
@@ -241,54 +299,48 @@ void CStage::Render()
 			light.GetambientLight(),
 			light.GetLightNum()
 			);
-	}*/
-	//土管描画
-	pipe.Render();
-	//ゴール描画
-	goal.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-	);
-	//サボテン描画
-	/*sabo.Render(
-		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		light.GetLightDirection(),
-		light.GetLightColor(),
-		light.GetambientLight(),
-		light.GetLightNum()
-		);*/
-	//コイン描画
-	coin.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		false);
-	//ゴール旗描画
-	goalflag.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix());
-	//鳥描画
-	bird.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix(),
-		false);
-	//回転するギミック描画
-	/*rotationgimmick.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix()
-		);*/
+		//サボテン描画
+		/*sabo.Render(
+			g_pd3dDevice,
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			light.GetLightDirection(),
+			light.GetLightColor(),
+			light.GetambientLight(),
+			light.GetLightNum()
+			);*/
+		//コイン描画
+		coin.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			false);
+		//ゴール旗描画
+		goalflag.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix());
+		//鳥描画
+		bird.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			false);
+		//回転するギミック描画
+		/*rotationgimmick.Render(
+			camera.GetViewMatrix(),
+			camera.GetProjectionMatrix()
+			);*/
+	}
+	
 	//太陽描画
 	sun.Render();
+	if (g_scenemanager->GetNomber() == StageBoss)
+	{
+		//ボス描画
+		boss.Render();
+	}
 
+	//コイン取得表示用(一番前に描画するためZバッファクリア)
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER,
 		D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
-
 	//コインスプライト描画
 	coinsprite.Render();
 
@@ -303,12 +355,16 @@ void CStage::Render()
 
 	//// 18-3 オフスクリーンレンダリングした絵をフレームバッファに貼り付ける。
 	CopyMainRTToCurrentRT();
-
+	
+	//ブルーム完了後２D表示
 	//コイン描画
 	coinNumber.Render(m_pSprite);
-	
+	if (g_scenemanager->GetNomber() == StageBoss)
+	{
+		//ボスライフ描画
+		bossLife.Render(m_pSprite);
+	}
 
-	
 
 	// シーンの描画終了。
 	g_pd3dDevice->EndScene();

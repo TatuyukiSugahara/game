@@ -39,6 +39,9 @@ void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	case Stage2:
 		modelData.LoadModelData("Asset/model/skyNight.x", &animation);
 		break;
+	case StageBoss:
+		modelData.LoadModelData("Asset/model/skyNight.x", &animation);
+		break;
 	}
 	
 	skinmodel.Init(&modelData);

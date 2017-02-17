@@ -43,6 +43,7 @@ void CTitleScene::Update()
 	if (fade.GetNext() <= fade.GetTimer())
 	{
 		SETitle->Stop();
+		g_scenemanager->SetNonber(Stage1);
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }

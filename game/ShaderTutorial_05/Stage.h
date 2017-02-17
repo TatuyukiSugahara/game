@@ -25,6 +25,8 @@
 #include "RotationGimmick.h"
 #include "CoinSprite.h"
 #include "Sun.h"
+#include "Boss.h"
+#include "BossLife.h"
 
 #define MAX_COLLISION 100
 
@@ -131,6 +133,10 @@ public:
 	{
 		return &coinsprite;
 	}
+	CBoss* GetBoss()
+	{
+		return &boss;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -165,6 +171,8 @@ protected:
 	CSoundSource			soundsource;
 	CCoinSprite	coinsprite;
 	CSun sun;					//太陽
+	CBoss boss;					//ボス
+	CBossLife bossLife;			//ボスライフ
 };
 
 extern CStage* g_stage;

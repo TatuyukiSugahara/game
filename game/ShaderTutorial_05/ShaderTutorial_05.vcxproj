@@ -158,6 +158,9 @@
     <ClCompile Include="Bird.cpp" />
     <ClCompile Include="BirdChip.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossLife.cpp" />
+    <ClCompile Include="BossLifeChip.cpp" />
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="Sound\WaveFile.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageBack.cpp" />
+    <ClCompile Include="StageBoss.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -241,6 +245,9 @@
     <ClInclude Include="Bird.h" />
     <ClInclude Include="BirdChip.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossLife.h" />
+    <ClInclude Include="BossLifeChip.h" />
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
     <ClInclude Include="Camera.h" />
@@ -305,6 +312,7 @@
     <ClInclude Include="Sound\WaveFile.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageBack.h" />
+    <ClInclude Include="StageBoss.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Title.h" />

@@ -6,6 +6,7 @@ enum StageNomber
 {
 	Stage1 = 1,
 	Stage2,
+	StageBoss,
 };
 
 class CScene;
@@ -47,10 +48,14 @@ public:
 	{
 		Nomber = StageNomber(i);
 	}
+	CScene* GetScenes()
+	{
+		m_scenes;
+	}
 private:
 	CScene* m_scenes;
 	int nextScene = -1;
 	bool resultflag = 0;		//0はゴール、1はデス
 	int num = 0;				//コインの数
-	StageNomber Nomber = StageNomber::Stage2;
+	StageNomber Nomber = StageNomber::StageBoss;
 };

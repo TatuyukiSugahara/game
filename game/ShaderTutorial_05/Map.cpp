@@ -15,6 +15,10 @@ SMapChipLocInfo mapChipLocInfoTable2[] = {
 #include "locationInfo2.h"
 };
 
+//マップチップの配置情報のテーブル。
+SMapChipLocInfo mapChipLocInfoTableBoss[] = {
+#include "LocationInfoBos.h"
+};
 
 CMap::CMap()
 {
@@ -38,6 +42,10 @@ void CMap::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	case Stage2:
 		mapChipTable = mapChipLocInfoTable2;
 		tableSize = sizeof(mapChipLocInfoTable2) / sizeof(mapChipLocInfoTable2[0]);
+		break;
+	case StageBoss:
+		mapChipTable = mapChipLocInfoTableBoss;
+		tableSize = sizeof(mapChipLocInfoTableBoss) / sizeof(mapChipLocInfoTableBoss[0]);
 		break;
 	}
 

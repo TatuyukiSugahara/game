@@ -107,3 +107,21 @@ void Camera::RotLongitudinal(float rotx)
 	}
 
 }
+
+void Camera::BossCamera()
+{
+	if (g_stage->GetBoss()->Start() == true)
+	{
+		static float time = 0.0f;
+		if (time < 5.0f)
+		{
+			float length = g_stage->GetBoss()->GetPos().x - vEyePt.x;
+			if (length >= 3.0f)
+			{
+				vEyePt += D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+				vLookatPt += D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+			}
+			
+		}
+	}
+}

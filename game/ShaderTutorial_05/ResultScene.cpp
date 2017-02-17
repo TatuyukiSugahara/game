@@ -37,17 +37,7 @@ void CResultScene::Update()
 	if (state == ResultState::Goal)
 	{
 		resultGoal.Update();
-		coinnumber.Update();
-		switch (g_scenemanager->GetNomber())
-		{
-		case Stage1:
-			g_scenemanager->SetNonber(Stage2);
-			break;
-		case Stage2:
-			g_scenemanager->SetNonber(Stage1);
-			break;
-		}
-		
+		coinnumber.Update();		
 	}
 	else if (state == ResultState::Death)
 	{
@@ -59,7 +49,29 @@ void CResultScene::Update()
 	}
 	if (fade.GetNext() <= fade.GetTimer())
 	{
-		g_scenemanager->ChangeScene(GameScene::Game);
+		if (state == ResultState::Goal)
+		{
+			switch (g_scenemanager->GetNomber())
+			{
+			case Stage1:
+				g_scenemanager->SetNonber(Stage2);
+				g_scenemanager->ChangeScene(GameScene::Game);
+				break;
+			case Stage2:
+				g_scenemanager->SetNonber(StageBoss);
+				g_scenemanager->ChangeScene(GameScene::Game);
+				break;
+			case StageBoss:
+				g_scenemanager->ChangeScene(GameScene::Title);
+				break;
+			}
+		}
+		else if (state == ResultState::Death)
+		{
+			g_scenemanager->ChangeScene(GameScene::Game);
+		}
+		
+		
 	}
 	resultcamera.Update();
 	resultlight.Update();

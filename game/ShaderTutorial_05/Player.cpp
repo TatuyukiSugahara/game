@@ -205,7 +205,8 @@ void CPlayer::Move(float maxmove)
 	static D3DXVECTOR3 dirZ(0.0f, 0.0f, 1.0f);
 	D3DXVECTOR3 dirpad(g_pad.GetLStickXF(), 0.0f, g_pad.GetLStickYF());
 
-	
+	//カメラの向いている方向と、上ベクトルとの外積を計算すると横移動のベクトルが求まる。
+	D3DXVec3Cross(&dirX, &dirZ, &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
 	addmove.x = dirX.x * dirpad.x - dirZ.x * dirpad.z;
 	addmove.z = dirX.z * dirpad.x - dirZ.z * dirpad.z;
@@ -213,8 +214,7 @@ void CPlayer::Move(float maxmove)
 	//カメラが向いている方向に進む。
 	dirZ = g_stage->GetCamera()->GetCameraDir();
 	D3DXVec3Normalize(&addmove, &addmove);
-	//カメラの向いている方向と、上ベクトルとの外積を計算すると横移動のベクトルが求まる。
-	D3DXVec3Cross(&dirX, &dirZ, &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	
 	if (D3DXVec3Length(&addmove) > 0.0f){
 		D3DXVECTOR3 forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 		m_targetAngleY = acos(D3DXVec3Dot(&forward, &addmove));

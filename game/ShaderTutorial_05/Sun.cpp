@@ -45,9 +45,21 @@ void CSun::Init()
 		light.SetDiffuseLightColor(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
 		light.SetAmbientLight(D3DXVECTOR4(1.5f, 1.5f, 2.0f, 1.0f));
 		break;
+	case StageBoss:
+		//ÉâÉCÉgÇèâä˙âªÅB
+		light.SetDiffuseLightDirection(0, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetDiffuseLightDirection(1, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetDiffuseLightDirection(2, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetDiffuseLightDirection(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+
+		light.SetDiffuseLightColor(0, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetDiffuseLightColor(1, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetDiffuseLightColor(2, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetDiffuseLightColor(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
+		light.SetAmbientLight(D3DXVECTOR4(1.5f, 1.5f, 2.0f, 1.0f));
+		break;
 	}
 	
-
 	modelData.LoadModelData("Asset/model/sun.x", &animation);
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);

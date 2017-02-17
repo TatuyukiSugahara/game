@@ -3,6 +3,7 @@
 #include "SkinModelData.h"
 #include "..\Light.h"
 #include "..\Stage.h"
+#include "..\StageBoss.h"
 
 extern UINT                 g_NumBoneMatricesMax;
 extern D3DXMATRIXA16*       g_pBoneMatrices ;
@@ -67,7 +68,11 @@ void SkinModel::DrawMeshContainer(
 	{
 		LVP = g_stage->GetShadow()->Getlvpmatrix();
 	}
-
+	/*if (g_stageBoss)
+	{
+		LVP = g_stageBoss->GetShadow()->Getlvpmatrix();
+	}
+*/
 	//定数レジスタに設定するカラー。
 	D3DXVECTOR4 color(1.0f, 0.0f, 0.0f, 1.0f);
 	//ワールド行列の転送。
