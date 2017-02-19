@@ -18,6 +18,9 @@ CPlayer::CPlayer()
 	case Stage2:
 		position = D3DXVECTOR3(1.0f, 205.0f, 0.0f);		//初期位置
 		break;
+	case StageBoss:
+		position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
+		break;
 	}
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//初期移動速度
 	Scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);			//初期スケール
@@ -92,7 +95,7 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
-	animation.PlayAnimation(0, 0.3f);
+	animation.PlayAnimation(PlayerStay, 0.3f);
 	animation.SetAnimationEndTime(2, 0.79f);
 	animation.SetAnimationEndTime(PlayerIsJump, 0.33f);
 	animation.SetAnimationEndTime(PlayerJumpNow, 0.016f);
@@ -101,7 +104,7 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	animation.SetAnimationLoopFlag(PlayerIsJump, false);
 	animation.SetAnimationLoopFlag(PlayerJumpWas, false);
 	animation.SetAnimationLoopFlag(PlayerHipDrop, false);
-
+	animation.SetAnimationLoopFlag(PlayerHappy, true);
 
 	characterController.Init(0.3f, 1.0f, position);
 	characterController.SetGravity(-30.0f);
@@ -299,7 +302,7 @@ void CPlayer::Jump()
 
 	}
 	//空中での落下の上限
-	if (movespeed.y <= -10.0f)
+	if (movespeed.y <= -10.0f && state != PlayerState::PlayerHipDrop)
 	{
 		movespeed.y = -10.0f;
 	}
@@ -339,25 +342,29 @@ void CPlayer::State()
 		}
 		
 	}
-	//ヒップドロップ
-	if (g_pad.IsPress(enButtonRB1) && !characterController.IsOnGround())
-	{
-		if (state != PlayerHipDrop)
-		{
-			state = PlayerHipDrop;
-			animation.PlayAnimation(PlayerHipDrop, 0.2f);
-			movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			movespeed.y -= 20.0f;
-		}
-		
-	}
+	
 	//ジャンプ中
 	if (!characterController.IsOnGround())
 	{
-		if (state != PlayerJumpNow && !animation.IsPlay())
+		//ヒップドロップ
+		if (g_pad.IsPress(enButtonRB1))
 		{
-			state = PlayerJumpNow;
-			animation.PlayAnimation(PlayerJumpNow, 0.2f);
+			if (state != PlayerHipDrop)
+			{
+				state = PlayerHipDrop;
+				animation.PlayAnimation(PlayerHipDrop, 0.2f);
+				movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				movespeed.y -= 20.0f;
+			}
+		}
+		//ジャンプ
+		else
+		{
+			if (state != PlayerJumpNow && !animation.IsPlay())
+			{
+				state = PlayerJumpNow;
+				animation.PlayAnimation(PlayerJumpNow, 0.2f);
+			}
 		}
 	}
 	
@@ -370,6 +377,18 @@ void CPlayer::Died()
 		g_stage->GetSoundSorce()->Stop();
 		g_scenemanager->SetResult(1);//死んだ場合
 		g_scenemanager->ChangeScene(GameScene::Result);
+	}
+}
+
+void CPlayer::Clear()
+{
+	if (characterController.IsOnGround() == true && state != PlayerHappy)
+	{
+		//正面を向かせるため
+		rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
+		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(180.0f));
+		state = PlayerHappy;
+		animation.PlayAnimation(PlayerHappy, 0.1f);
 	}
 }
 

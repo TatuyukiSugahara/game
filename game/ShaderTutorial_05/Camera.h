@@ -19,6 +19,8 @@ private:
 	float					Far;				//!<遠平面。
 	float					Near;				//!<近平面。
 	float					aspect;				//!<アスペクト比
+	float					bosstime;			//!<ボス登場時のカメラ演出の時間
+	float					Angle;				//!<画角	
 public:
 	/*!
 	 *@brief	コンストラクタ。

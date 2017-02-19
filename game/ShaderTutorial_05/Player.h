@@ -14,6 +14,7 @@ enum PlayerState{
 	PlayerJumpNow,		//ジャンプ中
 	PlayerJumpWas,		//着地時
 	PlayerHipDrop,		//ヒップドロップ
+	PlayerHappy,		//喜ぶ
 };
 
 enum Life{
@@ -122,6 +123,7 @@ public:
 	void Jump();
 	void State();
 	void Died();//死亡
+	void Clear();		//クリア時
 private:
 	D3DXVECTOR3				position;						//座標。
 	D3DXVECTOR3				movespeed;						//移動速度

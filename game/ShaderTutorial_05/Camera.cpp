@@ -19,11 +19,19 @@ Camera::~Camera()
 //カメラの更新処理。
 void Camera::Update()
 {
+	if (g_scenemanager->GetNomber() == StageBoss)
+	{
+
+		BossCamera();
+	}
+	else{
+		//プレイヤー追尾
+		D3DXVECTOR3 Pos = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, vEyePt.y, vEyePt.z);
+		vEyePt = g_stage->GetPlayer()->GetPos() + toPos;
+		vLookatPt = g_stage->GetPlayer()->GetPos();
+	}
 	
-	//プレイヤー追尾
-	D3DXVECTOR3 Pos = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, vEyePt.y, vEyePt.z);
-	vEyePt = g_stage->GetPlayer()->GetPos() + toPos;
-	vLookatPt = g_stage->GetPlayer()->GetPos();
+	
 	/*if (fabs(g_pad.GetRStickXF()) > 0.0f)
 	{
 		RotTransversal(g_pad.GetRStickXF() * 0.1f);
@@ -37,8 +45,9 @@ void Camera::Update()
 	cameradir.y = 0.0f;
 	D3DXVec3Normalize(&cameradir, &cameradir);
 
+
 	D3DXMatrixLookAtLH(&viewMatrix, &vEyePt, &vLookatPt, &vUpVec);
-	D3DXMatrixPerspectiveFovLH(&projectionMatrix, D3DX_PI / 4, aspect, Near, Far);
+	D3DXMatrixPerspectiveFovLH(&projectionMatrix, /*D3DX_PI / 4*/ D3DXToRadian(Angle), aspect, Near, Far);
 	
 	D3DXMatrixInverse(&viewMatrixRotInv, NULL, &viewMatrix);
 	mRot = viewMatrixRotInv;
@@ -63,7 +72,8 @@ void Camera::Init()
 	vUpVec = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	toPos = vEyePt - vLookatPt;						//視点 - 注視点
 	cameradir = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
+	Angle = 45.0f;									//画角
+	bosstime = 0.0f;
 	Update();
 }
 //============================================================
@@ -112,16 +122,56 @@ void Camera::BossCamera()
 {
 	if (g_stage->GetBoss()->Start() == true)
 	{
-		static float time = 0.0f;
-		if (time < 5.0f)
+		if (bosstime < 1.0f)
 		{
-			float length = g_stage->GetBoss()->GetPos().x - vEyePt.x;
-			if (length >= 3.0f)
+			g_stage->BossMusic();
+			g_stage->GetBossKatto()->SetKatto(true);
+			D3DXVECTOR3 to = D3DXVECTOR3(g_stage->GetBoss()->GetPos().x, g_stage->GetBoss()->GetPos().y,0.0f) - vEyePt;
+			if (to.x >= 3.0f)
 			{
-				vEyePt += D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-				vLookatPt += D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+				D3DXVec3Normalize(&to, &to);
+				vEyePt += D3DXVECTOR3(to.x, 0.0f, 0.0f);
+				vLookatPt += D3DXVECTOR3(to.x, 0.0f, 0.0f);
 			}
-			
+			bosstime += 1.0f / 60.0f;
 		}
+		else if (bosstime >= 1.0f && bosstime <= 2.0f)
+		{
+			g_stage->GetBossKatto()->SetKatto(false);
+			D3DXVECTOR3 to = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, 5.0f, 0.0f) - vEyePt;
+			if (to.x <= 0.1f && to.y <= 0.1f)
+			{
+				D3DXVec3Normalize(&to, &to);
+				vEyePt += D3DXVECTOR3(to.x, to.y, 0.0f);
+				vLookatPt += D3DXVECTOR3(to.x, to.y, 0.0f);
+			}
+			if (Angle < 90.0f)
+			{
+				Angle++; //ボス戦時のみ画角ひろげる。
+			}
+			bosstime += 1.0f / 60.0f;
+		}
+		else if (bosstime >= 2.0f)
+		{
+			g_stage->GetBoss()->SetCameraFlag(true);
+			//プレイヤー追尾
+			D3DXVECTOR3 Pos = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, vEyePt.y, vEyePt.z);
+			vEyePt = g_stage->GetPlayer()->GetPos() + toPos;
+			vLookatPt = g_stage->GetPlayer()->GetPos();
+		}
+		if (g_stage->GetBoss()->GetState() == BossDead)
+		{
+			if (Angle > 45.0f)
+			{
+				Angle--; //ボス撃破時画角狭める。
+			}
+		}
+	}
+	else
+	{
+		//プレイヤー追尾
+		D3DXVECTOR3 Pos = D3DXVECTOR3(g_stage->GetPlayer()->GetPos().x, vEyePt.y, vEyePt.z);
+		vEyePt = g_stage->GetPlayer()->GetPos() + toPos;
+		vLookatPt = g_stage->GetPlayer()->GetPos();
 	}
 }

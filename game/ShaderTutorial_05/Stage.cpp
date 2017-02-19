@@ -55,18 +55,8 @@ void CStage::Init()
 	light.Init();
 	//カメラの初期化。
 	camera.Init();
-
-	//サウンドソースを初期化。
-	if (g_scenemanager->GetNomber() == StageBoss)
-	{
-		soundsource.InitStreaming("Asset/Sound/battle.wav"); 
-	}
-	else
-	{
-		soundsource.InitStreaming("Asset/Sound/mario.wav");
-	}
+	soundsource.InitStreaming("Asset/Sound/mario.wav");
 	soundsource.Play(true);
-	soundsource.SetVolume(0.5f);
 
 	//スプライト初期化
 	if (FAILED(D3DXCreateSprite(g_pd3dDevice, &m_pSprite)))
@@ -120,10 +110,16 @@ void CStage::Init()
 	sun.Init();
 	if (g_scenemanager->GetNomber() == StageBoss)
 	{
+		//ボス音楽フラグ初期化。
+		bossmusic = false;
 		//ボス初期化
 		boss.Init();
 		//ボスライフ初期化
 		bossLife.Init();
+		//ボス名前初期化
+		bossName.Init();
+		//ボスカットイン初期化
+		bossKatto.Init();
 	}
 
 	//回転するギミック初期化
@@ -194,6 +190,10 @@ void CStage::Update()
 		boss.Update();
 		//ボスライフ更新
 		bossLife.Update();
+		//ボス名前更新
+		bossName.Update();
+		//ボスカットイン更新
+		bossKatto.Update();
 	}
 	//カメラの更新
 	camera.Update();
@@ -335,14 +335,19 @@ void CStage::Render()
 	if (g_scenemanager->GetNomber() == StageBoss)
 	{
 		//ボス描画
-		boss.Render();
+		boss.Render(camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(),
+			false);
 	}
 
 	//コイン取得表示用(一番前に描画するためZバッファクリア)
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER,
 		D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
-	//コインスプライト描画
-	coinsprite.Render();
+	if (g_scenemanager->GetNomber() != StageBoss)
+	{
+		//コインスプライト描画
+		coinsprite.Render();
+	}
 
 	bloom->Render();
 
@@ -357,12 +362,22 @@ void CStage::Render()
 	CopyMainRTToCurrentRT();
 	
 	//ブルーム完了後２D表示
-	//コイン描画
-	coinNumber.Render(m_pSprite);
 	if (g_scenemanager->GetNomber() == StageBoss)
 	{
 		//ボスライフ描画
 		bossLife.Render(m_pSprite);
+		//ボスカットイン描画
+		bossKatto.Render(m_pSprite);
+		if (boss.Start() == true && boss.GetLife() > 0)
+		{
+			//ボス名前描画
+			bossName.Render(m_pSprite);
+		}
+	}
+	else
+	{
+		//コイン描画
+		coinNumber.Render(m_pSprite);
 	}
 
 
@@ -424,5 +439,16 @@ void CStage::Add2DRigidBody(/*int arraySize*/)//ワールドに追加。
 		{
 			g_physicsWorld->AddRigidBody(m_rigidBody[i]);
 		}
+	}
+}
+
+void CStage::BossMusic()
+{
+	if (bossmusic == false)
+	{
+		soundsource.Stop();
+		soundsource.InitStreaming("Asset/Sound/battle.wav");
+		soundsource.Play(true);
+		bossmusic = true;
 	}
 }

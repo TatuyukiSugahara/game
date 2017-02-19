@@ -4,6 +4,12 @@
 #include "..\Stage.h"
 #include "../ResultScene.h"
 
+CSceneManager::CSceneManager()
+{
+	m_scenes = NULL;
+	Nomber = StageNomber::StageBoss;
+}
+
 void CSceneManager::InitializeScene()
 {
 	ChangeScene(GameScene::Title);

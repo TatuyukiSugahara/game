@@ -11,6 +11,8 @@ CBoss::CBoss()
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
+	D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(180.0f));
+	
 }
 //デストラクタ
 CBoss::~CBoss()
@@ -37,7 +39,7 @@ void CBoss::Init()
 	animation.PlayAnimation(0, 0.3f);
 	animation.SetAnimationLoopFlag(BossFalter, false);
 
-	skinmodel.SetShadowReceiverFlag(false);
+	skinmodel.SetShadowReceiverFlag(true);
 	skinmodel.SetDrawToShadowMap(false);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
@@ -65,12 +67,12 @@ void CBoss::Init()
 //更新。
 void CBoss::Update()
 {
-	if (Start() == true)
+	if (cameraflag == true)
 	{
 		switch (state)
 		{
 		case BossMove:
-			//Move();
+			Move();
 			break;
 		case BossFalter:
 			Falter();
@@ -86,22 +88,25 @@ void CBoss::Update()
 		movespeed = characterController.GetMoveSpeed();
 		position = characterController.GetPosition();
 		characterController.SetPosition(position);
-		animation.Update(1.0f / 60.0f);
+		
 	}
+	animation.Update(1.0f / 60.0f);
 	skinmodel.UpdateWorldMatrix(position, rotation, scale);
 }
 //描画。
-void CBoss::Render()
+void CBoss::Render(D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	if (state != BossState::BossDead)
 	{
-		skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(), &g_stage->GetCamera()->GetProjectionMatrix(), false);
+		skinmodel.Draw(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 	if (MAXPAR >= parTime && parflag == true)
 	{
 		for (auto p : particleEmitterList)
 		{
-			p->Render(g_stage->GetCamera()->GetViewMatrix(), g_stage->GetCamera()->GetProjectionMatrix());
+			p->Render(viewMatrix, projMatrix);
 		}
 	}
 }
@@ -164,6 +169,10 @@ void CBoss::Move()
 			state = BossDead;
 		}
 	}
+	if (position.y <= -5.0f)
+	{
+		state = BossDead;
+	}
 }
 
 void CBoss::Falter()
@@ -181,13 +190,14 @@ void CBoss::Falter()
 void CBoss::Dead()
 {
 	static float time = 0.0f;
-	time += 1.0f / 60.0f;
-	if (time >= 2.0f)
+	g_stage->GetPlayer()->Clear();
+	if (time >= 3.0f)
 	{
 		g_scenemanager->SetResult(0);
 		g_scenemanager->ChangeScene(Result);
 
 	}
+	time += 1.0f / 60.0f;
 }
 
 void CBoss::Particle()

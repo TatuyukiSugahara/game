@@ -20,7 +20,9 @@ public:
 	//更新。
 	void Update();
 	//描画。
-	void Render();
+	void Render(D3DXMATRIX viewMatrix,
+		D3DXMATRIX projMatrix,
+		bool isDrawToShadowMap);
 	void Move();
 	void Falter();
 	void Dead();
@@ -37,6 +39,14 @@ public:
 	{
 		return position;
 	}
+	void SetCameraFlag(bool flag)
+	{
+		cameraflag = flag;
+	}
+	BossState GetState()
+	{
+		return state;
+	}
 private:
 	D3DXVECTOR3				position;		//座標。
 	D3DXVECTOR3				scale;			//スケール
@@ -51,6 +61,7 @@ private:
 	float					currentAngleY;
 	float					targetAngleY;
 	int life = 5;
+	bool cameraflag = false;
 	BossState state;
 	SParicleEmitParameter param;
 	std::list<CParticleEmitter*> particleEmitterList;

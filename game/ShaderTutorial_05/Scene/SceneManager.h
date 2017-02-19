@@ -16,10 +16,7 @@ using namespace std;
 class CSceneManager
 {
 public:
-	CSceneManager()
-	{
-		m_scenes = NULL;
-	}
+	CSceneManager();
 	void InitializeScene();
 	void UpdateScene();
 	void RenderScene();
@@ -57,5 +54,5 @@ private:
 	int nextScene = -1;
 	bool resultflag = 0;		//0はゴール、1はデス
 	int num = 0;				//コインの数
-	StageNomber Nomber = StageNomber::StageBoss;
+	StageNomber Nomber;
 };

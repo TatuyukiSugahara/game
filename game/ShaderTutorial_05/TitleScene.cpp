@@ -14,7 +14,7 @@ void CTitleScene::Init()
 	SETitle = new CSoundSource;
 	SETitle->Init("Asset/Sound/CandyCrush.wav");
 	SETitle->SetVolume(0.25f);
-	SETitle->Play(false);
+	SETitle->Play(true);
 	this->CreateSprite();
 	title.Init();
 	titlestart.Init();
@@ -43,7 +43,7 @@ void CTitleScene::Update()
 	if (fade.GetNext() <= fade.GetTimer())
 	{
 		SETitle->Stop();
-		g_scenemanager->SetNonber(Stage1);
+		//g_scenemanager->SetNonber(Stage1);
 		g_scenemanager->ChangeScene(GameScene::Game);
 	}
 }

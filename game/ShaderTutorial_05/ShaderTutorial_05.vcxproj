@@ -159,8 +159,11 @@
     <ClCompile Include="BirdChip.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossKatto.cpp" />
     <ClCompile Include="BossLife.cpp" />
     <ClCompile Include="BossLifeChip.cpp" />
+    <ClCompile Include="BossLifeWakuChip.cpp" />
+    <ClCompile Include="BossName.cpp" />
     <ClCompile Include="BulletPhysics\BulletPhysics.cpp" />
     <ClCompile Include="CalcAABBSizeFromMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -246,8 +249,11 @@
     <ClInclude Include="BirdChip.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossKatto.h" />
     <ClInclude Include="BossLife.h" />
     <ClInclude Include="BossLifeChip.h" />
+    <ClInclude Include="BossLifeWakuChip.h" />
+    <ClInclude Include="BossName.h" />
     <ClInclude Include="BulletPhysics\BulletPhysics.h" />
     <ClInclude Include="CalcAABBSizeFromMesh.h" />
     <ClInclude Include="Camera.h" />
