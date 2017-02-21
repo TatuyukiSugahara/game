@@ -10,6 +10,10 @@ CBossKatto::CBossKatto()
 
 CBossKatto::~CBossKatto()
 {
+	if (SEKatto)
+	{
+		delete SEKatto;
+	}
 }
 
 void CBossKatto::Init()
@@ -21,12 +25,21 @@ void CBossKatto::Init()
 	texFileName = "Asset/model/bossKatto.png";
 	C2DImage::Init();
 	KattoFlag = false;
+
+	
 }
 
 void CBossKatto::Update()
 {
 	if (KattoFlag == true)
 	{
+		if (!flag)
+		{
+			SEKatto = new CSoundSource;
+			SEKatto->Init("Asset/Sound/keihou.wav");
+			SEKatto->Play(false);
+			flag = true;
+		}
 		SetupMatrices();
 	}
 }

@@ -1,11 +1,11 @@
 #pragma once 
 #include "Frame\2DImage.h"
 
-class CBossKatto : public C2DImage
+class CBossClear : public C2DImage
 {
 public:
-	CBossKatto();
-	~CBossKatto();
+	CBossClear();
+	~CBossClear();
 	void Init()override;
 	void Update()override;
 	void Render(LPD3DXSPRITE)override;
@@ -17,12 +17,12 @@ public:
 	{
 		backColor = D3DCOLOR_ARGB(255, r, g, b);
 	}
-	void SetKatto(bool flag)
+	void SetClear(bool flag)
 	{
-		KattoFlag = flag;
+		Clear = flag;
 	}
 private:
-	bool KattoFlag;
-	bool flag = false;			//SEならすふらぐ。
-	CSoundSource* SEKatto;
+	bool Clear;
+	bool flag = false;		//SE鳴らすフラグ。
+	CSoundSource* SEGoal;
 };

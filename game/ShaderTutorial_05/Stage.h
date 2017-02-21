@@ -29,6 +29,7 @@
 #include "BossLife.h"
 #include "BossName.h"
 #include "BossKatto.h"
+#include "BossClear.h"
 
 #define MAX_COLLISION 100
 
@@ -63,6 +64,7 @@ public:
 	void CreateCollision();				//2Dあたり判定
 	void Add2DRigidBody(/*int arraySize*/);		//2Dあたり判定追加
 	void BossMusic();							//ボス戦時の音楽再生。
+	void MusicStop();							//音楽ストップ。
 	Camera* GetCamera()
 	{
 		return&camera;
@@ -147,6 +149,10 @@ public:
 	{
 		return &bossKatto;
 	}
+	CBossClear* GetBossClear()
+	{
+		return &bossClear;
+	}
 protected:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_groundShape[MAX_COLLISION];	//地面のコリジョン形状。
@@ -184,6 +190,7 @@ protected:
 	CBossLife bossLife;			//ボスライフ
 	CBossName bossName;			//ボス名前
 	CBossKatto bossKatto;		//ボス登場時のカットイン。
+	CBossClear bossClear;		//ボス撃破時のカットイン。
 };
 
 extern CStage* g_stage;

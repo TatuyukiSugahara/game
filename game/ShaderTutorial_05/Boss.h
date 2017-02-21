@@ -43,6 +43,10 @@ public:
 	{
 		cameraflag = flag;
 	}
+	bool GetCameraFlag()
+	{
+		return cameraflag;
+	}
 	BossState GetState()
 	{
 		return state;

@@ -7,7 +7,7 @@
 CBoss::CBoss()
 {
 	//‰Šú‰»B
-	position = D3DXVECTOR3(75.0f, 4.0f, 0.0f);
+	position = D3DXVECTOR3(75.0f, 3.0f, 0.0f);
 	movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
@@ -45,11 +45,11 @@ void CBoss::Init()
 	skinmodel.SetSpecularMap(false);
 
 	param.texturePath = "Asset/model/star.png";
-	param.w = 0.5f;
-	param.h = 0.5f;
+	param.w = 1.0f;
+	param.h = 1.0f;
 	param.intervalTime = 0.2f;
 	param.life = 0.5f;
-	param.gravity = D3DXVECTOR3(0.0f, -0.016f, 0.0f);
+	param.gravity = D3DXVECTOR3(0.0f, -0.16f, 0.0f);
 	param.initSpeed = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 	parflag = false;
 	parTime = 0;
@@ -145,7 +145,7 @@ void CBoss::Move()
 		g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 1.3f, 0.3f) == true)
 	{
 		g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,
-			g_stage->GetPlayer()->GetMoveSpeed().y * -2.0f,
+			g_stage->GetPlayer()->GetMoveSpeed().y * -1.0f,
 			g_stage->GetPlayer()->GetMoveSpeed().z));
 
 		CSoundSource* SEenemyDeath = new CSoundSource;
@@ -190,11 +190,15 @@ void CBoss::Falter()
 void CBoss::Dead()
 {
 	static float time = 0.0f;
+	g_stage->MusicStop();
 	g_stage->GetPlayer()->Clear();
-	if (time >= 3.0f)
+	g_stage->GetBossClear()->SetClear(true);
+	if (time >= 3.5f)
 	{
-		g_scenemanager->SetResult(0);
-		g_scenemanager->ChangeScene(Result);
+		time = 0.0f;
+		g_stage->GetBossClear()->SetClear(false);
+		g_scenemanager->SetNonber(Stage1);
+		g_scenemanager->ChangeScene(Title);
 
 	}
 	time += 1.0f / 60.0f;

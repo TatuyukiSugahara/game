@@ -300,6 +300,9 @@
     <ClCompile Include="BossKatto.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="BossClear.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -567,6 +570,9 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BossKatto.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossClear.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

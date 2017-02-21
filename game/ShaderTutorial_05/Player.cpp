@@ -31,6 +31,7 @@ CPlayer::CPlayer()
 	radius = 0.3f;
 	friction = 0.2f;
 	state = PlayerStay;
+	lifestate = Alive;
 }
 //デストラクタ
 CPlayer::~CPlayer()
@@ -126,7 +127,7 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 //更新。
 void CPlayer::Update()
 {
-	if (!g_stage->GetPipe()->GetIsPipe())
+	if (!g_stage->GetPipe()->GetIsPipe() && !PlayerStop)
 	{
 		if (g_pad.IsPress(enButtonB))
 		{
@@ -138,14 +139,14 @@ void CPlayer::Update()
 		}
 		Jump();//ジャンプ
 	}
-	if (position.y < -5.0f)
+	if (PlayerStop == true)
 	{
-		g_stage->GetCamera()->RotLongitudinal(D3DXToRadian(-5.0f));
+		if (characterController.IsOnGround())
+		{
+			movespeed = { 0.0f, 0.0f, 0.0f };
+		}
 	}
-	if (position.y < -10.0f)
-	{
-		lifestate = Life::Died;
-	}
+	
 	Died();//死亡
 	//落ちると死亡判定
 	////天井と当たった？＆＆当たったのは,はてなボックス？
@@ -239,14 +240,6 @@ void CPlayer::Move(float maxmove)
 	float naiseki = D3DXVec3Dot(&v1, &v2);
 	//移動量があるなら
 	friction = 0.25f;
-	/*if (D3DXVec3Length(&addmove) > 0.0f)
-	{
-		friction = 0.8f + 2.6f * (1.0f - fabs(naiseki));
-	}
-	else
-	{
-		friction = 0.4f;
-	}*/
 
 	//速度を加算。
 	movespeed.x += addmove.x;
@@ -299,7 +292,6 @@ void CPlayer::Jump()
 		state = PlayerIsJump;
 		animation.PlayAnimation(PlayerIsJump,0.05f);
 		characterController.Jump();
-
 	}
 	//空中での落下の上限
 	if (movespeed.y <= -10.0f && state != PlayerState::PlayerHipDrop)
@@ -338,11 +330,8 @@ void CPlayer::State()
 				animation.PlayAnimation(PlayerStay, 0.3f);
 				movespeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			}
-			
 		}
-		
 	}
-	
 	//ジャンプ中
 	if (!characterController.IsOnGround())
 	{
@@ -372,6 +361,15 @@ void CPlayer::State()
 
 void CPlayer::Died()
 {
+	if (position.y < -5.0f)
+	{
+		g_stage->GetCamera()->RotLongitudinal(D3DXToRadian(-5.0f));
+	}
+	if (position.y < -10.0f)
+	{
+		lifestate = Life::Died;
+	}
+
 	if (lifestate == Life::Died)
 	{
 		g_stage->GetSoundSorce()->Stop();
@@ -382,6 +380,7 @@ void CPlayer::Died()
 
 void CPlayer::Clear()
 {
+	//ボス撃破時のピース。
 	if (characterController.IsOnGround() == true && state != PlayerHappy)
 	{
 		//正面を向かせるため
@@ -391,4 +390,3 @@ void CPlayer::Clear()
 		animation.PlayAnimation(PlayerHappy, 0.1f);
 	}
 }
-

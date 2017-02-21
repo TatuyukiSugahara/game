@@ -20,7 +20,8 @@ private:
 	float					Near;				//!<近平面。
 	float					aspect;				//!<アスペクト比
 	float					bosstime;			//!<ボス登場時のカメラ演出の時間
-	float					Angle;				//!<画角	
+	float					Angle;				//!<画角
+	float					camerahokan = 1.0f;	//!<カメラの線形保管。
 public:
 	/*!
 	 *@brief	コンストラクタ。

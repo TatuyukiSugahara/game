@@ -159,6 +159,7 @@
     <ClCompile Include="BirdChip.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossClear.cpp" />
     <ClCompile Include="BossKatto.cpp" />
     <ClCompile Include="BossLife.cpp" />
     <ClCompile Include="BossLifeChip.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="BirdChip.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossClear.h" />
     <ClInclude Include="BossKatto.h" />
     <ClInclude Include="BossLife.h" />
     <ClInclude Include="BossLifeChip.h" />

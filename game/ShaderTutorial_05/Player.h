@@ -119,6 +119,18 @@ public:
 	{
 		Scale += add;
 	}
+	void SetState(PlayerState state)
+	{
+		this->state = state;
+	}
+	void SetPlyaerStop(bool stop)
+	{
+		PlayerStop = stop;
+	}
+	bool GetPlayerStop()
+	{
+		return PlayerStop;
+	}
 	void Move(float maxmove);
 	void Jump();
 	void State();
@@ -146,6 +158,7 @@ private:
 	D3DXQUATERNION			rotation;						//回転クォータニオン
 	float					deathCount;						//死亡までのカウント
 	D3DXVECTOR3				addmove;							//次の移動
+	bool					PlayerStop = false;				//動けない状態
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;

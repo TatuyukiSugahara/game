@@ -60,12 +60,14 @@ void CPipe::Init()
 	switch (g_scenemanager->GetNomber())
 	{
 	case Stage1:
+		pipeChipTable = NULL;
 		pipeChipTable = pipeChipLocInfoTable;
 		collisionTablpipe = collisionInfoTablepipe;
 		tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
 		arraySize = ARRAYSIZE(collisionInfoTablepipe);
 		break;
 	case Stage2:
+		pipeChipTable = NULL;
 		pipeChipTable = pipeChipLocInfoTable2;
 		collisionTablpipe = collisionInfoTablpipe2;
 		tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);

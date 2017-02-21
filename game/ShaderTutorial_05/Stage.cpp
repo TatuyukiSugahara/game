@@ -120,6 +120,8 @@ void CStage::Init()
 		bossName.Init();
 		//ボスカットイン初期化
 		bossKatto.Init();
+		//ボス撃破クリア初期化
+		bossClear.Init();
 	}
 
 	//回転するギミック初期化
@@ -194,6 +196,8 @@ void CStage::Update()
 		bossName.Update();
 		//ボスカットイン更新
 		bossKatto.Update();
+		//ボスクリア更新
+		bossClear.Update();
 	}
 	//カメラの更新
 	camera.Update();
@@ -368,6 +372,8 @@ void CStage::Render()
 		bossLife.Render(m_pSprite);
 		//ボスカットイン描画
 		bossKatto.Render(m_pSprite);
+		//ボスクリア描画
+		bossClear.Render(m_pSprite);
 		if (boss.Start() == true && boss.GetLife() > 0)
 		{
 			//ボス名前描画
@@ -451,4 +457,10 @@ void CStage::BossMusic()
 		soundsource.Play(true);
 		bossmusic = true;
 	}
+}
+
+void CStage::MusicStop()
+{
+	//だんだん音を下げる。
+	soundsource.SetVolume(-0.05);
 }
