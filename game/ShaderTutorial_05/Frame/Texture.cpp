@@ -4,12 +4,21 @@
 /*!
 * @brief	テクスチャをロード。
 */
-void CTexture::Load(const char* fileName)
+void CTexture::Load(const char* fileName, bool isCubeMap)
 {
 	LPDIRECT3DDEVICE9 device = g_pd3dDevice;
-	if (FAILED(D3DXCreateTextureFromFile(
-		device,
-		fileName,
-		&m_tex))) {
+	if (!isCubeMap) {
+		if (FAILED(D3DXCreateTextureFromFile(
+			device,
+			fileName,
+			&m_tex))) {
+		}
+	}
+	else {
+		if (FAILED(D3DXCreateCubeTextureFromFile(
+			device,
+			fileName,
+			&m_cubeTex))) {
+		}
 	}
 }

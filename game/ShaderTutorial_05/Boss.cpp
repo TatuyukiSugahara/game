@@ -191,15 +191,18 @@ void CBoss::Dead()
 {
 	static float time = 0.0f;
 	g_stage->MusicStop();
-	g_stage->GetPlayer()->Clear();
+	
 	g_stage->GetBossClear()->SetClear(true);
-	if (time >= 3.5f)
+	if (time >= 3.0f)
+	{
+		g_stage->GetPlayer()->Clear();
+	}
+	if (time >= 5.0f)
 	{
 		time = 0.0f;
 		g_stage->GetBossClear()->SetClear(false);
 		g_scenemanager->SetNonber(Stage1);
 		g_scenemanager->ChangeScene(Title);
-
 	}
 	time += 1.0f / 60.0f;
 }

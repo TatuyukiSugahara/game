@@ -6,8 +6,8 @@
 CSun::CSun()
 {
 	//初期化。
-	position = D3DXVECTOR3(30.0f, 5.0f, 100.0f);
-	scale = D3DXVECTOR3(0.6f, 0.6f, 0.6f);
+	position = D3DXVECTOR3(20.0f, 3.0f, 70.0f);
+	scale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 }
 //デストラクタ

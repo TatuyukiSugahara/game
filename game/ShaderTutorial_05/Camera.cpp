@@ -14,6 +14,7 @@ Camera::Camera()
 //デストラクタ
 Camera::~Camera()
 {
+
 }
 
 //カメラの更新処理。
@@ -155,7 +156,6 @@ void Camera::BossCamera()
 			}
 			if (camerahokan == 1.0f)
 			{
-				vEyePt.z = -17.0f;
 				toPos = vEyePt - vLookatPt;
 			}
 			bosstime += 1.0f / 60.0f;
@@ -173,9 +173,9 @@ void Camera::BossCamera()
 		}
 		if (g_stage->GetBoss()->GetState() == BossDead)
 		{
-			if (Angle > 20.0f)
+			if (Angle > 15.0f)
 			{
-				Angle -= 0.1f; //ボス撃破時画角狭める。
+				Angle -= 0.2f; //ボス撃破時画角狭める。
 			}
 		}
 	}

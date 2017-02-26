@@ -38,7 +38,7 @@ void CHatenaBox::Update()
 {	
 	if (state == hit)
 	{
-		model.SetTexture("Asset/model/kara.png");
+		model.SetTexture("Asset/model/kara.png",false);
 		state = HatenaState::nohit;
 	}
 	//ワールド行列の更新。

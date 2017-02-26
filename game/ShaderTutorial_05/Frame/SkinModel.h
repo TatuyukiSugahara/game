@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Animation.h"
-
+#include "Texture.h"
 
 class SkinModelData;
 class RenderContext;
@@ -128,6 +128,16 @@ public:
 	{
 		Ground = flag;
 	}
+	//セットテクスチャ。
+	void SetTexture(const char* tex,bool isCube)
+	{
+		texture.Load(tex, isCube);
+	}
+	//セットスカイキューブ？
+	void SetSkyCube(bool flag)
+	{
+		SkyCube = flag;
+	}
 private:
 	D3DXMATRIX			worldMatrix;			//!<ワールド行列。
 	D3DXMATRIX			rotationMatrix;			//!<回転行列。
@@ -137,10 +147,12 @@ private:
 	CLight*				light;					//!<ライト。
 	bool				ShadowReceiverFlag;
 	bool				isDrawToShadowMap;
-	bool				isNormalMap;			//<!ノーマルマップフラグ
-	bool				isSpecularMap;		//<!スペキュラマップフラグ
-	bool				Ground;				//<!地面ですか？
-	LPDIRECT3DTEXTURE9	normalMap;				//<!ノーマルマップ。
+	bool				isNormalMap;				//<!ノーマルマップフラグ
+	bool				isSpecularMap;				//<!スペキュラマップフラグ
+	bool				Ground;						//<!地面ですか？
+	LPDIRECT3DTEXTURE9	normalMap;					//<!ノーマルマップ。
 	LPDIRECT3DTEXTURE9  specularMap;				//<!スペキュラマップ。
-	bool				hureneruflg = false;				//ふちを光らせる。
+	bool				hureneruflg = false;		//<!ふちを光らせる。
+	CTexture			texture;					//テクスチャ
+	bool				SkyCube = false;			//スカイキューブか?
 };

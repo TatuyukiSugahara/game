@@ -41,9 +41,9 @@ public:
 	{
 		ShadowReceiverFlag = flag;
 	}
-	void SetTexture(const char* texture)
+	void SetTexture(const char* texture, bool isCube)
 	{
-		tex->Load(texture);
+		tex->Load(texture,isCube);
 	}
 private:
 	LPD3DXMESH				mesh;			//ƒƒbƒVƒ…B

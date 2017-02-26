@@ -7,7 +7,7 @@ CStageBack::CStageBack()
 {
 	//初期化。
 
-	position = D3DXVECTOR3(0.0f, -70.0f, 0.0f);
+	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 	targetPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -31,25 +31,28 @@ void CStageBack::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	light.SetDiffuseLightColor(3, D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f));
 	light.SetAmbientLight(D3DXVECTOR4(1.1f, 1.1f, 1.1f, 1.0f));
 
-	switch (g_scenemanager->GetNomber())
-	{
-	case Stage1:
-		modelData.LoadModelData("Asset/model/sky.x", &animation);
-		break;
-	case Stage2:
-		modelData.LoadModelData("Asset/model/skyNight.x", &animation);
-		break;
-	case StageBoss:
-		modelData.LoadModelData("Asset/model/skyNight.x", &animation);
-		break;
-	}
 	
+	modelData.LoadModelData("Asset/model/sphere.x", &animation);
 	skinmodel.Init(&modelData);
 	skinmodel.SetLight(&light);
 	skinmodel.SetShadowReceiverFlag(false);
 	skinmodel.SetDrawToShadowMap(false);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
+	skinmodel.SetSkyCube(true);
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		skinmodel.SetTexture("Asset/model/skyCubeSunny.dds", true);
+		break;
+	case Stage2:
+		skinmodel.SetTexture("Asset/model/skyCubeMap.dds", true);
+		break;
+	case StageBoss:
+		skinmodel.SetTexture("Asset/model/skyCubeMap.dds", true);
+		break;
+	}
+	
 }
 //更新。
 void CStageBack::Update()

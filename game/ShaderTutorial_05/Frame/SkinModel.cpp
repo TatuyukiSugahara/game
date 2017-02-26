@@ -5,6 +5,7 @@
 #include "..\Stage.h"
 #include "..\StageBoss.h"
 
+
 extern UINT                 g_NumBoneMatricesMax;
 extern D3DXMATRIXA16*       g_pBoneMatrices ;
 
@@ -57,7 +58,16 @@ void SkinModel::DrawMeshContainer(
 		}
 		else
 		{
-			pEffect->SetTechnique("NoSkinModel");
+			if (!SkyCube)
+			{
+				pEffect->SetTechnique("NoSkinModel");
+			}
+			else
+			{
+				//空描画用テクニック。
+				pEffect->SetTechnique("Sky");
+			}
+			
 		}
 	}
 	
@@ -99,12 +109,8 @@ void SkinModel::DrawMeshContainer(
 	//視点。
 	pEffect->SetVector("vEyePos", &(D3DXVECTOR4)g_stage->GetCamera()->GetEyePt());
 
-	/*if (hureneruflg == true)
-	{*/
-		pEffect->SetInt("hureneruflg", hureneruflg);
-		//pEffect->SetMatrix("g_viewMatrixRotInv", &g_stage->GetCamera()->GetViewMatrixInv());
-
-	//}
+	//フレネルセットフラグ。
+	pEffect->SetInt("hureneruflg", hureneruflg);
 
 	//影を描画しているレンダーターゲットのテクスチャを取得。
 	if (ShadowReceiverFlag == TRUE)
@@ -173,7 +179,6 @@ void SkinModel::DrawMeshContainer(
 					}
 				}
 
-
 				pEffect->SetMatrixArray("g_mWorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
 				pEffect->SetInt("g_numBone", pMeshContainer->NumInfl);
 				// ディフューズテクスチャ。
@@ -196,12 +201,10 @@ void SkinModel::DrawMeshContainer(
 				pMeshContainer->MeshData.pMesh->DrawSubset(iAttrib);
 				pEffect->EndPass();
 				pEffect->End();
-
 			}
 		}
 		else 
 		{
-
 			D3DXMATRIX mWorld;
 			if (pFrame != NULL) {
 				mWorld = pFrame->CombinedTransformationMatrix;
@@ -209,17 +212,31 @@ void SkinModel::DrawMeshContainer(
 			else {
 				mWorld = *worldMatrix;
 			}
-			pEffect->SetTexture("g_normalTexture", NULL);
+			//pEffect->SetTexture("g_normalTexture", NULL);
 			pEffect->SetMatrix("g_worldMatrix", &mWorld);
 			pEffect->SetMatrix("g_rotationMatrix", rotationMatrix);
 			pEffect->Begin(0, D3DXFX_DONOTSAVESTATE);
 			pEffect->BeginPass(0);
-			for (DWORD i = 0; i < pMeshContainer->NumMaterials; i++) {
+			if (!SkyCube)
+			{
+				for (DWORD i = 0; i < pMeshContainer->NumMaterials; i++) {
 
-				pEffect->SetTexture("g_diffuseTexture", pMeshContainer->ppTextures[i]);
-				pEffect->CommitChanges();
-				pMeshContainer->MeshData.pMesh->DrawSubset(i);
+					pEffect->SetTexture("g_diffuseTexture", pMeshContainer->ppTextures[i]);
+					pEffect->CommitChanges();
+					pMeshContainer->MeshData.pMesh->DrawSubset(i);
+				}
 			}
+			else
+			{
+				for (DWORD i = 0; i < pMeshContainer->NumMaterials; i++) {
+
+					pEffect->SetTexture("g_skyCubeMap", texture.GetCubeMapDX());
+					pEffect->CommitChanges();
+					pMeshContainer->MeshData.pMesh->DrawSubset(i);
+				}
+			}
+
+			
 			pEffect->EndPass();
 			pEffect->End();
 		}
@@ -304,7 +321,6 @@ SkinModel::SkinModel() :
 }
 SkinModel::~SkinModel()
 {
-
 }
 
 void SkinModel::Init(SkinModelData* modelData)

@@ -383,6 +383,7 @@ void CPlayer::Clear()
 	//ボス撃破時のピース。
 	if (characterController.IsOnGround() == true && state != PlayerHappy)
 	{
+		PlayerStop = true;
 		//正面を向かせるため
 		rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(180.0f));

@@ -18,9 +18,8 @@ CGoalFlag::CGoalFlag()
 		break;
 	case Stage2:
 		position.x = 349.0f;
-		position.y = 147.0f;
+		position.y = 141.0f;
 		position.z = 11.0f;
-		position = D3DXVECTOR3(349.0f, 140.0f, 11.0f);
 		break;
 	}
 	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

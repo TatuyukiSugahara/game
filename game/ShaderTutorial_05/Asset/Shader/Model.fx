@@ -92,6 +92,19 @@ sampler_state
 };
 int g_isHasSpecularMap;		//スペキュラマップ保持している？
 
+//空用のキューブマップ。
+texture g_skyCubeMap;
+samplerCUBE g_skyCubeMapSampler = 
+sampler_state
+{
+    Texture = <g_skyCubeMap>;
+    MinFilter = Linear;
+    MagFilter = Linear;
+    MipFilter = Linear;
+    AddressU = Wrap;
+	AddressV = Wrap;
+};
+
 /*!
  * @brief	入力頂点
  */
@@ -123,6 +136,16 @@ struct VS_OUTPUT
 	float3	worldPos		: TEXCOORD6;
 	
 };
+
+/*!
+ * @brief	ピクセルシェーダーからの出力。
+ */
+struct PSOutput{
+	float4	color		: COLOR0;		//レンダリングターゲット0に書き込み。
+	float4	depth		: COLOR1;		//レンダリングターゲット1に書き込み。
+	float4  velocity 	: COLOR2;		//レンダリングターゲット2に書き込み。
+};
+
 /*!
  *@brief	ワールド座標とワールド法線をスキン行列から計算する。
  *@param[in]	In		入力頂点。
@@ -166,8 +189,8 @@ void CalcWorldPosAndNormalFromSkinMatrix( VS_INPUT In, out float3 Pos, out float
 void CalcWorldPosAndNormal( VS_INPUT In, out float3 Pos, out float3 Normal, out float3 Tangent )
 {
 	Pos = mul(In.Pos, g_worldMatrix );
-	Normal = mul(In.normal, g_rotationMatrix );
-	Tangent = mul(In.Tangent, g_rotationMatrix );
+	Normal = mul(In.normal, g_worldMatrix );
+	Tangent = mul(In.Tangent, g_worldMatrix );
 }
 
 /*!
@@ -251,8 +274,8 @@ float4 posInLVP = In.lightViewPos_1;
 		normal = tangent * localNormal.x
 				+ biNormal * localNormal.y
 				+ normal * localNormal.z;
-		normal = normalize(normal);
 	}
+	normal = normalize(normal);
 	//ライトを計算。
 	float4 lig = 0.0f;
 	{
@@ -294,7 +317,7 @@ float4 posInLVP = In.lightViewPos_1;
 	float t = 0.0f;
 	if (hureneruflg)
 	{
-		float3 normalInCamera = mul(In.normal, g_viewMatrixRotInv);
+		float3 normalInCamera = mul(normal, g_viewMatrixRotInv);
 		t = 1.0f - abs(dot(normalInCamera, float3(0.0f, 0.0f, 1.0f)));
 		t = pow(t, 1.5f);
 	}
@@ -310,6 +333,39 @@ float4 PSDrowToShadowMapMain(VS_OUTPUT In) : COLOR
 	float z = In.lightViewPos_1.z / In.lightViewPos_1.w;
 	return z;
 }
+
+/*!
+ * @brief	空描画用の頂点シェーダー。
+ */
+VS_OUTPUT VSSkyMain(VS_INPUT In)
+{
+	VS_OUTPUT o = (VS_OUTPUT)0;
+	float3 Pos, Normal, Tangent;
+	//スキンなし。
+	CalcWorldPosAndNormal(In, Pos, Normal, Tangent );
+
+	o.lightViewPos_1 = mul(float4(Pos,1.0f),g_mLVP );
+	o.worldPos = Pos;
+	o.Pos = mul(float4(Pos.xyz, 1.0f), g_mViewProj);	//ビュー空間から射影空間に変換。
+   
+    //鏡面反射用のベクトル
+    o.Eye = vEyePos - Pos.xyz;
+
+    o.uv = In.uv;
+    o.normal = normalize(Normal);
+    o.Tangent = normalize(Tangent);
+    o.Tex0 = In.Tex0;
+	return o;
+}
+/*!
+ * @brief	空描画用のピクセルシェーダー。
+ */
+float4 PSSkyMain(VS_OUTPUT In) : COLOR
+{
+	 float4 diffuseColor = texCUBE(g_skyCubeMapSampler, In.normal * -1.0f);
+	 return diffuseColor;
+}
+
 /*!
  *@brief	スキンありモデル用のテクニック。
  */
@@ -353,5 +409,15 @@ technique NoSkinModelDrowToShadowMap
 	{
 		VertexShader = compile vs_3_0 VSMain(false);
 		PixelShader = compile ps_3_0 PSDrowToShadowMapMain();
+	}
+}
+/*!
+ * @brief	空描画用のテクニック。
+ */
+technique Sky{
+	pass p0
+	{
+		VertexShader =  compile vs_3_0 VSSkyMain();
+		PixelShader = compile ps_3_0 PSSkyMain();
 	}
 }

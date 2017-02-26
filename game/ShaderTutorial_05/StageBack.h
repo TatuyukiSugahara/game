@@ -1,5 +1,6 @@
 #pragma once
 #include "Model.h"
+#include "Frame\Texture.h"
 
 class CStageBack {
 public:
@@ -29,4 +30,5 @@ private:
 	Animation animation;
 	CLight	light;
 	D3DXVECTOR3				targetPos;		//ターゲットのポジション
+	CTexture				texture;
 };

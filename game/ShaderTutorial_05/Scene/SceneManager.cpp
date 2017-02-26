@@ -7,7 +7,7 @@
 CSceneManager::CSceneManager()
 {
 	m_scenes = NULL;
-	Nomber = StageNomber::StageBoss;
+	Nomber = StageNomber::Stage2;
 }
 
 void CSceneManager::InitializeScene()

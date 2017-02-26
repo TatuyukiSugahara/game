@@ -18,7 +18,7 @@ CGoal::CGoal()
 		position.z = -24.5f;
 		break;
 	case Stage2:
-		position = D3DXVECTOR3(349.0f, 140.0f, 11.0f);
+		position = D3DXVECTOR3(349.0f, 133.0f, 11.0f);
 		break;
 	}
 	
@@ -43,13 +43,14 @@ void CGoal::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 //XVB
 void CGoal::Update()
 {
+	static float tyousei = 0.8f;
 	/*AABB*/
-	if (m_aabbMax.x > g_stage->GetPlayer()->GetAABBMin().x
-		&& m_aabbMin.x < g_stage->GetPlayer()->GetAABBMax().x
-		&& m_aabbMax.y > g_stage->GetPlayer()->GetAABBMin().y
-		&& m_aabbMin.y < g_stage->GetPlayer()->GetAABBMax().y
-		&& m_aabbMax.z > g_stage->GetPlayer()->GetAABBMin().z
-		&& m_aabbMin.z < g_stage->GetPlayer()->GetAABBMax().z
+	if (m_aabbMax.x - tyousei > g_stage->GetPlayer()->GetAABBMin().x + tyousei
+		&& m_aabbMin.x + tyousei < g_stage->GetPlayer()->GetAABBMax().x - tyousei
+		&& m_aabbMax.y - tyousei > g_stage->GetPlayer()->GetAABBMin().y + tyousei
+		&& m_aabbMin.y + tyousei < g_stage->GetPlayer()->GetAABBMax().y - tyousei
+		&& m_aabbMax.z + 3.0f > g_stage->GetPlayer()->GetAABBMin().z + tyousei
+		&& m_aabbMin.z - 3.0f < g_stage->GetPlayer()->GetAABBMax().z - tyousei
 
 		)
 	{
