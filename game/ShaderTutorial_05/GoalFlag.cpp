@@ -18,7 +18,7 @@ CGoalFlag::CGoalFlag()
 		break;
 	case Stage2:
 		position.x = 349.0f;
-		position.y = 141.0f;
+		position.y = 140.5f;
 		position.z = 11.0f;
 		break;
 	}

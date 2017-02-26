@@ -11,8 +11,14 @@ SMohurunChipLocInfo mohurunChipListTable[] = {
 #include "LocationMohurun.h"
 };
 
+//マップチップの配置情報のテーブル。
+SMohurunChipLocInfo mohurunChipListTable2[] = {
+#include "LocationMohurun2.h"
+};
+
 CMohurun::CMohurun()
 {
+	mohurunChipLoc = NULL;
 }
 
 
@@ -26,21 +32,31 @@ CMohurun::~CMohurun()
 //初期化。
 void CMohurun::Init()
 {
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		mohurunChipLoc = mohurunChipListTable;
+		tableSize = sizeof(mohurunChipListTable) / sizeof(mohurunChipListTable[0]);
+		break;
+	case Stage2:
+		mohurunChipLoc = mohurunChipListTable2;
+		tableSize = sizeof(mohurunChipListTable2) / sizeof(mohurunChipListTable2[0]);
+		break;
+	}
+
 	//配置情報からマップを構築
-	tableSize = sizeof(mohurunChipListTable) / sizeof(mohurunChipListTable[0]);
 	for (int a = 0; a < tableSize; a++)
 	{
 		//マップチップを生成
 		CMohurunChip* mohurunchip = new CMohurunChip;
-		mohurunchip->SetPosition(mohurunChipListTable[a].pos);
-		mohurunchip->Init(mohurunChipListTable[a].modelName, g_pd3dDevice);
+		mohurunchip->SetPosition(mohurunChipLoc[a].pos);
+		mohurunchip->Init(mohurunChipLoc[a].modelName, g_pd3dDevice);
 		mohurunChipList.push_back(mohurunchip);
 	}
 }
 //更新。
 void CMohurun::Update()
 {
-	tableSize = sizeof(mohurunChipListTable) / sizeof(mohurunChipListTable[0]);
 	for (auto p : mohurunChipList)
 	{
 		p->Update();

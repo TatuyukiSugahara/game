@@ -1,5 +1,12 @@
 #pragma once
 
+//マップチップの配置情報。
+struct SBirdChipLocInfo {
+	const char* modelName;		//モデル。
+	D3DXVECTOR3	pos;			//座標。
+	D3DXQUATERNION	rotation;		//回転。
+};
+
 class CBirdChip;
 
 class CBird
@@ -22,6 +29,8 @@ public:
 	}
 private:
 	std::vector<CBirdChip*> birdChipList;	//マップチップのリスト。
+	SBirdChipLocInfo* birdChipLoc;
+
 	int tableSize;
 };
 

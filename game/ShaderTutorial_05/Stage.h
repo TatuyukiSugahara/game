@@ -30,6 +30,7 @@
 #include "BossName.h"
 #include "BossKatto.h"
 #include "BossClear.h"
+#include "SkyCamera.h"
 
 #define MAX_COLLISION 100
 
@@ -164,6 +165,7 @@ protected:
 	bool bossmusic;					//ボス戦時の音楽フラグ。
 	LPD3DXSPRITE m_pSprite;			//スプライト
 	Camera camera;				//カメラ。
+	CSkyCamera skycamera;		//空用カメラ
 	CLight light;				//ライト
 	CLightBack lightback;		//背景ライト
 	CPlayer player;				//プレイヤー

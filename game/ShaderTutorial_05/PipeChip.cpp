@@ -5,9 +5,8 @@
 CPipeChip::CPipeChip()
 {
 	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	D3DXMatrixIdentity(&mWorld);
-	D3DXMatrixIdentity(&mRot);
-	D3DXMatrixIdentity(&mScale);
+	Scale = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	rotation = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 CPipeChip::~CPipeChip()
@@ -29,7 +28,6 @@ void CPipeChip::Init()
 
 	//まずはスキンモデルをロード。
 	modelData = g_skinmodeldataManager->LoadSkinModelData("Asset/model/pipe.X");
-	//modelData.LoadModelData("Asset/model/pipe.X", &animation);
 	skinmodel.Init(modelData);
 	skinmodel.SetLight(&light);
 	skinmodel.SetShadowReceiverFlag(true);
@@ -37,20 +35,21 @@ void CPipeChip::Init()
 	skinmodel.SetGround(true);
 	skinmodel.SetNormalMap(false);
 	skinmodel.SetSpecularMap(false);
-	//ワールド行列のバッファを作成。
-	D3DXMatrixScaling(&mScale, Scale.x, Scale.y, Scale.z);
 }
 
 void CPipeChip::Update()
 {
-
+	
 }
-void CPipeChip::Render()
+void CPipeChip::Render(D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	//ワールド行列の更新。
 	skinmodel.UpdateWorldMatrix(position, rotation, Scale);
-
-	skinmodel.Draw(&g_stage->GetCamera()->GetViewMatrix(),
-		&g_stage->GetCamera()->GetProjectionMatrix(),
-		false);
+	skinmodel.Draw(
+		&viewMatrix,
+		&projMatrix,
+		isDrawToShadowMap);
+	
 }

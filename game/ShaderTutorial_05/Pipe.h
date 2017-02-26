@@ -30,7 +30,9 @@ public:
 	void Init();
 	void Update();
 	//•`‰æB
-	void Render();
+	void Render(D3DXMATRIX viewMatrix,
+		D3DXMATRIX projMatrix,
+		bool isDrawToShadowMap);
 	//“yŠÇˆÚ“®
 	void PipeMove(int now, int next, int pipenum);
 	int GetSize()

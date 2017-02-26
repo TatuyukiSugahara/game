@@ -61,6 +61,7 @@ void CCoinChip::Update()
 			coinget = true;
 			g_scenemanager->AddNum();
 			g_stage->GetCoinSprite()->SetRotFlag(true);
+			g_stage->GetPlayer()->SetDiedTime(0.0f);
 			//ƒTƒEƒ“ƒh
 			soundSource->SetVolume(0.25f);
 			soundSource->Play(false);

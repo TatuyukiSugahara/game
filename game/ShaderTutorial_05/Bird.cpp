@@ -10,9 +10,14 @@ SBirdChipLocInfo birdChipListTable[] = {
 	#include "LocationBird.h"
 };
 
+//マップチップの配置情報のテーブル。
+SBirdChipLocInfo birdChipListTable2[] = {
+#include "LocationBird2.h"
+};
+
 CBird::CBird()
 {
-
+	birdChipLoc = NULL;
 }
 
 
@@ -26,14 +31,25 @@ CBird::~CBird()
 //初期化。
 void CBird::Init()
 {
+	switch (g_scenemanager->GetNomber())
+	{
+	case Stage1:
+		birdChipLoc = birdChipListTable;
+		tableSize = sizeof(birdChipListTable) / sizeof(birdChipListTable[0]);
+		break;
+	case Stage2:
+		birdChipLoc = birdChipListTable2;
+		tableSize = sizeof(birdChipListTable2) / sizeof(birdChipListTable2[0]);
+		break;
+	}
+
 	//配置情報からマップを構築
-	tableSize = sizeof(birdChipListTable) / sizeof(birdChipListTable[0]);
 	for (int a = 0; a < tableSize; a++)
 	{
 		//マップチップを生成
 		CBirdChip* birdchip = new CBirdChip;
-		birdchip->SetPosition(birdChipListTable[a].pos);
-		birdchip->Init(birdChipListTable[a].modelName, g_pd3dDevice);
+		birdchip->SetPosition(birdChipLoc[a].pos);
+		birdchip->Init(birdChipLoc[a].modelName, g_pd3dDevice);
 		birdChipList.push_back(birdchip);
 	}
 }

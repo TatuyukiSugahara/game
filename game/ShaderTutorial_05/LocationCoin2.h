@@ -91,37 +91,37 @@
 //coin
 {
 	"coin",
-	D3DXVECTOR3(117.55f, 174.74f, 0.00f),             //平行移動
+	D3DXVECTOR3(117.55f, 176.74f, 1.86f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(118.96f, 174.06f, 0.00f),             //平行移動
+	D3DXVECTOR3(118.96f, 176.06f, 1.86f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(120.35f, 173.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(120.35f, 175.08f, 1.86f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(122.99f, 172.45f, 0.00f),             //平行移動
+	D3DXVECTOR3(122.99f, 174.23f, -1.58f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(124.60f, 171.59f, 0.00f),             //平行移動
+	D3DXVECTOR3(124.60f, 173.37f, -1.58f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(126.04f, 170.78f, 0.00f),             //平行移動
+	D3DXVECTOR3(126.04f, 172.56f, -1.58f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
@@ -139,43 +139,43 @@
 //coin
 {
 	"coin",
-	D3DXVECTOR3(341.14f, 193.75f, 10.50f),             //平行移動
+	D3DXVECTOR3(341.14f, 194.69f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(338.17f, 191.66f, 10.50f),             //平行移動
+	D3DXVECTOR3(338.17f, 193.15f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(335.07f, 188.83f, 10.50f),             //平行移動
+	D3DXVECTOR3(335.07f, 190.42f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(332.58f, 185.93f, 10.50f),             //平行移動
+	D3DXVECTOR3(332.58f, 187.47f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(329.14f, 184.81f, 10.50f),             //平行移動
+	D3DXVECTOR3(329.14f, 186.15f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.77f, 182.92f, 10.50f),             //平行移動
+	D3DXVECTOR3(326.77f, 184.21f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(301.25f, 181.10f, 10.50f),             //平行移動
+	D3DXVECTOR3(301.25f, 181.86f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
@@ -187,13 +187,13 @@
 //coin
 {
 	"coin",
-	D3DXVECTOR3(319.80f, 165.00f, 10.50f),             //平行移動
+	D3DXVECTOR3(319.80f, 166.77f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.10f, 159.10f, 10.50f),             //平行移動
+	D3DXVECTOR3(323.10f, 162.21f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
@@ -457,361 +457,361 @@
 //coin
 {
 	"coin",
-	D3DXVECTOR3(85.31f, 174.13f, 0.00f),             //平行移動
+	D3DXVECTOR3(85.31f, 175.52f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(87.01f, 174.13f, 0.00f),             //平行移動
+	D3DXVECTOR3(87.01f, 175.52f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(88.51f, 174.13f, 0.00f),             //平行移動
+	D3DXVECTOR3(88.51f, 175.52f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(88.51f, 175.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(88.51f, 176.47f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(87.01f, 175.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(87.01f, 176.47f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(85.31f, 175.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(85.31f, 176.47f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(85.31f, 176.07f, 0.00f),             //平行移動
+	D3DXVECTOR3(85.31f, 177.46f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(87.01f, 176.07f, 0.00f),             //平行移動
+	D3DXVECTOR3(87.01f, 177.46f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(88.51f, 176.07f, 0.00f),             //平行移動
+	D3DXVECTOR3(88.51f, 177.46f, 1.08f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(113.59f, 176.07f, 0.00f),             //平行移動
+	D3DXVECTOR3(114.07f, 178.44f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(112.09f, 176.07f, 0.00f),             //平行移動
+	D3DXVECTOR3(112.57f, 177.66f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(110.39f, 176.07f, 0.00f),             //平行移動
+	D3DXVECTOR3(110.87f, 177.03f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(110.39f, 175.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(110.87f, 176.04f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(112.09f, 175.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(112.57f, 176.67f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(113.59f, 175.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(114.07f, 177.45f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(113.59f, 174.13f, 0.00f),             //平行移動
+	D3DXVECTOR3(114.07f, 176.50f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(112.09f, 174.13f, 0.00f),             //平行移動
+	D3DXVECTOR3(112.57f, 175.72f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(110.39f, 174.13f, 0.00f),             //平行移動
+	D3DXVECTOR3(110.87f, 175.09f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(129.02f, 171.14f, 0.00f),             //平行移動
+	D3DXVECTOR3(129.02f, 172.88f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(130.72f, 171.14f, 0.00f),             //平行移動
+	D3DXVECTOR3(130.72f, 172.88f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(132.22f, 171.14f, 0.00f),             //平行移動
+	D3DXVECTOR3(132.22f, 172.88f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(132.22f, 172.09f, 0.00f),             //平行移動
+	D3DXVECTOR3(132.22f, 173.83f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(130.72f, 172.09f, 0.00f),             //平行移動
+	D3DXVECTOR3(130.72f, 173.83f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(129.02f, 172.09f, 0.00f),             //平行移動
+	D3DXVECTOR3(129.02f, 173.83f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(129.02f, 173.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(129.02f, 174.82f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(130.72f, 173.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(130.72f, 174.82f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(132.22f, 173.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(132.22f, 174.82f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(135.77f, 169.98f, 0.00f),             //平行移動
+	D3DXVECTOR3(135.77f, 171.72f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(134.27f, 169.98f, 0.00f),             //平行移動
+	D3DXVECTOR3(134.27f, 171.72f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(132.57f, 169.98f, 0.00f),             //平行移動
+	D3DXVECTOR3(132.57f, 171.72f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(132.57f, 168.99f, 0.00f),             //平行移動
+	D3DXVECTOR3(132.57f, 170.73f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(134.27f, 168.99f, 0.00f),             //平行移動
+	D3DXVECTOR3(134.27f, 170.73f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(135.77f, 168.99f, 0.00f),             //平行移動
+	D3DXVECTOR3(135.77f, 170.73f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(135.77f, 168.04f, 0.00f),             //平行移動
+	D3DXVECTOR3(135.77f, 169.78f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(134.27f, 168.04f, 0.00f),             //平行移動
+	D3DXVECTOR3(134.27f, 169.78f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(132.57f, 168.04f, 0.00f),             //平行移動
+	D3DXVECTOR3(132.57f, 169.78f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.92f, 165.61f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.92f, 167.35f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(138.62f, 165.61f, 0.00f),             //平行移動
+	D3DXVECTOR3(138.62f, 167.35f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(140.12f, 165.61f, 0.00f),             //平行移動
+	D3DXVECTOR3(140.12f, 167.35f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(140.12f, 166.56f, 0.00f),             //平行移動
+	D3DXVECTOR3(140.12f, 168.30f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(138.62f, 166.56f, 0.00f),             //平行移動
+	D3DXVECTOR3(138.62f, 168.30f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.92f, 166.56f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.92f, 168.30f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.92f, 167.55f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.92f, 169.29f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(138.62f, 167.55f, 0.00f),             //平行移動
+	D3DXVECTOR3(138.62f, 169.29f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(140.12f, 167.55f, 0.00f),             //平行移動
+	D3DXVECTOR3(140.12f, 169.29f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.92f, 169.55f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.92f, 171.29f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(138.62f, 169.55f, 0.00f),             //平行移動
+	D3DXVECTOR3(138.62f, 171.29f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(140.12f, 169.55f, 0.00f),             //平行移動
+	D3DXVECTOR3(140.12f, 171.29f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(140.12f, 168.60f, 0.00f),             //平行移動
+	D3DXVECTOR3(140.12f, 170.34f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(138.62f, 168.60f, 0.00f),             //平行移動
+	D3DXVECTOR3(138.62f, 170.34f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.92f, 168.60f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.92f, 170.34f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(133.47f, 171.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(133.47f, 172.82f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(135.17f, 171.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(135.17f, 172.82f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.67f, 171.08f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.67f, 172.82f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.67f, 172.03f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.67f, 173.77f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(135.17f, 172.03f, 0.00f),             //平行移動
+	D3DXVECTOR3(135.17f, 173.77f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(133.47f, 172.03f, 0.00f),             //平行移動
+	D3DXVECTOR3(133.47f, 173.77f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(133.47f, 173.02f, 0.00f),             //平行移動
+	D3DXVECTOR3(133.47f, 174.76f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(135.17f, 173.02f, 0.00f),             //平行移動
+	D3DXVECTOR3(135.17f, 174.76f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(136.67f, 173.02f, 0.00f),             //平行移動
+	D3DXVECTOR3(136.67f, 174.76f, 0.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
@@ -1951,217 +1951,217 @@
 //coin
 {
 	"coin",
-	D3DXVECTOR3(219.10f, 204.87f, 11.00f),             //平行移動
+	D3DXVECTOR3(219.10f, 206.29f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(220.80f, 204.87f, 11.00f),             //平行移動
+	D3DXVECTOR3(220.80f, 206.29f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(222.30f, 204.87f, 11.00f),             //平行移動
+	D3DXVECTOR3(222.30f, 206.29f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(222.30f, 205.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(222.30f, 207.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(220.80f, 205.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(220.80f, 207.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(219.10f, 205.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(219.10f, 207.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(219.10f, 206.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(219.10f, 208.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(220.80f, 206.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(220.80f, 208.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(222.30f, 206.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(222.30f, 208.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(226.95f, 204.81f, 11.00f),             //平行移動
+	D3DXVECTOR3(226.95f, 206.23f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(225.45f, 204.81f, 11.00f),             //平行移動
+	D3DXVECTOR3(225.45f, 206.23f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(223.75f, 204.81f, 11.00f),             //平行移動
+	D3DXVECTOR3(223.75f, 206.23f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(223.75f, 203.81f, 11.00f),             //平行移動
+	D3DXVECTOR3(223.75f, 205.23f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(225.45f, 203.81f, 11.00f),             //平行移動
+	D3DXVECTOR3(225.45f, 205.23f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(226.95f, 203.81f, 11.00f),             //平行移動
+	D3DXVECTOR3(226.95f, 205.23f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(226.95f, 202.91f, 11.00f),             //平行移動
+	D3DXVECTOR3(226.95f, 204.33f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(225.45f, 202.91f, 11.00f),             //平行移動
+	D3DXVECTOR3(225.45f, 204.33f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(223.75f, 202.91f, 11.00f),             //平行移動
+	D3DXVECTOR3(223.75f, 204.33f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(225.86f, 199.83f, 11.00f),             //平行移動
+	D3DXVECTOR3(225.86f, 201.25f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(227.56f, 199.83f, 11.00f),             //平行移動
+	D3DXVECTOR3(227.56f, 201.25f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(229.06f, 199.83f, 11.00f),             //平行移動
+	D3DXVECTOR3(229.06f, 201.25f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(229.06f, 200.73f, 11.00f),             //平行移動
+	D3DXVECTOR3(229.06f, 202.15f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(227.56f, 200.73f, 11.00f),             //平行移動
+	D3DXVECTOR3(227.56f, 202.15f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(225.86f, 200.73f, 11.00f),             //平行移動
+	D3DXVECTOR3(225.86f, 202.15f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(225.86f, 201.73f, 11.00f),             //平行移動
+	D3DXVECTOR3(225.86f, 203.15f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(227.56f, 201.73f, 11.00f),             //平行移動
+	D3DXVECTOR3(227.56f, 203.15f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(229.06f, 201.73f, 11.00f),             //平行移動
+	D3DXVECTOR3(229.06f, 203.15f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(231.19f, 198.40f, 11.00f),             //平行移動
+	D3DXVECTOR3(231.19f, 199.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(229.69f, 198.40f, 11.00f),             //平行移動
+	D3DXVECTOR3(229.69f, 199.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(227.99f, 198.40f, 11.00f),             //平行移動
+	D3DXVECTOR3(227.99f, 199.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(227.99f, 197.40f, 11.00f),             //平行移動
+	D3DXVECTOR3(227.99f, 198.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(229.69f, 197.40f, 11.00f),             //平行移動
+	D3DXVECTOR3(229.69f, 198.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(231.19f, 197.40f, 11.00f),             //平行移動
+	D3DXVECTOR3(231.19f, 198.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(231.19f, 196.50f, 11.00f),             //平行移動
+	D3DXVECTOR3(231.19f, 197.92f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(229.69f, 196.50f, 11.00f),             //平行移動
+	D3DXVECTOR3(229.69f, 197.92f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(227.99f, 196.50f, 11.00f),             //平行移動
+	D3DXVECTOR3(227.99f, 197.92f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
@@ -2275,649 +2275,595 @@
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.42f, 232.19f, 11.00f),             //平行移動
+	D3DXVECTOR3(324.13f, 234.52f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.42f, 231.29f, 11.00f),             //平行移動
+	D3DXVECTOR3(324.13f, 233.62f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.62f, 231.29f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.33f, 233.62f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.42f, 233.19f, 11.00f),             //平行移動
+	D3DXVECTOR3(324.13f, 235.52f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.62f, 233.19f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.33f, 235.52f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(325.12f, 232.19f, 11.00f),             //平行移動
+	D3DXVECTOR3(325.83f, 234.52f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(325.12f, 233.19f, 11.00f),             //平行移動
+	D3DXVECTOR3(325.83f, 235.52f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.62f, 232.19f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.33f, 234.52f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(325.12f, 231.29f, 11.00f),             //平行移動
+	D3DXVECTOR3(325.83f, 233.62f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.87f, 228.08f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.58f, 230.41f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.37f, 228.98f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.08f, 231.31f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.87f, 229.98f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.58f, 232.31f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(326.87f, 228.98f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.58f, 231.31f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.37f, 229.98f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.08f, 232.31f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(325.17f, 229.98f, 11.00f),             //平行移動
+	D3DXVECTOR3(325.88f, 232.31f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.37f, 228.08f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.08f, 230.41f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(325.17f, 228.08f, 11.00f),             //平行移動
+	D3DXVECTOR3(325.88f, 230.41f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(325.17f, 228.98f, 11.00f),             //平行移動
+	D3DXVECTOR3(325.88f, 231.31f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(327.00f, 225.70f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.71f, 228.03f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(327.00f, 224.80f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.71f, 227.13f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(330.20f, 224.80f, 11.00f),             //平行移動
+	D3DXVECTOR3(330.91f, 227.13f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(327.00f, 226.70f, 11.00f),             //平行移動
+	D3DXVECTOR3(327.71f, 229.03f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(330.20f, 226.70f, 11.00f),             //平行移動
+	D3DXVECTOR3(330.91f, 229.03f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.70f, 225.70f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.41f, 228.03f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.70f, 226.70f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.41f, 229.03f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(330.20f, 225.70f, 11.00f),             //平行移動
+	D3DXVECTOR3(330.91f, 228.03f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.70f, 224.80f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.41f, 227.13f, 11.41f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(321.26f, 224.37f, 11.00f),             //平行移動
+	D3DXVECTOR3(321.41f, 226.36f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(322.76f, 225.27f, 11.00f),             //平行移動
+	D3DXVECTOR3(322.91f, 227.26f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(321.26f, 226.27f, 11.00f),             //平行移動
+	D3DXVECTOR3(321.41f, 227.26f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(321.26f, 225.27f, 11.00f),             //平行移動
+	D3DXVECTOR3(322.91f, 226.36f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(322.76f, 226.27f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.71f, 226.36f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(319.56f, 226.27f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.71f, 227.26f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(322.76f, 224.37f, 11.00f),             //平行移動
+	D3DXVECTOR3(315.19f, 226.09f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(319.56f, 224.37f, 11.00f),             //平行移動
+	D3DXVECTOR3(315.19f, 225.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(319.56f, 225.27f, 11.00f),             //平行移動
+	D3DXVECTOR3(318.39f, 225.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(315.04f, 224.10f, 11.00f),             //平行移動
+	D3DXVECTOR3(316.89f, 226.09f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(315.04f, 223.20f, 11.00f),             //平行移動
+	D3DXVECTOR3(318.39f, 226.09f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(318.24f, 223.20f, 11.00f),             //平行移動
+	D3DXVECTOR3(316.89f, 225.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(315.04f, 225.10f, 11.00f),             //平行移動
+	D3DXVECTOR3(314.42f, 222.68f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(318.24f, 225.10f, 11.00f),             //平行移動
+	D3DXVECTOR3(315.92f, 223.58f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(316.74f, 224.10f, 11.00f),             //平行移動
+	D3DXVECTOR3(314.42f, 223.58f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(316.74f, 225.10f, 11.00f),             //平行移動
+	D3DXVECTOR3(315.92f, 222.68f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(318.24f, 224.10f, 11.00f),             //平行移動
+	D3DXVECTOR3(312.72f, 222.68f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(316.74f, 223.20f, 11.00f),             //平行移動
+	D3DXVECTOR3(312.72f, 223.58f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(315.14f, 219.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(317.64f, 220.96f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(316.64f, 220.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(317.64f, 220.06f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(315.14f, 221.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(320.84f, 220.06f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(315.14f, 220.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(317.64f, 221.96f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(316.64f, 221.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(320.84f, 221.96f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(313.44f, 221.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.34f, 220.96f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(316.64f, 219.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.34f, 221.96f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(313.44f, 219.77f, 11.00f),             //平行移動
+	D3DXVECTOR3(320.84f, 220.96f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(313.44f, 220.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.34f, 220.06f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(318.61f, 219.79f, 11.00f),             //平行移動
+	D3DXVECTOR3(321.24f, 216.92f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(318.61f, 218.89f, 11.00f),             //平行移動
+	D3DXVECTOR3(322.74f, 217.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(321.81f, 218.89f, 11.00f),             //平行移動
+	D3DXVECTOR3(321.24f, 218.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(318.61f, 220.79f, 11.00f),             //平行移動
+	D3DXVECTOR3(321.24f, 217.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(321.81f, 220.79f, 11.00f),             //平行移動
+	D3DXVECTOR3(322.74f, 218.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(320.31f, 219.79f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.54f, 218.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(320.31f, 220.79f, 11.00f),             //平行移動
+	D3DXVECTOR3(322.74f, 216.92f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(321.81f, 219.79f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.54f, 216.92f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(320.31f, 218.89f, 11.00f),             //平行移動
+	D3DXVECTOR3(319.54f, 217.82f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(322.21f, 215.75f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.90f, 209.99f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.71f, 216.65f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.90f, 209.09f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(322.21f, 217.65f, 11.00f),             //平行移動
+	D3DXVECTOR3(333.10f, 209.09f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(322.21f, 216.65f, 11.00f),             //平行移動
+	D3DXVECTOR3(329.90f, 210.99f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.71f, 217.65f, 11.00f),             //平行移動
+	D3DXVECTOR3(333.10f, 210.99f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(320.51f, 217.65f, 11.00f),             //平行移動
+	D3DXVECTOR3(331.60f, 209.99f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(323.71f, 215.75f, 11.00f),             //平行移動
+	D3DXVECTOR3(331.60f, 210.99f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(320.51f, 215.75f, 11.00f),             //平行移動
+	D3DXVECTOR3(333.10f, 209.99f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(320.51f, 216.65f, 11.00f),             //平行移動
+	D3DXVECTOR3(331.60f, 209.09f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.73f, 211.01f, 11.00f),             //平行移動
+	D3DXVECTOR3(338.92f, 205.01f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.73f, 210.11f, 11.00f),             //平行移動
+	D3DXVECTOR3(340.42f, 205.91f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(331.93f, 210.11f, 11.00f),             //平行移動
+	D3DXVECTOR3(338.92f, 206.91f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(328.73f, 212.01f, 11.00f),             //平行移動
+	D3DXVECTOR3(338.92f, 205.91f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(331.93f, 212.01f, 11.00f),             //平行移動
+	D3DXVECTOR3(340.42f, 206.91f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(330.43f, 211.01f, 11.00f),             //平行移動
+	D3DXVECTOR3(337.22f, 206.91f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(330.43f, 212.01f, 11.00f),             //平行移動
+	D3DXVECTOR3(340.42f, 205.01f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(331.93f, 211.01f, 11.00f),             //平行移動
+	D3DXVECTOR3(337.22f, 205.01f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(330.43f, 210.11f, 11.00f),             //平行移動
+	D3DXVECTOR3(337.22f, 205.91f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(339.24f, 203.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(339.50f, 201.95f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(340.74f, 204.57f, 11.00f),             //平行移動
+	D3DXVECTOR3(339.50f, 201.05f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(339.24f, 205.57f, 11.00f),             //平行移動
+	D3DXVECTOR3(342.70f, 201.05f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(339.24f, 204.57f, 11.00f),             //平行移動
+	D3DXVECTOR3(339.50f, 202.95f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(340.74f, 205.57f, 11.00f),             //平行移動
+	D3DXVECTOR3(342.70f, 202.95f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(337.54f, 205.57f, 11.00f),             //平行移動
+	D3DXVECTOR3(341.20f, 201.95f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(340.74f, 203.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(341.20f, 202.95f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(337.54f, 203.67f, 11.00f),             //平行移動
+	D3DXVECTOR3(342.70f, 201.95f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(337.54f, 204.57f, 11.00f),             //平行移動
+	D3DXVECTOR3(341.20f, 201.05f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(339.82f, 200.61f, 11.00f),             //平行移動
+	D3DXVECTOR3(343.67f, 197.29f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(339.82f, 199.71f, 11.00f),             //平行移動
+	D3DXVECTOR3(345.17f, 198.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(343.02f, 199.71f, 11.00f),             //平行移動
+	D3DXVECTOR3(343.67f, 199.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(339.82f, 201.61f, 11.00f),             //平行移動
+	D3DXVECTOR3(343.67f, 198.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(343.02f, 201.61f, 11.00f),             //平行移動
+	D3DXVECTOR3(345.17f, 199.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(341.52f, 200.61f, 11.00f),             //平行移動
+	D3DXVECTOR3(341.97f, 199.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(341.52f, 201.61f, 11.00f),             //平行移動
+	D3DXVECTOR3(345.17f, 197.29f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(343.02f, 200.61f, 11.00f),             //平行移動
+	D3DXVECTOR3(341.97f, 197.29f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
 {
 	"coin",
-	D3DXVECTOR3(341.52f, 199.71f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(343.99f, 195.95f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(345.49f, 196.85f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(343.99f, 197.85f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(343.99f, 196.85f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(345.49f, 197.85f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(342.29f, 197.85f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(345.49f, 195.95f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(342.29f, 195.95f, 11.00f),             //平行移動
-	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
-},
-//coin
-{
-	"coin",
-	D3DXVECTOR3(342.29f, 196.85f, 11.00f),             //平行移動
+	D3DXVECTOR3(341.97f, 198.19f, 11.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //coin
@@ -3404,5 +3350,227 @@
 {
 	"coin",
 	D3DXVECTOR3(349.10f, 146.00f, 11.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(192.10f, 195.96f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(192.10f, 195.06f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(193.60f, 195.96f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(192.10f, 196.96f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(190.40f, 196.96f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(193.60f, 196.96f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(190.40f, 195.96f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(190.40f, 195.06f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(193.60f, 195.06f, 0.00f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(200.14f, 199.96f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(196.94f, 199.96f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(196.94f, 200.86f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(200.14f, 201.86f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(196.94f, 201.86f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(198.64f, 201.86f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(200.14f, 200.86f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(198.64f, 199.96f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(198.64f, 200.86f, 3.29f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(205.14f, 203.01f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(205.14f, 202.11f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(206.64f, 203.01f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(205.14f, 204.01f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(203.44f, 204.01f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(206.64f, 204.01f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(203.44f, 203.01f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(203.44f, 202.11f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(206.64f, 202.11f, 6.05f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(213.43f, 204.26f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(210.23f, 204.26f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(210.23f, 205.16f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(213.43f, 206.16f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(210.23f, 206.16f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(211.93f, 206.16f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(213.43f, 205.16f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(211.93f, 204.26f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(211.93f, 205.16f, 8.63f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
+},
+//coin
+{
+	"coin",
+	D3DXVECTOR3(327.10f, 158.00f, 10.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },

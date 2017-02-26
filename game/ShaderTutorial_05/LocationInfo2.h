@@ -91,7 +91,7 @@
 //ground_long
 {
 	"ground_long",
-	D3DXVECTOR3(5.89f, 171.00f, -22.50f),             //平行移動
+	D3DXVECTOR3(8.21f, 171.00f, -22.50f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //ground_long
@@ -241,7 +241,7 @@
 //ground_long
 {
 	"ground_long",
-	D3DXVECTOR3(308.20f, 238.00f, 10.00f),             //平行移動
+	D3DXVECTOR3(308.20f, 240.00f, 10.00f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),  //回転
 },
 //ground_block

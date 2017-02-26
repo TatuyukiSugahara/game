@@ -131,6 +131,10 @@ public:
 	{
 		return PlayerStop;
 	}
+	void SetDiedTime(float time)
+	{
+		DiedTime = time;
+	}
 	void Move(float maxmove);
 	void Jump();
 	void State();
@@ -159,6 +163,7 @@ private:
 	float					deathCount;						//€–S‚Ü‚Å‚ÌƒJƒEƒ“ƒg
 	D3DXVECTOR3				addmove;							//Ÿ‚ÌˆÚ“®
 	bool					PlayerStop = false;				//“®‚¯‚È‚¢ó‘Ô
+	float					DiedTime = 0.0f;				//€–S‚·‚éŠÔ
 	/*AABB*/
 	D3DXVECTOR3 m_aabbMin;
 	D3DXVECTOR3 m_aabbMax;

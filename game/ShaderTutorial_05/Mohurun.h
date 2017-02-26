@@ -1,5 +1,12 @@
 #pragma once
 
+//マップチップの配置情報。
+struct SMohurunChipLocInfo {
+	const char* modelName;		//モデル。
+	D3DXVECTOR3	pos;			//座標。
+	D3DXQUATERNION	rotation;		//回転。
+};
+
 class CMohurunChip;
 
 class CMohurun
@@ -23,6 +30,7 @@ public:
 	}
 private:
 	std::vector<CMohurunChip*> mohurunChipList;	//マップチップのリスト。
+	SMohurunChipLocInfo* mohurunChipLoc;
 	int tableSize;
 };
 

@@ -222,6 +222,7 @@
     <ClCompile Include="Saboten.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
+    <ClCompile Include="SkyCamera.cpp" />
     <ClCompile Include="Sound\SoundEngine.cpp" />
     <ClCompile Include="Sound\SoundSource.cpp" />
     <ClCompile Include="Sound\WaveFile.cpp" />
@@ -315,6 +316,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="ShadowMap.h" />
+    <ClInclude Include="SkyCamera.h" />
     <ClInclude Include="Sound\SoundEngine.h" />
     <ClInclude Include="Sound\SoundSource.h" />
     <ClInclude Include="Sound\WaveFile.h" />

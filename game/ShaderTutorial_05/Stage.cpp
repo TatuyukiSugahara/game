@@ -55,6 +55,8 @@ void CStage::Init()
 	light.Init();
 	//カメラの初期化。
 	camera.Init();
+	skycamera.Init();
+
 	soundsource.InitStreaming("Asset/Sound/mario.wav");
 	soundsource.Play(true);
 
@@ -201,6 +203,7 @@ void CStage::Update()
 	}
 	//カメラの更新
 	camera.Update();
+	skycamera.Update();
 }
 
 void CStage::Render()
@@ -239,8 +242,8 @@ void CStage::Render()
 	//ステージ背景描画
 	stageback.Render(
 		g_pd3dDevice,
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix()
+		skycamera.GetViewMatrix(),
+		skycamera.GetProjectionMatrix()
 		);
 	//マップ描画
 	map.Render(
@@ -292,7 +295,9 @@ void CStage::Render()
 		);
 		}*/
 		//土管描画
-		pipe.Render();
+		pipe.Render(camera.GetViewMatrix(),
+			camera.GetProjectionMatrix(), 
+			false);
 		//ゴール描画
 		goal.Render(
 			g_pd3dDevice,

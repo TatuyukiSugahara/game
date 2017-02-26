@@ -19,7 +19,7 @@ SCollisionInfoPipe collisionInfoTablepipe[] = {
 //ステージ２
 //土管チップの配置情報のテーブル。
 SPipeChipLocInfo pipeChipLocInfoTable2[] = {
-#include "locationPipe2.h"
+#include "locationPipe_2.h"
 };
 //あたり判定
 SCollisionInfoPipe collisionInfoTablpipe2[] = {
@@ -34,6 +34,8 @@ CPipe::CPipe()
 	memset(m_rigidBody3Dpipe, NULL, sizeof(m_rigidBody3Dpipe));
 	memset(m_rigidBody2Dpipe, NULL, sizeof(m_rigidBody2Dpipe));
 	m_myMotionState = NULL;
+	pipeChipTable = NULL;
+	collisionTablpipe = NULL;
 }
 CPipe::~CPipe()
 {
@@ -60,17 +62,15 @@ void CPipe::Init()
 	switch (g_scenemanager->GetNomber())
 	{
 	case Stage1:
-		pipeChipTable = NULL;
 		pipeChipTable = pipeChipLocInfoTable;
 		collisionTablpipe = collisionInfoTablepipe;
 		tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
 		arraySize = ARRAYSIZE(collisionInfoTablepipe);
 		break;
 	case Stage2:
-		pipeChipTable = NULL;
 		pipeChipTable = pipeChipLocInfoTable2;
 		collisionTablpipe = collisionInfoTablpipe2;
-		tableSize = sizeof(pipeChipLocInfoTable) / sizeof(pipeChipLocInfoTable[0]);
+		tableSize = sizeof(pipeChipLocInfoTable2) / sizeof(pipeChipLocInfoTable2[0]);
 		arraySize = ARRAYSIZE(collisionInfoTablpipe2);
 		break;
 	}
@@ -138,11 +138,15 @@ void CPipe::Update()
 
 }
 
-void CPipe::Render()
+void CPipe::Render(D3DXMATRIX viewMatrix,
+	D3DXMATRIX projMatrix,
+	bool isDrawToShadowMap)
 {
 	for (int a = 0; a < tableSize; a++)
 	{
-		pipeChipList[a]->Render();
+		pipeChipList[a]->Render(viewMatrix,
+			projMatrix,
+			isDrawToShadowMap);
 	}
 }
 
@@ -218,7 +222,6 @@ void CPipe::PipeMove(int now, int next, int pipenum)
 			SEPipe = new CSoundSource;
 			SEPipe->Init("Asset/Sound/Pipe.wav");
 			SEPipe->Play(false);
-			SEPipe->SetVolume(0.25f);
 			nextPos = D3DXVECTOR3(collisionTablpipe[next].pos.x
 				, collisionTablpipe[next].pos.y - 0.5f
 				, collisionTablpipe[next].pos.z);

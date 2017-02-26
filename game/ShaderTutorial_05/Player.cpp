@@ -361,15 +361,20 @@ void CPlayer::State()
 
 void CPlayer::Died()
 {
-	if (position.y < -5.0f)
+	if (characterController.IsOnGround() == true)
+	{
+		DiedTime = 0.0f;
+		return;
+	}
+	DiedTime += 1.0f / 60.0f;
+	if (DiedTime > 5.0f)
 	{
 		g_stage->GetCamera()->RotLongitudinal(D3DXToRadian(-5.0f));
 	}
-	if (position.y < -10.0f)
+	if (DiedTime > 5.5f)
 	{
 		lifestate = Life::Died;
 	}
-
 	if (lifestate == Life::Died)
 	{
 		g_stage->GetSoundSorce()->Stop();
