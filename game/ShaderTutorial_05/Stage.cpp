@@ -57,7 +57,7 @@ void CStage::Init()
 	camera.Init();
 	skycamera.Init();
 
-	soundsource.InitStreaming("Asset/Sound/mario.wav");
+	soundsource.InitStreaming("Asset/Sound/CandyCrush.wav");
 	soundsource.Play(true);
 
 	//スプライト初期化
@@ -458,7 +458,7 @@ void CStage::BossMusic()
 	if (bossmusic == false)
 	{
 		soundsource.Stop();
-		soundsource.InitStreaming("Asset/Sound/battle.wav");
+		soundsource.InitStreaming("Asset/Sound/dotabatare-su.wav");
 		soundsource.Play(true);
 		bossmusic = true;
 	}

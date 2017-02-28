@@ -59,8 +59,8 @@ void CStageBack::Update()
 {	
 	
 	targetPos = g_stage->GetPlayer()->GetPos();
-	static float rot = 0.0f;
-	D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot += 0.001f);
+	/*static float rot = 0.0f;
+	D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), rot += 0.001f);*/
 
 	skinmodel.UpdateWorldMatrix(D3DXVECTOR3(targetPos.x, targetPos.y - 100.0f, targetPos.z), rotation, scale);
 	
