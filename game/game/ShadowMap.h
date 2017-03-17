@@ -22,15 +22,9 @@ public:
 	//ライト作成
 	void CreateLight(D3DXMATRIX);
 	//影描画
-	void Render(
-		const D3DXMATRIX viewMatrix,
-		const D3DXMATRIX projMatrix
-		);
+	void Render(D3DXMATRIX viewMatrix);
 	//プレイヤー用影描画。
-	void RenderUnity(
-		const D3DXMATRIX viewMatrix,
-		const D3DXMATRIX projMatrix
-		);
+	void RenderUnity(D3DXMATRIX viewMatrix);
 	//リリース
 	void Release();
 	//ライトビュープロジェゲット
@@ -88,5 +82,5 @@ private:
 	float				Near;					//近平面。
 	float				Far;					//遠平面。
 	int					w;						//横
-	int					h;						//縦
+	int					h;						//縦zz
 };

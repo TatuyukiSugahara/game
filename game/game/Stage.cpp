@@ -412,15 +412,9 @@ void  CStage::StageRender()
 	g_pd3dDevice->BeginScene();
 
 	//影描画
-	shadow.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix()
-		);
-	//プレイヤー用の影
-	shadow.RenderUnity(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix()
-		);
+	shadow.Render(camera.GetViewMatrix());
+	//プレイヤー用の影描画
+	shadow.RenderUnity(camera.GetViewMatrix());
 	//レンダリングターゲットの切り替え。
 	LPDIRECT3DSURFACE9 frameBufferRT;
 	LPDIRECT3DSURFACE9 frameBufferDS;
@@ -575,15 +569,9 @@ void CStage::StageBossRender()
 	g_pd3dDevice->BeginScene();
 
 	//影描画
-	shadow.Render(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix()
-		);
+	shadow.Render(camera.GetViewMatrix());
 	//プレイヤー用の影描画
-	shadow.RenderUnity(
-		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix()
-		);
+	shadow.RenderUnity(camera.GetViewMatrix());
 
 	//レンダリングターゲットの切り替え。
 	LPDIRECT3DSURFACE9 frameBufferRT;

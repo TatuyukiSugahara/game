@@ -16,10 +16,7 @@ void CShadowMap::Create(int w, int h)
 }
 
 
-void CShadowMap::Render(
-	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix
-	)
+void CShadowMap::Render(D3DXMATRIX viewMatrix)
 {
 	g_pd3dDevice->GetViewport(&viewport);
 	//元々のレンダリングターゲットを保存。後で戻すためバックアップを行う
@@ -95,9 +92,7 @@ void CShadowMap::Render(
 	g_shadow = RenderTarget.GetTexture();
 }
 
-void CShadowMap::RenderUnity(
-	D3DXMATRIX viewMatrix,
-	D3DXMATRIX projMatrix)
+void CShadowMap::RenderUnity(D3DXMATRIX viewMatrix)
 {
 	g_pd3dDevice->GetViewport(&viewport);
 	//元々のレンダリングターゲットを保存。後で戻すためバックアップを行う

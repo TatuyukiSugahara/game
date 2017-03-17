@@ -207,7 +207,7 @@ void CPlayer::Update()
 void CPlayer::Render(
 	D3DXMATRIX viewMatrix,
 	D3DXMATRIX projMatrix,
-	const bool& isDrawToShadowMap
+	bool isDrawToShadowMap
 	)
 {
 	skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);

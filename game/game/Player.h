@@ -34,7 +34,7 @@ public:
 	void Render(
 		const D3DXMATRIX viewMatrix,
 		const D3DXMATRIX projMatrix,
-		const bool& isDrawToShadowMap
+		bool isDrawToShadowMap
 		);
 	//äJï˙ÅB
 	void Release();

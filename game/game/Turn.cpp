@@ -16,6 +16,7 @@ void CTurn::Init()
 	currentAngleY = 0.0f;
 	targetAngleY = 0.0f;
 	turnSpeed = 0.0f;
+	cTurnSpeed = 0.1f;
 }
 
 //‰ñ“]ˆ—
