@@ -31,7 +31,7 @@ public:
 	}
 private:
 	D3DXVECTOR3				position;		//座標。。
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
+	D3DXMATRIX				world;			//ワールド行列。
+	D3DXMATRIX				rotation;		//回転行列。
 	Model					model;			//モデル。
 };

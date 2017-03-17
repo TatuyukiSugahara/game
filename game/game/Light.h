@@ -12,15 +12,15 @@ public:
 	void Draw();
 	const D3DXVECTOR4* GetLightDirection() const
 	{
-		return m_diffuseLightDirection;
+		return diffuseLightDirection;
 	}
 	const D3DXVECTOR4* GetLightColor() const
 	{
-		return m_diffuseLightColor;
+		return diffuseLightColor;
 	}
 	const D3DXVECTOR4& GetambientLight() const
 	{	
-		return m_ambientLight;
+		return ambientLight;
 	}
 	const int& GetLightNum() const
 	{
@@ -33,7 +33,7 @@ public:
 	*/
 	void SetDiffuseLightDirection(int lightNo, const D3DXVECTOR4& dir)
 	{
-		m_diffuseLightDirection[lightNo] = dir;
+		diffuseLightDirection[lightNo] = dir;
 	}
 	/*!
 	*@brief	平行光源の色を設定。
@@ -42,19 +42,19 @@ public:
 	*/
 	void SetDiffuseLightColor(int lightNo, const D3DXVECTOR4& color)
 	{
-		m_diffuseLightColor[lightNo] = color;
+		diffuseLightColor[lightNo] = color;
 	}
 	/*!
 	* @brief	環境光を設定。
 	*/
 	void SetAmbientLight(const D3DXVECTOR4& ambient)
 	{
-		m_ambientLight = ambient;
+		ambientLight = ambient;
 	}
 private:
 	static const int		LIGHT_NUM = 4;
-	D3DXVECTOR4 			m_diffuseLightDirection[LIGHT_NUM];	//ライトの方向。
-	D3DXVECTOR4				m_diffuseLightColor[LIGHT_NUM];		//ライトの色。
-	D3DXVECTOR4				m_ambientLight;						//環境光
+	D3DXVECTOR4 			diffuseLightDirection[LIGHT_NUM];	//ライトの方向。
+	D3DXVECTOR4				diffuseLightColor[LIGHT_NUM];		//ライトの色。
+	D3DXVECTOR4				ambientLight;						//環境光
 };
 

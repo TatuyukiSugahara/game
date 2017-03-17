@@ -34,16 +34,18 @@ CPlayer::CPlayer()
 		position = D3DXVECTOR3(1.0f, 5.0f, 0.0f);		//初期位置
 		break;
 	}
-	movespeed = CConst::Vec3Zero;						//初期移動速度
+	moveSpeed = CConst::Vec3Zero;						//初期移動速度
 	scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);				//初期スケール
-	addmove = CConst::Vec3Zero;							//移動速度追加初期化
+	addMove = CConst::Vec3Zero;							//移動速度追加初期化
 	aabbMax = CConst::Vec3Zero;							//AABB初期化
-	aabbMin = CConst::Vec3Zero;							//AABB初期化
+	aabbMin = CConst::Vec3Zero;							//AABB
+	aabbMaxGet = CConst::Vec3Zero;						//AABB初期化
+	aabbMinGet = CConst::Vec3Zero;						//AABB初期化
 	rate = 0.0f;										//モーフィング用時間
 	radius = 0.3f;										//半径初期化
 	friction = 0.25f;									//摩擦初期化
 	state = PlayerState::Stay;							//プレイヤー状態初期化
-	lifestate = Life::Alive;							//生死状態初期化
+	lifeState = Life::Alive;							//生死状態初期化
 }
 //デストラクタ
 CPlayer::~CPlayer()
@@ -81,12 +83,12 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認をお願いします。", "エラー", MB_OK);
 	}
 	if (normalMap != NULL) {
-		//法線マップの読み込みが成功したので、CSkinModelに法線マップを設定する。
-		skinmodel.SetNormalMap(normalMap);
+		//法線マップの読み込みが成功したので、CskinModelに法線マップを設定する。
+		skinModel.SetNormalMap(normalMap);
 	}
 	if (specularMap != NULL) {
-		//スペキュラマップの読み込みが成功したので、CSkinModelにスペきゅらマップを設定する。
-		skinmodel.SetSpecularMap(specularMap);
+		//スペキュラマップの読み込みが成功したので、CskinModelにスペきゅらマップを設定する。
+		skinModel.SetSpecularMap(specularMap);
 	}
 	//ライトを初期化。
 	light.SetDiffuseLightDirection(0, D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -102,18 +104,18 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/Unity.X", &animation);
-	modelDataA.LoadModelData("Asset/model/morphTargetA.X", NULL);
-	modelDataB.LoadModelData("Asset/model/morphTargetB.X", NULL);
+	modelDataMorpA.LoadModelData("Asset/model/morphTargetA.X", NULL);
+	modelDataMorpA.LoadModelData("Asset/model/morphTargetB.X", NULL);
 
 	//オリジナル
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 	//モーフィング用A
-	skinmodelA.Init(&modelDataA);
-	skinmodelA.SetLight(&light);
+	skinModelMorpA.Init(&modelDataMorpA);
+	skinModelMorpA.SetLight(&light);
 	//モーフィング用B
-	skinmodelB.Init(&modelDataB);
-	skinmodelB.SetLight(&light);
+	skinModelMorpB.Init(&modelDataMorpB);
+	skinModelMorpB.SetLight(&light);
 
 	animation.PlayAnimation((int)PlayerState::Stay, 0.3f);
 	animation.SetAnimationEndTime((int)PlayerState::Run, 0.79f);
@@ -137,11 +139,11 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	currentAngleY = 0.0f;
 	targetAngleY = 0.0f;
 	turn.Init();
-	skinmodel.SetShadowReceiverFlag(false);
-	skinmodel.SetDrawToShadowMap(true);
-	skinmodel.SetNormalMap(true);
-	skinmodel.SetSpecularMap(true);
-	skinmodel.SetHureneruflg(true);
+	skinModel.SetShadowReceiverFlag(false);
+	skinModel.SetDrawToShadowMap(true);
+	skinModel.SetNormalMap(true);
+	skinModel.SetSpecularMap(true);
+	skinModel.SetHureneruflg(true);
 }
 //更新。
 void CPlayer::Update()
@@ -153,9 +155,9 @@ void CPlayer::Update()
 	if (GetAsyncKeyState(VK_RIGHT)) {
 		rate = min(1.0f, rate + 0.03f);
 	}
-	skinmodel.Morphing(&modelDataA, &modelDataB, rate);*/
+	skinModel.Morphing(&modelDataA, &modelDataB, rate);*/
 
-	if (!g_stage->GetPipe()->GetIsPipe() && !playerstop)
+	if (!g_stage->GetPipe()->GetIsPipe() && !playerStop)
 	{
 		if (g_pad.IsPress(enButtonB))
 		{
@@ -168,25 +170,25 @@ void CPlayer::Update()
 		Jump();//ジャンプ
 	}
 	//プレイヤーを静止させるフラグ
-	if (playerstop == true)
+	if (playerStop == true)
 	{
 		//地面についているか
 		if (characterController.IsOnGround())
 		{
-			movespeed = CConst::Vec3Zero;//移動速度を0に
+			moveSpeed = CConst::Vec3Zero;//移動速度を0に
 		}
 	}
 	//死亡
 	Died();
 	//キャラクターコントローラー更新
-	characterController.SetMoveSpeed(movespeed);
+	characterController.SetMoveSpeed(moveSpeed);
 	characterController.Execute();
-	movespeed = characterController.GetMoveSpeed();	//移動速度代入
+	moveSpeed = characterController.GetMoveSpeed();	//移動速度代入
 	position = characterController.GetPosition();	//座標代入
 	characterController.SetPosition(position);
 	//AABB更新
-	aabbMaxget = aabbMax + position;
-	aabbMinget = aabbMin + position;
+	aabbMaxGet = aabbMax + position;
+	aabbMinGet = aabbMin + position;
 	//アニメーション状態変更
 	State();
 	//Bダッシュ時のアニメーション速度
@@ -201,7 +203,7 @@ void CPlayer::Update()
 	}
 	animation.Update(CConst::DeltaTime);
 	//ワールド行列の更新。
-	skinmodel.UpdateWorldMatrix(position, rotation, scale);
+	skinModel.UpdateWorldMatrix(position, rotation, scale);
 }
 //描画。
 void CPlayer::Render(
@@ -210,7 +212,7 @@ void CPlayer::Render(
 	bool isDrawToShadowMap
 	)
 {
-	skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+	skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 }
 //開放。
 void CPlayer::Release()
@@ -229,21 +231,21 @@ void CPlayer::Move(float maxmove)
 	//カメラの向いている方向と、上ベクトルとの外積を計算すると横移動のベクトルが求まる。
 	D3DXVec3Cross(&dirX, &dirZ, &CConst::Vec3Up);
 	//移動速度追加
-	addmove.x = dirX.x * dirpad.x - dirZ.x * dirpad.z;
-	addmove.z = dirX.z * dirpad.x - dirZ.z * dirpad.z;
+	addMove.x = dirX.x * dirpad.x - dirZ.x * dirpad.z;
+	addMove.z = dirX.z * dirpad.x - dirZ.z * dirpad.z;
 	//カメラが向いている方向に進む。
 	dirZ = g_stage->GetCamera()->GetCameraDir();
 	//ノーマライズ
-	D3DXVec3Normalize(&addmove, &addmove);
+	D3DXVec3Normalize(&addMove, &addMove);
 	//移動しているとき
-	if (D3DXVec3Length(&addmove) > 0.0f)
+	if (D3DXVec3Length(&addMove) > 0.0f)
 	{
 		//前方向
 		D3DXVECTOR3 front = CConst::Vec3Front;
 		//ターゲットのアングル
-		targetAngleY = acos(D3DXVec3Dot(&front, &addmove));
+		targetAngleY = acos(D3DXVec3Dot(&front, &addMove));
 		D3DXVECTOR3 axis;
-		D3DXVec3Cross(&axis, &front, &addmove);
+		D3DXVec3Cross(&axis, &front, &addMove);
 		if (axis.x > 0.0f)
 		{
 			targetAngleY *= -1.0f;
@@ -253,18 +255,18 @@ void CPlayer::Move(float maxmove)
 		D3DXQuaternionRotationAxis(&rotation, &axis, currentAngleY);
 	}
 	D3DXVECTOR3 v1;//現在の進行方向
-	D3DXVec3Normalize(&v1, &movespeed);
+	D3DXVec3Normalize(&v1, &moveSpeed);
 	D3DXVECTOR3 v2;//次の進行方向
-	D3DXVec3Normalize(&v2, &addmove);
+	D3DXVec3Normalize(&v2, &addMove);
 	//内積
 	float naiseki = D3DXVec3Dot(&v1, &v2);
 	//移動量があるなら
 	friction = RUN_FRICTION;
 	//速度を加算。
-	movespeed.x += addmove.x;
-	movespeed.z += addmove.z;
+	moveSpeed.x += addMove.x;
+	moveSpeed.z += addMove.z;
 	//速度の上限
-	D3DXVECTOR3 moveSpeedXZ = movespeed;
+	D3DXVECTOR3 moveSpeedXZ = moveSpeed;
 	//高さはいらない
 	moveSpeedXZ.y = 0.0f;
 	D3DXVec3Normalize(&v1, &moveSpeedXZ);
@@ -272,26 +274,26 @@ void CPlayer::Move(float maxmove)
 	if (D3DXVec3Length(&moveSpeedXZ) >= maxmove )
 	{
 		//進行方向*移動速度
-		movespeed.x = v1.x * maxmove;	
-		movespeed.z = v1.z * maxmove;
+		moveSpeed.x = v1.x * maxmove;
+		moveSpeed.z = v1.z * maxmove;
 	}
 	//地面で移動中
 	if (characterController.IsOnGround())
 	{
 		//摩擦
 		D3DXVECTOR3 masatu = CConst::Vec3Zero;
-		D3DXVec3Normalize(&masatu, &movespeed);
+		D3DXVec3Normalize(&masatu, &moveSpeed);
 		//摩擦をかける
 		masatu *= -friction;
 		//摩擦より移動速度が小さいなら摩擦と移動速度をなくす。
 		if (D3DXVec3Length(&moveSpeedXZ) < D3DXVec3Length(&masatu))
 		{
 			masatu = CConst::Vec3Zero;
-			movespeed = CConst::Vec3Zero;
+			moveSpeed = CConst::Vec3Zero;
 		}
 		//移動速度を加算
-		movespeed.x += masatu.x;
-		movespeed.z += masatu.z;
+		moveSpeed.x += masatu.x;
+		moveSpeed.z += masatu.z;
 	}
 }
 
@@ -304,12 +306,12 @@ void CPlayer::Jump()
 		)
 	{
 		//ジャンプパワー代入
-		movespeed.y = JUMP_POWER;
+		moveSpeed.y = JUMP_POWER;
 		//サウンド再生
-		SEjump.reset( new CSoundSource );
-		SEjump->Init("Asset/Sound/jump.wav");
-		SEjump->SetVolume(0.25f);
-		SEjump->Play(false);
+		seJump.reset( new CSoundSource );
+		seJump->Init("Asset/Sound/jump.wav");
+		seJump->SetVolume(0.25f);
+		seJump->Play(false);
 		//ステートをジャンプに
 		state = PlayerState::IsJump;
 		//アニメーション再生
@@ -319,16 +321,16 @@ void CPlayer::Jump()
 	}
 	//空中での落下の上限
 	//ヒップドロップ中は上限なし
-	if (movespeed.y <= MAX_FALLING_SPEED && state != PlayerState::HipDrop)
+	if (moveSpeed.y <= MAX_FALLING_SPEED && state != PlayerState::HipDrop)
 	{
-		movespeed.y = MAX_FALLING_SPEED;
+		moveSpeed.y = MAX_FALLING_SPEED;
 	}
 }
 
 void CPlayer::State()
 {
 	//動いているかつ地面についている？
-	if (fabs(D3DXVec3Length(&movespeed)) >= 0.1f && characterController.IsOnGround() == true)
+	if (fabs(D3DXVec3Length(&moveSpeed)) >= 0.1f && characterController.IsOnGround() == true)
 	{
 		if (state != PlayerState::Run)
 		{
@@ -337,7 +339,7 @@ void CPlayer::State()
 		}
 	}
 	//地面についていて動いていない
-	if (characterController.IsOnGround() == true && fabs(D3DXVec3Length(&movespeed)) <= 0.1f)
+	if (characterController.IsOnGround() == true && fabs(D3DXVec3Length(&moveSpeed)) <= 0.1f)
 	{
 		if (state != PlayerState::Stay)
 		{
@@ -354,7 +356,7 @@ void CPlayer::State()
 				state = PlayerState::Stay;
 				animation.PlayAnimation((int)PlayerState::Stay, 0.3f);
 				//移動しないので移動速度を0に
-				movespeed = CConst::Vec3Zero;
+				moveSpeed = CConst::Vec3Zero;
 			}
 		}
 	}
@@ -369,9 +371,9 @@ void CPlayer::State()
 				state = PlayerState::HipDrop;
 				animation.PlayAnimation((int)PlayerState::HipDrop, 0.2f);
 				//真下に落ちてほしいので移動速度を0に
-				movespeed = CConst::Vec3Zero;
+				moveSpeed = CConst::Vec3Zero;
 				//下に速度加算
-				movespeed.y -= HIPDROP_SPEED;
+				moveSpeed.y -= HIPDROP_SPEED;
 			}
 		}
 		//ジャンプ
@@ -405,10 +407,10 @@ void CPlayer::Died()
 	//5.5秒経過すると死亡
 	if (diedTime > DEAD_TIME)
 	{
-		lifestate = Life::Died;
+		lifeState = Life::Died;
 	}
 	//死亡すると
-	if (lifestate == Life::Died)
+	if (lifeState == Life::Died)
 	{
 		//サウンドストップ
 		g_stage->GetSoundSorce()->Stop();
@@ -422,7 +424,7 @@ void CPlayer::Clear()
 	//ボス撃破時のピース。
 	if (characterController.IsOnGround() == true && state != PlayerState::Happy)
 	{
-		playerstop = true;
+		playerStop = true;
 		//正面を向かせるため
 		//回転を初期化
 		rotation = CConst::QuaternionIdentity;
@@ -430,7 +432,7 @@ void CPlayer::Clear()
 		D3DXQuaternionRotationAxis(&rotation, &CConst::Vec3Up, D3DX_PI);
 		state = PlayerState::Happy;
 		animation.PlayAnimation((int)PlayerState::Happy, 0.1f);
-		skinmodel.Morphing(&modelDataA, &modelDataB, rate);
+		skinModel.Morphing(&modelDataMorpA, &modelDataMorpB, rate);
 		rate += 0.1f;
 	}
 }

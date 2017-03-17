@@ -8,9 +8,9 @@
 CKinoko::CKinoko()
 {
 	//初期化。
-	D3DXMatrixIdentity(&mWorld);
+	D3DXMatrixIdentity(&world);
 	position = { 8.0f, 5.0f, 0.0f };
-	movespeed = CConst::Vec3Zero;
+	moveSpeed = CConst::Vec3Zero;
 
 	radius = 0.3f;
 }
@@ -26,9 +26,9 @@ void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	model.SetShadowReceiverFlag(false);
 
 	//AABB
-	CalcAABBSizeFromMesh(model.GetMesh(), m_aabbMin, m_aabbMax);
-	m_aabbMin += position;
-	m_aabbMax += position;
+	CalcAABBSizeFromMesh(model.GetMesh(), aabbMin, aabbMax);
+	aabbMin += position;
+	aabbMax += position;
 
 	kinoko = false;		//キノコゲットしていない。
 	state = KinokoState::none;		//キノコ出現していない。
@@ -37,10 +37,10 @@ void CKinoko::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 void CKinoko::Update()
 {
 	/*AABB*/
-	if (m_aabbMax.x > g_stage->GetPlayer()->GetAABBMin().x
-		&& m_aabbMin.x < g_stage->GetPlayer()->GetAABBMax().x
-		&& m_aabbMax.y > g_stage->GetPlayer()->GetAABBMin().y
-		&& m_aabbMin.y < g_stage->GetPlayer()->GetAABBMax().y
+	if (aabbMax.x > g_stage->GetPlayer()->GetAABBMin().x
+		&& aabbMin.x < g_stage->GetPlayer()->GetAABBMax().x
+		&& aabbMax.y > g_stage->GetPlayer()->GetAABBMin().y
+		&& aabbMin.y < g_stage->GetPlayer()->GetAABBMax().y
 
 		)
 	{
@@ -50,14 +50,14 @@ void CKinoko::Update()
 		SESuper->Play(false);
 		state = KinokoState::none;			//キノコ出現しなくなる
 	}
-	//IsIntersect.Intersect(&position, &movespeed, callbackList);//m_positionからの移動量(あたり判定)
+	//IsIntersect.Intersect(&position, &movespeed, callbackList);//positionからの移動量(あたり判定)
 
-	movespeed.x = 1.0f;
-	//m_aabbMax += IsIntersect.GetAddPos();
-	//m_aabbMin += IsIntersect.GetAddPos();
+	moveSpeed.x = 1.0f;
+	//aabbMax += IsIntersect.GetAddPos();
+	//aabbMin += IsIntersect.GetAddPos();
 
 	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+	D3DXMatrixTranslation(&world, position.x, position.y, position.z);
 }
 //描画。
 void CKinoko::Render(
@@ -75,8 +75,8 @@ void CKinoko::Render(
 	g_pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
 	model.Render(
 		pd3dDevice,
-		mWorld,
-		mRotation,
+		world,
+		rotation,
 		viewMatrix,
 		projMatrix,
 		diffuseLightDirection,

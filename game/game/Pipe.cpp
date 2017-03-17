@@ -13,7 +13,7 @@ SPipeChipLocInfo pipeChipLocInfoTable[] = {
 };
 //あたり判定
 SCollisionInfoPipe collisionInfoTablepipe[] = {
-#include "Collision2D_Pipe.h"
+#include "Collision_Pipe.h"
 };
 
 //ステージ２
@@ -30,10 +30,9 @@ CPipe::CPipe()
 {
 	nextPos = CConst::Vec3Zero;
 	isPipe = false;
-	memset(m_pipeboxShape, NULL, sizeof(m_pipeboxShape));
-	memset(m_rigidBody3Dpipe, NULL, sizeof(m_rigidBody3Dpipe));
-	memset(m_rigidBody2Dpipe, NULL, sizeof(m_rigidBody2Dpipe));
-	m_myMotionState = NULL;
+	memset(pipeboxShape, NULL, sizeof(pipeboxShape));
+	memset(rigidBodypipe, NULL, sizeof(rigidBodypipe));
+	myMotionState = NULL;
 	pipeChipTable = NULL;
 	collisionTablpipe = NULL;
 }
@@ -42,16 +41,13 @@ CPipe::~CPipe()
 	for (auto& pipechip : pipeChipList){
 		delete pipechip;
 	}
-	for (auto& pipeBox : m_pipeboxShape){
+	for (auto& pipeBox : pipeboxShape){
 		delete pipeBox;
 	}
-	for (auto& rb : m_rigidBody3Dpipe){
+	for (auto& rb : rigidBodypipe){
 		delete rb;
 	}
-	for (auto& rb : m_rigidBody2Dpipe){
-		delete rb;
-	}
-	delete m_myMotionState;
+	delete myMotionState;
 }
 void CPipe::Init()
 {
@@ -83,8 +79,8 @@ void CPipe::Init()
 		pipeChipList.push_back(pipeChip);
 	}
 	
-	CreateCollision2D();
-	Add2DRigidBody(arraySize);
+	CreateCollision();
+	AddRigidBody(arraySize);
 
 }
 void CPipe::Update()
@@ -121,7 +117,7 @@ void CPipe::Render(D3DXMATRIX viewMatrix,
 	}
 }
 
-void CPipe::CreateCollision2D()
+void CPipe::CreateCollision()
 {
 	if (arraySize >= MAXCOLLISION)
 	{
@@ -133,45 +129,41 @@ void CPipe::CreateCollision2D()
 		//剛体を初期化。
 		{
 			//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
-			m_pipeboxShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
+			pipeboxShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
 			btTransform groundTransform;
 			groundTransform.setIdentity();
 			groundTransform.setOrigin(btVector3(collision.pos.x, collision.pos.y, collision.pos.z));
 			float mass = 0.0f;
 
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
-			m_myMotionState = new btDefaultMotionState(groundTransform);
-			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_pipeboxShape[i], btVector3(0, 0, 0));
-			m_rigidBody2Dpipe[i] = new btRigidBody(rbInfo);
-
-			//ワールドに追加。
-			//g_physicsWorld->AddRigidBody(m_rigidBody2Dpipe[i]);
-
+			myMotionState = new btDefaultMotionState(groundTransform);
+			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, pipeboxShape[i], btVector3(0, 0, 0));
+			rigidBodypipe[i] = new btRigidBody(rbInfo);
 		}
 	}
 }
 
-void CPipe::Add2DRigidBody(int arraySize)//ワールドに追加。
+void CPipe::AddRigidBody(int arraySize)//ワールドに追加。
 {
-	if (!m_isAdd2DCollision){
-		m_isAdd2DCollision = true;
+	if (!isAddCollision){
+		isAddCollision = true;
 		arraySize;
 		for (int i = 0; i < arraySize; i++)
 		{
-			g_physicsWorld->AddRigidBody(m_rigidBody2Dpipe[i]);
+			g_physicsWorld->AddRigidBody(rigidBodypipe[i]);
 		}
 	}
 }
 
-void CPipe::Remove2DRigidBody(int arraySize)//ワールドから削除
+void CPipe::RemoveRigidBody(int arraySize)//ワールドから削除
 {
-	if (m_isAdd2DCollision){
-		m_isAdd2DCollision = false;
+	if (isAddCollision){
+		isAddCollision = false;
 		arraySize;
 		for (int i = 0; i < arraySize; i++)
 		{
-			if (m_rigidBody2Dpipe[i] != NULL)
-				g_physicsWorld->RemoveRigidBody(m_rigidBody2Dpipe[i]);
+			if (rigidBodypipe[i] != NULL)
+				g_physicsWorld->RemoveRigidBody(rigidBodypipe[i]);
 		}
 	}
 }
@@ -190,7 +182,7 @@ void CPipe::InPipe()
 		if (count == 30)
 		{
 			g_stage->GetPlayer()->SetPosition(nextPos);
-			Add2DRigidBody(arraySize);
+			AddRigidBody(arraySize);
 		}
 		if (count <= 60 && count >= 30)
 		{
@@ -208,7 +200,7 @@ void CPipe::InPipe()
 //移動処理
 void CPipe::PipeMove(int now, int next, int pipenum)
 {
-	if (g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == m_rigidBody2Dpipe[now]
+	if (g_stage->GetPlayer()->GetcharacterController().getCollisionObj() == rigidBodypipe[now]
 		&& g_stage->GetPlayer()->GetcharacterController().IsOnGround() == true
 		)
 	{
@@ -219,10 +211,10 @@ void CPipe::PipeMove(int now, int next, int pipenum)
 		if (fabs(dir) < 2.3f)
 		{
 			isPipe = true;
-			Remove2DRigidBody(arraySize);
-			SEPipe.reset(new CSoundSource);
-			SEPipe->Init("Asset/Sound/Pipe.wav");
-			SEPipe->Play(false);
+			RemoveRigidBody(arraySize);
+			sePipe.reset(new CSoundSource);
+			sePipe->Init("Asset/Sound/Pipe.wav");
+			sePipe->Play(false);
 			nextPos = D3DXVECTOR3(collisionTablpipe[next].pos.x
 				, collisionTablpipe[next].pos.y - 0.5f
 				, collisionTablpipe[next].pos.z);

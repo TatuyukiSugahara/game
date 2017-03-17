@@ -2,8 +2,8 @@
 #include "NoBlock.h"
 #include "stage.h"
 
-SCollisionInfo collisionInfoTable2Dnoblock[] = {
-#include "Collision2D_noblockbox1.h"
+SCollisionInfo collisionInfoTablenoblock[] = {
+#include "Collision_noblockbox1.h"
 };
 
 //コンストラクタ
@@ -18,10 +18,9 @@ CNoBlock::CNoBlock()
 //デストラクタ
 CNoBlock::~CNoBlock()
 {
-	delete m_noblockboxShape;
-	delete m_rigidBody3Dnoblock;
-	delete m_rigidBody2Dnoblock;
-	delete m_myMotionState;
+	delete noblockboxShape;
+	delete rigidBodynoblock;
+	delete myMotionState;
 }
 //初期化。
 void CNoBlock::Init()
@@ -39,25 +38,25 @@ void CNoBlock::Init()
 	light.SetAmbientLight(D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f));
 
 	modelData.LoadModelData("Asset/model/karabox.x", &animation);
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
-	skinmodel.SetShadowReceiverFlag(false);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
+	skinModel.SetShadowReceiverFlag(false);
 
 	state = NoblockState::nohit;
 
-	CreateCollision2D();
-	Add2DRigidBody();
+	CreateCollision();
+	AddRigidBody();
 }
 //更新。
 void CNoBlock::Update()
 {
 	if (state == NoblockState::hit)
 	{
-		skinmodel.UpdateWorldMatrix(position, rotation, scale);
+		skinModel.UpdateWorldMatrix(position, rotation, scale);
 	}
 	else if (state == NoblockState::nohit)
 	{
-		if (Get2Dnoblock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
+		if (Getnoblock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
 			&& g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
 		{
 			state = NoblockState::hit;
@@ -71,7 +70,7 @@ void CNoBlock::Render(
 {
 	if (state == NoblockState::hit)
 	{
-		skinmodel.Render(&viewMatrix, &projMatrix, false);
+		skinModel.Render(&viewMatrix, &projMatrix, false);
 	}
 }
 //開放。
@@ -80,35 +79,32 @@ void CNoBlock::Release()
 	
 }
 
-void CNoBlock::CreateCollision2D()
+void CNoBlock::CreateCollision()
 {
-	SCollisionInfo& collision = *collisionInfoTable2Dnoblock;
+	SCollisionInfo& collision = *collisionInfoTablenoblock;
 	//ここで剛体とかを登録する。
 	//剛体を初期化。
 	{
 		//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
-		m_noblockboxShape = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
+		noblockboxShape = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
 		btTransform groundTransform;
 		groundTransform.setIdentity();
 		groundTransform.setOrigin(btVector3(collision.pos.x, collision.pos.y, collision.pos.z));
 		float mass = 0.0f;
 
 		//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
-		m_myMotionState = new btDefaultMotionState(groundTransform);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_noblockboxShape, btVector3(0, 0, 0));
-		m_rigidBody2Dnoblock = new btRigidBody(rbInfo);
-
-		//ワールドに追加。
-		//g_physicsWorld->AddRigidBody(m_rigidBody2D[i]);
+		myMotionState = new btDefaultMotionState(groundTransform);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, noblockboxShape, btVector3(0, 0, 0));
+		rigidBodynoblock = new btRigidBody(rbInfo);
 
 	}
 
 }
 
-void CNoBlock::Add2DRigidBody()//ワールドに追加。
+void CNoBlock::AddRigidBody()//ワールドに追加。
 {
-	if (!m_isAdd2DCollision){
-		m_isAdd2DCollision = true;
-		g_physicsWorld->AddRigidBody(m_rigidBody2Dnoblock);
+	if (!isAddCollision){
+		isAddCollision = true;
+		g_physicsWorld->AddRigidBody(rigidBodynoblock);
 	}
 }

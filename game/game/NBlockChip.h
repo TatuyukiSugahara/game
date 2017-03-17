@@ -53,7 +53,7 @@ private:
 	D3DXVECTOR3				scale;			//スケール
 	D3DXQUATERNION			rotation;
 	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
-	SkinModel skinmodel;
+	SkinModel skinModel;
 	SkinModelData modelData;
 	Animation* orgAnimation;
 	Animation animation;

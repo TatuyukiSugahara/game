@@ -28,13 +28,13 @@ void CMapChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	char modelPath[256];
 	sprintf(modelPath, "Asset/model/%s.X", name);
 	modelData = g_skinmodeldataManager->LoadSkinModelData(modelPath);
-	skinmodel.Init(modelData);
-	skinmodel.SetLight(&light);
-	skinmodel.SetShadowReceiverFlag(true);
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetGround(true);
-	skinmodel.SetNormalMap(false);
-	skinmodel.SetSpecularMap(false);
+	skinModel.Init(modelData);
+	skinModel.SetLight(&light);
+	skinModel.SetShadowReceiverFlag(true);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetGround(true);
+	skinModel.SetNormalMap(false);
+	skinModel.SetSpecularMap(false);
 }
 
 void CMapChip::Update()
@@ -46,6 +46,6 @@ void CMapChip::Render(
 	D3DXMATRIX projMatrix)
 {
 	//ワールド行列の更新。
-	skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	skinmodel.Render(&viewMatrix, &projMatrix, false);
+	skinModel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	skinModel.Render(&viewMatrix, &projMatrix, false);
 }

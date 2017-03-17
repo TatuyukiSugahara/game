@@ -8,7 +8,7 @@ CSaboten::CSaboten()
 {
 	//初期化。
 
-	D3DXMatrixIdentity(&mWorld);
+	D3DXMatrixIdentity(&world);
 	position = { 39.0f, 1.25f, 0.0f };
 }
 //デストラクタ
@@ -30,13 +30,13 @@ void CSaboten::Update()
 	D3DXVec3Normalize(&dir, &dir);
 	D3DXMATRIX InverseMat;
 	D3DXMATRIX InverseRot;
-	D3DXMatrixInverse(&InverseMat, NULL, &mWorld);
-	D3DXMatrixInverse(&InverseRot, NULL, &mRotation);
+	D3DXMatrixInverse(&InverseMat, NULL, &world);
+	D3DXMatrixInverse(&InverseRot, NULL, &rotation);
 
 	D3DXVec3TransformCoord(&pos, &pos, &InverseMat);
 	D3DXVec3TransformCoord(&dir, &dir, &InverseRot);
 	//ワールド行列の更新。
-	D3DXMatrixTranslation(&mWorld, position.x, position.y, position.z);
+	D3DXMatrixTranslation(&world, position.x, position.y, position.z);
 }
 //描画。
 void CSaboten::Render(
@@ -51,8 +51,8 @@ void CSaboten::Render(
 {
 	model.Render(
 		pd3dDevice,
-		mWorld,
-		mRotation,
+		world,
+		rotation,
 		viewMatrix,
 		projMatrix,
 		diffuseLightDirection,

@@ -55,15 +55,15 @@ void CNBlockChip::Init()
 	modelData.CloneModelData(*orgSkinModelData, NULL);
 
 	//modelData.LoadModelData("Asset/model/block.x", &animation);
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 	animation.PlayAnimation(0);
 	animation.SetAnimationLoopFlag(1, false);
-	skinmodel.SetShadowReceiverFlag(true);
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetGround(true);
-	skinmodel.SetNormalMap(true);
-	skinmodel.SetSpecularMap(false);
+	skinModel.SetShadowReceiverFlag(true);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetGround(true);
+	skinModel.SetNormalMap(true);
+	skinModel.SetSpecularMap(false);
 
 	CreateCollision2D();
 	Add2DRigidBody();
@@ -127,15 +127,15 @@ void CNBlockChip::Render(
 {
 	if (isDrawToShadowMap == true)
 	{
-		skinmodel.UpdateWorldMatrix(position - D3DXVECTOR3(0.0f, 1.5f,0.0f), rotation, scale);
+		skinModel.UpdateWorldMatrix(position - D3DXVECTOR3(0.0f, 1.5f,0.0f), rotation, scale);
 	}
 	else
 	{
-		skinmodel.UpdateWorldMatrix(position, rotation, scale);
+		skinModel.UpdateWorldMatrix(position, rotation, scale);
 	}
 	if (MAXPAR >= parTime)
 	{
-		skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+		skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 
 	if (blockLost == true)

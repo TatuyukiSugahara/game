@@ -23,7 +23,7 @@
 #include "CoinNomber.h"
 #include "Bird.h"
 #include "RotationGimmick.h"
-#include "CoinSprite.h"
+#include "CoinGet.h"
 #include "Sun.h"
 #include "Boss.h"
 #include "BossLife.h"
@@ -85,7 +85,7 @@ public:
 	//背景用のライトをゲット。
 	CLightBack* GetLightBack()
 	{
-		return &lightback;
+		return &lightBack;
 	}
 	//プレイヤーをゲット。
 	CPlayer* GetPlayer()
@@ -100,7 +100,7 @@ public:
 	//はてなボックスをゲット。
 	CHatenaBox* GetHatena()
 	{
-		return &hanatebox;
+		return &hanateBox;
 	}
 	//マップをゲット
 	CMap* GetMap()
@@ -120,7 +120,7 @@ public:
 	//ノーマルブロックをゲット。
 	CNBlock* GetNBlock()
 	{
-		return &nblock;
+		return &nBlock;
 	}
 	//土管をゲット。
 	CPipe* GetPipe()
@@ -135,7 +135,7 @@ public:
 	//見えないブロックをゲット。
 	CNoBlock* GetNoBlock()
 	{
-		return&noblock;
+		return&noBlock;
 	}
 	//コインのナンバーをゲット。
 	CCoinNomber* GetCoinNum()
@@ -145,7 +145,7 @@ public:
 	//サウンドソースをゲット。
 	CSoundSource* GetSoundSorce()
 	{
-		return&soundsource;
+		return&soundSource;
 	}
 	//敵(とり)をゲット。
 	CBird* GetBird()
@@ -158,9 +158,9 @@ public:
 		return &coin;
 	}
 	//取得したコイン用のコインをゲット。
-	CCoinSprite* GetCoinSprite()
+	CCoinGet* GetCoinSprite()
 	{
-		return &coinsprite;
+		return &coinGet;
 	}
 	//ボスをゲット。
 	CBoss* GetBoss()
@@ -201,31 +201,31 @@ protected:
 	bool							isAddCollision;				//コリジョン追加フラグ
 	SCollisionInfo*					collisionTable;				//コリジョンテーブル
 	int								arraySize;					//サイズ
-	bool							bossmusic;					//ボス戦時の音楽フラグ。
+	bool							bossMusic;					//ボス戦時の音楽フラグ。
 	LPD3DXSPRITE					sprite;						//スプライト
 	Camera							camera;						//カメラ。
-	CSkyCamera						skycamera;					//空用カメラ
+	CSkyCamera						skyCamera;					//空用カメラ
 	CLight							light;						//ライト
-	CLightBack						lightback;					//背景ライト
+	CLightBack						lightBack;					//背景ライト
 	CPlayer							player;						//プレイヤー
-	CHatenaBox						hanatebox;					//はてなボックス
+	CHatenaBox						hanateBox;					//はてなボックス
 	CKinoko							kinoko;						//キノコ
-	CNBlock							nblock;						//ノーマルブロック
-	CStageBack						stageback;					//ステージ背景
+	CNBlock							nBlock;						//ノーマルブロック
+	CStageBack						stageBack;					//ステージ背景
 	CPipe							pipe;						//土管
 	CMap							map;						//マップ作製
 	CShadowMap						shadow;						//影
 	CGoal							goal;						//ゴール
 	CSaboten						sabo;						//サボテン
 	CMohurun						mohurun;					//モフルンエネミー
-	CNoBlock						noblock;					//見えないブロック
+	CNoBlock						noBlock;					//見えないブロック
 	CCoin							coin;						//コイン
-	CGoalFlag						goalflag;					//ゴールフラグ
+	CGoalFlag						goalFlag;					//ゴール旗
 	CCoinNomber						coinNumber;					//コインナンバー
 	CBird							bird;						//鳥エネミー
-	CRotationGimmick				rotationgimmick;			//回転するギミック
-	CSoundSource					soundsource;				//サウンドソース
-	CCoinSprite						coinsprite;					//コインを取得した用のコイン
+	CRotationGimmick				rotationGimmick;			//回転するギミック
+	CSoundSource					soundSource;				//サウンドソース
+	CCoinGet						coinGet;					//コインを取得した用のコイン
 	CSun							sun;						//太陽
 	CBoss							boss;						//ボス
 	CBossLife						bossLife;					//ボスライフ

@@ -52,94 +52,108 @@ public:
 	//移動速度ゲット
 	const D3DXVECTOR3& GetMoveSpeed() const
 	{
-		return movespeed;
+		return moveSpeed;
 	}
 	//プレイヤーのAABBのMAXをゲット
 	const D3DXVECTOR3& GetAABBMax() const
 	{
-		return aabbMaxget;
+		return aabbMaxGet;
 	}
 	//プレイヤーのAABBのMINをゲット
 	const D3DXVECTOR3& GetAABBMin() const
 	{
-		return aabbMinget;
+		return aabbMinGet;
 	}
-	const D3DXMATRIX& GetRot() const
-	{
-		return mRotation;
-	}
+	//プレイヤーのキャラクターコントローラーゲット
 	CCharacterController& GetcharacterController()
 	{
 		return characterController;
 	}
+	//effectセット。
 	void SetEffect(ID3DXEffect* effect)
 	{
-		skinmodel.SetEffect(effect);
+		skinModel.SetEffect(effect);
 	}
+	//エフェクトゲット
 	const ID3DXEffect* GetEffect() const
 	{
-		return skinmodel.GetEffect();
+		return skinModel.GetEffect();
 	}
+	//移動速度セット
 	void SetMoveSpeed(const D3DXVECTOR3& speed)
 	{
-		movespeed = speed;
+		moveSpeed = speed;
 	}
+	//プレイヤーライフステートゲット
 	const Life& GetLifeState() const
 	{
-		return lifestate;
+		return lifeState;
 	}
+	//ライフステートセット
 	void SetLifeState(const Life& life)
 	{
-		lifestate = life;
+		lifeState = life;
 	}
+	//スケールセット
 	void SetScale(const D3DXVECTOR3& scal)
 	{
 		scale = scal;
 	}
+	//スケールゲット
 	const D3DXVECTOR3& GetScale() const
 	{
 		return scale;
 	}
+	//スケール引き算
 	void SubScale(const D3DXVECTOR3& sub)
 	{
 		scale -= sub;
 	}
+	//スケール足し算
 	void AddScale(const D3DXVECTOR3& add)
 	{
 		scale += add;
 	}
+	//プレイヤーステートセット
 	void SetState(const PlayerState& state)
 	{
 		this->state = state;
 	}
+	//プレイヤーを静止させるフラグセット
 	void SetPlyaerStop(const bool& stop)
 	{
-		playerstop = stop;
+		playerStop = stop;
 	}
+	//プレイヤー静止させるフラグゲット
 	const bool& GetPlayerStop() const
 	{
-		return playerstop;
+		return playerStop;
 	}
+	//死亡時間セット
 	void SetDiedTime(const float& time)
 	{
 		diedTime = time;
 	}
+	//プレイヤー移動関数
 	void Move(float maxmove);
+	//プレイヤージャンプ関数
 	void Jump();
+	//プレイヤーのステート関数
 	void State();
-	void Died();		//死亡
-	void Clear();		//クリア時
+	//死亡関数
+	void Died();
+	//クリア時関数		
+	void Clear();		
 private:
 	D3DXVECTOR3						position;						//座標。
-	D3DXVECTOR3						movespeed;						//移動速度
+	D3DXVECTOR3						moveSpeed;						//移動速度
 	D3DXVECTOR3						scale;							//スケールw
-	D3DXMATRIX						mRotation;						//回転行列。
-	SkinModel						skinmodel;						//オリジナル
-	SkinModel						skinmodelA;						//モーフィング用A
-	SkinModel						skinmodelB;						//モーフィング用B
+	SkinModel						skinModel;						//オリジナル
+	SkinModel						skinModelMorpA;						//モーフィング用A
+	SkinModel						skinModelMorpB;						//モーフィング用B
 	SkinModelData					modelData;						//オリジナル
-	SkinModelData					modelDataA;						//モーフィング用A
-	SkinModelData					modelDataB;						//モーフィング用B
+	SkinModelData					modelDataMorpA;						//モーフィング用A
+	SkinModelData					modelDataMorpB;						//モーフィング用B
 	Animation 						animation;						//アニメーション
 	CLight							light;							//ライト
 	LPDIRECT3DTEXTURE9				normalMap = NULL;				//ノーマルマップ
@@ -147,23 +161,20 @@ private:
 	CTurn							turn;							//ターンクラス
 	CCharacterController			characterController;			//キャラクターコントローラー
 	PlayerState						state;							//プレイヤーの状態
-	Life							lifestate;						//プレイヤー生死
+	Life							lifeState;						//プレイヤー生死
 	D3DXQUATERNION					rotation;						//回転クォータニオン
-	D3DXVECTOR3						addmove;						//次の移動
+	D3DXVECTOR3						addMove;						//移動速度加算のため
 	D3DXVECTOR3						aabbMin;						//AABBの初期値
 	D3DXVECTOR3						aabbMax;						//AABBの初期値
-	D3DXVECTOR3						aabbMinget;						//AABBにプレイヤーの今の場所を足したところ
-	D3DXVECTOR3						aabbMaxget;						//AABBにプレイヤーの今の場所を足したところ
-	std::unique_ptr<CSoundSource>	SEjump;							//ジャンプSE
+	D3DXVECTOR3						aabbMinGet;						//AABBにプレイヤーの今の場所を足したところ
+	D3DXVECTOR3						aabbMaxGet;						//AABBにプレイヤーの今の場所を足したところ
+	std::unique_ptr<CSoundSource>	seJump;							//ジャンプSE
 	float							radius;							//半径
 	float							friction;						//摩擦
 	float							deathCount;						//死亡までのカウント
-	bool							playerstop = false;				//動けない状態
+	bool							playerStop = false;				//動けない状態
 	float							diedTime = 0.0f;				//死亡する時間
 	float							rate;							//モーフィング用時間
 	float							currentAngleY;					//現在のアングル
 	float							targetAngleY;					//ターゲットのアングル
-
-	
-
 };

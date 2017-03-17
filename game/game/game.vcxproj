@@ -171,7 +171,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinChip.cpp" />
     <ClCompile Include="CoinNomber.cpp" />
-    <ClCompile Include="CoinSprite.cpp" />
+    <ClCompile Include="CoinGet.cpp" />
     <ClCompile Include="Const.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Frame\2DImage.cpp" />
@@ -264,7 +264,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinChip.h" />
     <ClInclude Include="CoinNomber.h" />
-    <ClInclude Include="CoinSprite.h" />
+    <ClInclude Include="CoinGet.h" />
     <ClInclude Include="Const.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Frame\2DImage.h" />

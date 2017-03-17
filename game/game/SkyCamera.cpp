@@ -37,12 +37,12 @@ void CSkyCamera::Update()
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, D3DX_PI / 4, aspect, Near, Far);
 
 	D3DXMatrixInverse(&viewMatrixRotInv, NULL, &viewMatrix);
-	mRot = viewMatrixRotInv;
-	mRot.m[3][0] = 0.0f;
-	mRot.m[3][1] = 0.0f;
-	mRot.m[3][2] = 0.0f;
-	mRot.m[3][3] = 1.0f;
-	D3DXMatrixTranspose(&viewMatrixRotInv, &mRot);
+	rot = viewMatrixRotInv;
+	rot.m[3][0] = 0.0f;
+	rot.m[3][1] = 0.0f;
+	rot.m[3][2] = 0.0f;
+	rot.m[3][3] = 1.0f;
+	D3DXMatrixTranspose(&viewMatrixRotInv, &rot);
 }
 //ÉJÉÅÉâÇÃèâä˙âªÅB
 void CSkyCamera::Init()
@@ -62,8 +62,8 @@ void CSkyCamera::RotTransversal(float roty)
 	D3DXQUATERNION mAxisY;
 	D3DXVECTOR4 v;
 	D3DXQuaternionRotationAxis(&mAxisY, &vUpVec, roty);
-	D3DXMatrixRotationQuaternion(&mRot, &mAxisY);
-	D3DXVec3Transform(&v, &toPos, &mRot);
+	D3DXMatrixRotationQuaternion(&rot, &mAxisY);
+	D3DXVec3Transform(&v, &toPos, &rot);
 	toPos.x = v.x;
 	toPos.y = v.y;
 	toPos.z = v.z;
@@ -76,8 +76,8 @@ void CSkyCamera::RotLongitudinal(float rotx)
 	D3DXVECTOR4 v;
 	D3DXVec3Cross(&Cross, &vUpVec, &toPos);
 	D3DXQuaternionRotationAxis(&zAxis, &Cross, rotx);
-	D3DXMatrixRotationQuaternion(&mRot, &zAxis);
-	D3DXVec3Transform(&v, &toPos, &mRot);
+	D3DXMatrixRotationQuaternion(&rot, &zAxis);
+	D3DXVec3Transform(&v, &toPos, &rot);
 	D3DXVECTOR3 toPosOld = toPos;
 	toPos.x = v.x;
 	toPos.y = v.y;

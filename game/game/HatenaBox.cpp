@@ -2,8 +2,8 @@
 #include "HatenaBox.h"
 #include "stage.h"
 
-SCollisionInfo collisionInfoTable2Dhatena[] = {
-#include "Collision2D_hatenabox1.h"
+SCollisionInfo collisionInfoTableHatena[] = {
+#include "Collision_hatenabox1.h"
 };
 
 //コンストラクタ
@@ -81,7 +81,7 @@ void CHatenaBox::Release()
 
 void CHatenaBox::CreateCollision2D()
 {
-	SCollisionInfo& collision = *collisionInfoTable2Dhatena;
+	SCollisionInfo& collision = *collisionInfoTableHatena;
 		//ここで剛体とかを登録する。
 		//剛体を初期化。
 		{

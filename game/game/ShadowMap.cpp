@@ -5,10 +5,10 @@
 
 void CShadowMap::Create(int w, int h)
 {
-	RenderTarget.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
-	RenderTargetUnity.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
-	this->h = h;
-	this->w = w;
+	renderTarget.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
+	renderTargetUnity.Create(w, h, 1, D3DFMT_A8R8G8B8, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0);
+	height = h;
+	width = w;
 
 
 	Near = 0.1f;
@@ -20,12 +20,12 @@ void CShadowMap::Render(D3DXMATRIX viewMatrix)
 {
 	g_pd3dDevice->GetViewport(&viewport);
 	//元々のレンダリングターゲットを保存。後で戻すためバックアップを行う
-	g_pd3dDevice->GetRenderTarget(0, &Backbuffer);
+	g_pd3dDevice->GetRenderTarget(0, &backBuffer);
 	//元々のデプスステンシルバッファを保存。後で戻すため
-	g_pd3dDevice->GetDepthStencilSurface(&BackZ);
+	g_pd3dDevice->GetDepthStencilSurface(&backZ);
 	//レンダリングターゲットを変更する
-	g_pd3dDevice->SetRenderTarget(0, RenderTarget.GetRenderTarget());
-	g_pd3dDevice->SetDepthStencilSurface(RenderTarget.GetDepthStencilBuffer());
+	g_pd3dDevice->SetRenderTarget(0, renderTarget.GetRenderTarget());
+	g_pd3dDevice->SetDepthStencilSurface(renderTarget.GetDepthStencilBuffer());
 	//書き込み先を変更したのでクリア
 	g_pd3dDevice->Clear(
 		0,
@@ -84,24 +84,24 @@ void CShadowMap::Render(D3DXMATRIX viewMatrix)
 		true
 		);
 	//元のレンダーターゲットに戻す
-	g_pd3dDevice->SetRenderTarget(0, Backbuffer);
-	g_pd3dDevice->SetDepthStencilSurface(BackZ);
+	g_pd3dDevice->SetRenderTarget(0, backBuffer);
+	g_pd3dDevice->SetDepthStencilSurface(backZ);
 	g_pd3dDevice->SetViewport(&viewport);
 	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//テクスチャセット
-	g_shadow = RenderTarget.GetTexture();
+	g_shadow = renderTarget.GetTexture();
 }
 
 void CShadowMap::RenderUnity(D3DXMATRIX viewMatrix)
 {
 	g_pd3dDevice->GetViewport(&viewport);
 	//元々のレンダリングターゲットを保存。後で戻すためバックアップを行う
-	g_pd3dDevice->GetRenderTarget(0, &Backbuffer);
+	g_pd3dDevice->GetRenderTarget(0, &backBuffer);
 	//元々のデプスステンシルバッファを保存。後で戻すため
-	g_pd3dDevice->GetDepthStencilSurface(&BackZ);
+	g_pd3dDevice->GetDepthStencilSurface(&backZ);
 	//レンダリングターゲットを変更する
-	g_pd3dDevice->SetRenderTarget(0, RenderTargetUnity.GetRenderTarget());
-	g_pd3dDevice->SetDepthStencilSurface(RenderTargetUnity.GetDepthStencilBuffer());
+	g_pd3dDevice->SetRenderTarget(0, renderTargetUnity.GetRenderTarget());
+	g_pd3dDevice->SetDepthStencilSurface(renderTargetUnity.GetDepthStencilBuffer());
 	//書き込み先を変更したのでクリア
 	g_pd3dDevice->Clear(
 		0,
@@ -124,12 +124,12 @@ void CShadowMap::RenderUnity(D3DXMATRIX viewMatrix)
 		true
 		);
 	//元のレンダーターゲットに戻す
-	g_pd3dDevice->SetRenderTarget(0, Backbuffer);
-	g_pd3dDevice->SetDepthStencilSurface(BackZ);
+	g_pd3dDevice->SetRenderTarget(0, backBuffer);
+	g_pd3dDevice->SetDepthStencilSurface(backZ);
 	g_pd3dDevice->SetViewport(&viewport);
 	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//プレイヤーの影テクスチャセット
-	g_Unity = RenderTargetUnity.GetTexture();
+	g_Unity = renderTargetUnity.GetTexture();
 }
 
 void CShadowMap::CreateLight(D3DXMATRIX proj)
@@ -150,7 +150,7 @@ void CShadowMap::CreateLight(D3DXMATRIX proj)
 	D3DXVECTOR3 target;
 	D3DXVec3Add(&target, &lightPosition, &lightDirection);
 	D3DXMatrixLookAtLH(&lvMatrix, &lightPosition, &target, &lightUp);
-	D3DXMatrixMultiply(&LVPMatrix, &lvMatrix, &projMatrix);
+	D3DXMatrixMultiply(&lVPMatrix, &lvMatrix, &projMatrix);
 }
 
 void CShadowMap::Release()

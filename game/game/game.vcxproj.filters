@@ -255,9 +255,6 @@
     <ClCompile Include="Fade.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
-    <ClCompile Include="CoinSprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Frame\SkinModelDataManager.cpp">
       <Filter>ソース ファイル\Frame</Filter>
     </ClCompile>
@@ -304,6 +301,9 @@
       <Filter>ソース ファイル\Frame</Filter>
     </ClCompile>
     <ClCompile Include="Const.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinGet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -530,9 +530,6 @@
     <ClInclude Include="Fade.h">
       <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
-    <ClInclude Include="CoinSprite.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Frame\SkinModelDataManager.h">
       <Filter>ソース ファイル\Frame</Filter>
     </ClInclude>
@@ -580,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>ソース ファイル\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinGet.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

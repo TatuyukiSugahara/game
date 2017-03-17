@@ -6,7 +6,7 @@
 #include "ResultGoal.h"
 #include "Fade.h"
 #include "CoinNomber.h"
-#include "CoinSprite.h"
+#include "CoinGet.h"
 
 class CResultScene : public CScene
 {
@@ -38,7 +38,7 @@ private:
 
 	CFade fade;
 	CCoinNomber coinnumber;			//コインナンバー
-	CCoinSprite	coinsprite;			//コインスプライト
+	CCoinGet	coinGet;			//コインスプライト
 
 };
 

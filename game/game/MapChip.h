@@ -23,7 +23,7 @@ public:
 		rotation = rot;
 	}
 private:
-	SkinModel skinmodel;
+	SkinModel skinModel;
 	SkinModelData* modelData;
 	Animation animation;
 	CLight	light;

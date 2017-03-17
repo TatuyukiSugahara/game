@@ -1,16 +1,16 @@
 #include "stdafx.h"
-#include "CoinSprite.h"
+#include "CoinGet.h"
 #include "Stage.h"
 
 
-CCoinSprite::CCoinSprite()
+CCoinGet::CCoinGet()
 {
 	position = D3DXVECTOR3(-4.8f, 3.07f, 0.0f);
 	rotation = CConst::QuaternionIdentity;
 }
 
 
-CCoinSprite::~CCoinSprite()
+CCoinGet::~CCoinGet()
 {
 	if (normalMap != NULL)
 	{
@@ -18,7 +18,7 @@ CCoinSprite::~CCoinSprite()
 	}
 }
 
-void CCoinSprite::Init()
+void CCoinGet::Init()
 {
 	//ノーマルマップロード
 	HRESULT hr = D3DXCreateTextureFromFileA(
@@ -57,7 +57,7 @@ void CCoinSprite::Init()
 	skinmodel.SetSpecularMap(false);
 }
 
-void CCoinSprite::Update()
+void CCoinGet::Update()
 {
 	if (rot == true)
 	{
@@ -80,7 +80,7 @@ void CCoinSprite::Update()
 	}
 }
 
-void CCoinSprite::Render(
+void CCoinGet::Render(
 	D3DXMATRIX viewMatrix,
 	D3DXMATRIX projMatrix,
 	bool isDrawToShadowMap)

@@ -30,7 +30,7 @@ public:
 	//ライトビュープロジェゲット
 	const D3DXMATRIX& Getlvpmatrix() const
 	{
-		return LVPMatrix;
+		return lVPMatrix;
 	}
 	//ライトの座標ゲット
 	void SetLightPosition(const D3DXVECTOR3& pos)
@@ -68,19 +68,19 @@ public:
 	}
 private:
 	D3DVIEWPORT9		viewport;				//テクスチャのビューポート
-	LPDIRECT3DSURFACE9	Backbuffer;				//レンダーターゲットバックアップ
-	LPDIRECT3DSURFACE9	BackZ;					//デプスバッファバックアップ
-	CRenderTarget		RenderTarget;			//シャドーマップを書き込むレンダーターゲット
-	CRenderTarget		RenderTargetUnity;		//シャドーマップを書き込むプレイヤー用レンダーターゲット
+	LPDIRECT3DSURFACE9	backBuffer;				//レンダーターゲットバックアップ
+	LPDIRECT3DSURFACE9	backZ;					//デプスバッファバックアップ
+	CRenderTarget		renderTarget;			//シャドーマップを書き込むレンダーターゲット
+	CRenderTarget		renderTargetUnity;		//シャドーマップを書き込むプレイヤー用レンダーターゲット
 	D3DXVECTOR3			lightPosition;			//ライトの座標
 	D3DXVECTOR3			lightDirection;			//ライトの方向
 	D3DXMATRIX			lvMatrix;				//ライトビューマトリクス
-	D3DXMATRIX			LVPMatrix;				//ライトビュープロジェマトリクス
+	D3DXMATRIX			lVPMatrix;				//ライトビュープロジェマトリクス
 	D3DXMATRIX			projMatrix;				//プロジェ
 	D3DXMATRIX			worldMatrix;			//ワールド
 	ID3DXEffect*		pEffect;				//エフェクト
 	float				Near;					//近平面。
 	float				Far;					//遠平面。
-	int					w;						//横
-	int					h;						//縦zz
+	int					width;					//横
+	int					height;					//縦
 };

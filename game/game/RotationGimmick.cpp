@@ -13,7 +13,7 @@ CRotationGimmick::CRotationGimmick()
 	position[1] = originPos + vector * 1.5f;	//2Ç¬Çﬂ
 	position[2] = originPos + vector * 2.0f;	//3Ç¬Çﬂ
 	scale = CConst::Vec3One;					//ëÂÇ´Ç≥
-	D3DXMatrixIdentity(&mRotation);				//âÒì]
+	D3DXMatrixIdentity(&rotation);				//âÒì]
 }
 
 
@@ -41,13 +41,13 @@ void CRotationGimmick::Init()
 	{
 		modelData[i].LoadModelData("Asset/model/coin.X", &animation);
 
-		skinmodel[i].Init(&modelData[i]);
-		skinmodel[i].SetLight(&light);
+		skinModel[i].Init(&modelData[i]);
+		skinModel[i].SetLight(&light);
 
-		skinmodel[i].SetDrawToShadowMap(false);
-		skinmodel[i].SetShadowReceiverFlag(false);
-		skinmodel[i].SetNormalMap(false);
-		skinmodel[i].SetSpecularMap(false);
+		skinModel[i].SetDrawToShadowMap(false);
+		skinModel[i].SetShadowReceiverFlag(false);
+		skinModel[i].SetNormalMap(false);
+		skinModel[i].SetSpecularMap(false);
 	}
 
 	
@@ -55,15 +55,15 @@ void CRotationGimmick::Init()
 //çXêVÅB
 void CRotationGimmick::Update()
 {
-	D3DXMatrixRotationZ(&mRotation, D3DXToRadian(1.0f));
-	D3DXVec3TransformCoord(&vector, &vector, &mRotation);
+	D3DXMatrixRotationZ(&rotation, D3DXToRadian(1.0f));
+	D3DXVec3TransformCoord(&vector, &vector, &rotation);
 	position[0] = originPos + vector * 1.0f;
 	position[1] = originPos + vector * 1.5f;
 	position[2] = originPos + vector * 2.0f;
 	
 	for (int i = 0; i < 3; i++)
 	{
-		skinmodel[i].UpdateWorldMatrix(position[i], CConst::QuaternionIdentity, scale);
+		skinModel[i].UpdateWorldMatrix(position[i], CConst::QuaternionIdentity, scale);
 	}
 	
 }
@@ -74,6 +74,6 @@ void CRotationGimmick::Render(
 {
 	for (int i = 0; i < 3; i++)
 	{
-		skinmodel[i].Render(&viewMatrix, &projMatrix, false);
+		skinModel[i].Render(&viewMatrix, &projMatrix, false);
 	}
 }

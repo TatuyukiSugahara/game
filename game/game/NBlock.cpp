@@ -47,10 +47,10 @@ void CNBlock::Update()
 		if (nblockChipList[a]->Get2DBlock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
 			&& g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
 		{
-			SEBlock.reset(new CSoundSource);
-			SEBlock->Init("Asset/Sound/block.wav");
-			SEBlock->Play(false);
-			SEBlock->SetVolume(0.25f);
+			seBlock.reset(new CSoundSource);
+			seBlock->Init("Asset/Sound/block.wav");
+			seBlock->Play(false);
+			seBlock->SetVolume(0.25f);
 			nblockChipList[a]->SetLost(true);
 			nblockChipList[a]->SetParFlag(true);
 		}

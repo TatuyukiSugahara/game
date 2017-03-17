@@ -25,15 +25,15 @@ public:
 	}
 	void SetScale(const D3DXVECTOR3& scale)
 	{
-		Scale = scale;
+		this->scale = scale;
 	}
 private:
-	SkinModel skinmodel;
-	SkinModelData* modelData;
-	Animation animation;
-	CLight	light;
-	D3DXVECTOR3							position;
-	D3DXQUATERNION						rotation;
-	D3DXVECTOR3							Scale;			//大きさ
+	SkinModel							skinmodel;		//モデル
+	SkinModelData*						modelData;		//モデルデータ
+	Animation							animation;		//アニメーション
+	CLight								light;			//ライト
+	D3DXVECTOR3							position;		//座標
+	D3DXQUATERNION						rotation;		//回転
+	D3DXVECTOR3							scale;			//大きさ
 };
 

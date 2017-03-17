@@ -44,8 +44,8 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	//オリジナルのモデルデータからクローンモデルを作成。
 	modelData.CloneModelData(*orgSkinModelData, &animation);
 
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 	animation.PlayAnimation(0);
 
 	state = MohurunState::Alive;
@@ -57,19 +57,19 @@ void CMohurunChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	param.life = 0.5f;
 	param.gravity = D3DXVECTOR3(0.0f, -0.016f, 0.0f);
 	param.initSpeed = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
-	parflag = false;
+	parFlag = false;
 	parTime = 0;
 	count = 0;
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetShadowReceiverFlag(true);
-	skinmodel.SetNormalMap(false);
-	skinmodel.SetSpecularMap(false);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetShadowReceiverFlag(true);
+	skinModel.SetNormalMap(false);
+	skinModel.SetSpecularMap(false);
 	//キャラクターコントローラー初期化
 	characterController.Init(0.3f, 1.0f, position);
 	characterController.SetGravity(-30.0f);
 	//サウンド初期化
-	SEenemyDeath.reset(new CSoundSource);
-	SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
+	seEnemyDeath.reset(new CSoundSource);
+	seEnemyDeath->Init("Asset/Sound/enemyDeath.wav");
 }
 //更新。
 void CMohurunChip::Update()
@@ -92,10 +92,10 @@ void CMohurunChip::Update()
 				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 0.7f, 0.3f) == true)
 			{
 				scale = D3DXVECTOR3(1.4f, 0.2f, 1.4f);
-				parflag = true;
+				parFlag = true;
 				state = MohurunState::Dead;
-				SEenemyDeath->Play(false);
-				SEenemyDeath->SetVolume(0.25f);
+				seEnemyDeath->Play(false);
+				seEnemyDeath->SetVolume(0.25f);
 				g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,
 					-g_stage->GetPlayer()->GetMoveSpeed().y * 0.5f,
 					g_stage->GetPlayer()->GetMoveSpeed().z));
@@ -121,9 +121,9 @@ void CMohurunChip::Update()
 		//ワールド行列の更新。
 		animation.Update(CConst::DeltaTime);
 		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(180.0f));
-		skinmodel.UpdateWorldMatrix(position, rotation, scale);
+		skinModel.UpdateWorldMatrix(position, rotation, scale);
 	}
-	if (parflag == true)
+	if (parFlag == true)
 	{
 		if (MAXPAR >= parTime)
 		{
@@ -136,7 +136,7 @@ void CMohurunChip::Update()
 		else
 		{
 			
-			parflag = false;
+			parFlag = false;
 			for (auto p : particleEmitterList)
 			{
 				delete(p);
@@ -154,7 +154,7 @@ void CMohurunChip::Render(
 {
 	if (count < 50)
 	{
-		skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+		skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 	else if (MAXPAR >= parTime)
 	{

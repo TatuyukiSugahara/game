@@ -34,5 +34,5 @@ private:
 	std::vector<CNBlockChip*> nblockChipList;	//マップチップのリスト。
 	int tableSize;
 	SBlockChipLocInfo* nblockChipLocTable;
-	std::unique_ptr<CSoundSource> SEBlock;
+	std::unique_ptr<CSoundSource> seBlock;
 };

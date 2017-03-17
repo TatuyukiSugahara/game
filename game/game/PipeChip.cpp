@@ -5,7 +5,7 @@
 CPipeChip::CPipeChip()
 {
 	position = CConst::Vec3Zero;
-	Scale = CConst::Vec3Zero;
+	scale = CConst::Vec3Zero;
 	rotation = CConst::QuaternionIdentity;
 }
 
@@ -47,7 +47,7 @@ void CPipeChip::Render(
 	bool isDrawToShadowMap)
 {
 	//ワールド行列の更新。
-	skinmodel.UpdateWorldMatrix(position, rotation, Scale);
+	skinmodel.UpdateWorldMatrix(position, rotation, scale);
 	skinmodel.Render(
 		&viewMatrix,
 		&projMatrix,

@@ -41,14 +41,12 @@ public:
 	}
 private:
 	MohurunState state;
-
 	D3DXVECTOR3				gravity = D3DXVECTOR3(0.0f, -0.98f, 0.0f);
-	D3DXVECTOR3				position;		//座標。。
+	D3DXVECTOR3				position;		//座標
 	D3DXVECTOR3				scale;			//大きさ
 	D3DXVECTOR3				movespeed;		//移動速度
-	D3DXMATRIX				mWorld;			//ワールド行列。
 	D3DXQUATERNION			rotation;
-	SkinModel skinmodel;
+	SkinModel skinModel;
 	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
 	SkinModelData modelData;
 	Animation animation;
@@ -59,8 +57,8 @@ private:
 	std::list<CParticleEmitter*> particleEmitterList;
 	const int MAXPAR = 100;
 	int parTime;
-	bool parflag;
+	bool parFlag;
 	int count;
-	std::unique_ptr<CSoundSource> SEenemyDeath;
+	std::unique_ptr<CSoundSource> seEnemyDeath;
 };
 

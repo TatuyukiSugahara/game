@@ -40,25 +40,24 @@ public:
 	{
 		state = sta;
 	}
-	const btRigidBody *Get2Dnoblock() const
+	const btRigidBody *Getnoblock() const
 	{
-		return m_rigidBody2Dnoblock;
+		return rigidBodynoblock;
 	}
-	void CreateCollision2D();				//2Dあたり判定
-	void Add2DRigidBody();		//2Dあたり判定追加
+	void CreateCollision();				//2Dあたり判定
+	void AddRigidBody();		//2Dあたり判定追加
 private:
 	D3DXVECTOR3				position;		//座標。
 	D3DXVECTOR3				scale;			//スケール
 	D3DXQUATERNION			rotation;
-	SkinModel				skinmodel;
+	SkinModel				skinModel;
 	SkinModelData			modelData;
 	Animation				animation;
 	CLight					light;
-	NoblockState			state;			//はてなの状態
+	NoblockState			state;			//見えないブロックの状態
 	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_noblockboxShape = NULL;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dnoblock = NULL;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dnoblock = NULL;	//剛体2D。
-	btDefaultMotionState* m_myMotionState = NULL;
-	bool				m_isAdd2DCollision;
+	btCollisionShape*	noblockboxShape = NULL;	//地面のコリジョン形状。
+	btRigidBody*		rigidBodynoblock = NULL;	//剛体。
+	btDefaultMotionState* myMotionState = NULL;
+	bool				isAddCollision;
 };

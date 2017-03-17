@@ -56,14 +56,14 @@ public:
 	}
 private:
 	D3DXVECTOR3				position;		//座標。。
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
+	D3DXMATRIX				world;			//ワールド行列。
+	D3DXMATRIX				rotation;		//回転行列。
 	Model					model;			//モデル。
-	D3DXVECTOR3				movespeed;
+	D3DXVECTOR3				moveSpeed;
 	float					radius;
 	KinokoState				state;			//キノコの状態
 	bool					kinoko;			//キノコをプレイヤーはゲットしている？
 	/*AABB*/
-	D3DXVECTOR3 m_aabbMin;
-	D3DXVECTOR3 m_aabbMax;
+	D3DXVECTOR3 aabbMin;
+	D3DXVECTOR3 aabbMax;
 };

@@ -9,7 +9,7 @@ class CSkyCamera {
 private:
 	D3DXMATRIX				viewMatrix;			//!<ビュー行列。カメラ行列
 	D3DXMATRIX				projectionMatrix;	//!<プロジェクション行列。ビュー空間から射影空間に変換する行列。
-	D3DXMATRIX				mRot;				//!<回転行列
+	D3DXMATRIX				rot;				//!<回転行列
 	D3DXMATRIX				viewMatrixRotInv;	//!<回転行列の逆行列。
 	D3DXVECTOR3				vEyePt;				//!<カメラの視点。
 	D3DXVECTOR3				vLookatPt;			//!<カメラの注視点。
@@ -116,7 +116,7 @@ public:
 	//回転のゲッター
 	const D3DXMATRIX& GetRot() const
 	{
-		return mRot;
+		return rot;
 	}
 	/*!
 	*@brief	カメラ横回転。

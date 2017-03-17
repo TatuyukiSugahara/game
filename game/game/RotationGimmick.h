@@ -28,9 +28,8 @@ private:
 	D3DXVECTOR3				position[3];	//座標。
 	D3DXVECTOR3				vector;			//向き
 	D3DXVECTOR3				scale;			//大きさ
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	SkinModel				skinmodel[3];	//スキンモデル
+	D3DXMATRIX				rotation;		//回転行列。
+	SkinModel				skinModel[3];	//スキンモデル
 	SkinModelData			modelData[3];	//モデルデータ
 	Animation				animation;		//アニメーション
 	CLight					light;			//ライト

@@ -1,10 +1,10 @@
 #pragma once 
 
-class CCoinSprite
+class CCoinGet
 {
 public:
-	CCoinSprite();
-	~CCoinSprite();
+	CCoinGet();
+	~CCoinGet();
 	void Init();
 	void Update();
 	void Render(

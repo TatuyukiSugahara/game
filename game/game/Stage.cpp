@@ -22,7 +22,7 @@ CStage* g_stage;
 void CStage::UpdateLight()
 {
 	light.Update();
-	lightback.Update();
+	lightBack.Update();
 }
 
 void CStage::Init()
@@ -154,21 +154,21 @@ void CStage::AddRigidBody()
 void CStage::BossMusic()
 {
 	//ボス戦の音楽を流す
-	if (bossmusic == false)
+	if (bossMusic == false)
 	{
 		//現在の音楽を止める
-		soundsource.Stop();
+		soundSource.Stop();
 		//ボス戦音楽を再生
-		soundsource.InitStreaming("Asset/Sound/dotabatare-su.wav");
-		soundsource.Play(true);
-		bossmusic = true;
+		soundSource.InitStreaming("Asset/Sound/dotabatare-su.wav");
+		soundSource.Play(true);
+		bossMusic = true;
 	}
 }
 
 void CStage::MusicStop()
 {
 	//だんだん音を下げる。
-	soundsource.SetVolume(-0.005f);
+	soundSource.SetVolume(-0.005f);
 }
 
 //デバッグ用のステージ変更
@@ -205,14 +205,14 @@ void CStage::StageInit()
 	light.Init();
 	//カメラの初期化。
 	camera.Init();
-	skycamera.Init();
+	skyCamera.Init();
 	//サウンド初期化
-	soundsource.InitStreaming("Asset/Sound/CandyCrush.wav");
-	soundsource.Play(true);
+	soundSource.InitStreaming("Asset/Sound/CandyCrush.wav");
+	soundSource.Play(true);
 	//背景ライトを初期化
-	lightback.Init();
+	lightBack.Init();
 	//ステージ背景初期化
-	stageback.Init(g_pd3dDevice);
+	stageBack.Init(g_pd3dDevice);
 	//マップ初期化
 	map.Init(g_pd3dDevice);
 	//プレイヤー初期化
@@ -220,7 +220,7 @@ void CStage::StageInit()
 	//モフルンエネミー初期化
 	mohurun.Init();
 	//nブロック初期化
-	nblock.Init(g_pd3dDevice);
+	nBlock.Init(g_pd3dDevice);
 	//見えないブロック初期化
 	//noblock.Init();
 	//はてなボックス初期化
@@ -236,15 +236,18 @@ void CStage::StageInit()
 	//コインを初期化
 	coin.Init();
 	//ゴールフラグ初期化
-	goalflag.Init();
+	goalFlag.Init();
 	//鳥初期化
 	bird.Init();
 	//コインナンバー初期化
 	coinNumber.Init();
-	//コインスプライト初期化
-	coinsprite.Init();
+	//取得したコイン用のコイン初期化
+	coinGet.Init();
 	//影初期化
-	shadow.Create(512, 512);
+	//w = 512, h =  512
+	static int w = 512;
+	static int h = 512;
+	shadow.Create(w, h);
 	//太陽初期化
 	sun.Init();
 	//回転するギミック初期化
@@ -264,24 +267,27 @@ void CStage::StageBossInit()
 	light.Init();
 	//カメラの初期化。
 	camera.Init();
-	skycamera.Init();
+	skyCamera.Init();
 	//サウンド初期化
-	soundsource.InitStreaming("Asset/Sound/CandyCrush.wav");
-	soundsource.Play(true);
+	soundSource.InitStreaming("Asset/Sound/CandyCrush.wav");
+	soundSource.Play(true);
 	//背景ライトを初期化
-	lightback.Init();
+	lightBack.Init();
 	//ステージ背景初期化
-	stageback.Init(g_pd3dDevice);
+	stageBack.Init(g_pd3dDevice);
 	//マップ初期化
 	map.Init(g_pd3dDevice);
 	//プレイヤー初期化
 	player.Init(g_pd3dDevice);
 	//影初期化
-	shadow.Create(512, 512);
+	//w = 512, h =  512
+	static int w = 512;
+	static int h = 512;
+	shadow.Create(w, h);
 	//太陽初期化
 	sun.Init();
 	//ボス音楽フラグ初期化。
-	bossmusic = false;
+	bossMusic = false;
 	//ボス初期化
 	boss.Init();
 	//ボスライフ初期化
@@ -300,30 +306,31 @@ void CStage::StageUpdate()
 	//ライトの更新。
 	UpdateLight();
 	//ステージ背景更新
-	stageback.Update();
+	stageBack.Update();
 	//マップ更新
 	map.Update();
 	//プレイヤーを更新。
 	player.Update();
 	//コイン更新
 	coinNumber.Update();
-	//コインスプライト更新
-	coinsprite.Update();
+	//取得したコイン用のコイン更新
+	coinGet.Update();
 	//影更新
 	//ライトのポジションをプレイヤーの10m上に設定
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	static const D3DXVECTOR3 Vec3UP10 = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + Vec3UP10;
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
 	shadow.SetLightDirection(lightDir);
 	//サウンドソース更新
-	soundsource.Update();
+	soundSource.Update();
 	//太陽更新
 	sun.Update();
 	//モフルンエネミー更新
 	mohurun.Update();
 	//Nブロックを更新
-	nblock.Update();
+	nBlock.Update();
 	//土管更新
 	pipe.Update();
 	//ゴール更新
@@ -333,7 +340,7 @@ void CStage::StageUpdate()
 	//コイン更新
 	coin.Update();
 	//ゴールフラグ更新
-	goalflag.Update();
+	goalFlag.Update();
 	//鳥更新
 	bird.Update();
 	//回転するギミック更新
@@ -351,7 +358,7 @@ void CStage::StageUpdate()
 	kame.Update();
 	//カメラの更新
 	camera.Update();
-	skycamera.Update();
+	skyCamera.Update();
 
 #ifdef _DEBUG
 	StageChange();
@@ -364,24 +371,25 @@ void CStage::StageBossUpdate()
 	//ライトの更新。
 	UpdateLight();
 	//ステージ背景更新
-	stageback.Update();
+	stageBack.Update();
 	//マップ更新
 	map.Update();
 	//プレイヤーを更新。
 	player.Update();
 	//コイン更新
 	coinNumber.Update();
-	//コインスプライト更新
-	coinsprite.Update();
+	//取得したコイン用のコイン更新
+	coinGet.Update();
 	//影更新
 	//ライトのポジションをプレイヤーの10m上に設定
-	D3DXVECTOR3 lightPos = player.GetPos() + D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	static const D3DXVECTOR3 Vec3UP10 = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	D3DXVECTOR3 lightPos = player.GetPos() + Vec3UP10;
 	shadow.SetLightPosition(lightPos);
 	D3DXVECTOR3 lightDir = player.GetPos() - lightPos;
 	D3DXVec3Normalize(&lightDir, &lightDir);
 	shadow.SetLightDirection(lightDir);
 	//サウンドソース更新
-	soundsource.Update();
+	soundSource.Update();
 	//太陽更新
 	sun.Update();
 	//ボス更新
@@ -396,7 +404,7 @@ void CStage::StageBossUpdate()
 	bossClear.Update();
 	//カメラの更新
 	camera.Update();
-	skycamera.Update();
+	skyCamera.Update();
 
 #ifdef _DEBUG
 	StageChange();
@@ -432,9 +440,9 @@ void  CStage::StageRender()
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 
 	//ステージ背景描画
-	stageback.Render(
-		skycamera.GetViewMatrix(),
-		skycamera.GetProjectionMatrix()
+	stageBack.Render(
+		skyCamera.GetViewMatrix(),
+		skyCamera.GetProjectionMatrix()
 		);
 	//マップ描画
 	map.Render(
@@ -452,14 +460,14 @@ void  CStage::StageRender()
 		camera.GetProjectionMatrix(),
 		false);
 	//Nブロックを描画
-	nblock.Render(
+	nBlock.Render(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
 		false);
 	//見えないブロック描画
-	noblock.Render(
+	/*noBlock.Render(
 		camera.GetViewMatrix(),
-		camera.GetProjectionMatrix());
+		camera.GetProjectionMatrix());*/
 	//はてなボックス描画
 	/*hanatebox.Render(
 	g_pd3dDevice,
@@ -508,7 +516,7 @@ void  CStage::StageRender()
 		camera.GetProjectionMatrix(),
 		false);
 	//ゴール旗描画
-	goalflag.Render(
+	goalFlag.Render(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix());
 	//鳥描画
@@ -534,7 +542,7 @@ void  CStage::StageRender()
 	//コイン取得表示用(一番前に描画するためZバッファクリア)
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER,
 		D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
-	coinsprite.Render(
+	coinGet.Render(
 		camera.GetViewMatrix(),
 		camera.GetProjectionMatrix(),
 		false);
@@ -590,9 +598,9 @@ void CStage::StageBossRender()
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 
 	//ステージ背景描画
-	stageback.Render(
-		skycamera.GetViewMatrix(),
-		skycamera.GetProjectionMatrix()
+	stageBack.Render(
+		skyCamera.GetViewMatrix(),
+		skyCamera.GetProjectionMatrix()
 		);
 	//マップ描画
 	map.Render(
