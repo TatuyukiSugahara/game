@@ -1,5 +1,5 @@
-﻿2017/02/26 13:39:44 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\GitHub\game\game\ShaderTutorial_05\LinearMath\LinearMath.vcxproj" (Rebuild ターゲット)。
+﻿2017/03/18 13:44:22 にビルドを開始しました。
+     1>ノード 5 上のプロジェクト "C:\GitHub\game\game\game\LinearMath\LinearMath.vcxproj" (Build ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\GitHub\game\game\\BulletPhysics\src /nologo /W3 /WX- /O2 /Ob2 /Oy- /D WIN32 /D NDEBUG /D USE_GRAPHICAL_BENCHMARK /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /D _MBCS /Gm- /EHsc /MT /GS /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo"LinearMath.dir\Release\\" /Fd"LinearMath.dir\Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt btAlignedAllocator.cpp btConvexHull.cpp btConvexHullComputer.cpp btGeometryUtil.cpp btPolarDecomposition.cpp btQuickprof.cpp btSerializer.cpp btVector3.cpp
          btAlignedAllocator.cpp
@@ -21,8 +21,8 @@
          LinearMath.dir\Release\btSerializer.obj
          LinearMath.dir\Release\btVector3.obj
          LinearMath.vcxproj -> C:\GitHub\game\game\\bulletPhysics\lib\Release\LinearMath.lib
-     1>プロジェクト "C:\GitHub\game\game\ShaderTutorial_05\LinearMath\LinearMath.vcxproj" (Rebuild ターゲット) のビルドが完了しました。
+     1>プロジェクト "C:\GitHub\game\game\game\LinearMath\LinearMath.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:04.47
+経過時間 00:00:02.90

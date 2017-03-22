@@ -22,8 +22,8 @@ CHatenaBox::~CHatenaBox()
 //初期化。
 void CHatenaBox::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
-	CreateCollision2D();
-	Add2DRigidBody();
+	CreateCollision();
+	AddRigidBody();
 
 	model.Init(pd3dDevice, "Asset/model/hatena_box.x");
 	model.SetShadowReceiverFlag(false);
@@ -69,45 +69,38 @@ void CHatenaBox::Render(
 void CHatenaBox::Release()
 {
 	model.Release();
-	if (m_rigidBody2Dhatena){
+	if (rigidBodyHatena){
 	
-		m_rigidBody2Dhatena = NULL;
-	}
-	if (m_rigidBody3Dhatena){
-		
-		m_rigidBody3Dhatena = NULL;
+		rigidBodyHatena = NULL;
 	}
 }
 
-void CHatenaBox::CreateCollision2D()
+void CHatenaBox::CreateCollision()
 {
 	SCollisionInfo& collision = *collisionInfoTableHatena;
 		//ここで剛体とかを登録する。
 		//剛体を初期化。
 		{
 			//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
-			m_hatenaboxShape = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
+			hatenaboxShape = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
 			btTransform groundTransform;
 			groundTransform.setIdentity();
 			groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, collision.pos.z));
 			float mass = 0.0f;
 
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
-			m_myMotionState = new btDefaultMotionState(groundTransform);
-			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_hatenaboxShape, btVector3(0, 0, 0));
-			m_rigidBody2Dhatena = new btRigidBody(rbInfo);
-
-			//ワールドに追加。
-			//g_bulletPhysics.AddRigidBody(m_rigidBody2D[i]);
+			myMotionState = new btDefaultMotionState(groundTransform);
+			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, hatenaboxShape, btVector3(0, 0, 0));
+			rigidBodyHatena = new btRigidBody(rbInfo);
 
 		}
 	
 }
 
-void CHatenaBox::Add2DRigidBody()//ワールドに追加。
+void CHatenaBox::AddRigidBody()//ワールドに追加。
 {
-	if (!m_isAdd2DCollision){
-		m_isAdd2DCollision = true;
-		g_physicsWorld->AddRigidBody(m_rigidBody2Dhatena);
+	if (!isAddCollision){
+		isAddCollision = true;
+		g_physicsWorld->AddRigidBody(rigidBodyHatena);
 	}
 }

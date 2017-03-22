@@ -45,25 +45,25 @@ void Camera::Update()
 		RotLongitudinal(g_pad.GetRStickYF() * 0.1f);
 	}
 	*/
-	cameradir = toPos;
-	cameradir.y = 0.0f;
-	D3DXVec3Normalize(&cameradir, &cameradir);
+	cameraDir = toPos;
+	cameraDir.y = 0.0f;
+	D3DXVec3Normalize(&cameraDir, &cameraDir);
 
 
 	D3DXMatrixLookAtLH(&viewMatrix, &vEyePt, &vLookatPt, &vUpVec);
-	D3DXMatrixPerspectiveFovLH(&projectionMatrix, /*D3DX_PI / 4*/ D3DXToRadian(Angle), aspect, Near, Far);
+	D3DXMatrixPerspectiveFovLH(&projectionMatrix, /*D3DX_PI / 4*/ D3DXToRadian(angle), aspect, Near, Far);
 	
 	D3DXMatrixInverse(&viewMatrixRotInv, NULL, &viewMatrix);
-	mRot = viewMatrixRotInv;
-	mRot.m[3][0] = 0.0f;
-	mRot.m[3][1] = 0.0f;
-	mRot.m[3][2] = 0.0f;
-	mRot.m[3][3] = 1.0f;
-	D3DXMatrixTranspose(&viewMatrixRotInv, &mRot);
+	rot = viewMatrixRotInv;
+	rot.m[3][0] = 0.0f;
+	rot.m[3][1] = 0.0f;
+	rot.m[3][2] = 0.0f;
+	rot.m[3][3] = 1.0f;
+	D3DXMatrixTranspose(&viewMatrixRotInv, &rot);
 
 	//3Dサウンドのリスナーはカメラ。
 	g_soundengine->SetListenerPosition(g_stage->GetPlayer()->GetPos());
-	const D3DXMATRIX& m = mRot;
+	const D3DXMATRIX& m = rot;
 	g_soundengine->SetListenerFront({ m.m[2][0], m.m[2][1], m.m[2][2] });
 	g_soundengine->SetListenerUp({ m.m[1][0], m.m[1][1], m.m[1][2] });
 
@@ -75,9 +75,9 @@ void Camera::Init()
 	vLookatPt = D3DXVECTOR3(0.0f, 1.8f, 0.0f);
 	vUpVec = CConst::Vec3Up;
 	toPos = vEyePt - vLookatPt;						//視点 - 注視点
-	cameradir = CConst::Vec3Zero;
-	Angle = 45.0f;									//画角
-	bosstime = 0.0f;
+	cameraDir = CConst::Vec3Zero;
+	angle = 45.0f;									//画角
+	bossTime = 0.0f;
 	Update();
 }
 //============================================================
@@ -88,8 +88,8 @@ void Camera::RotTransversal(float roty)
 	D3DXQUATERNION mAxisY;
 	D3DXVECTOR4 v;
 	D3DXQuaternionRotationAxis(&mAxisY, &vUpVec, roty);
-	D3DXMatrixRotationQuaternion(&mRot, &mAxisY);
-	D3DXVec3Transform(&v, &toPos, &mRot);
+	D3DXMatrixRotationQuaternion(&rot, &mAxisY);
+	D3DXVec3Transform(&v, &toPos, &rot);
 	toPos.x = v.x;
 	toPos.y = v.y;
 	toPos.z = v.z;
@@ -103,8 +103,8 @@ void Camera::RotLongitudinal(float rotx)
 	D3DXVECTOR4 v;
 	D3DXVec3Cross(&Cross, &vUpVec, &toPos);
 	D3DXQuaternionRotationAxis(&zAxis, &Cross, rotx);
-	D3DXMatrixRotationQuaternion(&mRot, &zAxis);
-	D3DXVec3Transform(&v, &toPos, &mRot);
+	D3DXMatrixRotationQuaternion(&rot, &zAxis);
+	D3DXVec3Transform(&v, &toPos, &rot);
 	D3DXVECTOR3 toPosOld = toPos;
 	toPos.x = v.x;
 	toPos.y = v.y;
@@ -126,7 +126,7 @@ void Camera::BossCamera()
 {
 	if (g_stage->GetBoss()->Start() == true)
 	{
-		if (bosstime < 2.0f)
+		if (bossTime < 2.0f)
 		{
 			D3DXVECTOR3 targetCEye(g_stage->GetBoss()->GetPos() + toPos);			//ボスカメラ視点。
 			D3DXVECTOR3 currentCEye(g_stage->GetPlayer()->GetPos() + toPos);		//プレイヤーカメラ視点。
@@ -135,35 +135,35 @@ void Camera::BossCamera()
 			g_stage->GetPlayer()->SetPlyaerStop(true);
 			g_stage->BossMusic();
 			g_stage->GetBossKatto()->SetKatto(true);
-			vEyePt = (targetCEye * (1.0f - camerahokan) + currentCEye * camerahokan);
-			vLookatPt = (targetCLook * (1.0f - camerahokan) + currentCLook * camerahokan);
+			vEyePt = (targetCEye * (1.0f - cameraHokan) + currentCEye * cameraHokan);
+			vLookatPt = (targetCLook * (1.0f - cameraHokan) + currentCLook * cameraHokan);
 			toPos = vEyePt - vLookatPt;
-			if (camerahokan > 0.0f)
+			if (cameraHokan > 0.0f)
 			{
-				camerahokan -= 0.01f;
+				cameraHokan -= 0.01f;
 			}
-			bosstime += CConst::DeltaTime;
+			bossTime += CConst::DeltaTime;
 		}
-		else if (bosstime >= 2.0f && bosstime < 4.0f)
+		else if (bossTime >= 2.0f && bossTime < 4.0f)
 		{
 			D3DXVECTOR3 targetCEye(g_stage->GetBoss()->GetPos() + toPos);			//ボスカメラ視点。
 			D3DXVECTOR3 currentCEye(g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(toPos.x, toPos.y, -17.0f));		//プレイヤーカメラ視点。
 			D3DXVECTOR3 targetCLook(g_stage->GetBoss()->GetPos());					//ボスカメラ注視点。
 			D3DXVECTOR3 currentCLook(g_stage->GetPlayer()->GetPos());				//プレイヤーカメラ注視点。
 			g_stage->GetBossKatto()->SetKatto(false);
-			vEyePt = (targetCEye * (1.0f - camerahokan) + currentCEye * camerahokan);
-			vLookatPt = (targetCLook * (1.0f - camerahokan) + currentCLook * camerahokan);
-			if (camerahokan < 1.0f)
+			vEyePt = (targetCEye * (1.0f - cameraHokan) + currentCEye * cameraHokan);
+			vLookatPt = (targetCLook * (1.0f - cameraHokan) + currentCLook * cameraHokan);
+			if (cameraHokan < 1.0f)
 			{
-				camerahokan += 0.01f;
+				cameraHokan += 0.01f;
 			}
-			if (camerahokan == 1.0f)
+			if (cameraHokan == 1.0f)
 			{
 				toPos = vEyePt - vLookatPt;
 			}
-			bosstime += CConst::DeltaTime;
+			bossTime += CConst::DeltaTime;
 		}
-		else if (bosstime >= 4.0f)
+		else if (bossTime >= 4.0f)
 		{
 			if (g_stage->GetPlayer()->GetPlayerStop() == true)
 			{
@@ -176,9 +176,9 @@ void Camera::BossCamera()
 		}
 		if (g_stage->GetBoss()->GetState() == CBoss::BossState::Dead)
 		{
-			if (Angle > 15.0f)
+			if (angle > 15.0f)
 			{
-				Angle -= 0.2f; //ボス撃破時画角狭める。
+				angle -= 0.2f; //ボス撃破時画角狭める。
 			}
 		}
 	}

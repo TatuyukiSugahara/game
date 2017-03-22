@@ -14,21 +14,22 @@ public:
 	void Render(
 		D3DXMATRIX viewMatrix,
 		D3DXMATRIX projMatrix);
+	//座標をセット
 	void SetPos(const D3DXVECTOR3& pos)
 	{
 		position=pos;
 	}
+	//回転をセット
 	void SetRot(const D3DXQUATERNION& rot)
 	{
 		rotation = rot;
 	}
 private:
-	SkinModel skinModel;
-	SkinModelData* modelData;
-	Animation animation;
-	CLight	light;
-	D3DXVECTOR3							position;
-	D3DXQUATERNION						rotation;
-	int									size;
+	SkinModel			skinModel;	//モデル
+	SkinModelData*		modelData;	//モデルデータ
+	Animation			animation;	//アニメーション
+	CLight				light;		//ライト
+	D3DXVECTOR3			position;	//座標
+	D3DXQUATERNION		rotation;	//回転
 };
 

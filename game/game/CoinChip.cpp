@@ -7,6 +7,8 @@
 CCoinChip::CCoinChip()
 {
 	position = CConst::Vec3Zero;
+	scale = D3DXVECTOR3(1.0f, 1.0f, 2.0f);
+	scaleShadow = D3DXVECTOR3(1.0f, 1.0f, 4.0f);
 	rotation = CConst::QuaternionIdentity;
 }
 
@@ -34,27 +36,27 @@ void CCoinChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	modelData = g_skinmodeldataManager->LoadSkinModelData(modelPath);
 	//modelData.LoadModelData(modelPath, &animation);
 
-	skinmodel.Init(modelData);
-	skinmodel.SetLight(&light);
-	skinmodel.SetShadowReceiverFlag(false);
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetNormalMap(true);
-	skinmodel.SetSpecularMap(false);
+	skinModel.Init(modelData);
+	skinModel.SetLight(&light);
+	skinModel.SetShadowReceiverFlag(false);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetNormalMap(true);
+	skinModel.SetSpecularMap(false);
 
 	soundSource.reset(new CSoundSource);
 	soundSource->Init("Asset/Sound/coin.wav");
 
-	coinget = false;
+	coinGet = false;
 }
 
 void CCoinChip::Update()
 {
-	if (coinget == false)
+	if (coinGet == false)
 	{
 		//コインとプレイヤーが当たったか。
 		if (BallCollision(position, g_stage->GetPlayer()->GetPos(), 0.75f, 0.75) == true)
 		{
-			coinget = true;
+			coinGet = true;
 			g_scenemanager->AddNum();
 			g_stage->GetCoinSprite()->SetRotFlag(true);
 			g_stage->GetPlayer()->SetDiedTime(0.0f);
@@ -66,7 +68,7 @@ void CCoinChip::Update()
 		{
 			if (BallCollision(position, g_stage->GetMohu()->GetPos(i), 0.37f, 0.5f) == true)
 			{
-				coinget = true;
+				coinGet = true;
 			}
 		}
 	}
@@ -76,16 +78,16 @@ void CCoinChip::Render(
 	D3DXMATRIX projMatrix,
 	bool isDrawToShadowMap)
 {
-	if (coinget == false)
+	if (coinGet == false)
 	{
 		if (isDrawToShadowMap == true)
 		{
-			skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 4.0f));
+			skinModel.UpdateWorldMatrix(position, rotation, scaleShadow);
 		}
 		else
 		{
-			skinmodel.UpdateWorldMatrix(position, rotation, D3DXVECTOR3(1.0f, 1.0f, 2.0f));
+			skinModel.UpdateWorldMatrix(position, rotation, scale);
 		}
-		skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+		skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 }

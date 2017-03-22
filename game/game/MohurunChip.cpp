@@ -9,7 +9,7 @@ CMohurunChip::CMohurunChip()
 {
 	scale = D3DXVECTOR3(1.4f, 1.4f, 1.4f);
 	rotation = CConst::QuaternionIdentity;
-	movespeed = D3DXVECTOR3(-2.0f, 0.0f, 0.0f);				//初期移動速度
+	moveSpeed = D3DXVECTOR3(-2.0f, 0.0f, 0.0f);				//初期移動速度
 }
 
 
@@ -108,14 +108,14 @@ void CMohurunChip::Update()
 
 			
 
-			characterController.SetMoveSpeed(movespeed);
+			characterController.SetMoveSpeed(moveSpeed);
 			characterController.Execute();
-			movespeed = characterController.GetMoveSpeed();
+			moveSpeed = characterController.GetMoveSpeed();
 			position = characterController.GetPosition();
 			characterController.SetPosition(position);
 			if (characterController.IsKabe())
 			{
-				movespeed.x *= -1.0f;
+				moveSpeed.x *= -1.0f;
 			}
 		}
 		//ワールド行列の更新。

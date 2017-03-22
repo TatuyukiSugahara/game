@@ -198,6 +198,7 @@ void SkinModel::DrawMeshContainer(
 				pEffect->CommitChanges();
 				// draw the subset with the current world matrix palette and material state
 				pMeshContainer->MeshData.pMesh->DrawSubset(iAttrib);
+
 				pEffect->EndPass();
 				pEffect->End();
 			}
@@ -234,12 +235,11 @@ void SkinModel::DrawMeshContainer(
 					pMeshContainer->MeshData.pMesh->DrawSubset(i);
 				}
 			}
-
-			
 			pEffect->EndPass();
 			pEffect->End();
 		}
 	}
+	mesh = pMeshContainer->MeshData.pMesh;
 }
 void SkinModel::DrawFrame(
 	IDirect3DDevice9* pd3dDevice,
@@ -315,7 +315,8 @@ void SkinModel::DrawFrame(
 SkinModel::SkinModel() :
 	skinModelData(nullptr),
 	light(nullptr),
-	pEffect(nullptr)
+	pEffect(nullptr),
+	mesh(nullptr)
 {
 }
 SkinModel::~SkinModel()
@@ -384,7 +385,7 @@ LPD3DXMESH SkinModel::GetOrgMesh(LPD3DXFRAME frame) const
 //モーフィング処理の実行。
 //morphTarget	モーフターゲット
 //rate モーフィングレート。
-void SkinModel::Morphing(SkinModelData* morphTargetA, SkinModelData* morphTargetB, float rate)
+void SkinModel::Morphing(SkinModel* morphTargetA, SkinModel* morphTargetB, float rate)
 {
 	//モーフターゲットAのメッシュを取得。
 	LPD3DXMESH targetMesh_A = morphTargetA->GetOrgMeshFirst();
@@ -405,7 +406,7 @@ void SkinModel::Morphing(SkinModelData* morphTargetA, SkinModelData* morphTarget
 
 	//自分の頂点バッファを取得する。
 	LPDIRECT3DVERTEXBUFFER9 vertexBuffer;
-	skinModelData->GetOrgMeshFirst()->GetVertexBuffer(&vertexBuffer);
+	GetMesh()->GetVertexBuffer(&vertexBuffer);
 	D3DXVECTOR3* vertexPos;
 	D3DXVECTOR3* targetVertexPos_A;
 	D3DXVECTOR3* targetVertexPos_B;

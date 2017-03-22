@@ -4,6 +4,8 @@ class C2DImage
 {
 public:
 	C2DImage();
+	//クラスが破棄される時に継承クラスのデストラクタが動作しないため
+	//virtualをつける
 	virtual ~C2DImage();
 	virtual void Init();
 	virtual void Update() = 0;

@@ -67,10 +67,10 @@ void CPipe::Init()
 		break;
 	}
 
-	//配置情報からマップを構築
+	//配置情報から土管を構築
 	for (int a = 0; a < tableSize; a++)
 	{
-		//マップチップを生成
+		//土管チップを生成
 		CPipeChip* pipeChip = new CPipeChip;
 		pipeChip->SetPos(pipeChipTable[a].pos);
 		pipeChip->SetRot(pipeChipTable[a].rotation);
@@ -80,7 +80,7 @@ void CPipe::Init()
 	}
 	
 	CreateCollision();
-	AddRigidBody(arraySize);
+	AddRigidBody();
 
 }
 void CPipe::Update()
@@ -143,7 +143,7 @@ void CPipe::CreateCollision()
 	}
 }
 
-void CPipe::AddRigidBody(int arraySize)//ワールドに追加。
+void CPipe::AddRigidBody()//ワールドに追加。
 {
 	if (!isAddCollision){
 		isAddCollision = true;
@@ -155,7 +155,7 @@ void CPipe::AddRigidBody(int arraySize)//ワールドに追加。
 	}
 }
 
-void CPipe::RemoveRigidBody(int arraySize)//ワールドから削除
+void CPipe::RemoveRigidBody()//ワールドから削除
 {
 	if (isAddCollision){
 		isAddCollision = false;
@@ -182,7 +182,7 @@ void CPipe::InPipe()
 		if (count == 30)
 		{
 			g_stage->GetPlayer()->SetPosition(nextPos);
-			AddRigidBody(arraySize);
+			AddRigidBody();
 		}
 		if (count <= 60 && count >= 30)
 		{
@@ -211,7 +211,7 @@ void CPipe::PipeMove(int now, int next, int pipenum)
 		if (fabs(dir) < 2.3f)
 		{
 			isPipe = true;
-			RemoveRigidBody(arraySize);
+			RemoveRigidBody();
 			sePipe.reset(new CSoundSource);
 			sePipe->Init("Asset/Sound/Pipe.wav");
 			sePipe->Play(false);

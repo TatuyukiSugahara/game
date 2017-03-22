@@ -21,55 +21,63 @@ public:
 		const D3DXMATRIX viewMatrix,
 		const D3DXMATRIX projMatrix,
 		bool isDrawToShadowMap);
+	//座標セット
 	void SetPos(const D3DXVECTOR3& pos)
 	{
 		position = pos;
 	}
+	//回転セット
 	void SetRot(const D3DXQUATERNION& rot)
 	{
 		rotation = rot;
 	}
+	//大きさセット
 	void SetScale(const D3DXVECTOR3& scale)
 	{
 		this->scale = scale;
 	}
+	//ブロック壊すフラグセット
 	void SetLost(const bool& flag)
 	{
 		blockLost = flag;
 	}
+	//パーティクルを出すかフラグ
 	void SetParFlag(const bool& flag)
 	{
-		parflag = flag;
+		parFlag = flag;
 	}
-	void CreateCollision2D();				//2Dあたり判定
-	void Add2DRigidBody();					//2Dあたり判定追加
-	void Remove2DRigidBody();				//2Dあたり判定削除
-	const btRigidBody *Get2DBlock() const
+	//ブロックの剛体ゲット
+	const btRigidBody *GetBlock() const
 	{
-		return m_rigidBody2Dblock;
+		return rigidBodyBlock;
 	}
+	//あたり判定作成
+	void CreateCollision();				
+	//あたり判定追加
+	void AddRigidBody();				
+	//あたり判定削除
+	void RemoveRigidBody();				
 private:
-	D3DXVECTOR3				position;		//座標。
-	D3DXVECTOR3				scale;			//スケール
-	D3DXQUATERNION			rotation;
-	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
-	SkinModel skinModel;
-	SkinModelData modelData;
-	Animation* orgAnimation;
-	Animation animation;
-	CLight	light;
-	AnimState animState;
-	SParicleEmitParameter param;
-	std::list<CParticleEmitter*> particleEmitterList;
-	const int MAXPAR = 50;
-	int parTime;
-	bool parflag;
-	bool blockLost;						//ブロックがあるか？
+	D3DXVECTOR3						position;				//座標。
+	D3DXVECTOR3						scale;					//大きさ
+	D3DXQUATERNION					rotation;				//回転
+	static SkinModelData*			orgSkinModelData;		//オリジナルのスキンモデルデータ。
+	SkinModel						skinModel;				//モデル
+	SkinModelData					modelData;				//モデルデータ
+	Animation*						orgAnimation;			//オリジナルのアニメーション
+	Animation						animation;				//アニメーション
+	CLight							light;					//ライト
+	AnimState						animState;				//アニメーション用ステート
+	SParicleEmitParameter			param;					//パーティクル
+	std::list<CParticleEmitter*>	particleEmitterList;	//パーティクルリスト
+	const int						MAXPAR = 50;			//パーティクル発生時間の上限
+	int								parTime;				//パーティクルの時間
+	bool							parFlag;				//パーティクルが出るかのフラグ
+	bool							blockLost;				//ブロックがあるか？
 	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_blockboxShape = NULL;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dblock = NULL;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dblock = NULL;	//剛体2D。
-	btDefaultMotionState* m_myMotionState = NULL;
-	bool				m_isAdd2DCollision;
+	btCollisionShape*				blockboxShape = NULL;	//地面のコリジョン形状。
+	btRigidBody*					rigidBodyBlock = NULL;	//剛体
+	btDefaultMotionState*			myMotionState = NULL;	//モーションステート
+	bool							isAddCollision;			//コリジョン追加フラグ
 };
 

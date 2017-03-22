@@ -19,12 +19,10 @@ public:
 		position = pos;
 	}
 private:
-	D3DXVECTOR3				position;		//座標。。
+	D3DXVECTOR3				position;		//座標。
 	D3DXVECTOR3				scale;			//大きさ
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	SkinModel skinmodel;
-	SkinModelData modelData;
-	Animation animation;
-	CLight	light;
+	SkinModel				skinModel;		//モデル
+	SkinModelData			modelData;		//モデルデータ
+	Animation				animation;		//アニメーション
+	CLight					light;			//ライト
 };

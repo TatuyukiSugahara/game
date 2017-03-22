@@ -8,7 +8,7 @@ CBoss::CBoss()
 {
 	//初期化。
 	position = D3DXVECTOR3(75.0f, 3.0f, 0.0f);
-	movespeed = CConst::Vec3Zero;
+	moveSpeed = CConst::Vec3Zero;
 	scale = CConst::Vec3One;
 	rotation = CConst::QuaternionIdentity;
 	D3DXQuaternionRotationAxis(&rotation, &CConst::Vec3Up, CConst::Radian180);
@@ -34,15 +34,15 @@ void CBoss::Init()
 	light.SetAmbientLight(D3DXVECTOR4(1.5f, 1.5f, 1.5f, 1.0f));
 
 	modelData.LoadModelData("Asset/model/boss.X", &animation);
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 	animation.PlayAnimation(0, 0.3f);
 	animation.SetAnimationLoopFlag((int)BossState::Falter, false);
 
-	skinmodel.SetShadowReceiverFlag(true);
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetNormalMap(false);
-	skinmodel.SetSpecularMap(false);
+	skinModel.SetShadowReceiverFlag(true);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetNormalMap(false);
+	skinModel.SetSpecularMap(false);
 
 	param.texturePath = "Asset/model/star.png";
 	param.w = 1.0f;
@@ -51,7 +51,7 @@ void CBoss::Init()
 	param.life = 0.5f;
 	param.gravity = D3DXVECTOR3(0.0f, -0.16f, 0.0f);
 	param.initSpeed = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
-	parflag = false;
+	parFlag = false;
 	parTime = 0;
 
 	state = BossState::Move;
@@ -67,7 +67,7 @@ void CBoss::Init()
 //更新。
 void CBoss::Update()
 {
-	if (cameraflag == true)
+	if (cameraFlag == true)
 	{
 		switch (state)
 		{
@@ -83,15 +83,15 @@ void CBoss::Update()
 		}
 
 		Particle();
-		characterController.SetMoveSpeed(movespeed);
+		characterController.SetMoveSpeed(moveSpeed);
 		characterController.Execute();
-		movespeed = characterController.GetMoveSpeed();
+		moveSpeed = characterController.GetMoveSpeed();
 		position = characterController.GetPosition();
 		characterController.SetPosition(position);
 		
 	}
 	animation.Update(CConst::DeltaTime);
-	skinmodel.UpdateWorldMatrix(position, rotation, scale);
+	skinModel.UpdateWorldMatrix(position, rotation, scale);
 }
 //描画。
 void CBoss::Render(D3DXMATRIX viewMatrix,
@@ -100,9 +100,9 @@ void CBoss::Render(D3DXMATRIX viewMatrix,
 {
 	if (state != BossState::Dead)
 	{
-		skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+		skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
-	if (MAXPAR >= parTime && parflag == true)
+	if (MAXPAR >= parTime && parFlag == true)
 	{
 		for (auto p : particleEmitterList)
 		{
@@ -119,7 +119,7 @@ void CBoss::Move()
 	D3DXVECTOR3 ToPos = g_stage->GetPlayer()->GetPos() - position;
 	ToPos.y = 0.0f;
 	D3DXVec3Normalize(&ToPos, &ToPos);
-	movespeed = ToPos * 3.0f;
+	moveSpeed = ToPos * 3.0f;
 
 	//プレイヤーに向く。
 	D3DXVECTOR3 forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
@@ -152,7 +152,7 @@ void CBoss::Move()
 		SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
 		SEenemyDeath->Play(false);
 
-		parflag = true;
+		parFlag = true;
 		param.pos = D3DXVECTOR3(position.x, position.y += 3.0f, position.z);
 		CParticleEmitterPtr particleEmitter(new CParticleEmitter);
 		particleEmitter->Init(param);
@@ -209,7 +209,7 @@ void CBoss::Dead()
 
 void CBoss::Particle()
 {
-	if (parflag == true)
+	if (parFlag == true)
 	{
 
 		if (MAXPAR >= parTime)
@@ -224,7 +224,7 @@ void CBoss::Particle()
 		else
 		{
 			parTime = 0;
-			parflag = false;
+			parFlag = false;
 			
 			particleEmitterList.clear();
 		}

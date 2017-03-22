@@ -27,38 +27,40 @@ public:
 	{
 		position = pos;
 	}
+	//モフルンのステートゲット
 	const MohurunState& GetState() const
 	{
 		return state;
 	}
+	//ステートセット
 	void SetState(const MohurunState& state)
 	{
 		this->state = state;
 	}
+	//座標ゲット
 	const D3DXVECTOR3& GetPos() const
 	{
 		return position;
 	}
 private:
-	MohurunState state;
-	D3DXVECTOR3				gravity = D3DXVECTOR3(0.0f, -0.98f, 0.0f);
-	D3DXVECTOR3				position;		//座標
-	D3DXVECTOR3				scale;			//大きさ
-	D3DXVECTOR3				movespeed;		//移動速度
-	D3DXQUATERNION			rotation;
-	SkinModel skinModel;
-	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
-	SkinModelData modelData;
-	Animation animation;
-	Animation* orgAnimation;
-	CLight	light;
-	CCharacterController characterController;				//キャラクターコントローラー
-	SParicleEmitParameter param;
-	std::list<CParticleEmitter*> particleEmitterList;
-	const int MAXPAR = 100;
-	int parTime;
-	bool parFlag;
-	int count;
-	std::unique_ptr<CSoundSource> seEnemyDeath;
+	MohurunState 					state;					//ステート
+	D3DXVECTOR3						position;				//座標
+	D3DXVECTOR3						scale;					//大きさ
+	D3DXVECTOR3						moveSpeed;				//移動速度
+	D3DXQUATERNION					rotation;				//回転
+	SkinModel						skinModel;				//モデル
+	static SkinModelData*			orgSkinModelData;		//スキンモデルデータ。
+	SkinModelData					modelData;				//モデルデータ
+	Animation						animation;				//アニメーション
+	Animation*						orgAnimation;			//オリジナルのアニメーション
+	CLight							light;					//ライト
+	CCharacterController			characterController;	//キャラクターコントローラー
+	SParicleEmitParameter			param;					//パーティクル
+	std::list<CParticleEmitter*>	particleEmitterList;	//パーティクルリスト
+	const int						MAXPAR = 50;			//パーティクル発生時間の上限
+	int								parTime;				//パーティクルの時間
+	bool							parFlag;				//パーティクルが出るかのフラグ
+	int								count;					//倒した後数秒表示させるための時間
+	std::unique_ptr<CSoundSource>	seEnemyDeath;			//死亡した時のSE
 };
 

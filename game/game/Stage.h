@@ -194,7 +194,7 @@ public:
 	}
 protected:
 	//bulletPhysicsの剛体を使用するために必要な変数。
-	static const int MaxCollision = 100;										//コリジョンの最大数
+	static const int				MaxCollision = 100;			//コリジョンの最大数
 	btCollisionShape*				groundShape[MaxCollision];	//地面のコリジョン形状。
 	btRigidBody*					rigidBody[MaxCollision];	//剛体。
 	btDefaultMotionState*			myMotionState;				//モーションステート

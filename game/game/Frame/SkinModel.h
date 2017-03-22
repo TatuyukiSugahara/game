@@ -72,22 +72,22 @@ public:
 	{
 		this->light = light;
 	}
-	void SetShadowReceiverFlag(bool flag)
+	void SetShadowReceiverFlag(const bool flag)
 	{
 		ShadowReceiverFlag = flag;
 	}
-	void SetDrawToShadowMap(bool flag)
+	void SetDrawToShadowMap(const bool flag)
 	{
 		isDrawToShadowMap = flag;
 	}
 	/*!
 	*@brief 法線マップフラグを設定。
 	*/
-	void SetNormalMap(bool flag)
+	void SetNormalMap(const bool flag)
 	{
 		isNormalMap = flag;
 	}
-	void SetSpecularMap(bool flag)
+	void SetSpecularMap(const bool flag)
 	{
 		isSpecularMap = flag;
 	}
@@ -112,45 +112,50 @@ public:
 	//morphTargetA	モーフターゲットA
 	//morphTargetB  モーフターゲットB
 	//rate モーフィングレート。
-	void Morphing(SkinModelData* morphTargetA, SkinModelData* morphTargetB, float rate);
+	void Morphing(SkinModel* morphTargetA, SkinModel* morphTargetB, float rate);
 
 	/*!
 	* @brief	ノーマルマップセット。
 	*/
-	void SetNormalMap(LPDIRECT3DTEXTURE9 normal)
+	void SetNormalMap(const LPDIRECT3DTEXTURE9& normal)
 	{
 		normalMap = normal;
 	}
 	/*!
 	*@brief スペキュラマップを設定。
 	*/
-	void SetSpecularMap(LPDIRECT3DTEXTURE9 specMap)
+	void SetSpecularMap(const LPDIRECT3DTEXTURE9& specMap)
 	{
 		specularMap = specMap;
 	}
 	/*!
 	*@brief フレネルを設定。
 	*/
-	void SetHureneruflg(bool flag)
+	void SetHureneruflg(const bool flag)
 	{
 		hureneruflg = flag;
 	}
 	/*!
 	*@brief 地面かどうか設定。
 	*/
-	void SetGround(bool flag)
+	void SetGround(const bool flag)
 	{
 		Ground = flag;
 	}
 	//セットテクスチャ。
-	void SetTexture(const char* tex,bool isCube)
+	void SetTexture(const char* tex,const bool isCube)
 	{
 		texture.Load(tex, isCube);
 	}
 	//セットスカイキューブ？
-	void SetSkyCube(bool flag)
+	void SetSkyCube(const bool flag)
 	{
 		SkyCube = flag;
+	}
+	//ゲットメッシュ
+	LPD3DXMESH GetMesh() const
+	{
+		return mesh;
 	}
 private:
 	D3DXMATRIX			worldMatrix;			//!<ワールド行列。
@@ -169,4 +174,5 @@ private:
 	bool				hureneruflg = false;		//<!ふちを光らせる。
 	CTexture			texture;					//テクスチャ
 	bool				SkyCube = false;			//スカイキューブか?
+	LPD3DXMESH			mesh;						//メッシュ
 };

@@ -44,13 +44,13 @@ private:
 	D3DXVECTOR3				position;		//座標
 	D3DXVECTOR3				scale;			//大きさ
 	D3DXQUATERNION			rotation;		//回転
-	D3DXVECTOR3				movespeed;		//移動速度
-	SkinModel skinmodel;
-	SkinModelData modelData;
-	Animation animation;
-	CLight	light;
-	CCharacterController characterController;//キャラクターコントローラー
-	const float SPEED = 10.0f;			//速度を設定。
-	const float HEIGHT = 0.5f;			//高さ
-	const float RADIUS = 0.5f;			//半径
+	D3DXVECTOR3				moveSpeed;		//移動速度
+	SkinModel				skinModel;
+	SkinModelData			modelData;
+	Animation				animation;
+	CLight					light;
+	CCharacterController	characterController;	//キャラクターコントローラー
+	const float				SPEED = 10.0f;			//速度を設定。
+	const float				HEIGHT = 0.5f;			//高さ
+	const float				RADIUS = 0.5f;			//半径
 };

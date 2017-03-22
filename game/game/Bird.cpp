@@ -5,12 +5,12 @@
 
 using namespace std;
 
-//マップチップの配置情報のテーブル。
+//鳥チップの配置情報のテーブル。
 SBirdChipLocInfo birdChipListTable[] = {
 	#include "LocationBird.h"
 };
 
-//マップチップの配置情報のテーブル。
+//鳥チップの配置情報のテーブル。
 SBirdChipLocInfo birdChipListTable2[] = {
 #include "LocationBird2.h"
 };
@@ -43,10 +43,10 @@ void CBird::Init()
 		break;
 	}
 
-	//配置情報からマップを構築
+	//配置情報から鳥を構築
 	for (int a = 0; a < tableSize; a++)
 	{
-		//マップチップを生成
+		//鳥チップを生成
 		CBirdChip* birdchip = new CBirdChip;
 		birdchip->SetPosition(birdChipLoc[a].pos);
 		birdchip->Init(birdChipLoc[a].modelName, g_pd3dDevice);

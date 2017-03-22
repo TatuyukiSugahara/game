@@ -33,34 +33,38 @@ public:
 	{
 		position = pos;
 	}
+	//座標ゲット
 	const D3DXVECTOR3& GetPos() const
 	{
 		return position;
 	}
+	//ステートゲット
 	const HatenaState& GetState() const
 	{
 		return state;
 	}
+	//ステートセット
 	void SetState(const HatenaState& sta)
 	{
 		state = sta;
 	}
-	const btRigidBody *Get2DHatena() const
+	//剛体ゲット
+	const btRigidBody *GetHatena() const
 	{
-		return m_rigidBody2Dhatena;
+		return rigidBodyHatena;
 	}
-	void CreateCollision2D();				//2Dあたり判定
-	void Add2DRigidBody();		//2Dあたり判定追加
+	//あたり判定作成
+	void CreateCollision();
+	//あたり判定追加
+	void AddRigidBody();		
 private:
-	D3DXVECTOR3				position;		//座標。。
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	Model					model;			//モデル。
-	HatenaState				state;			//はてなの状態
-	//bulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_hatenaboxShape;	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody3Dhatena = NULL;	//剛体3D。
-	btRigidBody*		m_rigidBody2Dhatena = NULL;	//剛体2D。
-	btDefaultMotionState* m_myMotionState;
-	bool				m_isAdd2DCollision;
+	D3DXVECTOR3				position;				//座標。
+	D3DXMATRIX				mWorld;					//ワールド行列。
+	D3DXMATRIX				mRotation;				//回転行列。
+	Model					model;					//モデル。
+	HatenaState				state;					//はてなの状態
+	btCollisionShape*		hatenaboxShape;			//地面のコリジョン形状。
+	btRigidBody*			rigidBodyHatena = NULL;	//剛体
+	btDefaultMotionState*	myMotionState;			//モーションステート
+	bool					isAddCollision;			//コリジョン追加フラグ
 };

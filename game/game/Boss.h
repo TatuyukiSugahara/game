@@ -23,8 +23,11 @@ public:
 		const D3DXMATRIX viewMatrix,
 		const D3DXMATRIX projMatrix,
 		bool isDrawToShadowMap);
+	//移動
 	void Move();
+	//怯む
 	void Falter();
+	//死亡
 	void Dead();
 	//パーティクル
 	void Particle();
@@ -40,40 +43,43 @@ public:
 	{
 		return position;
 	}
+	//ボス用カメラのフラグセット
 	void SetCameraFlag(const bool& flag)
 	{
-		cameraflag = flag;
+		cameraFlag = flag;
 	}
+	//ボス用カメラのゲット
 	const bool& GetCameraFlag() const 
 	{
-		return cameraflag;
+		return cameraFlag;
 	}
+	//状態ゲット
 	const BossState& GetState() const
 	{
 		return state;
 	}
 private:
-	D3DXVECTOR3				position;		//座標。
-	D3DXVECTOR3				scale;			//スケール
-	D3DXVECTOR3				movespeed;		//移動速度
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXQUATERNION			rotation;
-	SkinModel skinmodel;
-	SkinModelData modelData;
-	Animation animation;
-	CLight	light;
-	CTurn					turn;			//ターンクラス
-	float					currentAngleY;
-	float					targetAngleY;
-	int life;
-	bool cameraflag = false;
-	BossState state;
-	SParicleEmitParameter param;
-	typedef std::shared_ptr<CParticleEmitter> CParticleEmitterPtr;
-	std::list<CParticleEmitterPtr> particleEmitterList;
-	const int MAXPAR = 100;
-	int parTime;
-	bool parflag;
+	D3DXVECTOR3									position;				//座標。
+	D3DXVECTOR3									scale;					//スケール
+	D3DXVECTOR3									moveSpeed;				//移動速度
+	D3DXQUATERNION								rotation;				//回転
+	SkinModel									skinModel;				//モデル
+	SkinModelData								modelData;				//モデルデータ
+	Animation									animation;				//アニメーション
+	CLight										light;					//ライト
+	CTurn										turn;					//ターンクラス
+	CCharacterController						characterController;	//キャラクターコントローラー
+	BossState									state;					//状態
+	SParicleEmitParameter						param;					//パーティクル
+	typedef std::shared_ptr<CParticleEmitter>	CParticleEmitterPtr;	//パーティクルエミッターのシェアードポインタ
+	std::list<CParticleEmitterPtr>				particleEmitterList;	//パーティクルリスト
+	const int									MAXPAR = 50;			//パーティクル発生時間の上限
+	int											parTime;				//パーティクルの時間
+	bool										parFlag;				//パーティクルが出るかのフラグ
+	float										currentAngleY;			//現在のアングル
+	float										targetAngleY;			//向きたいアングル
+	int											life;					//ライフ
+	bool										cameraFlag = false;		//ボス用カメラのフラグ
 
-	CCharacterController characterController;				//キャラクターコントローラー
+	
 };

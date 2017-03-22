@@ -20,20 +20,20 @@ void CBossKatto::Init()
 	backColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	texFileName = "Asset/model/bossKatto.png";
 	C2DImage::Init();
-	KattoFlag = false;
+	kattoFlag = false;
 
 	
 }
 
 void CBossKatto::Update()
 {
-	if (KattoFlag == true)
+	if (kattoFlag == true)
 	{
 		if (!flag)
 		{
-			SEKatto.reset(new CSoundSource);
-			SEKatto->Init("Asset/Sound/keihou.wav");
-			SEKatto->Play(false);
+			seKatto.reset(new CSoundSource);
+			seKatto->Init("Asset/Sound/keihou.wav");
+			seKatto->Play(false);
 			flag = true;
 		}
 		SetupMatrices();
@@ -42,7 +42,7 @@ void CBossKatto::Update()
 
 void CBossKatto::Render(LPD3DXSPRITE pSprite)
 {
-	if (KattoFlag == true)
+	if (kattoFlag == true)
 	{
 		C2DImage::Render(pSprite);
 	}

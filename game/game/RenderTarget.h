@@ -70,9 +70,9 @@ public:
 		return height;
 	}
 private:
-	LPDIRECT3DSURFACE9		depthSurface;		//!<深度バッファ用のサーフェイス
-	LPDIRECT3DTEXTURE9		texture;			//!<書き込み先のテクスチャ。
-	LPDIRECT3DSURFACE9		surface;			//!<サーフェイス
+	LPDIRECT3DSURFACE9		depthSurface;	//!<深度バッファ用のサーフェイス
+	LPDIRECT3DTEXTURE9		texture;		//!<書き込み先のテクスチャ。
+	LPDIRECT3DSURFACE9		surface;		//!<サーフェイス
 	int						width = 0;		//!<幅
 	int						height = 0;		//!<高さ
 };

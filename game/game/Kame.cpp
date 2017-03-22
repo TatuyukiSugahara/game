@@ -3,6 +3,11 @@
 #include "Stage.h"
 #include "BallCollision.h"
 
+namespace
+{
+	const float HANSYA = -1.0f;
+}
+
 //コンストラクタ
 CKame::CKame()
 {
@@ -10,7 +15,7 @@ CKame::CKame()
 	position = D3DXVECTOR3(10.82f, 3.0f, 0.0f);
 	scale = CConst::Vec3One;
 	rotation = CConst::QuaternionIdentity;
-	movespeed = CConst::Vec3Zero;
+	moveSpeed = CConst::Vec3Zero;
 }
 //デストラクタ
 CKame::~CKame()
@@ -33,8 +38,8 @@ void CKame::Init()
 
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/koura.X", NULL);
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 	//キャラクターコントローラー初期化
 	CharConInit();
 }
@@ -46,7 +51,7 @@ void CKame::Update()
 	//キャラクターコントローラー更新
 	CharConUpdate();
 	//ワールド行列の更新。
-	skinmodel.UpdateWorldMatrix(position, rotation, scale);
+	skinModel.UpdateWorldMatrix(position, rotation, scale);
 }
 //描画。
 void CKame::Render(
@@ -55,7 +60,7 @@ void CKame::Render(
 	bool shadow
 	)
 {
-	skinmodel.Render(&viewMatrix, &projMatrix, shadow);
+	skinModel.Render(&viewMatrix, &projMatrix, shadow);
 }
 
 void CKame::CharConInit()
@@ -66,9 +71,9 @@ void CKame::CharConInit()
 
 void CKame::CharConUpdate()
 {
-	characterController.SetMoveSpeed(movespeed);
+	characterController.SetMoveSpeed(moveSpeed);
 	characterController.Execute();
-	movespeed = characterController.GetMoveSpeed();
+	moveSpeed = characterController.GetMoveSpeed();
 	position = characterController.GetPosition();
 	characterController.SetPosition(position);
 }
@@ -84,11 +89,11 @@ void CKame::Hit()
 		//方向を正規化する
 		D3DXVec3Normalize(&Dir, &Dir);
 		//方向*スピードで移動速度を決定
-		movespeed = Dir * SPEED;
+		moveSpeed = Dir * SPEED;
 	}
 	//壁と当たった時は反射する
 	if (characterController.IsKabe() == true)
 	{
-		movespeed *= (-1.0f, 1.0f, -1.0f);
+		moveSpeed *= HANSYA;
 	}
 }

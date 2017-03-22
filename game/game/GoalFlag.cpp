@@ -8,7 +8,6 @@
 CGoalFlag::CGoalFlag()
 {
 	//初期化。
-	D3DXMatrixIdentity(&mWorld);
 	switch (g_scenemanager->GetNumber())
 	{
 	case CSceneManager::StageNumber::Stage1:
@@ -46,19 +45,19 @@ void CGoalFlag::Init()
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/goalflag.X", &animation);
 	animation.PlayAnimation(0);
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 }
 //更新。
 void CGoalFlag::Update()
 {
 	//ワールド行列の更新。
-	skinmodel.UpdateWorldMatrix(position, D3DXQUATERNION(0.0f, 0.0f, 0.0f, 1.0f), scale);
+	skinModel.UpdateWorldMatrix(position, CConst::QuaternionIdentity, scale);
 }
 //描画。
 void CGoalFlag::Render(
 	D3DXMATRIX viewMatrix,
 	D3DXMATRIX projMatrix)
 {
-	skinmodel.Render(&viewMatrix, &projMatrix, false);
+	skinModel.Render(&viewMatrix, &projMatrix, false);
 }

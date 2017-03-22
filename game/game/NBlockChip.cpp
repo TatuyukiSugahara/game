@@ -15,13 +15,10 @@ CNBlockChip::CNBlockChip()
 
 CNBlockChip::~CNBlockChip()
 {
-	delete m_blockboxShape;
-	delete m_myMotionState;
-	if (m_rigidBody3Dblock){
-		delete m_rigidBody3Dblock;
-	}
-	if (m_rigidBody2Dblock){
-		delete m_rigidBody2Dblock;
+	delete blockboxShape;
+	delete myMotionState;
+	if (rigidBodyBlock){
+		delete rigidBodyBlock;
 	}
 	/*if (orgSkinModelData)
 	{
@@ -65,8 +62,8 @@ void CNBlockChip::Init()
 	skinModel.SetNormalMap(true);
 	skinModel.SetSpecularMap(false);
 
-	CreateCollision2D();
-	Add2DRigidBody();
+	CreateCollision();
+	AddRigidBody();
 
 	param.texturePath = "Asset/model/block.png";
 	param.w = 0.5f;
@@ -76,7 +73,7 @@ void CNBlockChip::Init()
 	param.gravity = D3DXVECTOR3(0.0f, -0.5f, 0.0f);
 	param.initSpeed = D3DXVECTOR3(0.0f, 4.0f, 0.0f);
 	param.pos = position;
-	parflag = false;
+	parFlag = false;
 	parTime = 0;
 	CParticleEmitter* particleEmitter = new CParticleEmitter;
 	particleEmitter->Init(param);
@@ -87,7 +84,7 @@ void CNBlockChip::Update()
 {
 	if (blockLost == true)//ブロック壊された
 	{
-		Remove2DRigidBody();
+		RemoveRigidBody();
 		if (animState != AnimState::On)
 		{
 			animation.PlayAnimation(1);
@@ -95,7 +92,7 @@ void CNBlockChip::Update()
 			animState = AnimState::On;
 		}
 
-		if (parflag == true)
+		if (parFlag == true)
 		{
 			if (MAXPAR >= parTime)
 			{
@@ -107,7 +104,7 @@ void CNBlockChip::Update()
 			}
 			else
 			{
-				parflag = false;
+				parFlag = false;
 				for (auto p : particleEmitterList)
 				{
 					delete(p);
@@ -150,39 +147,39 @@ void CNBlockChip::Render(
 	}
 }
 
-void CNBlockChip::CreateCollision2D()
+void CNBlockChip::CreateCollision()
 {
 	//ここで剛体とかを登録する。
 	//剛体を初期化。
 	{
 		//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
-		m_blockboxShape = new btBoxShape(btVector3(scale.x*0.5f, scale.y*0.5f, scale.z*0.5f));
+		blockboxShape = new btBoxShape(btVector3(scale.x*0.5f, scale.y*0.5f, scale.z*0.5f));
 		btTransform groundTransform;
 		groundTransform.setIdentity();
 		groundTransform.setOrigin(btVector3(position.x, position.y, position.z));
 		float mass = 0.0f;
 
 		//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
-		m_myMotionState = new btDefaultMotionState(groundTransform);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_blockboxShape, btVector3(0, 0, 0));
-		m_rigidBody2Dblock = new btRigidBody(rbInfo);
+		myMotionState = new btDefaultMotionState(groundTransform);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, blockboxShape, btVector3(0, 0, 0));
+		rigidBodyBlock = new btRigidBody(rbInfo);
 	}
 
 }
 
-void CNBlockChip::Add2DRigidBody()//ワールドに追加。
+void CNBlockChip::AddRigidBody()//ワールドに追加。
 {
-	if (!m_isAdd2DCollision){
-		m_isAdd2DCollision = true;
-		g_physicsWorld->AddRigidBody(m_rigidBody2Dblock);
+	if (!isAddCollision){
+		isAddCollision = true;
+		g_physicsWorld->AddRigidBody(rigidBodyBlock);
 		
 	}
 }
 
-void CNBlockChip::Remove2DRigidBody()
+void CNBlockChip::RemoveRigidBody()
 {
-	if (m_rigidBody2Dblock != NULL)
+	if (rigidBodyBlock != NULL)
 	{
-		g_physicsWorld->RemoveRigidBody(m_rigidBody2Dblock);
+		g_physicsWorld->RemoveRigidBody(rigidBodyBlock);
 	}
 }

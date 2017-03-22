@@ -36,10 +36,12 @@ public:
 	{
 		position = pos;
 	}
+	//キノコをゲットしたかのフラグセット
 	void SetKinoko(const bool& flag)
 	{
 		kinoko = flag;
 	}
+	//キノコをゲットしたかのフラグゲット
 	const bool& GetKinoko() const
 	{
 		return kinoko;
@@ -59,11 +61,10 @@ private:
 	D3DXMATRIX				world;			//ワールド行列。
 	D3DXMATRIX				rotation;		//回転行列。
 	Model					model;			//モデル。
-	D3DXVECTOR3				moveSpeed;
-	float					radius;
+	D3DXVECTOR3				moveSpeed;		//移動速度
+	float					radius;			//半径
 	KinokoState				state;			//キノコの状態
 	bool					kinoko;			//キノコをプレイヤーはゲットしている？
-	/*AABB*/
-	D3DXVECTOR3 aabbMin;
-	D3DXVECTOR3 aabbMax;
+	D3DXVECTOR3				aabbMin;		//AABBの最小
+	D3DXVECTOR3				aabbMax;		//AABBの最大
 };

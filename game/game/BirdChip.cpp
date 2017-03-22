@@ -42,8 +42,8 @@ void CBirdChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	//オリジナルのモデルデータからクローンモデルを作成。
 	modelData.CloneModelData(*orgSkinModelData, &animation);
 
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
 	animation.PlayAnimation(0);
 
 	state = BirdState::Alive;
@@ -57,17 +57,17 @@ void CBirdChip::Init(const char* name, LPDIRECT3DDEVICE9 pd3dDevice)
 	param.initSpeed = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 
-	parflag = false;
+	parFlag = false;
 	parTime = 0;
 
 	count = 0;
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetShadowReceiverFlag(true);
-	skinmodel.SetNormalMap(false);
-	skinmodel.SetSpecularMap(false);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetShadowReceiverFlag(true);
+	skinModel.SetNormalMap(false);
+	skinModel.SetSpecularMap(false);
 
-	SEenemyDeath.reset( new CSoundSource);
-	SEenemyDeath->Init("Asset/Sound/enemyDeath.wav");
+	seEnemyDeath.reset( new CSoundSource);
+	seEnemyDeath->Init("Asset/Sound/enemyDeath.wav");
 
 }
 
@@ -92,11 +92,11 @@ void CBirdChip::Update()
 				g_stage->GetPlayer()->GetPos() + D3DXVECTOR3(0.0f, -0.2f, 0.0f), 0.4f, 0.4f) == true)
 			{
 				scale = D3DXVECTOR3(1.0f, 0.2f, 1.0f);
-				parflag = true;
+				parFlag = true;
 				state = BirdState::Dead;
 				
-				SEenemyDeath->Play(false);
-				SEenemyDeath->SetVolume(0.25f);
+				seEnemyDeath->Play(false);
+				seEnemyDeath->SetVolume(0.25f);
 				g_stage->GetPlayer()->SetMoveSpeed(D3DXVECTOR3(g_stage->GetPlayer()->GetMoveSpeed().x,
 					-g_stage->GetPlayer()->GetMoveSpeed().y * 0.5f,
 					g_stage->GetPlayer()->GetMoveSpeed().z));
@@ -112,10 +112,10 @@ void CBirdChip::Update()
 			
 		}
 		D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(-90.0f));
-		skinmodel.UpdateWorldMatrix(position, rotation, scale);
+		skinModel.UpdateWorldMatrix(position, rotation, scale);
 
 	}
-	if (parflag == true)
+	if (parFlag == true)
 	{
 		if (MAXPAR >= parTime)
 		{
@@ -127,7 +127,7 @@ void CBirdChip::Update()
 		}
 		else
 		{
-			parflag = false;
+			parFlag = false;
 			for (auto p : particleEmitterList)
 			{
 				delete(p);
@@ -144,7 +144,7 @@ void CBirdChip::Render(
 {
 	if (count < 50)
 	{
-		skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+		skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 	}
 	else if (MAXPAR >= parTime)
 	{

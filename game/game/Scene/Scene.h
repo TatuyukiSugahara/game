@@ -5,10 +5,9 @@ class CScene
 {
 public:
 	CScene(){}
-	virtual ~CScene()	//基本クラスのデストラクタにはバーチャルをつける。
-	{
-		
-	}
+	//クラスが破棄される時に継承クラスのデストラクタが動作しない
+	//基本クラスのデストラクタにはバーチャルをつける。
+	virtual ~CScene(){}
 	virtual void Init() = 0;
 	virtual void Update() = 0;
 	virtual void Render() = 0;

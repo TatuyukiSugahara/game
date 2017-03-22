@@ -21,15 +21,12 @@ public:
 		position = pos;
 	}
 private:
-	D3DXVECTOR3				position;		//座標。。
-	D3DXVECTOR3				scale;			//大きさ
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXMATRIX				mRotation;		//回転行列。
-	SkinModel skinmodel;
-	SkinModelData modelData;
-	Animation animation;
-	CLight	light;
-	/*AABB*/
-	D3DXVECTOR3 m_aabbMin;
-	D3DXVECTOR3 m_aabbMax;
+	D3DXVECTOR3		position;		//座標
+	D3DXVECTOR3		scale;			//大きさ
+	SkinModel		skinModel;		//モデル	
+	SkinModelData	modelData;		//モデルデータ
+	Animation		animation;		//アニメーション
+	CLight			light;			//ライト
+	D3DXVECTOR3		aabbMin;		//AABBの最小
+	D3DXVECTOR3		aabbMax;		//AABBの最大
 };

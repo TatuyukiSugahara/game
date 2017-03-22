@@ -105,7 +105,7 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 	//モデルをロード。
 	modelData.LoadModelData("Asset/model/Unity.X", &animation);
 	modelDataMorpA.LoadModelData("Asset/model/morphTargetA.X", NULL);
-	modelDataMorpA.LoadModelData("Asset/model/morphTargetB.X", NULL);
+	modelDataMorpB.LoadModelData("Asset/model/morphTargetB.X", NULL);
 
 	//オリジナル
 	skinModel.Init(&modelData);
@@ -149,13 +149,13 @@ void CPlayer::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 void CPlayer::Update()
 {
 
-	/*if (GetAsyncKeyState(VK_LEFT)) {
+	if (GetAsyncKeyState(VK_LEFT)) {
 		rate = max(0.0f, rate - 0.03f);
 	}
 	if (GetAsyncKeyState(VK_RIGHT)) {
 		rate = min(1.0f, rate + 0.03f);
 	}
-	skinModel.Morphing(&modelDataA, &modelDataB, rate);*/
+	skinModel.Morphing(&skinModelMorpA, &skinModelMorpB, rate);
 
 	if (!g_stage->GetPipe()->GetIsPipe() && !playerStop)
 	{
@@ -432,7 +432,7 @@ void CPlayer::Clear()
 		D3DXQuaternionRotationAxis(&rotation, &CConst::Vec3Up, D3DX_PI);
 		state = PlayerState::Happy;
 		animation.PlayAnimation((int)PlayerState::Happy, 0.1f);
-		skinModel.Morphing(&modelDataMorpA, &modelDataMorpB, rate);
+		skinModel.Morphing(&skinModelMorpA, &skinModelMorpB, rate);
 		rate += 0.1f;
 	}
 }

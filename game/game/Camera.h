@@ -9,19 +9,19 @@ class Camera {
 private:
 	D3DXMATRIX				viewMatrix;			//!<ビュー行列。カメラ行列
 	D3DXMATRIX				projectionMatrix;	//!<プロジェクション行列。ビュー空間から射影空間に変換する行列。
-	D3DXMATRIX				mRot;				//!<回転行列
+	D3DXMATRIX				rot;				//!<回転行列
 	D3DXMATRIX				viewMatrixRotInv;			//回転行列の逆行列。
 	D3DXVECTOR3				vEyePt;				//!<カメラの視点。
 	D3DXVECTOR3				vLookatPt;			//!<カメラの注視点。
 	D3DXVECTOR3				vUpVec;				//!<カメラの上方向。
 	D3DXVECTOR3				toPos;				//!<視点から注視点のベクトル
-	D3DXVECTOR3				cameradir;			//カメラの方向
+	D3DXVECTOR3				cameraDir;			//カメラの方向
 	float					Far;				//!<遠平面。
 	float					Near;				//!<近平面。
 	float					aspect;				//!<アスペクト比
-	float					bosstime;			//!<ボス登場時のカメラ演出の時間
-	float					Angle;				//!<画角
-	float					camerahokan = 1.0f;	//!<カメラの線形保管。
+	float					bossTime;			//!<ボス登場時のカメラ演出の時間
+	float					angle;				//!<画角
+	float					cameraHokan = 1.0f;	//!<カメラの線形保管。
 public:
 	/*!
 	 *@brief	コンストラクタ。
@@ -119,14 +119,14 @@ public:
 	//回転のゲッター
 	const D3DXMATRIX& GetRot() const
 	{
-		return mRot;
+		return rot;
 	}
 	/*!
 	*@brief	カメラの方向ゲット。
 	*/
 	const D3DXVECTOR3& GetCameraDir()
 	{
-		return cameradir;
+		return cameraDir;
 	}
 	//カメラが横に回転。
 	void RotTransversal(float roty);

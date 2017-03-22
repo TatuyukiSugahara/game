@@ -6,12 +6,12 @@
 
 using namespace std;
 
-//マップチップの配置情報のテーブル。
+//モフルンチップの配置情報のテーブル。
 SMohurunChipLocInfo mohurunChipListTable[] = {
 #include "LocationMohurun.h"
 };
 
-//マップチップの配置情報のテーブル。
+//モフルンチップの配置情報のテーブル。
 SMohurunChipLocInfo mohurunChipListTable2[] = {
 #include "LocationMohurun2.h"
 };
@@ -44,10 +44,10 @@ void CMohurun::Init()
 		break;
 	}
 
-	//配置情報からマップを構築
+	//配置情報からモフルンを構築
 	for (int a = 0; a < tableSize; a++)
 	{
-		//マップチップを生成
+		//モフルンチップを生成
 		CMohurunChip* mohurunchip = new CMohurunChip;
 		mohurunchip->SetPosition(mohurunChipLoc[a].pos);
 		mohurunchip->Init(mohurunChipLoc[a].modelName, g_pd3dDevice);

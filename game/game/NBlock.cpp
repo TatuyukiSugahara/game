@@ -5,8 +5,8 @@
 
 using namespace std;
 
-//マップチップの配置情報のテーブル。
-SBlockChipLocInfo nblockChipLocInfoTable[] = {
+//ブロックチップの配置情報のテーブル。
+SBlockChipLocInfo nBlockChipLocInfoTable[] = {
 #include "LocationBlock.h"
 };
 
@@ -23,15 +23,15 @@ CNBlock::~CNBlock()
 void CNBlock::Init(LPDIRECT3DDEVICE9 pd3dDevice)
 {
 
-	//配置情報からマップを構築
-	tableSize = sizeof(nblockChipLocInfoTable) / sizeof(nblockChipLocInfoTable[0]);
+	//配置情報からブロックを構築
+	tableSize = sizeof(nBlockChipLocInfoTable) / sizeof(nBlockChipLocInfoTable[0]);
 	for (int a = 0; a < tableSize; a++)
 	{
-		//マップチップを生成
+		//ブロックチップを生成
 		CNBlockChip* blockChip = new CNBlockChip;
-		blockChip->SetPos(nblockChipLocInfoTable[a].pos);
-		blockChip->SetRot(nblockChipLocInfoTable[a].rotation);
-		blockChip->SetScale(nblockChipLocInfoTable[a].scale);
+		blockChip->SetPos(nBlockChipLocInfoTable[a].pos);
+		blockChip->SetRot(nBlockChipLocInfoTable[a].rotation);
+		blockChip->SetScale(nBlockChipLocInfoTable[a].scale);
 		blockChip->Init();
 		nblockChipList.push_back(blockChip);
 	}
@@ -44,7 +44,7 @@ void CNBlock::Update()
 	for (int a = 0; a < tableSize; a++)
 	{
 		//ブロックと当たった？
-		if (nblockChipList[a]->Get2DBlock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
+		if (nblockChipList[a]->GetBlock() == g_stage->GetPlayer()->GetcharacterController().getCollisionObj()
 			&& g_stage->GetPlayer()->GetcharacterController().IsCeiling() == true)
 		{
 			seBlock.reset(new CSoundSource);

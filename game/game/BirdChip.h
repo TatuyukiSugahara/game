@@ -25,37 +25,38 @@ public:
 	{
 		position = pos;
 	}
+	//状態ゲット
 	const BirdState& GetState() const
 	{
 		return state;
 	}
+	//状態セット
 	void SetState(const BirdState& state)
 	{
 		this->state = state;
 	}
+	//座標ゲット
 	const D3DXVECTOR3& GetPos() const 
 	{
 		return position;
 	}
 private:
-	BirdState state;
-	D3DXVECTOR3				position;		//座標。。
-	D3DXVECTOR3				scale;			//大きさ
-	D3DXMATRIX				mWorld;			//ワールド行列。
-	D3DXQUATERNION			rotation;
-	SkinModel skinmodel;
-	SkinModelData modelData;
-	Animation animation;
-	static SkinModelData*	orgSkinModelData;		//スキンモデルデータ。
-	Animation* orgAnimation;
-	CLight	light;
-	SParicleEmitParameter param;
-	std::list<CParticleEmitter*> particleEmitterList;
-	const int MAXPAR = 100;
-	int parTime;
-	bool parflag;
-	int count;
-
-	std::unique_ptr<CSoundSource> SEenemyDeath;
+	BirdState						state;					//状態
+	D3DXVECTOR3						position;				//座標
+	D3DXVECTOR3						scale;					//大きさ
+	D3DXQUATERNION					rotation;				//回転
+	SkinModel						skinModel;				//モデル
+	SkinModelData					modelData;				//モデルデータ
+	Animation						animation;				//アニメーション
+	static SkinModelData*			orgSkinModelData;		//スキンモデルデータ。
+	Animation*						orgAnimation;			//オリジナルのアニメーション
+	CLight							light;					//ライト
+	SParicleEmitParameter			param;					//パーティクル
+	std::list<CParticleEmitter*>	particleEmitterList;	//パーティクルリスト
+	const int						MAXPAR = 50;			//パーティクル発生時間の上限
+	int								parTime;				//パーティクルの時間
+	bool							parFlag;				//パーティクルが出るかのフラグ
+	int								count;					//死亡した後描画する時間
+	std::unique_ptr<CSoundSource>	seEnemyDeath;			//死亡したSE
 };
 

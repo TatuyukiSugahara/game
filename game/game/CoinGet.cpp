@@ -7,6 +7,7 @@ CCoinGet::CCoinGet()
 {
 	position = D3DXVECTOR3(-4.8f, 3.07f, 0.0f);
 	rotation = CConst::QuaternionIdentity;
+	scale = D3DXVECTOR3(0.8f, 0.8f, 0.8f);
 }
 
 
@@ -30,8 +31,8 @@ void CCoinGet::Init()
 		MessageBox(NULL, "テクスチャのロードに失敗しました。指定したパスが正しいか確認してください。", "エラー", MB_OK);
 	}
 	if (normalMap != NULL) {
-		//法線マップの読み込みが成功したので、CSkinModelに法線マップを設定する。
-		skinmodel.SetNormalMap(normalMap);
+		//法線マップの読み込みが成功したので、CskinModelに法線マップを設定する。
+		skinModel.SetNormalMap(normalMap);
 	}
 
 	//ライトを初期化。
@@ -49,12 +50,12 @@ void CCoinGet::Init()
 	//まずはスキンモデルをロード。
 	modelData.LoadModelData("Asset/model/coin.X", &animation);
 
-	skinmodel.Init(&modelData);
-	skinmodel.SetLight(&light);
-	skinmodel.SetShadowReceiverFlag(false);
-	skinmodel.SetDrawToShadowMap(false);
-	skinmodel.SetNormalMap(true);
-	skinmodel.SetSpecularMap(false);
+	skinModel.Init(&modelData);
+	skinModel.SetLight(&light);
+	skinModel.SetShadowReceiverFlag(false);
+	skinModel.SetDrawToShadowMap(false);
+	skinModel.SetNormalMap(true);
+	skinModel.SetSpecularMap(false);
 }
 
 void CCoinGet::Update()
@@ -68,7 +69,7 @@ void CCoinGet::Update()
 			{
 				angle = 0.0f;
 			}
-			D3DXQuaternionRotationAxis(&rotation, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), angle += 0.05f);
+			D3DXQuaternionRotationAxis(&rotation, &CConst::Vec3Up, angle += 0.05f);
 			time += CConst::DeltaTime;
 		}
 		else
@@ -85,6 +86,6 @@ void CCoinGet::Render(
 	D3DXMATRIX projMatrix,
 	bool isDrawToShadowMap)
 {
-	skinmodel.UpdateWorldMatrix(position + g_stage->GetPlayer()->GetPos(), rotation, D3DXVECTOR3(0.8f, 0.8f, 0.8f));
-	skinmodel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
+	skinModel.UpdateWorldMatrix(position + g_stage->GetPlayer()->GetPos(), rotation, scale);
+	skinModel.Render(&viewMatrix, &projMatrix, isDrawToShadowMap);
 }

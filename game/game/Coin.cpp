@@ -2,15 +2,16 @@
 #include "Coin.h"
 #include "CoinChip.h"
 
+
 using namespace std;
 
 
-//マップチップの配置情報のテーブル。
+//コインチップの配置情報のテーブル。
 SCoinChipLocInfo coinChipLocInfoTable[] = {
 #include "LocationCoin.h"
 };
 
-//マップチップの配置情報のテーブル。
+//コインチップの配置情報のテーブル。
 SCoinChipLocInfo coinChipLocInfoTable2[] = {
 #include "LocationCoin2.h"
 };
@@ -39,10 +40,10 @@ void CCoin::Init()
 		tableSize = sizeof(coinChipLocInfoTable2) / sizeof(coinChipLocInfoTable2[0]);
 		break;
 	}
-	//配置情報からマップを構築
+	//配置情報からコインを構築
 	for (int a = 0; a < tableSize; a++)
 	{
-		//マップチップを生成
+		//コインチップを生成
 		CCoinChip* coinchip = new CCoinChip;
 		coinchip->SetPos(coinChipLocTable[a].pos);
 		coinchip->Init(coinChipLocTable[a].modelName, g_pd3dDevice);

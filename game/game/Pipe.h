@@ -1,6 +1,6 @@
 #pragma once
 
-//マップチップの配置情報。
+//土管チップの配置情報。
 struct SPipeChipLocInfo {
 	const char* modelName;		//モデル。
 	D3DXVECTOR3	pos;			//座標。
@@ -18,7 +18,7 @@ struct SCollisionInfoPipe {
 class CPipeChip;
 
 /*!
-* @brief	マップクラス。
+* @brief	土管クラス。
 */
 class CPipe {
 public:
@@ -36,10 +36,12 @@ public:
 	void InPipe();
 	//土管移動
 	void PipeMove(int now, int next, int pipenum);
+	//配置情報のテーブルサイズゲット
 	const int& GetSize() const
 	{
 		return tableSize;
 	}
+	//土管配置情報のテーブルサイズゲット
 	const int& GetArraySize() const
 	{
 		return arraySize;
@@ -49,25 +51,29 @@ public:
 	{
 		return isPipe;
 	}
+	//土管の剛体ゲット
 	const btRigidBody *GetPipe() const
 	{
 		return *rigidBodypipe;
 	}
-	void CreateCollision();				//あたり判定
-	void AddRigidBody(int arraySize);		//あたり判定追加
-	void RemoveRigidBody(int arraySize);	//あたり判定削除
+	//あたり判定作成
+	void CreateCollision();	
+	//あたり判定追加
+	void AddRigidBody();	
+	//あたり判定削除
+	void RemoveRigidBody();	
 private:
 	
 	static const int				MAXCOLLISION = 30;				//コリジョンの上限
 	btCollisionShape*				pipeboxShape[MAXCOLLISION];		//地面のコリジョン形状。
 	btRigidBody*					rigidBodypipe[MAXCOLLISION];	//剛体。
 	btDefaultMotionState*			myMotionState;					//モーションステート
-	bool							isAddCollision;
-	SPipeChipLocInfo*				pipeChipTable;
-	std::vector<CPipeChip*>			pipeChipList;					//マップチップのリスト。
-	int								tableSize;
-	SCollisionInfoPipe*				collisionTablpipe;
-	int								arraySize;
+	bool							isAddCollision;					//コリジョン追加フラグ
+	std::vector<CPipeChip*>			pipeChipList;					//土管チップのリスト。
+	SPipeChipLocInfo*				pipeChipTable;					//土管コリジョン情報のテーブル
+	SCollisionInfoPipe*				collisionTablpipe;				//土管配置情報のテーブル
+	int								arraySize;						//土管配置情報のテーブルサイズ
+	int								tableSize;						//配置情報のテーブルサイズ
 	int								count;							//土管に入るカウント;
 	D3DXVECTOR3						nextPos;						//次の土管の場所;
 	bool							isPipe;							//土管に入るフラグ;

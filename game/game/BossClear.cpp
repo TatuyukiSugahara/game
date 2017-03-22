@@ -38,9 +38,9 @@ void CBossClear::Update()
 		//SE‚ð–Â‚ç‚·ƒtƒ‰ƒOB
 		if (flag == false)
 		{
-			SEGoal.reset(new CSoundSource);
-			SEGoal->Init("Asset/Sound/goal.wav");
-			SEGoal->Play(false);
+			seGoal.reset(new CSoundSource);
+			seGoal->Init("Asset/Sound/goal.wav");
+			seGoal->Play(false);
 			flag = true;
 		}
 		SetupMatrices();
