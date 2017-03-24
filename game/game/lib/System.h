@@ -6,7 +6,7 @@
 #include "../Sound/SoundEngine.h"
 #include "../Sound/SoundSource.h"
 #include "..\Frame\SkinModelDataManager.h"
-#include "..\RenderTarget.h"
+#include "..\Frame\RenderTarget.h"
 #include "../Frame/bloom.h"
 
 extern LPDIRECT3D9             g_pD3D;		

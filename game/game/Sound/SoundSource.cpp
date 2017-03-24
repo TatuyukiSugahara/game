@@ -2,8 +2,8 @@
  * @brief	âπåπÉNÉâÉXÅB
  */
 #include "..\stdafx.h"
-#include "..\Stage.h"
-#include "tk/tkEnginePreCompile.h"
+#include "..\Map\Stage.h"
+#include "Tk/tkEnginePreCompile.h"
 #include "Sound/SoundEngine.h"
 #include "Sound/SoundSource.h"
 

@@ -1,4 +1,4 @@
-#include "../tk/tkEnginePreCompile.h"
+#include "../Tk/tkEnginePreCompile.h"
 #include "Physics.h"
 #include "RigidBody.h"
 

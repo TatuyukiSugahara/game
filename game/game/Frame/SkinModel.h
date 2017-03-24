@@ -72,10 +72,12 @@ public:
 	{
 		this->light = light;
 	}
+	//影を受けるフラグセット
 	void SetShadowReceiverFlag(const bool flag)
 	{
 		ShadowReceiverFlag = flag;
 	}
+	//影を描画するフラグセット
 	void SetDrawToShadowMap(const bool flag)
 	{
 		isDrawToShadowMap = flag;
@@ -87,14 +89,17 @@ public:
 	{
 		isNormalMap = flag;
 	}
+	//すぺきゅらマップフラグをセット
 	void SetSpecularMap(const bool flag)
 	{
 		isSpecularMap = flag;
 	}
+	//エフェクトをゲット
 	ID3DXEffect* GetEffect() const
 	{
 		return pEffect;
 	}
+	//エフェクトをセットする
 	void SetEffect(ID3DXEffect* effect)
 	{
 		pEffect = effect;
@@ -109,8 +114,8 @@ public:
 	LPD3DXMESH GetOrgMeshFirst() const;
 
 	//モーフィング処理の実行。
-	//morphTargetA	モーフターゲットA
-	//morphTargetB  モーフターゲットB
+	//morphTargetA	モーフターゲット笑顔
+	//morphTargetB　もーふターゲット真顔
 	//rate モーフィングレート。
 	void Morphing(SkinModel* morphTargetA, SkinModel* morphTargetB, float rate);
 
@@ -152,20 +157,25 @@ public:
 	{
 		SkyCube = flag;
 	}
-	//ゲットメッシュ
-	LPD3DXMESH GetMesh() const
+	//メッシュをツリー構造で調べて作成する
+	void CreateMeshList(LPD3DXFRAME pFrame);
+	//メッシュをゲット
+	const LPD3DXMESH& GetMesh(const LPD3DXMESHCONTAINER& pMeshContainerBase) const;
+	//メッシュリストをゲット
+	const std::vector<LPD3DXMESH>& GetMeshList() const
 	{
-		return mesh;
+		return meshList;
 	}
+
 private:
-	D3DXMATRIX			worldMatrix;			//!<ワールド行列。
-	D3DXMATRIX			rotationMatrix;			//!<回転行列。
-	SkinModelData*		skinModelData;			//!<スキンモデルデータ。
-	ID3DXEffect*		pEffect;				//!<エフェクト。
-	Animation			animation;				//!<アニメーション。
-	CLight*				light;					//!<ライト。
-	bool				ShadowReceiverFlag;
-	bool				isDrawToShadowMap;
+	D3DXMATRIX			worldMatrix;				//!<ワールド行列。
+	D3DXMATRIX			rotationMatrix;				//!<回転行列。
+	SkinModelData*		skinModelData;				//!<スキンモデルデータ。
+	ID3DXEffect*		pEffect;					//!<エフェクト。
+	Animation			animation;					//!<アニメーション。
+	CLight*				light;						//!<ライト。
+	bool				ShadowReceiverFlag;			//!<影を受ける？
+	bool				isDrawToShadowMap;			//!<影を描画する？
 	bool				isNormalMap;				//<!ノーマルマップフラグ
 	bool				isSpecularMap;				//<!スペキュラマップフラグ
 	bool				Ground;						//<!地面ですか？
@@ -174,5 +184,5 @@ private:
 	bool				hureneruflg = false;		//<!ふちを光らせる。
 	CTexture			texture;					//テクスチャ
 	bool				SkyCube = false;			//スカイキューブか?
-	LPD3DXMESH			mesh;						//メッシュ
+	std::vector<LPD3DXMESH>			meshList;		//メッシュリスト
 };

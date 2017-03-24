@@ -1,7 +1,7 @@
 /*!
 *@brief	パッド。
 */
-#include "..\tk\tkEnginePreCompile.h"
+#include "..\Tk\tkEnginePreCompile.h"
 #include "Pad.h"
 #include <limits.h>
 

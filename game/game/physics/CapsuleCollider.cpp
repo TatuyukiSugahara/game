@@ -2,7 +2,7 @@
  * @brief	カプセルコライダー。
  */
 
-#include "../tk/tkEnginePreCompile.h"
+#include "../Tk/tkEnginePreCompile.h"
 #include "CapsuleCollider.h"
 
 	/*!

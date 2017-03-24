@@ -2,7 +2,7 @@
 * @brief	キャラクタのコリジョンコントロール。
 */
 #include "../stdafx.h"
-#include "../tk/tkEnginePreCompile.h"
+#include "../Tk/tkEnginePreCompile.h"
 #include "CharacterController.h"
 #include "CollisionAttr.h"
 		//衝突したときに呼ばれる関数オブジェクト(地面用)

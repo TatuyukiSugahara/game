@@ -27,7 +27,7 @@
 #include "Frame\SkinModel.h"
 #include "Frame\SkinModelData.h"
 #include "Frame\Animation.h"
-#include "Light.h"
+#include "Light\Light.h"
 #include "Frame\SkinModelDataManager.h"
 
 //コンスト定義のヘッダー

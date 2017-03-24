@@ -1,8 +1,8 @@
 #include "../stdafx.h"
 #include "SceneManager.h"
-#include "../TitleScene.h"
-#include "..\Stage.h"
-#include "../ResultScene.h"
+#include "../Title/TitleScene.h"
+#include "../Map/Stage.h"
+#include "../Result/ResultScene.h"
 
 CSceneManager::CSceneManager()
 {

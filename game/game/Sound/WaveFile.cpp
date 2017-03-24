@@ -2,7 +2,7 @@
  * @brief	waveファイル。
  */
 #include "..\stdafx.h"
-#include "tk/tkEnginePreCompile.h"
+#include "Tk/tkEnginePreCompile.h"
 #include "Sound/WaveFile.h"
 
 

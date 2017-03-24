@@ -4,7 +4,7 @@
 #include "..\stdafx.h"
 #include "ParticleEmitter.h"
 #include "Particle.h"
-#include "..\Stage.h"
+#include "..\Map\Stage.h"
 
 
  /*!

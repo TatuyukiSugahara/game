@@ -3,7 +3,7 @@
  */
 
 
-#include "..\tk\tkEnginePreCompile.h"
+#include "..\Tk\tkEnginePreCompile.h"
 #include "SphereCollider.h"
 
 	/*!

@@ -2,19 +2,19 @@
  *@brief	シェーダーのチュートリアル00
  */
 #include "stdafx.h"
-#include "stage.h"
-#include "TitleScene.h"
-#include "ResultScene.h"
+#include "Map\stage.h"
+#include "Title/TitleScene.h"
+#include "Result/ResultScene.h"
 #include "Scene\SceneManager.h"
 #include "Particle\Primitive.h"
 
 //-----------------------------------------------------------------------------
 // グローバル変数。
 //-----------------------------------------------------------------------------
-CRenderTarget* mainRenderTarget;	//!<18-2 メインレンダリングターゲット。
-CPrimitive*	quadPrimitive;			//!<18-3 四角形の板ポリプリミティブ。
-LPD3DXEFFECT copyEffect;			//!<18-3 コピーを行うシェーダー。
-LPD3DXEFFECT monochromeEffect;		//!<18-4 モノクロフィルターをかけるシェーダー。
+CRenderTarget* mainRenderTarget;	//!< メインレンダリングターゲット。
+CPrimitive*	quadPrimitive;			//!< 四角形の板ポリプリミティブ。
+LPD3DXEFFECT copyEffect;			//!< コピーを行うシェーダー。
+LPD3DXEFFECT monochromeEffect;		//!< モノクロフィルターをかけるシェーダー。
 
 //-----------------------------------------------------------------------------
 // 板ポリを描画。
@@ -44,7 +44,7 @@ void DrawQuadPrimitive()
 		);
 }
 //-----------------------------------------------------------------------------
-// Name: 18-2 メインレンダリングターゲットを初期化。
+// メインレンダリングターゲットを初期化。
 //-----------------------------------------------------------------------------
 void InitMainRenderTarget()
 {
@@ -60,7 +60,7 @@ void InitMainRenderTarget()
 		);
 }
 //-----------------------------------------------------------------------------
-// Name: 18-3 板ポリの初期化。
+// 板ポリの初期化。
 //-----------------------------------------------------------------------------
 void InitQuadPrimitive()
 {
@@ -112,7 +112,7 @@ void InitQuadPrimitive()
 		);
 }
 //-----------------------------------------------------------------------------
-// Name: 18-3 メインレンダリングターゲットの内容を現在のレンダリングターゲットにコピー。
+// メインレンダリングターゲットの内容を現在のレンダリングターゲットにコピー。
 //-----------------------------------------------------------------------------
 void CopyMainRTToCurrentRT()
 {
@@ -122,8 +122,8 @@ void CopyMainRTToCurrentRT()
 	g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 
-	LPD3DXEFFECT shader = copyEffect;			//18-3 コピーを行うシェーダーを使う場合はこちら。
-	//LPD3DXEFFECT shader = monochromeEffect;		//18-4 モノクロフィルターをかける場合はこちらを使用する。
+	LPD3DXEFFECT shader = copyEffect;			// コピーを行うシェーダーを使う場合はこちら。
+	//LPD3DXEFFECT shader = monochromeEffect;		// モノクロフィルターをかける場合はこちらを使用する。
 	//シェーダーを設定。
 	shader->SetTechnique("Default");
 	shader->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
@@ -191,15 +191,15 @@ void LoadShaders()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ゲームを初期化。
+// ゲームを初期化。
 //-----------------------------------------------------------------------------
 void Init()
 {
-	//18-2 メインレンダリングターゲットを作成する。
+	// メインレンダリングターゲットを作成する。
 	InitMainRenderTarget();
-	//18-3 四角形の板ポリプリミティブを作成。
+	// 四角形の板ポリプリミティブを作成。
 	InitQuadPrimitive();
-	//18-3、18-4 シェーダーをロード。
+	// シェーダーをロード。
 	LoadShaders();
 	//サウンドエンジン
 	g_soundengine->Init();
@@ -210,21 +210,8 @@ void Init()
 //-----------------------------------------------------------------------------
 VOID Render()
 {
-	//シーンの描画開始。
-	//g_pd3dDevice->BeginScene();
-
-	
-
-
 	// シーンをレンダリング。
 	g_scenemanager->RenderScene();
-
-	
-	
-	// シーンの描画終了。
-	//g_pd3dDevice->EndScene();
-	// バックバッファとフロントバッファを入れ替える。
-	//g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 }
 /*!-----------------------------------------------------------------------------
  *@brief	更新処理。
@@ -257,9 +244,9 @@ void Terminate()
 	{
 		delete g_skinmodeldataManager;
 	}
-	delete mainRenderTarget;	//18-2
-	delete quadPrimitive;		//18-3
-	copyEffect->Release();		//18-3
+	delete mainRenderTarget;	
+	delete quadPrimitive;		
+	copyEffect->Release();		
 	/*g_pd3dDevice->Release();
 	g_pD3D->Release();*/
 }

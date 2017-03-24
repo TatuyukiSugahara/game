@@ -1,0 +1,237 @@
+#pragma once
+#include "lib\System.h"
+#include "Scene\Scene.h"
+#include "Camera\Camera.h"
+#include "Light\Light.h"
+#include "Light\LightBack.h"
+#include "Player\Player.h"
+#include "Stage.h"
+#include "Block\HatenaBox.h"
+#include "Gimmick\Kinoko.h"
+#include "Block\NBlock.h"
+#include "StageBack.h"
+#include "Pipe\Pipe.h"
+#include "Map.h"
+#include "Frame\ShadowMap.h"
+#include "Goal\Goal.h"
+#include "Enemy\Saboten.h"
+#include "Enemy\Mohurun.h"
+#include "Sound\SoundSource.h"
+#include "Block\NoBlock.h"
+#include "Coin\Coin.h"
+#include "Goal\GoalFlag.h"
+#include "Coin\CoinNomber.h"
+#include "Enemy\Bird.h"
+#include "Gimmick\RotationGimmick.h"
+#include "Coin\CoinGet.h"
+#include "Sun.h"
+#include "Boss\Boss.h"
+#include "Boss\BossLife.h"
+#include "Boss\BossName.h"
+#include "Boss\BossKatto.h"
+#include "Boss\BossClear.h"
+#include "Camera\SkyCamera.h"
+#include "Enemy\Kame.h"
+
+//オブジェクトの詳細
+struct SCollisionInfo {
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 angle;
+	D3DXVECTOR3 scale;
+};
+
+class CStage : public CScene
+{
+public:
+	CStage(){}
+	~CStage()
+	{
+		for (auto& shape : groundShape){
+			delete shape;
+		}
+		for (auto& rb : rigidBody){
+			delete rb;
+		}
+		delete myMotionState;
+		
+	}
+	void Init();								//初期化
+	void Update();								//更新
+	void Render();								//描画
+	void UpdateLight();							//ライト更新
+	void Release();								//リリース
+	void CreateCollision();						//あたり判定
+	void AddRigidBody();						//あたり判定追加
+	void BossMusic();							//ボス戦時の音楽再生。
+	void MusicStop();							//音楽ストップ。
+	void StageChange();							//デバッグ用ステージ変更。
+	void StageInit();							//通常ステージの初期化
+	void StageBossInit();						//ボスステージの初期化
+	void StageUpdate();							//通常ステージのアップデート
+	void StageBossUpdate();						//ボスステージのアップデート
+	void StageRender();							//通常ステージの描画
+	void StageBossRender();						//ボスステージの描画
+	//カメラをゲット。
+	Camera* GetCamera()
+	{
+		return&camera;
+	}
+	//ライトをゲット。
+	CLight* GetLight()
+	{
+		return &light;
+	}
+	//背景用のライトをゲット。
+	CLightBack* GetLightBack()
+	{
+		return &lightBack;
+	}
+	//プレイヤーをゲット。
+	CPlayer* GetPlayer()
+	{
+		return &player;
+	}
+	//キノコをゲット。
+	CKinoko* GetKinoko()
+	{
+		return &kinoko;
+	}
+	//はてなボックスをゲット。
+	CHatenaBox* GetHatena()
+	{
+		return &hanateBox;
+	}
+	//マップをゲット
+	CMap* GetMap()
+	{
+		return&map;
+	}
+	//影をゲット。
+	CShadowMap* GetShadow()
+	{
+		return&shadow;
+	}
+	//サボテンをゲット。
+	CSaboten* GetSabo()
+	{
+		return &sabo;
+	}
+	//ノーマルブロックをゲット。
+	CNBlock* GetNBlock()
+	{
+		return &nBlock;
+	}
+	//土管をゲット。
+	CPipe* GetPipe()
+	{
+		return &pipe;
+	}
+	//敵(もふるん)をげっと。
+	CMohurun* GetMohu()
+	{
+		return &mohurun;
+	}
+	//見えないブロックをゲット。
+	CNoBlock* GetNoBlock()
+	{
+		return&noBlock;
+	}
+	//コインのナンバーをゲット。
+	CCoinNomber* GetCoinNum()
+	{
+		return &coinNumber;
+	}
+	//サウンドソースをゲット。
+	CSoundSource* GetSoundSorce()
+	{
+		return&soundSource;
+	}
+	//敵(とり)をゲット。
+	CBird* GetBird()
+	{
+		return &bird;
+	}
+	//コインをゲット。
+	CCoin* GetCoin()
+	{
+		return &coin;
+	}
+	//取得したコイン用のコインをゲット。
+	CCoinGet* GetCoinSprite()
+	{
+		return &coinGet;
+	}
+	//ボスをゲット。
+	CBoss* GetBoss()
+	{
+		return &boss;
+	}
+	//ボスの名前をゲット。
+	CBossName* GetBossName()
+	{
+		return &bossName;
+	}
+	//ボス戦時のカットインをゲット。
+	CBossKatto* GetBossKatto()
+	{
+		return &bossKatto;
+	}
+	//ボスを撃破した時のカットインをゲット。
+	CBossClear* GetBossClear()
+	{
+		return &bossClear;
+	}
+	//コンストがいる場合の亀をゲット
+	const CKame* GetKame() const
+	{
+		return &kame;
+	}
+	//亀をゲット
+	CKame* GetKame()
+	{
+		return &kame;
+	}
+protected:
+	//bulletPhysicsの剛体を使用するために必要な変数。
+	static const int				MaxCollision = 100;			//コリジョンの最大数
+	btCollisionShape*				groundShape[MaxCollision];	//地面のコリジョン形状。
+	btRigidBody*					rigidBody[MaxCollision];	//剛体。
+	btDefaultMotionState*			myMotionState;				//モーションステート
+	bool							isAddCollision;				//コリジョン追加フラグ
+	SCollisionInfo*					collisionTable;				//コリジョンテーブル
+	int								arraySize;					//サイズ
+	bool							bossMusic;					//ボス戦時の音楽フラグ。
+	LPD3DXSPRITE					sprite;						//スプライト
+	Camera							camera;						//カメラ。
+	CSkyCamera						skyCamera;					//空用カメラ
+	CLight							light;						//ライト
+	CLightBack						lightBack;					//背景ライト
+	CPlayer							player;						//プレイヤー
+	CHatenaBox						hanateBox;					//はてなボックス
+	CKinoko							kinoko;						//キノコ
+	CNBlock							nBlock;						//ノーマルブロック
+	CStageBack						stageBack;					//ステージ背景
+	CPipe							pipe;						//土管
+	CMap							map;						//マップ作製
+	CShadowMap						shadow;						//影
+	CGoal							goal;						//ゴール
+	CSaboten						sabo;						//サボテン
+	CMohurun						mohurun;					//モフルンエネミー
+	CNoBlock						noBlock;					//見えないブロック
+	CCoin							coin;						//コイン
+	CGoalFlag						goalFlag;					//ゴール旗
+	CCoinNomber						coinNumber;					//コインナンバー
+	CBird							bird;						//鳥エネミー
+	CRotationGimmick				rotationGimmick;			//回転するギミック
+	CSoundSource					soundSource;				//サウンドソース
+	CCoinGet						coinGet;					//コインを取得した用のコイン
+	CSun							sun;						//太陽
+	CBoss							boss;						//ボス
+	CBossLife						bossLife;					//ボスライフ
+	CBossName						bossName;					//ボス名前
+	CBossKatto						bossKatto;					//ボス登場時のカットイン。
+	CBossClear						bossClear;					//ボス撃破時のカットイン。
+	CKame							kame;						//亀
+};
+
+extern CStage* g_stage;

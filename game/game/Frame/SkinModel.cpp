@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "SkinModel.h"
 #include "SkinModelData.h"
-#include "..\Light.h"
-#include "..\Stage.h"
+#include "..\Light\Light.h"
+#include "..\Map\Stage.h"
 
 
 extern UINT                 g_NumBoneMatricesMax;
@@ -81,7 +81,7 @@ void SkinModel::DrawMeshContainer(
 	{
 		LVP = g_stageBoss->GetShadow()->Getlvpmatrix();
 	}
-*/
+	*/
 	//定数レジスタに設定するカラー。
 	D3DXVECTOR4 color(1.0f, 0.0f, 0.0f, 1.0f);
 	//ワールド行列の転送。
@@ -239,7 +239,7 @@ void SkinModel::DrawMeshContainer(
 			pEffect->End();
 		}
 	}
-	mesh = pMeshContainer->MeshData.pMesh;
+	//mesh = pMeshContainer->MeshData.pMesh;
 }
 void SkinModel::DrawFrame(
 	IDirect3DDevice9* pd3dDevice,
@@ -315,8 +315,7 @@ void SkinModel::DrawFrame(
 SkinModel::SkinModel() :
 	skinModelData(nullptr),
 	light(nullptr),
-	pEffect(nullptr),
-	mesh(nullptr)
+	pEffect(nullptr)
 {
 }
 SkinModel::~SkinModel()
@@ -332,6 +331,7 @@ void SkinModel::Init(SkinModelData* modelData)
 	Ground = false;
 	pEffect = g_effectManager->LoadEffect("Asset/Shader/Model.fx");
 	skinModelData = modelData;
+	CreateMeshList(skinModelData->GetFrameRoot());
 }
 void SkinModel::UpdateWorldMatrix(const D3DXVECTOR3& trans, const D3DXQUATERNION& rot, const D3DXVECTOR3& scale)
 {
@@ -382,61 +382,105 @@ LPD3DXMESH SkinModel::GetOrgMesh(LPD3DXFRAME frame) const
 	return skinModelData->GetOrgMesh(frame);
 }
 
+//メッシュをツリー構造で調べて作成する
+void SkinModel::CreateMeshList(LPD3DXFRAME pFrame)
+{
+	LPD3DXMESHCONTAINER pMeshContainer;
+
+	pMeshContainer = pFrame->pMeshContainer;
+	//メッシュがある
+	while (pMeshContainer != NULL)
+	{
+		//顔？
+		if (strcmp(pFrame->Name, "_face") == 0)
+		{
+			meshList.push_back(GetMesh(pMeshContainer));
+		}
+		pMeshContainer = pMeshContainer->pNextMeshContainer;
+	}
+	//兄弟がいる?
+	if (pFrame->pFrameSibling != NULL)
+	{
+		CreateMeshList(pFrame->pFrameSibling);
+	}
+	//子供がいる？
+	if (pFrame->pFrameFirstChild != NULL)
+	{
+		CreateMeshList(pFrame->pFrameFirstChild);
+	}
+}
+
+//メッシュをゲット
+const LPD3DXMESH& SkinModel::GetMesh(const LPD3DXMESHCONTAINER& pMeshContainerBase) const
+{
+	D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
+
+	return pMeshContainer->MeshData.pMesh;
+}
+
+
 //モーフィング処理の実行。
-//morphTarget	モーフターゲット
+//morphTargetA	モーフターゲット笑顔
+//morphTargetB　もーふターゲット真顔
 //rate モーフィングレート。
 void SkinModel::Morphing(SkinModel* morphTargetA, SkinModel* morphTargetB, float rate)
 {
-	//モーフターゲットAのメッシュを取得。
-	LPD3DXMESH targetMesh_A = morphTargetA->GetOrgMeshFirst();
-	//モーフターゲットAの頂点バッファを取得する。
-	LPDIRECT3DVERTEXBUFFER9 targetVertexBuffer_A;
-	targetMesh_A->GetVertexBuffer(&targetVertexBuffer_A);
-	//頂点バッファの定義を取得する。
-	D3DVERTEXBUFFER_DESC desc;
-	targetVertexBuffer_A->GetDesc(&desc);
-	//頂点ストライドを計算する。
-	int stride = desc.Size / targetMesh_A->GetNumVertices();
+	//メッシュのサイズ分回す
+	for (unsigned int i = 0; i < meshList.size(); i++)
+	{
+		LPD3DXMESH targetMesh_A = morphTargetA->GetMeshList()[i];
+		//モーフターゲットAの頂点バッファを取得する。
+		LPDIRECT3DVERTEXBUFFER9 targetVertexBuffer_A;
+		targetMesh_A->GetVertexBuffer(&targetVertexBuffer_A);
+		//頂点バッファの定義を取得する。
+		D3DVERTEXBUFFER_DESC desc;
+		targetVertexBuffer_A->GetDesc(&desc);
+	
+		//頂点ストライドを計算する。
+		int stride = desc.Size / targetMesh_A->GetNumVertices();
 
-	//モーフターゲットBのメッシュを取得する。
-	LPD3DXMESH targetMesh_B = morphTargetB->GetOrgMeshFirst();
-	//モーフターゲットBの頂点バッファを取得する。
-	LPDIRECT3DVERTEXBUFFER9 targetVertexBuffer_B;
-	targetMesh_B->GetVertexBuffer(&targetVertexBuffer_B);
+		//モーフターゲットBのメッシュを取得する。
+		LPD3DXMESH targetMesh_B = morphTargetB->GetMeshList()[i];
+		//モーフターゲットBの頂点バッファを取得する。
+		LPDIRECT3DVERTEXBUFFER9 targetVertexBuffer_B;
+		targetMesh_B->GetVertexBuffer(&targetVertexBuffer_B);
+		targetVertexBuffer_B->GetDesc(&desc);
+		//自分の頂点バッファを取得する。
+		LPDIRECT3DVERTEXBUFFER9 vertexBuffer;
+		GetMeshList()[i]->GetVertexBuffer(&vertexBuffer);
+		vertexBuffer->GetDesc(&desc);
+		D3DXVECTOR3* vertexPos;
+		D3DXVECTOR3* targetVertexPos_A;
+		D3DXVECTOR3* targetVertexPos_B;
+		//頂点バッファをロック。
+		vertexBuffer->Lock(0, desc.Size, (void**)&vertexPos, D3DLOCK_DISCARD);
+		targetVertexBuffer_A->Lock(0, desc.Size, (void**)&targetVertexPos_A, D3DLOCK_DISCARD);
+		targetVertexBuffer_B->Lock(0, desc.Size, (void**)&targetVertexPos_B, D3DLOCK_DISCARD);
+		for (unsigned int vertNo = 0; vertNo < targetMesh_A->GetNumVertices(); vertNo++) {
+			///////////////////////////////////////////////////////////////////
+			//ここに頂点モーフの処理を記述する。
+			///////////////////////////////////////////////////////////////////
+			*vertexPos = *targetVertexPos_A * (1.0f - rate) + *targetVertexPos_B * rate;
 
-	//自分の頂点バッファを取得する。
-	LPDIRECT3DVERTEXBUFFER9 vertexBuffer;
-	GetMesh()->GetVertexBuffer(&vertexBuffer);
-	D3DXVECTOR3* vertexPos;
-	D3DXVECTOR3* targetVertexPos_A;
-	D3DXVECTOR3* targetVertexPos_B;
-	//頂点バッファをロック。
-	vertexBuffer->Lock(0, desc.Size, (void**)&vertexPos, D3DLOCK_DISCARD);
-	targetVertexBuffer_A->Lock(0, desc.Size, (void**)&targetVertexPos_A, D3DLOCK_DISCARD);
-	targetVertexBuffer_B->Lock(0, desc.Size, (void**)&targetVertexPos_B, D3DLOCK_DISCARD);
-	for (int vertNo = 0; vertNo < targetMesh_A->GetNumVertices(); vertNo++) {
-		///////////////////////////////////////////////////////////////////
-		//ここに頂点モーフの処理を記述する。
-		///////////////////////////////////////////////////////////////////
-		*vertexPos = *targetVertexPos_A * (1.0f - rate) + *targetVertexPos_B * rate;
+			//次の頂点へ。
+			char* p = (char*)vertexPos;
 
-		//次の頂点へ。
-		char* p = (char*)vertexPos;
-
-		p += stride;
-		vertexPos = (D3DXVECTOR3*)p;
-		p = (char*)targetVertexPos_A;
-		p += stride;
-		targetVertexPos_A = (D3DXVECTOR3*)p;
-		p = (char*)targetVertexPos_B;
-		p += stride;
-		targetVertexPos_B = (D3DXVECTOR3*)p;
+			p += stride;
+			vertexPos = (D3DXVECTOR3*)p;
+			p = (char*)targetVertexPos_A;
+			p += stride;
+			targetVertexPos_A = (D3DXVECTOR3*)p;
+			p = (char*)targetVertexPos_B;
+			p += stride;
+			targetVertexPos_B = (D3DXVECTOR3*)p;
+		}
+		//頂点バッファをアンロック。
+		vertexBuffer->Unlock();
+		targetVertexBuffer_A->Unlock();
+		targetVertexBuffer_B->Unlock();
+		vertexBuffer->Release();
+		targetVertexBuffer_A->Release();
+		targetVertexBuffer_B->Release();
 	}
-	//頂点バッファをアンロック。
-	vertexBuffer->Unlock();
-	targetVertexBuffer_A->Unlock();
-	targetVertexBuffer_B->Unlock();
-	vertexBuffer->Release();
-	targetVertexBuffer_A->Release();
-	targetVertexBuffer_B->Release();
+	
 }
