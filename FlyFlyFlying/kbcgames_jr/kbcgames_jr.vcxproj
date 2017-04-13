@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{263B0672-18DB-45C7-87EC-1AEDA6FAD640}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>kbcgames_jr</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)\bulletPhysics\src;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)\bulletPhysics\lib\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)\bulletPhysics\src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\bulletPhysics\lib\Release;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>BulletCollision_Debug.lib;BulletDynamics_Debug.lib;BulletSoftBody_Debug.lib;LinearMath_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>BulletCollision.lib;BulletDynamics.lib;BulletSoftBody.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\BulletPhysics\BulletPhysics.cpp" />
+    <ClCompile Include="Source\Frame\Audio.cpp" />
+    <ClCompile Include="Source\Frame\BloomRender.cpp" />
+    <ClCompile Include="Source\Frame\C2DObject.cpp" />
+    <ClCompile Include="Source\Frame\C3DDraw.cpp" />
+    <ClCompile Include="Source\Frame\CAnimation.cpp" />
+    <ClCompile Include="Source\Frame\Ccamera.cpp" />
+    <ClCompile Include="Source\Frame\CGamepad.cpp" />
+    <ClCompile Include="Source\Frame\CGimmickManager.cpp" />
+    <ClCompile Include="Source\Frame\CRandom.cpp" />
+    <ClCompile Include="Source\Frame\DepthField.cpp" />
+    <ClCompile Include="Source\Frame\GraphicsDevice.cpp" />
+    <ClCompile Include="Source\Frame\input.cpp" />
+    <ClCompile Include="Source\Frame\IsIntersect.cpp" />
+    <ClCompile Include="Source\Frame\particle\CParticle.cpp" />
+    <ClCompile Include="Source\Frame\particle\CParticleEmitter.cpp" />
+    <ClCompile Include="Source\Frame\RayCursor.cpp" />
+    <ClCompile Include="Source\Frame\RenderTarget.cpp" />
+    <ClCompile Include="Source\Frame\Rigidbody.cpp" />
+    <ClCompile Include="Source\Frame\SceneManager.cpp" />
+    <ClCompile Include="Source\Frame\Shadow.cpp" />
+    <ClCompile Include="Source\Frame\SkinModelDate.cpp" />
+    <ClCompile Include="Source\Frame\Stage\CStage.cpp" />
+    <ClCompile Include="Source\Frame\Stage\CStageManager.cpp" />
+    <ClCompile Include="Source\Frame\Turn.cpp" />
+    <ClCompile Include="Source\Frame\WinMain.cpp" />
+    <ClCompile Include="Source\Game\CDataLoad.cpp" />
+    <ClCompile Include="Source\Game\CFlower.cpp" />
+    <ClCompile Include="Source\Game\CGameFlg.cpp" />
+    <ClCompile Include="Source\Game\ClearSelect.cpp" />
+    <ClCompile Include="Source\Game\CSelectCursor.cpp" />
+    <ClCompile Include="Source\Game\FlowerManager.cpp" />
+    <ClCompile Include="Source\Game\GameCursor.cpp" />
+    <ClCompile Include="Source\Game\GameCursor3D.cpp" />
+    <ClCompile Include="Source\Game\GameCursorWind.cpp" />
+    <ClCompile Include="Source\Game\GameScene.cpp" />
+    <ClCompile Include="Source\Game\Goal.cpp" />
+    <ClCompile Include="Source\Game\Ground.cpp" />
+    <ClCompile Include="Source\Game\Ground2.cpp" />
+    <ClCompile Include="Source\Game\Ground3.cpp" />
+    <ClCompile Include="Source\Game\Ground4.cpp" />
+    <ClCompile Include="Source\Game\Ground5.cpp" />
+    <ClCompile Include="Source\Game\Ground6.cpp" />
+    <ClCompile Include="Source\Game\Ground7.cpp" />
+    <ClCompile Include="Source\Game\Ground8.cpp" />
+    <ClCompile Include="Source\Game\Ground9.cpp" />
+    <ClCompile Include="Source\Game\Hasu.cpp" />
+    <ClCompile Include="Source\Game\LostGround.cpp" />
+    <ClCompile Include="Source\Game\Movefloor.cpp" />
+    <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Game\Pointa.cpp" />
+    <ClCompile Include="Source\Game\AlwaysWind.cpp" />
+    <ClCompile Include="Source\Game\ResultScene.cpp" />
+    <ClCompile Include="Source\Game\SelectScene.cpp" />
+    <ClCompile Include="Source\Game\Stage1.cpp" />
+    <ClCompile Include="Source\Game\Stage1Back.cpp" />
+    <ClCompile Include="Source\Game\Stage2.cpp" />
+    <ClCompile Include="Source\Game\Stage3.cpp" />
+    <ClCompile Include="Source\Game\Stage4.cpp" />
+    <ClCompile Include="Source\Game\Stage5.cpp" />
+    <ClCompile Include="Source\Game\Stage6.cpp" />
+    <ClCompile Include="Source\Game\Stage7.cpp" />
+    <ClCompile Include="Source\Game\Stage8.cpp" />
+    <ClCompile Include="Source\Game\Stage9.cpp" />
+    <ClCompile Include="Source\Game\StageClear.cpp" />
+    <ClCompile Include="Source\Game\stagetest.cpp" />
+    <ClCompile Include="Source\Game\Title.cpp" />
+    <ClCompile Include="Source\Game\TitleContinue.cpp" />
+    <ClCompile Include="Source\Game\TitleScene.cpp" />
+    <ClCompile Include="Source\Game\TitleStart.cpp" />
+    <ClCompile Include="Source\Game\TitleUnitychan.cpp" />
+    <ClCompile Include="Source\Game\Windmill.cpp" />
+    <ClCompile Include="Source\Game\wood.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\BulletPhysics\BulletPhysics.h" />
+    <ClInclude Include="Source\Frame\Audio.h" />
+    <ClInclude Include="Source\Frame\BloomRender.h" />
+    <ClInclude Include="Source\Frame\C2DObject.h" />
+    <ClInclude Include="Source\Frame\C3DDraw.h" />
+    <ClInclude Include="Source\Frame\C3DObject.h" />
+    <ClInclude Include="Source\Frame\CAnimation.h" />
+    <ClInclude Include="Source\Frame\Ccamera.h" />
+    <ClInclude Include="Source\Frame\CGamepad.h" />
+    <ClInclude Include="Source\Frame\CGimmickManager.h" />
+    <ClInclude Include="Source\Frame\CLight.h" />
+    <ClInclude Include="Source\Frame\CRandom.h" />
+    <ClInclude Include="Source\Frame\DepthField.h" />
+    <ClInclude Include="Source\Frame\DXCommon.h" />
+    <ClInclude Include="Source\Frame\GraphicsDevice.h" />
+    <ClInclude Include="Source\Frame\haba.h" />
+    <ClInclude Include="Source\Frame\Input.h" />
+    <ClInclude Include="Source\Frame\IPlayerCollisionCallback.h" />
+    <ClInclude Include="Source\Frame\IsIntersect.h" />
+    <ClInclude Include="Source\Frame\particle\CParticle.h" />
+    <ClInclude Include="Source\Frame\particle\CParticleEmitter.h" />
+    <ClInclude Include="Source\Frame\RayCursor.h" />
+    <ClInclude Include="Source\Frame\RenderTarget.h" />
+    <ClInclude Include="Source\Frame\Rigidbody.h" />
+    <ClInclude Include="Source\Frame\SceCommon.h" />
+    <ClInclude Include="Source\Frame\Scene.h" />
+    <ClInclude Include="Source\Frame\SceneManager.h" />
+    <ClInclude Include="Source\Frame\Shadow.h" />
+    <ClInclude Include="Source\Frame\SkinModelDate.h" />
+    <ClInclude Include="Source\Frame\Stage\CStage.h" />
+    <ClInclude Include="Source\Frame\Stage\CStageManager.h" />
+    <ClInclude Include="Source\Frame\Turn.h" />
+    <ClInclude Include="Source\Frame\WinMain.h" />
+    <ClInclude Include="Source\Game\CDataLoad.h" />
+    <ClInclude Include="Source\Game\CFlower.h" />
+    <ClInclude Include="Source\Game\CGameFlg.h" />
+    <ClInclude Include="Source\Game\ClearSelect.h" />
+    <ClInclude Include="Source\Game\CSelectCursor.h" />
+    <ClInclude Include="Source\Game\FlowerManager.h" />
+    <ClInclude Include="Source\Game\GameCursor.h" />
+    <ClInclude Include="Source\Game\GameCursor3D.h" />
+    <ClInclude Include="Source\Game\GameCursorWind.h" />
+    <ClInclude Include="Source\Game\GameScene.h" />
+    <ClInclude Include="Source\Game\Goal.h" />
+    <ClInclude Include="Source\Game\Ground.h" />
+    <ClInclude Include="Source\Game\Ground2.h" />
+    <ClInclude Include="Source\Game\Ground3.h" />
+    <ClInclude Include="Source\Game\Ground4.h" />
+    <ClInclude Include="Source\Game\Ground5.h" />
+    <ClInclude Include="Source\Game\Ground6.h" />
+    <ClInclude Include="Source\Game\Ground7.h" />
+    <ClInclude Include="Source\Game\Ground8.h" />
+    <ClInclude Include="Source\Game\Ground9.h" />
+    <ClInclude Include="Source\Game\Hasu.h" />
+    <ClInclude Include="Source\Game\LostGround.h" />
+    <ClInclude Include="Source\Game\Movefloor.h" />
+    <ClInclude Include="Source\Game\Player.h" />
+    <ClInclude Include="Source\Game\Pointa.h" />
+    <ClInclude Include="Source\Game\AlwaysWind.h" />
+    <ClInclude Include="Source\Game\ResultScene.h" />
+    <ClInclude Include="Source\Game\SelectScene.h" />
+    <ClInclude Include="Source\Game\Stage1.h" />
+    <ClInclude Include="Source\Game\Stage1Back.h" />
+    <ClInclude Include="Source\Game\Stage2.h" />
+    <ClInclude Include="Source\Game\Stage3.h" />
+    <ClInclude Include="Source\Game\Stage4.h" />
+    <ClInclude Include="Source\Game\Stage5.h" />
+    <ClInclude Include="Source\Game\Stage6.h" />
+    <ClInclude Include="Source\Game\Stage7.h" />
+    <ClInclude Include="Source\Game\Stage8.h" />
+    <ClInclude Include="Source\Game\Stage9.h" />
+    <ClInclude Include="Source\Game\StageClear.h" />
+    <ClInclude Include="Source\Game\stagetest.h" />
+    <ClInclude Include="Source\Game\Title.h" />
+    <ClInclude Include="Source\Game\TitleContinue.h" />
+    <ClInclude Include="Source\Game\TitleScene.h" />
+    <ClInclude Include="Source\Game\TitleStart.h" />
+    <ClInclude Include="Source\Game\TitleUnitychan.h" />
+    <ClInclude Include="Source\Game\Windmill.h" />
+    <ClInclude Include="Source\Game\wood.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
