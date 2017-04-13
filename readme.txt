@@ -10,6 +10,7 @@ RunRunRunningとFlyFlyFlyingという２作品を提出しています。
 
 プロジェクト
   Game/game.sln
+  FlyFlyFlying/kbcgames_jr.sln
 
 動画(アピールしたいものを動画にまとめています。)
   movie/runrunrunning.mp4
