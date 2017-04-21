@@ -1,19 +1,22 @@
-RunRunRunningとFlyFlyFlyingという２作品を提出しています。
+制作を行った全作品を提出しています。
 
-作品のドキュメント
+・RunRunRunning	//完成した作品で最新のものです。一番見ていただきたい作品です。
 　作品ドキュメント(RunRunRunning).docx
-  作品ドキュメント(FlyFlyFlying).docx
-
-実行ファイル
 　exe/RunRunRunning/game.exe
-  exe/FlyFlyFlying/kbcgames_jr.exe
+　proj/RunRunRunning/game.sln
+　movie/runrunrunning.mp4
 
-プロジェクト
-  Game/game.sln
-  FlyFlyFlying/kbcgames_jr.sln
+・FlyFlyFlying
+　作品ドキュメント(FlyFlyFlying).docx
+　exe/FlyFlyFlying/kbcgames_jr.exe
+　proj/FlyFlyFlying/kbcgames_jr.sln
+　movie/flyflyflying.mp4
 
-動画(アピールしたいものを動画にまとめています。)
-  movie/runrunrunning.mp4
-  movie/flyflyflying.mp4
+・Unity作品
+　作品ドキュメント(Unity作品).docx
 
-
+・HRN //現在制作中のものです。
+　exe/HRN/Decide.exe
+　proj/HRN/game/Decide/Decide.sln
+　企画書/企画書.docx
+　企画書/企画書.pptx
